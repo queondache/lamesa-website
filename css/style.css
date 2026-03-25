@@ -322,16 +322,11 @@ p {
 
 /* Logo */
 .navbar__logo {
-  font-weight: 900;
-  font-size: 1.375rem;
-  color: var(--black);
-  letter-spacing: -0.03em;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
   cursor: pointer;
-  transition: color var(--transition-base);
-}
-
-.navbar__logo span {
-  color: var(--yellow);
+  transition: opacity var(--transition-base);
 }
 
 .navbar__logo:hover {
