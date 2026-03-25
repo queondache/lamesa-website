@@ -1,0 +1,1196 @@
+/* ============================================================
+   La Mesa – Creative Lab · Barcelona
+   CSS Design System
+   Author: La Mesa
+   Last updated: 2026
+   ============================================================ */
+
+/* ============================================================
+   1. CSS CUSTOM PROPERTIES (Design Tokens)
+   ============================================================ */
+:root {
+  --cream:  #FFFAEE;
+  --yellow: #F7B137;
+  --blue:   #1B3C8B;
+  --pink:   #E84159;
+  --black:  #1A1A1A;
+  --white:  #FFFFFF;
+
+  /* Typography */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-body:    'Montserrat', sans-serif;
+
+  /* Spacing scale */
+  --space-xs:  8px;
+  --space-sm:  16px;
+  --space-md:  24px;
+  --space-lg:  48px;
+  --space-xl:  80px;
+  --space-2xl: 120px;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 100px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
+
+  /* Z-index scale */
+  --z-base:    10;
+  --z-overlay: 20;
+  --z-modal:   30;
+  --z-nav:     50;
+  --z-fixed:   999;
+
+  /* Container */
+  --container-max: 1280px;
+  --container-pad: 24px;
+
+  /* Navbar */
+  --nav-height: 64px;
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  color: var(--black);
+  background-color: var(--cream);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity var(--transition-base);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Accessibility: visible focus states */
+:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+/* ============================================================
+   3. TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+/* H1 — Garet Black fallback: Montserrat 900 */
+h1 {
+  font-weight: 900;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+}
+
+/* H2 — Montserrat Black 900 */
+h2 {
+  font-weight: 900;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+}
+
+/* H3 — High Cruiser fallback: Montserrat 600 uppercase */
+h3 {
+  font-weight: 600;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 65ch;
+}
+
+/* ============================================================
+   4. LAYOUT UTILITIES
+   ============================================================ */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+.section {
+  padding: var(--space-xl) 0;
+}
+
+.section--lg {
+  padding: var(--space-2xl) 0;
+}
+
+/* Grid helpers */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+/* Flex helpers */
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text-center { text-align: center; }
+
+/* ============================================================
+   5. FADE-IN ON SCROLL ANIMATION
+   ============================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in--delay-1 { transition-delay: 0.1s; }
+.fade-in--delay-2 { transition-delay: 0.2s; }
+.fade-in--delay-3 { transition-delay: 0.3s; }
+
+/* ============================================================
+   6. BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--transition-base),
+              color var(--transition-base),
+              transform var(--transition-base),
+              box-shadow var(--transition-base);
+  white-space: nowrap;
+}
+
+.btn:hover {
+  opacity: 1; /* override link opacity */
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Primary button */
+.btn--primary {
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.btn--primary:hover {
+  background-color: #e09e28;
+}
+
+/* Secondary button */
+.btn--secondary {
+  background-color: transparent;
+  color: var(--cream);
+  border: 2px solid var(--cream);
+}
+
+.btn--secondary:hover {
+  background-color: var(--cream);
+  color: var(--black);
+}
+
+/* Dark button */
+.btn--dark {
+  background-color: var(--black);
+  color: var(--cream);
+}
+
+.btn--dark:hover {
+  background-color: #333;
+}
+
+/* White button */
+.btn--white {
+  background-color: var(--white);
+  color: var(--blue);
+}
+
+.btn--white:hover {
+  background-color: var(--cream);
+}
+
+/* ============================================================
+   7. NAVBAR
+   ============================================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  height: var(--nav-height);
+  background-color: var(--cream);
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+  display: flex;
+  align-items: center;
+  transition: box-shadow var(--transition-base);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* Logo */
+.navbar__logo {
+  font-weight: 900;
+  font-size: 1.375rem;
+  color: var(--black);
+  letter-spacing: -0.03em;
+  cursor: pointer;
+  transition: color var(--transition-base);
+}
+
+.navbar__logo span {
+  color: var(--yellow);
+}
+
+.navbar__logo:hover {
+  opacity: 0.85;
+}
+
+/* Nav links */
+.navbar__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.navbar__link {
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  transition: color var(--transition-base);
+  cursor: pointer;
+}
+
+.navbar__link:hover {
+  color: var(--yellow);
+  opacity: 1;
+}
+
+/* Language switcher */
+.navbar__lang {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: var(--space-md);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.navbar__lang a {
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.navbar__lang a:hover {
+  opacity: 1;
+  background-color: var(--yellow);
+  color: var(--black);
+}
+
+.navbar__lang a.active {
+  background-color: var(--black);
+  color: var(--cream);
+}
+
+.navbar__lang span {
+  color: var(--black);
+  opacity: 0.3;
+}
+
+/* Hamburger */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-base);
+}
+
+.navbar__hamburger:hover {
+  background-color: rgba(0,0,0,0.06);
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--black);
+  border-radius: 2px;
+  transition: transform var(--transition-slow), opacity var(--transition-slow);
+}
+
+/* Hamburger open state */
+.navbar__hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.navbar__hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.navbar__hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile menu */
+.navbar__mobile {
+  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0;
+  right: 0;
+  background-color: var(--cream);
+  padding: var(--space-md) var(--container-pad);
+  border-bottom: 1px solid rgba(26,26,26,0.1);
+  flex-direction: column;
+  gap: var(--space-sm);
+  z-index: calc(var(--z-nav) - 1);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.navbar__mobile.open {
+  display: flex;
+}
+
+.navbar__mobile-link {
+  font-weight: 700;
+  font-size: 1.125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(26,26,26,0.08);
+  cursor: pointer;
+  transition: color var(--transition-base);
+}
+
+.navbar__mobile-link:hover {
+  color: var(--yellow);
+  opacity: 1;
+}
+
+.navbar__mobile-lang {
+  display: flex;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.navbar__mobile-lang a {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.navbar__mobile-lang a.active {
+  background-color: var(--black);
+  color: var(--cream);
+}
+
+/* ============================================================
+   8. HERO SECTION
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--yellow);
+}
+
+/* Geometric pattern background (placeholder until real photo) */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--yellow);
+  background-image:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 40px,
+      rgba(255,255,255,0.07) 40px,
+      rgba(255,255,255,0.07) 80px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 40px,
+      rgba(0,0,0,0.04) 40px,
+      rgba(0,0,0,0.04) 80px
+    );
+  overflow: hidden;
+}
+
+.hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Overlay */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+/* Hero content */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: var(--space-lg) var(--container-pad);
+  max-width: 860px;
+}
+
+.hero__title {
+  color: var(--cream);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+  text-shadow: 0 2px 16px rgba(0,0,0,0.2);
+}
+
+.hero__subtitle {
+  color: var(--cream);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+  max-width: 55ch;
+  margin-left: auto;
+  margin-right: auto;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+}
+
+/* ============================================================
+   9. NOSOTRAS SECTION
+   ============================================================ */
+.nosotras {
+  background-color: var(--white);
+}
+
+.nosotras__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-xl);
+  align-items: center;
+}
+
+.nosotras__text h2 {
+  margin-bottom: var(--space-md);
+  color: var(--black);
+}
+
+.nosotras__text p {
+  color: var(--black);
+  opacity: 0.8;
+  font-size: 1.0625rem;
+}
+
+/* Image placeholder */
+.nosotras__image {
+  aspect-ratio: 4/3;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--yellow);
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent,
+    transparent 20px,
+    rgba(255,255,255,0.15) 20px,
+    rgba(255,255,255,0.15) 40px
+  );
+}
+
+.nosotras__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============================================================
+   10. CLASES SECTION
+   ============================================================ */
+.clases {
+  background-color: var(--cream);
+}
+
+.clases__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.clases__header h2 {
+  margin-bottom: var(--space-sm);
+}
+
+/* Cards grid */
+.clases__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+}
+
+/* Card */
+.clase-card {
+  background-color: var(--white);
+  border: 2px solid var(--yellow);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+  cursor: default;
+}
+
+.clase-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(247,177,55,0.2);
+}
+
+.clase-card__title {
+  font-weight: 900;
+  font-size: 1.375rem;
+  color: var(--black);
+  letter-spacing: -0.02em;
+}
+
+.clase-card__subtitle {
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--blue);
+}
+
+.clase-card__body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--black);
+  opacity: 0.75;
+  flex: 1;
+  max-width: 100%;
+}
+
+.clase-card__price {
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--yellow);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.clase-card__cta {
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--blue);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: color var(--transition-base), letter-spacing var(--transition-base);
+  cursor: pointer;
+}
+
+.clase-card__cta:hover {
+  color: var(--yellow);
+  opacity: 1;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   11. WORKSHOPS SECTION
+   ============================================================ */
+.workshops {
+  background-color: var(--yellow);
+  text-align: center;
+}
+
+.workshops__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.workshops h2 {
+  color: var(--blue);
+  margin-bottom: var(--space-md);
+}
+
+.workshops__subheadline {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--blue);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  max-width: 100%;
+}
+
+.workshops__text {
+  color: var(--blue);
+  opacity: 0.85;
+  margin-bottom: var(--space-lg);
+  max-width: 100%;
+}
+
+/* ============================================================
+   12. TIENDA SECTION
+   ============================================================ */
+.tienda {
+  background-color: var(--white);
+}
+
+.tienda__header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.tienda__header h2 {
+  margin-bottom: var(--space-sm);
+}
+
+.tienda__subheadline {
+  font-size: 1.125rem;
+  color: var(--black);
+  opacity: 0.7;
+  max-width: 60ch;
+  margin: 0 auto var(--space-md);
+}
+
+.tienda__text {
+  font-size: 0.9375rem;
+  color: var(--black);
+  opacity: 0.7;
+  max-width: 60ch;
+  margin: 0 auto;
+}
+
+/* Product grid placeholders */
+.tienda__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.tienda__product {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background-color: var(--yellow);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 16px,
+    rgba(255,255,255,0.12) 16px,
+    rgba(255,255,255,0.12) 32px
+  );
+  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
+}
+
+.tienda__product:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.tienda__product img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Gift voucher highlight */
+.tienda__gift {
+  background-color: var(--cream);
+  border: 2px solid var(--yellow);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto var(--space-xl);
+}
+
+.tienda__gift h3 {
+  margin-bottom: var(--space-sm);
+  color: var(--black);
+}
+
+.tienda__gift p {
+  font-size: 0.9375rem;
+  color: var(--black);
+  opacity: 0.75;
+  margin: 0 auto var(--space-md);
+  max-width: 50ch;
+}
+
+/* CTA group */
+.tienda__ctas {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   13. PRIVADAS SECTION
+   ============================================================ */
+.privadas {
+  background-color: var(--blue);
+}
+
+.privadas__inner {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.privadas h2 {
+  color: var(--cream);
+  margin-bottom: var(--space-sm);
+}
+
+.privadas__subheadline {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--cream);
+  margin-bottom: var(--space-md);
+  max-width: 100%;
+}
+
+.privadas__body {
+  color: var(--cream);
+  opacity: 0.85;
+  margin: 0 auto var(--space-lg);
+}
+
+/* Tags */
+.privadas__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.privadas__tag {
+  background-color: var(--pink);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+}
+
+/* ============================================================
+   14. ARTISTAS SECTION
+   ============================================================ */
+.artistas {
+  background-color: var(--cream);
+  text-align: center;
+}
+
+.artistas__inner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.artistas h2 {
+  margin-bottom: var(--space-md);
+}
+
+.artistas__body {
+  font-size: 1.0625rem;
+  color: var(--black);
+  opacity: 0.8;
+  margin: 0 auto var(--space-lg);
+}
+
+/* ============================================================
+   15. CONTACTO + FOOTER
+   ============================================================ */
+.contacto {
+  background-color: var(--black);
+  padding: var(--space-xl) 0 0;
+}
+
+.contacto h2 {
+  color: var(--cream);
+  margin-bottom: var(--space-lg);
+}
+
+/* 3-column footer grid */
+.contacto__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+/* Column headings */
+.contacto__col h3 {
+  color: var(--yellow);
+  margin-bottom: var(--space-sm);
+  font-size: 0.8125rem;
+}
+
+.contacto__col p,
+.contacto__col a {
+  color: var(--cream);
+  opacity: 0.75;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+  display: block;
+  transition: opacity var(--transition-base);
+}
+
+.contacto__col a:hover {
+  opacity: 1;
+  color: var(--yellow);
+}
+
+/* Map embed */
+.contacto__map {
+  grid-column: 1 / -1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  height: 280px;
+  margin-top: var(--space-md);
+}
+
+.contacto__map iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(20%) contrast(1.05);
+}
+
+/* Social icons row */
+.contacto__social {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.contacto__social a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.75;
+  transition: opacity var(--transition-base), color var(--transition-base);
+}
+
+.contacto__social a:hover {
+  opacity: 1;
+  color: var(--yellow);
+}
+
+/* Footer bottom bar */
+.footer__bar {
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: var(--space-md) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.footer__bar p {
+  color: var(--cream);
+  opacity: 0.4;
+  font-size: 0.8125rem;
+  max-width: 100%;
+}
+
+.footer__tagline {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--cream);
+  opacity: 0.6;
+}
+
+/* ============================================================
+   16. WHATSAPP FLOATING BUTTON
+   ============================================================ */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: var(--z-fixed);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(247,177,55,0.45);
+  cursor: pointer;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  animation: whatsapp-pulse 2.8s ease-in-out infinite;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(247,177,55,0.55);
+  opacity: 1;
+  animation-play-state: paused;
+}
+
+.whatsapp-btn svg {
+  width: 32px;
+  height: 32px;
+  fill: var(--white);
+}
+
+@keyframes whatsapp-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(247,177,55,0.45),
+                0 0 0 0 rgba(247,177,55,0.4);
+  }
+  50% {
+    box-shadow: 0 8px 24px rgba(247,177,55,0.45),
+                0 0 0 12px rgba(247,177,55,0);
+  }
+}
+
+/* ============================================================
+   17. RESPONSIVE — TABLET (≤ 1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  :root {
+    --space-xl:  60px;
+    --space-2xl: 80px;
+    --container-pad: 20px;
+  }
+
+  .nosotras__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .nosotras__image {
+    order: -1;
+  }
+
+  .clases__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .contacto__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ============================================================
+   18. RESPONSIVE — MOBILE (≤ 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  :root {
+    --space-xl:  48px;
+    --space-2xl: 64px;
+    --container-pad: 16px;
+  }
+
+  /* Navbar */
+  .navbar__links,
+  .navbar__lang {
+    display: none;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 80vh;
+  }
+
+  /* Cards */
+  .clases__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Tienda */
+  .tienda__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .tienda__ctas {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Footer */
+  .contacto__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__bar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  /* WhatsApp */
+  .whatsapp-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+
+  .whatsapp-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* ============================================================
+   19. RESPONSIVE — SMALL MOBILE (≤ 375px)
+   ============================================================ */
+@media (max-width: 375px) {
+  :root {
+    --container-pad: 12px;
+    --space-lg: 32px;
+  }
+
+  .hero__title {
+    font-size: 2rem;
+  }
+
+  .tienda__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clase-card {
+    padding: 24px;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    font-size: 0.875rem;
+  }
+}
+
+/* ============================================================
+   20. PRINT STYLES
+   ============================================================ */
+@media print {
+  .navbar,
+  .whatsapp-btn,
+  .navbar__mobile {
+    display: none !important;
+  }
+}
