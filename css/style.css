@@ -1406,20 +1406,6 @@ p {
   gap: 8px;
 }
 
-.plazas {
-  font-size: 0.75rem;
-  background: #e8f5e9;
-  color: #2e7d32;
-  padding: 2px 8px;
-  border-radius: 100px;
-  white-space: nowrap;
-  font-weight: 600;
-}
-
-.plazas.completo {
-  background: #fce4ec;
-  color: #c62828;
-}
 
 /* Grid 6 card — 3 colonne desktop, 2 tablet, 1 mobile */
 .clases__grid {
