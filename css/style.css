@@ -1431,6 +1431,9 @@ p {
   margin-top: 6px;
   font-style: italic;
   letter-spacing: 0.02em;
+  text-align: center;
+  display: block;
+  width: 100%;
 }
 
 .footer__tagline-ca {
@@ -1737,10 +1740,10 @@ p {
 }
 
 .clase-suelta {
-  margin-bottom: 2px;
+  margin-bottom: 6px;
 }
 
 #workshops {
-  padding-top: 24px;
+  padding-top: 64px;
   padding-bottom: 48px;
 }
