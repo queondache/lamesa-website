@@ -1731,3 +1731,12 @@ p {
     padding: 0 20px 16px;
   }
 }
+
+#clases {
+  padding-bottom: 0;
+}
+
+#workshops {
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
