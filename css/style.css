@@ -175,6 +175,13 @@ p {
   padding: var(--space-2xl) 0;
 }
 
+@media (max-width: 600px) {
+  .section--lg {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+}
+
 /* Grid helpers */
 .grid-2 {
   display: grid;
@@ -574,6 +581,11 @@ p {
   background-color: var(--white);
 }
 
+.nosotras.section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
 .nosotras__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -622,7 +634,7 @@ p {
 
 .clases__header {
   text-align: center;
-  margin-bottom: var(--space-xl);
+  margin-bottom: 0;
 }
 
 .clases__header h2 {
@@ -637,7 +649,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  margin-top: 40px;
+  margin-top: 24px;
 }
 
 /* Label blocco tematico */
@@ -663,6 +675,12 @@ p {
 @media (min-width: 600px) {
   .clases__bloque-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 1023px) {
+  .clases__bloques {
+    gap: 16px;
   }
 }
 
@@ -808,10 +826,20 @@ p {
    ============================================================ */
 
 .clase-suelta {
-  margin-top: 24px;
+  margin-top: 16px;
   background: var(--pink, #E84159);
   border-radius: 16px;
   overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .clase-suelta__inner {
+    padding: 20px;
+    gap: 12px;
+  }
+  .clase-suelta__title {
+    font-size: 1.3rem;
+  }
 }
 
 .clase-suelta__inner {
@@ -1114,6 +1142,7 @@ p {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
+  margin-top: 32px;
   margin-bottom: var(--space-xl);
 }
 
@@ -1620,6 +1649,10 @@ p {
 
 .faq {
   background: var(--cream);
+}
+
+.faq.section--lg {
+  padding-bottom: 60px;
 }
 
 .faq__inner {
