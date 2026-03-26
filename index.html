@@ -278,36 +278,38 @@
             Workshops puntuales con artistas invitados. Cerámica, pintura, macramé,
             joyería, ilustración… cada encuentro es único y no se repite.
           </p>
-          <p class="workshops__text">
-            ¿Quieres saber qué hay próximamente? Escríbenos y te avisamos.
-          </p>
-          <a
-            class="btn btn--white"
-            href="https://wa.me/34711552030?text=Hola!%20Quiero%20saber%20qué%20workshops%20hay%20próximamente"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Ver próximos workshops por WhatsApp"
-          >
-            Ver próximos workshops →
-          </a>
 
-          <a class="btn btn--outline-light"
-             href="https://drive.google.com/drive/folders/1skRVnl7KxyRohEVQ3QLtmfphP1Ny0Hpm?usp=sharing"
-             id="workshops-pdf-link"
-             target="_blank"
-             rel="noopener noreferrer"
-             aria-label="Descargar programa de workshops de La Mesa en PDF">
-            📄 Ver programa del mes →
-          </a>
+          <div class="workshops__ctas">
+            <a class="btn btn--dark"
+               href="https://drive.google.com/drive/folders/1skRVnl7KxyRohEVQ3QLtmfphP1Ny0Hpm?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Ver programa de workshops de La Mesa en Drive">
+              📄 Ver próximos workshops →
+            </a>
+            <a class="btn btn--outline-dark"
+               href="https://wa.me/34711552030?text=Hola!%20Quiero%20saber%20más%20sobre%20los%20próximos%20workshops"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Escríbenos por WhatsApp para más información sobre workshops">
+              Escríbenos para más información →
+            </a>
+          </div>
 
           <div class="workshops__newsletter">
-            <p class="workshops__newsletter-text">¿Te avisamos del próximo?</p>
-            <form class="newsletter-form newsletter-form--inline" action="#" method="post" id="newsletter-form-workshops">
+            <p class="workshops__newsletter-label">¿Te avisamos del próximo?</p>
+            <form class="newsletter-form newsletter-form--inline"
+                  action="#" method="post" id="newsletter-form-workshops"
+                  onsubmit="return false;">
               <input type="email" name="email" placeholder="tu@email.com" required
                 aria-label="Tu dirección de email"
                 class="newsletter-input">
               <button type="submit" class="newsletter-btn">Avísame →</button>
             </form>
+            <label class="privacy-check">
+              <input type="checkbox" required name="privacy-workshops">
+              <span>Acepto la <a href="/privacy.html" target="_blank">política de privacidad</a></span>
+            </label>
           </div>
         </div>
       </div>
@@ -543,6 +545,10 @@
               class="newsletter-input">
             <button type="submit" class="newsletter-btn">Apuntarme →</button>
           </form>
+          <label class="privacy-check privacy-check--light">
+            <input type="checkbox" required name="privacy-footer">
+            <span>Acepto la <a href="/privacy.html" target="_blank">política de privacidad</a></span>
+          </label>
         </div>
 
         <!-- Footer bottom bar -->

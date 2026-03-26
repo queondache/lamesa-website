@@ -1191,97 +1191,24 @@ p {
 }
 
 /* ============================================================
-   NEWSLETTER + PDF WORKSHOP
+   NEWSLETTER + WORKSHOPS CTA
    ============================================================ */
 
-.workshops__newsletter {
-  margin-top: 32px;
+/* CTA group workshops */
+.workshops__ctas {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.workshops__newsletter-text {
-  font-size: 0.95rem;
-  color: var(--blue);
-  font-weight: 600;
-  margin: 0;
-}
-
-.newsletter-form--inline {
-  display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  gap: 16px;
   justify-content: center;
+  margin-bottom: 40px;
 }
 
-.footer__newsletter {
-  border-top: 1px solid rgba(255, 250, 238, 0.15);
-  padding: 48px 0 40px;
-  text-align: center;
-  max-width: 480px;
-  margin: 0 auto;
-}
-
-.footer__newsletter-title {
-  font-size: 1.5rem;
-  font-weight: 900;
-  color: var(--cream);
-  margin-bottom: 8px;
-}
-
-.footer__newsletter-text {
-  font-size: 0.95rem;
-  color: rgba(255, 250, 238, 0.7);
-  margin-bottom: 20px;
-}
-
-.newsletter-form {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.newsletter-input {
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: none;
-  font-size: 0.95rem;
-  font-family: inherit;
-  min-width: 220px;
-  outline: none;
-  color: var(--black);
-}
-
-.newsletter-input:focus {
-  box-shadow: 0 0 0 3px rgba(247, 177, 55, 0.4);
-}
-
-.newsletter-btn {
-  padding: 12px 24px;
-  background: var(--yellow);
-  color: var(--black);
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-family: inherit;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: opacity 200ms ease;
-  white-space: nowrap;
-}
-
-.newsletter-btn:hover {
-  opacity: 0.88;
-}
-
-.btn--outline-light {
+/* Btn outline su sfondo giallo */
+.btn--outline-dark {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 28px;
+  padding: 16px 32px;
   border: 2px solid var(--blue);
   color: var(--blue);
   background: transparent;
@@ -1292,19 +1219,155 @@ p {
   text-decoration: none;
   transition: all 200ms ease;
   cursor: pointer;
-  margin-top: 8px;
 }
 
-.btn--outline-light:hover {
+.btn--outline-dark:hover {
   background: var(--blue);
   color: var(--cream);
 }
 
+/* Newsletter inline (workshops) */
+.workshops__newsletter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.workshops__newsletter-label {
+  font-size: 0.95rem;
+  color: var(--blue);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* Footer newsletter box */
+.footer__newsletter {
+  border-top: 1px solid rgba(255, 250, 238, 0.15);
+  padding: 48px 24px 40px;
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.footer__newsletter-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--cream);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.footer__newsletter-text {
+  font-size: 0.95rem;
+  color: rgba(255, 250, 238, 0.7);
+  margin-bottom: 20px;
+  display: block;
+}
+
+/* Shared form */
+.newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.newsletter-form--inline {
+  flex-wrap: nowrap;
+}
+
+/* Input pill shape — coerente col brand */
+.newsletter-input {
+  padding: 14px 20px;
+  border-radius: 100px;
+  border: 2px solid var(--blue);
+  font-size: 0.95rem;
+  font-family: inherit;
+  min-width: 200px;
+  outline: none;
+  color: var(--black);
+  background: var(--cream);
+  transition: box-shadow 200ms ease;
+}
+
+.newsletter-input:focus {
+  box-shadow: 0 0 0 3px rgba(27, 60, 139, 0.2);
+}
+
+/* Su sfondo scuro footer */
+.footer__newsletter .newsletter-input {
+  background: rgba(255, 250, 238, 0.95);
+  border-color: transparent;
+}
+
+.newsletter-btn {
+  padding: 14px 24px;
+  background: var(--yellow);
+  color: var(--black);
+  border: none;
+  border-radius: 100px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover {
+  opacity: 0.85;
+}
+
+/* Privacy checkbox */
+.privacy-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--blue);
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.privacy-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--blue);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.privacy-check a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+.privacy-check--light {
+  color: rgba(255, 250, 238, 0.75);
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.privacy-check--light a {
+  color: var(--yellow);
+}
+
+/* Mobile */
 @media (max-width: 768px) {
+  .workshops__ctas {
+    flex-direction: column;
+    align-items: center;
+  }
   .newsletter-form,
   .newsletter-form--inline {
     flex-direction: column;
     align-items: stretch;
+    width: 100%;
+    max-width: 320px;
   }
   .newsletter-input {
     min-width: unset;

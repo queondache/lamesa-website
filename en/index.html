@@ -275,38 +275,40 @@
           <h2>Creative Sessions</h2>
           <p class="workshops__subheadline">
             One-off workshops with guest artists. Ceramics, painting, macramé,
-            jewellery, illustration… every gathering is unique and doesn't repeat.
+            jewellery, illustration… each gathering is unique and never repeated.
           </p>
-          <p class="workshops__text">
-            Want to know what's coming up next? Message us and we'll keep you posted.
-          </p>
-          <a
-            class="btn btn--white"
-            href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20about%20upcoming%20workshops"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="See upcoming workshops via WhatsApp"
-          >
-            See upcoming workshops →
-          </a>
 
-          <a class="btn btn--outline-light"
-             href="https://drive.google.com/drive/folders/1skRVnl7KxyRohEVQ3QLtmfphP1Ny0Hpm?usp=sharing"
-             id="workshops-pdf-link"
-             target="_blank"
-             rel="noopener noreferrer"
-             aria-label="Download La Mesa workshops programme PDF">
-            📄 View this month's programme →
-          </a>
+          <div class="workshops__ctas">
+            <a class="btn btn--dark"
+               href="https://drive.google.com/drive/folders/1skRVnl7KxyRohEVQ3QLtmfphP1Ny0Hpm?usp=sharing"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="View La Mesa workshops programme on Drive">
+              📄 View upcoming workshops →
+            </a>
+            <a class="btn btn--outline-dark"
+               href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20upcoming%20workshops"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="Message us on WhatsApp for more information about workshops">
+              Message us for more info →
+            </a>
+          </div>
 
           <div class="workshops__newsletter">
-            <p class="workshops__newsletter-text">Want us to let you know?</p>
-            <form class="newsletter-form newsletter-form--inline" action="#" method="post" id="newsletter-form-workshops">
+            <p class="workshops__newsletter-label">Want us to let you know?</p>
+            <form class="newsletter-form newsletter-form--inline"
+                  action="#" method="post" id="newsletter-form-workshops"
+                  onsubmit="return false;">
               <input type="email" name="email" placeholder="your@email.com" required
                 aria-label="Your email address"
                 class="newsletter-input">
               <button type="submit" class="newsletter-btn">Notify me →</button>
             </form>
+            <label class="privacy-check">
+              <input type="checkbox" required name="privacy-workshops">
+              <span>I accept the <a href="/en/privacy.html" target="_blank">privacy policy</a></span>
+            </label>
           </div>
         </div>
       </div>
@@ -542,6 +544,10 @@
               class="newsletter-input">
             <button type="submit" class="newsletter-btn">Sign me up →</button>
           </form>
+          <label class="privacy-check privacy-check--light">
+            <input type="checkbox" required name="privacy-footer">
+            <span>I accept the <a href="/en/privacy.html" target="_blank">privacy policy</a></span>
+          </label>
         </div>
 
         <!-- Footer bottom bar -->
