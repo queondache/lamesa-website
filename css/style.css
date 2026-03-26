@@ -551,6 +551,7 @@ p {
   text-align: center;
   padding: var(--space-lg) var(--container-pad);
   max-width: 860px;
+  align-items: center;
 }
 
 .hero__title {
@@ -1434,6 +1435,7 @@ p {
   text-align: center;
   display: block;
   width: 100%;
+  align-self: center;
 }
 
 .footer__tagline-ca {
