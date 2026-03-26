@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página no encontrada – La Mesa</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px;
+      background: #FFFAEE;
+      font-family: Montserrat, sans-serif;
+    }
+    .error-page__logo {
+      margin-bottom: 40px;
+    }
+    .error-page__logo img {
+      height: 48px;
+      width: auto;
+    }
+    .error-page__number {
+      font-size: 8rem;
+      font-weight: 900;
+      color: #F7B137;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .error-page__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1B3C8B;
+      margin-bottom: 16px;
+    }
+    .error-page__text {
+      font-size: 1rem;
+      color: #666;
+      max-width: 400px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .error-page__actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-page__logo">
+      <a href="/">
+        <img src="/images/logo-lamesa.png" alt="La Mesa – Laboratorio Creativo Barcelona">
+      </a>
+    </div>
+    <div class="error-page__number">404</div>
+    <h1 class="error-page__title">Esta página se perdió en el horno</h1>
+    <p class="error-page__text">
+      No encontramos lo que buscabas, pero en La Mesa siempre hay algo bueno esperándote.
+    </p>
+    <div class="error-page__actions">
+      <a href="/" class="btn btn--primary" style="text-decoration:none; display:inline-flex; align-items:center; padding:16px 32px; background:#F7B137; color:#1A1A1A; border-radius:100px; font-weight:700; font-family:Montserrat,sans-serif;">
+        Volver al inicio →
+      </a>
+      <a href="https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa"
+         target="_blank" rel="noopener noreferrer"
+         class="btn btn--outline-dark"
+         style="text-decoration:none; display:inline-flex; align-items:center; padding:16px 32px; border:2px solid #1B3C8B; color:#1B3C8B; border-radius:100px; font-weight:700; font-family:Montserrat,sans-serif;">
+        Escríbenos →
+      </a>
+    </div>
+  </div>
+</body>
+</html>
