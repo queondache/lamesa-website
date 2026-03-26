@@ -1189,3 +1189,128 @@ p {
     display: none !important;
   }
 }
+
+/* ============================================================
+   NEWSLETTER + PDF WORKSHOP
+   ============================================================ */
+
+.workshops__newsletter {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.workshops__newsletter-text {
+  font-size: 0.95rem;
+  color: var(--blue);
+  font-weight: 600;
+  margin: 0;
+}
+
+.newsletter-form--inline {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__newsletter {
+  border-top: 1px solid rgba(255, 250, 238, 0.15);
+  padding: 48px 0 40px;
+  text-align: center;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.footer__newsletter-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+
+.footer__newsletter-text {
+  font-size: 0.95rem;
+  color: rgba(255, 250, 238, 0.7);
+  margin-bottom: 20px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.newsletter-input {
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.95rem;
+  font-family: inherit;
+  min-width: 220px;
+  outline: none;
+  color: var(--black);
+}
+
+.newsletter-input:focus {
+  box-shadow: 0 0 0 3px rgba(247, 177, 55, 0.4);
+}
+
+.newsletter-btn {
+  padding: 12px 24px;
+  background: var(--yellow);
+  color: var(--black);
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: opacity 200ms ease;
+  white-space: nowrap;
+}
+
+.newsletter-btn:hover {
+  opacity: 0.88;
+}
+
+.btn--outline-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border: 2px solid var(--blue);
+  color: var(--blue);
+  background: transparent;
+  border-radius: 100px;
+  font-weight: 700;
+  font-family: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 200ms ease;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.btn--outline-light:hover {
+  background: var(--blue);
+  color: var(--cream);
+}
+
+@media (max-width: 768px) {
+  .newsletter-form,
+  .newsletter-form--inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .newsletter-input {
+    min-width: unset;
+    width: 100%;
+  }
+  .newsletter-btn {
+    width: 100%;
+  }
+}
