@@ -1736,7 +1736,11 @@ p {
   padding-bottom: 0 !important;
 }
 
+.clase-suelta {
+  margin-bottom: 2px;
+}
+
 #workshops {
-  padding-top: 32px;
+  padding-top: 24px;
   padding-bottom: 48px;
 }
