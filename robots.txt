@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /en/privacy.html
+
+Sitemap: https://www.lamesabcn.com/sitemap.xml
