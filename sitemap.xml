@@ -5,6 +5,7 @@
     <loc>https://www.lamesabcn.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/"/>
     <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
@@ -19,6 +20,12 @@
   </url>
   <url>
     <loc>https://www.lamesabcn.com/privacy.html</loc>
+    <lastmod>2026-03-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/en/privacy.html</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
