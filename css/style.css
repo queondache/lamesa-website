@@ -629,78 +629,263 @@ p {
   margin-bottom: var(--space-sm);
 }
 
-/* Cards grid */
-.clases__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-md);
-}
+/* ============================================================
+   CLASES — struttura a blocchi tematici, mobile first
+   ============================================================ */
 
-/* Card */
-.clase-card {
-  background-color: var(--white);
-  border: 2px solid var(--yellow);
-  border-radius: var(--radius-md);
-  padding: 32px;
+.clases__bloques {
   display: flex;
   flex-direction: column;
-  gap: var(--space-sm);
-  transition: transform var(--transition-slow), box-shadow var(--transition-slow);
-  cursor: default;
+  gap: 24px;
+  margin-top: 40px;
 }
 
-.clase-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px rgba(247,177,55,0.2);
+/* Label blocco tematico */
+.clases__bloque-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blue);
+  margin: 0 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--yellow);
+  display: inline-block;
+}
+
+/* Grid dentro ogni blocco */
+.clases__bloque-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .clases__bloque-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Desktop — blocchi side by side */
+@media (min-width: 1024px) {
+  .clases__bloques {
+    flex-direction: row;
+    gap: 32px;
+  }
+  .clases__bloque {
+    flex: 1;
+  }
+}
+
+/* Card base */
+.clase-card {
+  border-radius: var(--radius-lg, 16px);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+@media (max-width: 600px) {
+  .clase-card {
+    padding: 20px;
+  }
+}
+
+/* Card primary ceramica — sfondo giallo */
+.clase-card--primary {
+  background: var(--yellow);
+}
+
+.clase-card--primary .clase-card__subtitle {
+  color: rgba(26, 26, 26, 0.6);
+}
+
+.clase-card--primary .clase-card__title {
+  color: var(--black);
+}
+
+.clase-card--primary .clase-card__body {
+  color: rgba(26, 26, 26, 0.8);
+}
+
+/* Card primary torno — sfondo blu */
+.clase-card--torno-primary {
+  background: var(--blue);
+}
+
+.clase-card--torno-primary .clase-card__subtitle {
+  color: rgba(255, 250, 238, 0.6);
+}
+
+.clase-card--torno-primary .clase-card__title {
+  color: var(--cream);
+}
+
+.clase-card--torno-primary .clase-card__body {
+  color: rgba(255, 250, 238, 0.85);
+}
+
+/* Card secondary — sfondo neutro */
+.clase-card--secondary {
+  background: var(--white, #fff);
+  border: 1.5px solid rgba(27, 60, 139, 0.15);
+}
+
+.clase-card--secondary .clase-card__subtitle {
+  color: var(--blue);
+  opacity: 0.6;
+}
+
+.clase-card--secondary .clase-card__title {
+  color: var(--black);
+}
+
+.clase-card--secondary .clase-card__body {
+  color: #555;
+}
+
+/* Testi card */
+.clase-card__subtitle {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
 }
 
 .clase-card__title {
+  font-size: 1.3rem;
   font-weight: 900;
-  font-size: 1.375rem;
-  color: var(--black);
-  letter-spacing: -0.02em;
-}
-
-.clase-card__subtitle {
-  font-weight: 600;
-  font-size: 0.875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--blue);
+  margin: 0;
+  line-height: 1.2;
 }
 
 .clase-card__body {
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--black);
-  opacity: 0.75;
-  flex: 1;
-  max-width: 100%;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
 }
 
-.clase-card__price {
-  font-weight: 900;
-  font-size: 2rem;
-  color: var(--yellow);
-  letter-spacing: -0.03em;
-  line-height: 1;
-}
-
+/* CTA — tap target min 44px */
 .clase-card__cta {
-  margin-top: 4px;
+  display: block;
+  min-height: 44px;
+  padding: 10px 0;
   font-weight: 700;
-  font-size: 0.875rem;
-  color: var(--blue);
+  font-size: 0.85rem;
+  text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  transition: color var(--transition-base), letter-spacing var(--transition-base);
-  cursor: pointer;
+  letter-spacing: 0.06em;
+  margin-top: 12px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  align-self: flex-start;
 }
 
-.clase-card__cta:hover {
+.clase-card__cta:active {
+  opacity: 0.6;
+}
+
+/* CTA colori per contesto */
+.clase-card--primary .clase-card__cta--online {
+  color: var(--blue);
+}
+
+.clase-card--torno-primary .clase-card__cta--whatsapp {
   color: var(--yellow);
-  opacity: 1;
-  letter-spacing: 0.08em;
+}
+
+.clase-card--secondary .clase-card__cta--online,
+.clase-card--secondary .clase-card__cta--whatsapp {
+  color: var(--blue);
+}
+
+/* ============================================================
+   CLASE SUELTA — banner sotto i blocchi
+   ============================================================ */
+
+.clase-suelta {
+  margin-top: 24px;
+  background: var(--pink, #E84159);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.clase-suelta__inner {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .clase-suelta__inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 40px;
+    gap: 32px;
+  }
+}
+
+.clase-suelta__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 4px;
+}
+
+.clase-suelta__title {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #fff;
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+
+@media (min-width: 768px) {
+  .clase-suelta__title {
+    font-size: 2rem;
+  }
+}
+
+.clase-suelta__body {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.clase-suelta__cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 12px 28px;
+  background: #fff;
+  color: var(--pink, #E84159);
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  white-space: nowrap;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 200ms ease;
+  flex-shrink: 0;
+}
+
+.clase-suelta__cta:hover {
+  opacity: 0.9;
+}
+
+.clase-suelta__cta:active {
+  opacity: 0.7;
+  transform: scale(0.98);
 }
 
 /* ============================================================
@@ -1079,10 +1264,6 @@ p {
     order: -1;
   }
 
-  .clases__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .contacto__grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1111,11 +1292,6 @@ p {
   /* Hero */
   .hero {
     min-height: 80vh;
-  }
-
-  /* Cards */
-  .clases__grid {
-    grid-template-columns: 1fr;
   }
 
   /* Tienda */
@@ -1169,14 +1345,74 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .clase-card {
-    padding: 24px;
-  }
-
   .btn {
     padding: 12px 22px;
     font-size: 0.875rem;
   }
+}
+
+/* ============================================================
+   MOBILE FIXES GLOBALI
+   ============================================================ */
+
+/* Hamburger — tap target 44x44 */
+.navbar__hamburger {
+  min-width: 44px;
+  min-height: 44px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tutti i bottoni — touch ottimizzato */
+.btn,
+.btn--primary,
+.btn--dark,
+.btn--outline-dark,
+.newsletter-btn {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active,
+.btn--primary:active,
+.btn--dark:active,
+.btn--outline-dark:active {
+  opacity: 0.75;
+  transform: scale(0.98);
+}
+
+/* Privacy link — area tap più grande */
+.privacy-check {
+  padding: 8px 0;
+  min-height: 44px;
+}
+
+.privacy-check a {
+  padding: 4px 2px;
+  display: inline-block;
+}
+
+/* ============================================================
+   TESTO CATALANO
+   ============================================================ */
+
+.hero__subtitle-ca {
+  font-size: 0.85rem;
+  color: rgba(255, 250, 238, 0.55);
+  margin-top: 6px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.footer__tagline-ca {
+  font-size: 0.78rem;
+  color: rgba(255, 250, 238, 0.4);
+  margin-top: 2px;
+}
+
+.privadas__tag--ca {
+  font-style: italic;
+  opacity: 0.8;
 }
 
 /* ============================================================
@@ -1375,55 +1611,6 @@ p {
   }
   .newsletter-btn {
     width: 100%;
-  }
-}
-
-/* Horarios nelle card */
-.clase-card__horarios {
-  margin: 12px 0 16px;
-  font-size: 0.85rem;
-}
-
-.clase-card__horarios-title {
-  font-weight: 700;
-  color: var(--blue);
-  margin-bottom: 6px;
-}
-
-.clase-card__horarios ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.clase-card__horarios li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 8px;
-}
-
-
-/* Grid 6 card — 3 colonne desktop, 2 tablet, 1 mobile */
-.clases__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 40px;
-}
-
-@media (max-width: 1024px) {
-  .clases__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .clases__grid {
-    grid-template-columns: 1fr;
   }
 }
 
