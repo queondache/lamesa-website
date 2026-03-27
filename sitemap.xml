@@ -5,8 +5,8 @@
     <loc>https://www.lamesabcn.com/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
-    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/"/>
-    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -14,7 +14,17 @@
     <loc>https://www.lamesabcn.com/en/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
-    <lastmod>2026-03-26</lastmod>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
+    <lastmod>2026-03-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/ca/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
+    <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
