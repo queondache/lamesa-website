@@ -1753,3 +1753,17 @@ p {
 #artistas {
   padding-bottom: 48px;
 }
+
+/* ============================================================
+   SPACING SYSTEM — basato su valore di riferimento 80px
+   ============================================================ */
+
+/* Sezioni cream — 72px interno, coerente con lo spazio di riferimento */
+#nosotras  { padding-top: 72px; padding-bottom: 72px; }
+#tienda    { padding-top: 72px; padding-bottom: 72px; }
+#faq       { padding-top: 72px; padding-bottom: 56px; }
+#artistas  { padding-top: 72px; padding-bottom: 56px; }
+
+/* Sezioni colorate — 64px, il cambio sfondo fa già separazione */
+#workshops { padding-top: 64px; padding-bottom: 64px; }
+#privadas  { padding-top: 64px; padding-bottom: 64px; }
