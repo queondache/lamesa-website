@@ -6,6 +6,27 @@
    ============================================================ */
 
 /* ============================================================
+   0. CUSTOM FONTS
+   ============================================================ */
+@font-face {
+  font-family: 'Garet';
+  src: url('../fonts/Garet-Black.woff2') format('woff2'),
+       url('../fonts/Garet-Black.otf') format('opentype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'HighCruiser';
+  src: url('../fonts/HighCruiser.woff2') format('woff2'),
+       url('../fonts/HighCruiser.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ============================================================
    1. CSS CUSTOM PROPERTIES (Design Tokens)
    ============================================================ */
 :root {
@@ -17,7 +38,8 @@
   --white:  #FFFFFF;
 
   /* Typography */
-  --font-heading: 'Montserrat', sans-serif;
+  --font-heading: 'Garet', 'Montserrat', sans-serif;
+  --font-sub:     'HighCruiser', 'Montserrat', sans-serif;
   --font-body:    'Montserrat', sans-serif;
 
   /* Spacing scale */
@@ -131,20 +153,21 @@ h1, h2, h3, h4 {
   letter-spacing: -0.02em;
 }
 
-/* H1 — Garet Black fallback: Montserrat 900 */
+/* H1 — Garet Black 900 */
 h1 {
   font-weight: 900;
   font-size: clamp(2.25rem, 5vw, 4rem);
 }
 
-/* H2 — Montserrat Black 900 */
+/* H2 — Garet Black 900 */
 h2 {
   font-weight: 900;
   font-size: clamp(1.75rem, 3.5vw, 2.75rem);
 }
 
-/* H3 — High Cruiser fallback: Montserrat 600 uppercase */
+/* H3 — HighCruiser, fallback: Montserrat 600 uppercase */
 h3 {
+  font-family: var(--font-sub);
   font-weight: 600;
   font-size: clamp(1rem, 2vw, 1.25rem);
   text-transform: uppercase;
