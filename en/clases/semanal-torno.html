@@ -34,7 +34,9 @@
     .turno-hero h1 { margin-bottom: var(--space-xs); }
     .turno-hero__subtitle { font-family: var(--font-sub); font-size: clamp(1rem, 2vw, 1.25rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); opacity: 0.7; }
     .turno-explainer { text-align: center; padding: 0 0 var(--space-lg); background: var(--cream); }
-    .turno-explainer p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; color: var(--blue); font-weight: 600; }
+    .turno-explainer__banner { background: var(--blue); color: var(--white); padding: var(--space-md) var(--space-lg); border-radius: var(--radius-md); max-width: 800px; margin: 0 auto; }
+    .turno-explainer__label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--yellow); margin-bottom: var(--space-xs); }
+    .turno-explainer p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; color: var(--white); font-weight: 700; }
     .turno-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); padding-bottom: var(--space-lg); }
     @media (max-width: 600px) { .turno-grid { grid-template-columns: 1fr; } }
     .turno-card { border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); text-align: center; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
@@ -45,12 +47,12 @@
     .turno-card--torno { background: var(--blue); }
     .turno-card--torno .turno-card__day { color: var(--white); }
     .turno-card--torno .turno-card__details { color: rgba(255, 255, 255, 0.75); }
-    .turno-card--torno .turno-card__cta { background: var(--white); color: var(--blue); }
-    .turno-card--torno .turno-card__cta:hover { background: var(--cream); }
+    .turno-card--torno .turno-card__cta { background: var(--white); color: var(--blue); border-color: var(--white); }
+    .turno-card--torno .turno-card__cta:hover { background: var(--cream); border-color: var(--cream); }
     .turno-card__day { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.2; }
     .turno-card__details { font-size: 0.95rem; line-height: 1.5; margin: 0; }
-    .turno-card__cta { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); margin-top: var(--space-sm); padding: 14px 28px; border-radius: var(--radius-pill); background: var(--black); color: var(--cream); font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; line-height: 1; text-decoration: none; cursor: pointer; min-height: 44px; transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base); white-space: nowrap; }
-    .turno-card__cta:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); background-color: #333; }
+    .turno-card__cta { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); margin-top: var(--space-sm); padding: 14px 28px; border-radius: var(--radius-pill); background: var(--white); color: var(--black); border: 2px solid var(--black); font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; line-height: 1; text-decoration: none; cursor: pointer; min-height: 44px; transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base); white-space: nowrap; }
+    .turno-card__cta:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); background-color: var(--cream); }
     .turno-card__cta:active { transform: translateY(0); }
     .turno-nota { text-align: center; padding: 0 0 var(--space-xl); background: var(--cream); }
     .turno-nota p { font-size: 0.875rem; color: #888; max-width: 480px; margin: 0 auto var(--space-sm); line-height: 1.6; }
@@ -111,8 +113,11 @@
 
     <section class="turno-explainer">
       <div class="container">
-        <p>You're booking a monthly course: 4 classes of 2 hours each, always on the same day and time. One single payment: €160 for the full month.</p>
-        <p style="font-size:0.875rem; color:#888; margin-top:var(--space-xs);">Maximum 2 people per slot.</p>
+        <div class="turno-explainer__banner">
+          <span class="turno-explainer__label">Important</span>
+          <p>You're booking a monthly course: 4 classes of 2 hours each, always on the same day and time. One single payment: €160 for the full month.</p>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.7); margin-top:var(--space-xs);">Maximum 2 people per slot.</p>
+        </div>
       </div>
     </section>
 

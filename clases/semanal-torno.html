@@ -53,13 +53,30 @@
       padding: 0 0 var(--space-lg);
       background: var(--cream);
     }
+    .turno-explainer__banner {
+      background: var(--blue);
+      color: var(--white);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-md);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .turno-explainer__label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--yellow);
+      margin-bottom: var(--space-xs);
+    }
     .turno-explainer p {
       max-width: 600px;
       margin: 0 auto;
       font-size: 1.05rem;
       line-height: 1.7;
-      color: var(--blue);
-      font-weight: 600;
+      color: var(--white);
+      font-weight: 700;
     }
 
     .turno-grid {
@@ -112,9 +129,11 @@
     .turno-card--torno .turno-card__cta {
       background: var(--white);
       color: var(--blue);
+      border-color: var(--white);
     }
     .turno-card--torno .turno-card__cta:hover {
       background: var(--cream);
+      border-color: var(--cream);
     }
 
     .turno-card__day {
@@ -136,8 +155,9 @@
       margin-top: var(--space-sm);
       padding: 14px 28px;
       border-radius: var(--radius-pill);
-      background: var(--black);
-      color: var(--cream);
+      background: var(--white);
+      color: var(--black);
+      border: 2px solid var(--black);
       font-family: var(--font-body);
       font-weight: 700;
       font-size: 0.9375rem;
@@ -154,7 +174,7 @@
       opacity: 1;
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      background-color: #333;
+      background-color: var(--cream);
     }
     .turno-card__cta:active {
       transform: translateY(0);
@@ -280,8 +300,11 @@
          ============================================================ -->
     <section class="turno-explainer">
       <div class="container">
-        <p>Estás reservando un curso mensual: 4 clases de 2 horas, siempre el mismo día y a la misma hora. Pagas una sola vez: 160€ por el mes completo.</p>
-        <p style="font-size:0.875rem; color:#888; margin-top:var(--space-xs);">Máximo 2 personas por turno.</p>
+        <div class="turno-explainer__banner">
+          <span class="turno-explainer__label">Importante</span>
+          <p>Estás reservando un curso mensual: 4 clases de 2 horas, siempre el mismo día y a la misma hora. Pagas una sola vez: 160€ por el mes completo.</p>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.7); margin-top:var(--space-xs);">Máximo 2 personas por turno.</p>
+        </div>
       </div>
     </section>
 
