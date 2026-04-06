@@ -824,7 +824,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   padding: 4px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
 }
 
 .clase-card--primary .clase-card__badge {
