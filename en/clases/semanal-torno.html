@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Weekly Wheel Throwing Class – La Mesa Barcelona</title>
+  <meta name="description" content="Choose your slot for the Weekly Wheel Throwing Class at La Mesa. 4 classes of 2 hours, €160/month. Book online.">
+
+  <!-- Hreflang -->
+  <link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-torno.html">
+  <link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-torno.html">
+  <link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-torno.html">
+  <link rel="alternate" hreflang="x-default" href="https://www.lamesabcn.com/clases/semanal-torno.html">
+
+  <!-- Theme color -->
+  <meta name="theme-color" content="#F7B137">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="../../css/style.css">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../images/favicon-180.png">
+
+  <style>
+    .turno-hero { background: var(--cream); text-align: center; padding: var(--space-xl) 0 var(--space-lg); }
+    .turno-hero h1 { margin-bottom: var(--space-xs); }
+    .turno-hero__subtitle { font-family: var(--font-sub); font-size: clamp(1rem, 2vw, 1.25rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); opacity: 0.7; }
+    .turno-explainer { text-align: center; padding: 0 0 var(--space-lg); background: var(--cream); }
+    .turno-explainer p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; color: var(--blue); font-weight: 600; }
+    .turno-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); padding-bottom: var(--space-lg); }
+    @media (max-width: 600px) { .turno-grid { grid-template-columns: 1fr; } }
+    .turno-card { border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); text-align: center; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
+    .turno-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+    .turno-card--modelado { background: var(--yellow); }
+    .turno-card--modelado .turno-card__day { color: var(--black); }
+    .turno-card--modelado .turno-card__details { color: rgba(26, 26, 26, 0.75); }
+    .turno-card--torno { background: var(--blue); }
+    .turno-card--torno .turno-card__day { color: var(--white); }
+    .turno-card--torno .turno-card__details { color: rgba(255, 255, 255, 0.75); }
+    .turno-card--torno .turno-card__cta { background: var(--white); color: var(--blue); }
+    .turno-card--torno .turno-card__cta:hover { background: var(--cream); }
+    .turno-card__day { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.2; }
+    .turno-card__details { font-size: 0.95rem; line-height: 1.5; margin: 0; }
+    .turno-card__cta { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); margin-top: var(--space-sm); padding: 14px 28px; border-radius: var(--radius-pill); background: var(--black); color: var(--cream); font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; line-height: 1; text-decoration: none; cursor: pointer; min-height: 44px; transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base); white-space: nowrap; }
+    .turno-card__cta:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); background-color: #333; }
+    .turno-card__cta:active { transform: translateY(0); }
+    .turno-nota { text-align: center; padding: 0 0 var(--space-xl); background: var(--cream); }
+    .turno-nota p { font-size: 0.875rem; color: #888; max-width: 480px; margin: 0 auto var(--space-sm); line-height: 1.6; }
+    .turno-nota__wa { display: inline-flex; align-items: center; gap: var(--space-xs); padding: 10px 24px; border-radius: var(--radius-pill); border: 2px solid #888; color: #555; font-weight: 700; font-size: 0.875rem; text-decoration: none; min-height: 44px; transition: border-color var(--transition-base), color var(--transition-base); }
+    .turno-nota__wa:hover { opacity: 1; border-color: var(--black); color: var(--black); }
+    .turno-nota__wa svg { width: 18px; height: 18px; fill: currentColor; }
+  </style>
+</head>
+<body>
+
+  <header class="navbar" role="banner">
+    <div class="navbar__inner">
+      <a class="navbar__logo" href="/en/" aria-label="La Mesa – Go to top">
+        <img src="../../images/logo-lamesa.png" alt="La Mesa – Laboratorio Creativo Barcelona" width="40" height="40" style="height:40px; width:auto; display:block;">
+      </a>
+      <nav class="navbar__links" aria-label="Main navigation">
+        <a class="navbar__link" href="/en/#clases" data-section="clases">Classes</a>
+        <a class="navbar__link" href="/en/#workshops" data-section="workshops">Workshops</a>
+        <a class="navbar__link" href="/en/#tienda" data-section="tienda">Shop</a>
+        <a class="navbar__link" href="/en/#privadas" data-section="privadas">Private</a>
+        <a class="navbar__link" href="/en/#faq">FAQ</a>
+        <a class="navbar__link" href="/en/#contacto" data-section="contacto">Contact</a>
+        <div class="navbar__lang" aria-label="Change language">
+          <a href="/clases/semanal-torno.html" lang="es">ES</a>
+          <span aria-hidden="true">|</span>
+          <a href="/en/clases/semanal-torno.html" class="active" aria-current="page" lang="en">EN</a>
+          <span aria-hidden="true">|</span>
+          <a href="/ca/clases/semanal-torno.html" lang="ca">CA</a>
+        </div>
+      </nav>
+      <button class="navbar__hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <nav id="mobile-menu" class="navbar__mobile" aria-label="Mobile menu">
+      <a class="navbar__mobile-link" href="/en/#clases">Classes</a>
+      <a class="navbar__mobile-link" href="/en/#workshops">Workshops</a>
+      <a class="navbar__mobile-link" href="/en/#tienda">Shop</a>
+      <a class="navbar__mobile-link" href="/en/#privadas">Private</a>
+      <a class="navbar__mobile-link" href="/en/#faq">FAQ</a>
+      <a class="navbar__mobile-link" href="/en/#contacto">Contact</a>
+      <div class="navbar__mobile-lang">
+        <a href="/clases/semanal-torno.html" lang="es">ES</a>
+        <a href="/en/clases/semanal-torno.html" class="active" aria-current="page" lang="en">EN</a>
+        <a href="/ca/clases/semanal-torno.html" lang="ca">CA</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="turno-hero">
+      <div class="container">
+        <h1>Weekly Wheel Throwing Class</h1>
+        <p class="turno-hero__subtitle">Choose your slot</p>
+      </div>
+    </section>
+
+    <section class="turno-explainer">
+      <div class="container">
+        <p>You're booking a monthly course: 4 classes of 2 hours each, always on the same day and time. One single payment: €160 for the full month.</p>
+        <p style="font-size:0.875rem; color:#888; margin-top:var(--space-xs);">Maximum 2 people per slot.</p>
+      </div>
+    </section>
+
+    <section class="turno-section" style="background: var(--cream);">
+      <div class="container">
+        <div class="turno-grid">
+
+          <div class="turno-card turno-card--torno fade-in">
+            <h2 class="turno-card__day">Monday<br>3:00pm</h2>
+            <p class="turno-card__details">4 classes · 2h · €160/month</p>
+            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-lunes-15h" target="_blank" rel="noopener" aria-label="Book Monday 3:00pm slot">Book →</a>
+          </div>
+
+          <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
+            <h2 class="turno-card__day">Wednesday<br>4:00pm</h2>
+            <p class="turno-card__details">4 classes · 2h · €160/month</p>
+            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles16pm" target="_blank" rel="noopener" aria-label="Book Wednesday 4:00pm slot">Book →</a>
+          </div>
+
+          <div class="turno-card turno-card--torno fade-in fade-in--delay-2">
+            <h2 class="turno-card__day">Wednesday<br>6:30pm</h2>
+            <p class="turno-card__details">4 classes · 2h · €160/month</p>
+            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles-18h30" target="_blank" rel="noopener" aria-label="Book Wednesday 6:30pm slot">Book →</a>
+          </div>
+
+          <div class="turno-card turno-card--torno fade-in fade-in--delay-3">
+            <h2 class="turno-card__day">Friday<br>11:00am</h2>
+            <p class="turno-card__details">4 classes · 2h · €160/month</p>
+            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-viernes-11h" target="_blank" rel="noopener" aria-label="Book Friday 11:00am slot">Book →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="turno-nota">
+      <div class="container">
+        <p>No slot works for you? Get in touch and we'll figure it out.</p>
+        <a class="turno-nota__wa" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20book%20a%20weekly%20wheel%20throwing%20class%20but%20none%20of%20the%20available%20slots%20work%20for%20me." target="_blank" rel="noopener noreferrer" aria-label="Contact La Mesa on WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </section>
+
+    <section class="contacto" id="contacto">
+      <div class="container">
+        <div class="footer__bar">
+          <p class="footer__tagline">La Mesa — Creative Lab · La Barceloneta, Barcelona</p>
+          <p>© 2026 La Mesa · All rights reserved</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <a class="whatsapp-btn" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer" aria-label="Contact La Mesa on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+  </a>
+
+  <script src="../../js/main.js" defer></script>
+</body>
+</html>
