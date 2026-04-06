@@ -126,16 +126,6 @@
     .turno-card--torno .turno-card__details {
       color: rgba(255, 255, 255, 0.75);
     }
-    .turno-card--torno .turno-card__cta {
-      background: var(--white);
-      color: var(--blue);
-      border-color: var(--white);
-    }
-    .turno-card--torno .turno-card__cta:hover {
-      background: var(--cream);
-      border-color: var(--cream);
-    }
-
     .turno-card__day {
       font-family: var(--font-heading);
       font-weight: 900;
@@ -147,38 +137,18 @@
       line-height: 1.5;
       margin: 0;
     }
-    .turno-card__cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-xs);
+    .turno-card .btn {
       margin-top: var(--space-sm);
-      padding: 14px 28px;
-      border-radius: var(--radius-pill);
-      background: var(--white);
-      color: var(--black);
-      border: 2px solid var(--black);
-      font-family: var(--font-body);
-      font-weight: 700;
-      font-size: 0.9375rem;
-      line-height: 1;
+    }
+    .turno-card__suelta {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 0.875rem;
       text-decoration: none;
-      cursor: pointer;
-      min-height: 44px;
-      transition: background-color var(--transition-base),
-                  transform var(--transition-base),
-                  box-shadow var(--transition-base);
-      white-space: nowrap;
+      font-weight: 600;
     }
-    .turno-card__cta:hover {
-      opacity: 1;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-      background-color: var(--cream);
-    }
-    .turno-card__cta:active {
-      transform: translateY(0);
-    }
+    .turno-card--modelado .turno-card__suelta { color: var(--blue); }
+    .turno-card--torno .turno-card__suelta { color: var(--yellow); }
 
     .turno-nota {
       text-align: center;
@@ -319,28 +289,32 @@
           <div class="turno-card turno-card--torno fade-in">
             <h2 class="turno-card__day">Lunes<br>15:00h</h2>
             <p class="turno-card__details">4 clases · 2h · 160€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-lunes-15h" target="_blank" rel="noopener" aria-label="Reservar turno lunes 15:00h">Reservar →</a>
+            <a class="btn btn--white" href="https://cal.com/la-mesa/clase-semanal-torno-lunes-15h" target="_blank" rel="noopener" aria-label="Reservar turno lunes 15:00h">Reservar →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Clase Suelta de Torno">o prueba una Clase Suelta →</a>
           </div>
 
           <!-- Turno 2: Miércoles 16:00h -->
           <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
             <h2 class="turno-card__day">Miércoles<br>16:00h</h2>
             <p class="turno-card__details">4 clases · 2h · 160€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles16pm" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 16:00h">Reservar →</a>
+            <a class="btn btn--white" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles16pm" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 16:00h">Reservar →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Clase Suelta de Torno">o prueba una Clase Suelta →</a>
           </div>
 
           <!-- Turno 3: Miércoles 18:30h -->
           <div class="turno-card turno-card--torno fade-in fade-in--delay-2">
             <h2 class="turno-card__day">Miércoles<br>18:30h</h2>
             <p class="turno-card__details">4 clases · 2h · 160€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles-18h30" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 18:30h">Reservar →</a>
+            <a class="btn btn--white" href="https://cal.com/la-mesa/clase-semanal-torno-miercoles-18h30" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 18:30h">Reservar →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Clase Suelta de Torno">o prueba una Clase Suelta →</a>
           </div>
 
           <!-- Turno 4: Viernes 11:00h -->
           <div class="turno-card turno-card--torno fade-in fade-in--delay-3">
             <h2 class="turno-card__day">Viernes<br>11:00h</h2>
             <p class="turno-card__details">4 clases · 2h · 160€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-torno-viernes-11h" target="_blank" rel="noopener" aria-label="Reservar turno viernes 11:00h">Reservar →</a>
+            <a class="btn btn--white" href="https://cal.com/la-mesa/clase-semanal-torno-viernes-11h" target="_blank" rel="noopener" aria-label="Reservar turno viernes 11:00h">Reservar →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Clase Suelta de Torno">o prueba una Clase Suelta →</a>
           </div>
 
         </div>

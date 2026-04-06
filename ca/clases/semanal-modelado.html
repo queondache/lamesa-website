@@ -47,13 +47,20 @@
     .turno-card--torno { background: var(--blue); }
     .turno-card--torno .turno-card__day { color: var(--white); }
     .turno-card--torno .turno-card__details { color: rgba(255, 255, 255, 0.75); }
-    .turno-card--torno .turno-card__cta { background: var(--white); color: var(--blue); border-color: var(--white); }
-    .turno-card--torno .turno-card__cta:hover { background: var(--cream); border-color: var(--cream); }
     .turno-card__day { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.2; }
     .turno-card__details { font-size: 0.95rem; line-height: 1.5; margin: 0; }
-    .turno-card__cta { display: inline-flex; align-items: center; justify-content: center; gap: var(--space-xs); margin-top: var(--space-sm); padding: 14px 28px; border-radius: var(--radius-pill); background: var(--white); color: var(--black); border: 2px solid var(--black); font-family: var(--font-body); font-weight: 700; font-size: 0.9375rem; line-height: 1; text-decoration: none; cursor: pointer; min-height: 44px; transition: background-color var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base); white-space: nowrap; }
-    .turno-card__cta:hover { opacity: 1; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); background-color: var(--cream); }
-    .turno-card__cta:active { transform: translateY(0); }
+    .turno-card .btn {
+      margin-top: var(--space-sm);
+    }
+    .turno-card__suelta {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: 0.875rem;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .turno-card--modelado .turno-card__suelta { color: var(--blue); }
+    .turno-card--torno .turno-card__suelta { color: var(--yellow); }
     .turno-nota { text-align: center; padding: 0 0 var(--space-xl); background: var(--cream); }
     .turno-nota p { font-size: 0.875rem; color: #888; max-width: 480px; margin: 0 auto var(--space-sm); line-height: 1.6; }
     .turno-nota__wa { display: inline-flex; align-items: center; gap: var(--space-xs); padding: 10px 24px; border-radius: var(--radius-pill); border: 2px solid #888; color: #555; font-weight: 700; font-size: 0.875rem; text-decoration: none; min-height: 44px; transition: border-color var(--transition-base), color var(--transition-base); }
@@ -127,25 +134,29 @@
           <div class="turno-card turno-card--modelado fade-in">
             <h2 class="turno-card__day">Dilluns<br>15:00h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-modelado-lunes-15h" target="_blank" rel="noopener" aria-label="Reserva torn dilluns 15:00h">Reserva →</a>
+            <a class="btn btn--dark" href="https://cal.com/la-mesa/clase-semanal-modelado-lunes-15h" target="_blank" rel="noopener" aria-label="Reserva torn dilluns 15:00h">Reserva →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Classe Suelta de Modelat">o prova una Classe Suelta →</a>
           </div>
 
           <div class="turno-card turno-card--modelado fade-in fade-in--delay-1">
             <h2 class="turno-card__day">Dimecres<br>16:00h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-modelado-miercoles-16h" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 16:00h">Reserva →</a>
+            <a class="btn btn--dark" href="https://cal.com/la-mesa/clase-semanal-modelado-miercoles-16h" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 16:00h">Reserva →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Classe Suelta de Modelat">o prova una Classe Suelta →</a>
           </div>
 
           <div class="turno-card turno-card--modelado fade-in fade-in--delay-2">
             <h2 class="turno-card__day">Dimecres<br>18:30h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-modelado-miercoles-630pm" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 18:30h">Reserva →</a>
+            <a class="btn btn--dark" href="https://cal.com/la-mesa/clase-semanal-modelado-miercoles-630pm" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 18:30h">Reserva →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Classe Suelta de Modelat">o prova una Classe Suelta →</a>
           </div>
 
           <div class="turno-card turno-card--modelado fade-in fade-in--delay-3">
             <h2 class="turno-card__day">Divendres<br>11:00h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
-            <a class="turno-card__cta" href="https://cal.com/la-mesa/clase-semanal-modelado-viernes-11h" target="_blank" rel="noopener" aria-label="Reserva torn divendres 11:00h">Reserva →</a>
+            <a class="btn btn--dark" href="https://cal.com/la-mesa/clase-semanal-modelado-viernes-11h" target="_blank" rel="noopener" aria-label="Reserva torn divendres 11:00h">Reserva →</a>
+            <a class="turno-card__suelta" href="#" aria-label="Classe Suelta de Modelat">o prova una Classe Suelta →</a>
           </div>
 
         </div>
