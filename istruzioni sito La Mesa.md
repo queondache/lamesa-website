@@ -214,9 +214,10 @@ lamesa-website/
 - `.fade-in` — opacity 0, translateY(24px), transition 0.6s
 - `.fade-in.visible` — opacity 1, translateY(0) (aggiunto via IntersectionObserver)
 - `.fade-in--delay-1` (0.1s), `--delay-2` (0.2s), `--delay-3` (0.3s)
+- Override dentro `.turno-grid`: delay-1 (0.05s), delay-2 (0.1s) — piu' rapidi per pagine con poche card
 
 **Bottoni:**
-- `.btn` — base: inline-flex, padding 14px 28px, border-radius pill, font-weight 700, font-size 0.9375rem
+- `.btn` — base: inline-flex, padding 14px 28px, min-height 44px, border-radius pill, font-weight 700, font-size 0.9375rem
 - `.btn--primary` — bg yellow, color black
 - `.btn--dark` — bg black, color cream
 - `.btn--secondary` — transparent, border cream
@@ -229,6 +230,22 @@ lamesa-website/
 - `.clase-card--torno-primary` — bg blue (torno)
 - `.clase-card--secondary` — bg white, border 1.5px solid rgba(27,60,139,0.15)
 - `.clase-card__cta` — min-height 44px (tap target), font-size 0.85rem, uppercase
+
+**Pagine intermedie /clases/ (CSS in style.css, sezione PAGINE CLASES):**
+- `.turno-back` — breadcrumb, bg cream, padding-top var(--space-sm)
+- `.turno-back a` — display inline-block, padding 12px 0 (tap target), color blue, font-weight 600
+- `.turno-hero` — bg cream, text-align center, padding xl/lg
+- `.turno-explainer` — text-align center, bg cream
+- `.turno-explainer__banner` — bg blue, border-radius md, max-width 800px
+- `.turno-grid` — grid repeat(3, 1fr), collapse a 1fr sotto 768px
+- `.turno-grid--2col` — grid 1fr 1fr (pagine suelta), collapse a 1fr sotto 600px
+- `.turno-card` — border-radius lg, padding md, flex column, hover translateY(-4px)
+- `.turno-card--modelado` — bg yellow; `.turno-card--torno` — bg blue
+- `.turno-card__waitlist` — display flex, align-items center, min-height 44px (tap target), font-size 0.8rem
+- `.turno-suelta-banner` — text-align center, margin-top md
+- `.turno-nota` — text-align center, padding-bottom xl
+- `.turno-nota--suelta` — padding-bottom calc(xl + 80px) per evitare overlap con WhatsApp floating button
+- `.turno-nota__wa` — inline-flex, pill border, min-height 44px
 
 **Newsletter:**
 - `.newsletter-form` — flex wrap, gap 8px
