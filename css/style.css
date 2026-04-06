@@ -1829,10 +1829,12 @@ p {
 }
 
 .turno-back a {
+  display: inline-block;
   font-size: 0.875rem;
   color: var(--blue);
   text-decoration: none;
   font-weight: 600;
+  padding: 12px 0;
 }
 
 .turno-back a:hover {
@@ -1999,9 +2001,15 @@ p {
   margin-top: var(--space-sm);
 }
 
+/* Faster fade-in delays inside turno grid (only 3 cards) */
+.turno-grid .fade-in--delay-1 { transition-delay: 0.05s; }
+.turno-grid .fade-in--delay-2 { transition-delay: 0.1s; }
+
 /* Waitlist link under Reservar button */
 .turno-card__waitlist {
-  display: block;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   margin-top: var(--space-xs);
   font-size: 0.8rem;
   font-weight: 600;
@@ -2034,6 +2042,10 @@ p {
   text-align: center;
   padding: 0 0 var(--space-xl);
   background: var(--cream);
+}
+
+.turno-nota--suelta {
+  padding-bottom: calc(var(--space-xl) + 80px);
 }
 
 .turno-nota p {
