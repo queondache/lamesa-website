@@ -717,6 +717,7 @@ p {
 @media (min-width: 1024px) {
   .clases__bloques {
     flex-direction: row;
+    align-items: stretch;
     gap: 32px;
   }
   .clases__bloque {
@@ -743,6 +744,7 @@ p {
 /* Card primary ceramica — sfondo giallo */
 .clase-card--primary {
   background: var(--yellow);
+  height: 100%;
 }
 
 .clase-card--primary .clase-card__subtitle {
@@ -760,6 +762,7 @@ p {
 /* Card primary torno — sfondo blu */
 .clase-card--torno-primary {
   background: var(--blue);
+  height: 100%;
 }
 
 .clase-card--torno-primary .clase-card__subtitle {
