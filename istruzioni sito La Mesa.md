@@ -37,12 +37,28 @@ lamesa-website/
 │   └── index.html          # Versione EN (lang="en")
 ├── ca/
 │   └── index.html          # Versione CA (lang="ca")
+├── clases/
+│   ├── semanal-modelado.html  # Pagina turni Clase Semanal Modelado (noindex)
+│   ├── semanal-torno.html     # Pagina turni Clase Semanal Torno (noindex)
+│   └── suelta.html            # Pagina scelta Clase Suelta (noindex)
+├── en/
+│   ├── index.html          # Versione EN (lang="en")
+│   └── clases/
+│       ├── semanal-modelado.html
+│       ├── semanal-torno.html
+│       └── suelta.html
+├── ca/
+│   ├── index.html          # Versione CA (lang="ca")
+│   └── clases/
+│       ├── semanal-modelado.html
+│       ├── semanal-torno.html
+│       └── suelta.html
 ├── css/
-│   └── style.css           # Design system completo (1770 righe)
+│   └── style.css           # Design system completo + stili pagine clases
 ├── js/
 │   └── main.js             # Navbar, scroll, lazy load, toast, smooth scroll (267 righe)
 ├── images/
-│   ├── hero.JPG            # Hero background (747 KB) ⚠️ ESTENSIONE MAIUSCOLA
+│   ├── hero.jpg            # Hero background (747 KB)
 │   ├── nosotras.jpg        # Sezione nosotras (4.5 MB) ⚠️ DA OTTIMIZZARE
 │   ├── pieza-01.jpg        # Tienda grid (139 KB)
 │   ├── pieza-02.jpg        # Tienda grid (116 KB)
@@ -53,7 +69,7 @@ lamesa-website/
 │   ├── favicon-16.png      # Favicon 16x16
 │   ├── favicon-32.png      # Favicon 32x32
 │   └── favicon-180.png     # Apple touch icon 180x180
-├── fonts/                  # Directory vuota (font caricati da Google Fonts)
+├── fonts/                  # Font custom: Garet-Black.woff2, HighCruiser.woff2
 ├── privacy.html            # Politica privacy ES (noindex)
 ├── 404.html                # Pagina errore custom
 ├── sitemap.xml             # Sitemap con hreflang (ES, EN, CA + privacy)
@@ -65,11 +81,11 @@ lamesa-website/
 
 ### Note critiche sui file
 
-- **hero.JPG** ha estensione maiuscola ma nel HTML e' referenziato come `hero.jpg` — funziona su macOS (case-insensitive) ma puo' fallire su Linux/GitHub Pages (case-sensitive). **Da rinominare a `hero.jpg`.**
 - **nosotras.jpg** e' 4.5 MB — troppo pesante per il web, da comprimere.
 - Le 3 versioni linguistiche (ES, EN, CA) sono file HTML separati con contenuto tradotto manualmente. **Non esiste un sistema i18n automatico.**
 - CSS e JS sono condivisi: un solo `style.css` e un solo `main.js` per tutte le lingue.
 - EN e CA usano path relativi (`../css/style.css`, `../images/...`), ES usa path dalla root (`css/style.css`, `images/...`) o assoluti (`/images/...` per favicon).
+- Le 9 pagine intermedie `/clases/` non hanno blocchi `<style>` inline — tutti gli stili sono nel CSS condiviso sotto il commento `/* ============ PAGINE CLASES ============ */`.
 
 ---
 
@@ -86,20 +102,27 @@ lamesa-website/
 --white:  #FFFFFF    /* Sfondo nosotras, tienda, card secondary */
 ```
 
+**Colori neutrali (CSS Custom Properties):**
+```css
+--color-muted:          #888  /* Testo catalano inline, turno-nota */
+--color-text-secondary: #555  /* Body text card secondary, turno-nota__wa */
+--color-text-tertiary:  #444  /* FAQ answer, testo privacy */
+--color-dark:           #333  /* Hover di btn--dark */
+--color-text-light:     #666  /* Testo 404 */
+```
+
 **Colori derivati (hardcoded, non variabili):**
 - `#e09e28` — hover di btn--primary
-- `#333` — hover di btn--dark
-- `#888` — testo catalano inline nelle sezioni ES
-- `#555` — body text card secondary
-- `#444` — testo FAQ answer, testo privacy
-- `#666` — testo 404
 
 ### 3.2 Tipografia
 
 ```css
---font-heading: 'Montserrat', sans-serif
---font-body:    'Montserrat', sans-serif
+--font-heading: 'Garet', 'Montserrat', sans-serif   /* Garet Black 900 — titoli h1, h2 */
+--font-sub:     'HighCruiser', 'Montserrat', sans-serif  /* HighCruiser 400 — sottotitoli h3 */
+--font-body:    'Montserrat', sans-serif              /* Body text, UI */
 ```
+
+**Font custom caricati via @font-face:** Garet-Black.woff2, HighCruiser.woff2 dalla cartella `/fonts/`.
 
 **Stessa font per heading e body.** Pesi usati: 400 (body), 600 (h3, nav link), 700 (btn, labels), 900 (h1, h2, card title).
 
@@ -371,12 +394,27 @@ section.contacto > div.container
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
 
-### Link Koalendar (prenotazione online diretta)
+### Sistema di prenotazione
 
-| Servizio | URL Koalendar | ID HTML |
+**Clase Semanal (abbonamento mensile) — Stripe Payment Links:**
+
+| Tipo | Turno | Stripe Link |
 |---|---|---|
-| Taller Semanal | `https://koalendar.com/e/laboratorio-de-ceramica` | `#cta-taller-semanal` |
-| Clase Suelta | `https://koalendar.com/e/torno-la-mesa` | `#cta-clase-suelta` |
+| Modelado | Miercoles 16h | `https://buy.stripe.com/cNi8wRcdvdN29VfddebMQ05` |
+| Modelado | Miercoles 18:30h | `https://buy.stripe.com/aFa4gB2CV4cs8RbgpqbMQ04` |
+| Modelado | Jueves 11h | `https://buy.stripe.com/cNidRba5n8sI9VfehibMQ03` |
+| Torno | Miercoles 16h | `https://buy.stripe.com/14A8wRa5n4cs7N7a12bMQ02` |
+| Torno | Miercoles 18:30h | `https://buy.stripe.com/dRm4gBa5nfVa8RbgpqbMQ01` |
+| Torno | Jueves 11h | `https://buy.stripe.com/28E7sN3GZgZe3wR1uwbMQ00` |
+
+**Clase Suelta (prenotazione singola) — Cal.com:**
+
+| Tipo | Cal.com Link |
+|---|---|
+| Modelado | `https://cal.com/la-mesa/clase-suelta-modelado` |
+| Torno | `https://cal.com/la-mesa/clase-suelta-torno` |
+
+**Coworking** — Solo WhatsApp, nessun link di prenotazione online.
 
 ### Link WhatsApp
 
@@ -523,7 +561,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 ### Problemi da risolvere
 
-1. **hero.JPG estensione maiuscola** — Il file si chiama `hero.JPG` ma nel HTML e' referenziato come `hero.jpg`. Su GitHub Pages (Linux, case-sensitive) l'immagine hero potrebbe non caricarsi. Rinominare il file a `hero.jpg`.
+1. ~~**hero.JPG estensione maiuscola**~~ — **RISOLTO**: il file e' gia' `hero.jpg` con estensione minuscola.
 
 2. **nosotras.jpg troppo pesante** — 4.5 MB e' eccessivo per un'immagine web. Comprimere a ~200-300 KB max.
 
@@ -537,7 +575,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 7. **Nessun favicon .ico** — Solo PNG. Alcuni browser vecchi potrebbero non trovare il favicon.
 
-8. **Font directory vuota** — La cartella `fonts/` esiste ma e' vuota. I font vengono da Google Fonts CDN. Decidere se rimuovere la directory o aggiungere font self-hosted per performance.
+8. ~~**Font directory vuota**~~ — **RISOLTO**: la cartella `fonts/` contiene Garet-Black e HighCruiser, caricati via @font-face. Montserrat caricato da Google Fonts CDN.
 
 ### Miglioramenti possibili (non urgenti)
 

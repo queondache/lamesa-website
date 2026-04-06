@@ -29,32 +29,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
 
-  <style>
-    .turno-hero { background: var(--cream); text-align: center; padding: var(--space-xl) 0 var(--space-lg); }
-    .turno-hero h1 { margin-bottom: var(--space-xs); }
-    .turno-hero__subtitle { font-family: var(--font-body); font-size: clamp(1rem, 2vw, 1.25rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); opacity: 0.7; }
-    .turno-explainer { text-align: center; padding: 0 0 var(--space-lg); background: var(--cream); }
-    .turno-explainer p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; color: var(--black); }
-    .turno-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-md); padding-bottom: var(--space-lg); }
-    @media (max-width: 600px) { .turno-grid { grid-template-columns: 1fr; } }
-    .turno-card { border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); text-align: center; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
-    .turno-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-    .turno-card--modelado { background: var(--yellow); }
-    .turno-card--modelado .turno-card__title { color: var(--black); }
-    .turno-card--modelado .turno-card__details { color: rgba(26, 26, 26, 0.75); }
-    .turno-card--modelado .turno-card__price { color: rgba(26, 26, 26, 0.55); }
-    .turno-card--torno { background: var(--blue); }
-    .turno-card--torno .turno-card__title { color: var(--white); }
-    .turno-card--torno .turno-card__details { color: rgba(255, 255, 255, 0.75); }
-    .turno-card--torno .turno-card__price { color: rgba(255, 255, 255, 0.55); }
-    .turno-card__title { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.2; }
-    .turno-card__details { font-size: 0.95rem; line-height: 1.5; margin: 0; }
-    .turno-card__price { font-size: 0.85rem; font-weight: 600; margin: 0; }
-    .turno-card .btn { margin-top: var(--space-sm); }
-    .turno-nota { text-align: center; padding: 0 0 var(--space-xl); background: var(--cream); }
-    .turno-nota p { font-size: 0.875rem; color: #888; max-width: 480px; margin: 0 auto var(--space-sm); line-height: 1.6; }
-    .turno-nota .btn svg { width: 18px; height: 18px; fill: currentColor; }
-  </style>
 </head>
 <body>
 
@@ -121,6 +95,12 @@
     </nav>
   </header>
 
+  <section class="turno-back">
+    <div class="container">
+      <a href="/#clases">← Volver a clases</a>
+    </div>
+  </section>
+
   <main>
 
     <!-- ============================================================
@@ -147,7 +127,7 @@
          ============================================================ -->
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid">
+        <div class="turno-grid turno-grid--2col">
 
           <!-- Modelado -->
           <div class="turno-card turno-card--modelado fade-in">

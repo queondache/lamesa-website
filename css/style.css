@@ -37,6 +37,13 @@
   --black:  #1A1A1A;
   --white:  #FFFFFF;
 
+  /* Neutral text colors */
+  --color-muted:          #888;
+  --color-text-secondary: #555;
+  --color-text-tertiary:  #444;
+  --color-dark:           #333;
+  --color-text-light:     #666;
+
   /* Typography */
   --font-heading: 'Garet', 'Montserrat', sans-serif;
   --font-sub:     'HighCruiser', 'Montserrat', sans-serif;
@@ -109,11 +116,7 @@ img {
 a {
   color: inherit;
   text-decoration: none;
-  transition: opacity var(--transition-base);
-}
-
-a:hover {
-  opacity: 0.8;
+  transition: color var(--transition-base);
 }
 
 ul, ol {
@@ -142,6 +145,7 @@ button {
     transition-duration: 0.01ms !important;
   }
   html { scroll-behavior: auto; }
+  .whatsapp-btn { animation: none; }
 }
 
 /* ============================================================
@@ -254,6 +258,7 @@ p {
   align-items: center;
   gap: var(--space-xs);
   padding: 14px 28px;
+  min-height: 44px;
   border-radius: var(--radius-pill);
   font-family: var(--font-body);
   font-weight: 700;
@@ -306,7 +311,7 @@ p {
 }
 
 .btn--dark:hover {
-  background-color: #333;
+  background-color: var(--color-dark);
 }
 
 /* White button */
@@ -785,7 +790,7 @@ p {
 }
 
 .clase-card--secondary .clase-card__body {
-  color: #555;
+  color: var(--color-text-secondary);
 }
 
 /* Testi card */
@@ -1725,7 +1730,7 @@ p {
   border: 1.5px solid rgba(27, 60, 139, 0.15);
   border-radius: 12px;
   overflow: hidden;
-  background: #fff;
+  background: var(--white);
   transition: border-color 200ms ease;
 }
 
@@ -1767,7 +1772,7 @@ p {
   padding: 0 24px 18px;
   font-size: 0.95rem;
   line-height: 1.7;
-  color: #444;
+  color: var(--color-text-tertiary);
   margin: 0;
 }
 
@@ -1811,3 +1816,262 @@ p {
 /* Sezioni colorate — 64px, il cambio sfondo fa già separazione */
 #workshops { padding-top: 64px; padding-bottom: 64px; }
 #privadas  { padding-top: 64px; padding-bottom: 64px; }
+
+/* ============================================================
+   PAGINE CLASES — stili condivisi per pagine intermedie
+   /clases/semanal-modelado, semanal-torno, suelta (ES/EN/CA)
+   ============================================================ */
+
+/* Back link (breadcrumb) */
+.turno-back {
+  background: var(--cream);
+  padding: var(--space-sm) 0 0;
+}
+
+.turno-back a {
+  font-size: 0.875rem;
+  color: var(--blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.turno-back a:hover {
+  opacity: 0.7;
+}
+
+/* Hero */
+.turno-hero {
+  background: var(--cream);
+  text-align: center;
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.turno-hero h1 {
+  margin-bottom: var(--space-xs);
+}
+
+.turno-hero__subtitle {
+  font-family: var(--font-sub);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--blue);
+  opacity: 0.7;
+}
+
+/* Explainer */
+.turno-explainer {
+  text-align: center;
+  padding: 0 0 var(--space-lg);
+  background: var(--cream);
+}
+
+.turno-explainer p {
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.turno-explainer__banner {
+  background: var(--blue);
+  color: var(--white);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.turno-explainer__banner p {
+  color: var(--white);
+  font-weight: 700;
+}
+
+.turno-explainer__label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--yellow);
+  margin-bottom: var(--space-xs);
+}
+
+/* Grid — default 3 columns (semanal pages) */
+.turno-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-md);
+  padding-bottom: var(--space-lg);
+}
+
+/* Grid — 2 columns (suelta pages) */
+.turno-grid--2col {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 768px) {
+  .turno-grid:not(.turno-grid--2col) {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .turno-grid--2col {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Card base */
+.turno-card {
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  text-align: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.turno-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+/* Modelado cards: yellow bg */
+.turno-card--modelado {
+  background: var(--yellow);
+}
+
+.turno-card--modelado .turno-card__day,
+.turno-card--modelado .turno-card__title {
+  color: var(--black);
+}
+
+.turno-card--modelado .turno-card__details {
+  color: rgba(26, 26, 26, 0.75);
+}
+
+.turno-card--modelado .turno-card__price {
+  color: rgba(26, 26, 26, 0.55);
+}
+
+/* Torno cards: blue bg */
+.turno-card--torno {
+  background: var(--blue);
+}
+
+.turno-card--torno .turno-card__day,
+.turno-card--torno .turno-card__title {
+  color: var(--white);
+}
+
+.turno-card--torno .turno-card__details {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.turno-card--torno .turno-card__price {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+/* Card text elements */
+.turno-card__day,
+.turno-card__title {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(1.4rem, 3vw, 1.8rem);
+  line-height: 1.2;
+}
+
+.turno-card__details {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.turno-card__price {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.turno-card .btn {
+  margin-top: var(--space-sm);
+}
+
+/* Waitlist link under Reservar button */
+.turno-card__waitlist {
+  display: block;
+  margin-top: var(--space-xs);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.turno-card--modelado .turno-card__waitlist {
+  color: var(--blue);
+}
+
+.turno-card--torno .turno-card__waitlist {
+  color: var(--yellow);
+}
+
+/* Suelta banner (below turno grid) */
+.turno-suelta-banner {
+  text-align: center;
+  margin-top: var(--space-md);
+  padding-bottom: var(--space-sm);
+}
+
+.turno-suelta-banner a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Nota / WhatsApp fallback */
+.turno-nota {
+  text-align: center;
+  padding: 0 0 var(--space-xl);
+  background: var(--cream);
+}
+
+.turno-nota p {
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  max-width: 480px;
+  margin: 0 auto var(--space-sm);
+  line-height: 1.6;
+}
+
+.turno-nota__wa {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  padding: 10px 24px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-muted);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-decoration: none;
+  min-height: 44px;
+  transition: border-color var(--transition-base), color var(--transition-base);
+}
+
+.turno-nota__wa:hover {
+  border-color: var(--black);
+  color: var(--black);
+}
+
+.turno-nota__wa svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+
+.turno-nota .btn svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}

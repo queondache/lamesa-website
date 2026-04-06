@@ -29,44 +29,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../../images/favicon-180.png">
 
-  <style>
-    .turno-hero { background: var(--cream); text-align: center; padding: var(--space-xl) 0 var(--space-lg); }
-    .turno-hero h1 { margin-bottom: var(--space-xs); }
-    .turno-hero__subtitle { font-family: var(--font-sub); font-size: clamp(1rem, 2vw, 1.25rem); text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); opacity: 0.7; }
-    .turno-explainer { text-align: center; padding: 0 0 var(--space-lg); background: var(--cream); }
-    .turno-explainer__banner { background: var(--blue); color: var(--white); padding: var(--space-md) var(--space-lg); border-radius: var(--radius-md); max-width: 800px; margin: 0 auto; }
-    .turno-explainer__label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--yellow); margin-bottom: var(--space-xs); }
-    .turno-explainer p { max-width: 600px; margin: 0 auto; font-size: 1.05rem; line-height: 1.7; color: var(--white); font-weight: 700; }
-    .turno-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md); padding-bottom: var(--space-lg); }
-    @media (max-width: 600px) { .turno-grid { grid-template-columns: 1fr; } }
-    .turno-card { border-radius: var(--radius-lg); padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); text-align: center; transition: transform var(--transition-fast), box-shadow var(--transition-fast); }
-    .turno-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
-    .turno-card--modelado { background: var(--yellow); }
-    .turno-card--modelado .turno-card__day { color: var(--black); }
-    .turno-card--modelado .turno-card__details { color: rgba(26, 26, 26, 0.75); }
-    .turno-card--torno { background: var(--blue); }
-    .turno-card--torno .turno-card__day { color: var(--white); }
-    .turno-card--torno .turno-card__details { color: rgba(255, 255, 255, 0.75); }
-    .turno-card__day { font-family: var(--font-heading); font-weight: 900; font-size: clamp(1.4rem, 3vw, 1.8rem); line-height: 1.2; }
-    .turno-card__details { font-size: 0.95rem; line-height: 1.5; margin: 0; }
-    .turno-card .btn {
-      margin-top: var(--space-sm);
-    }
-    .turno-card__suelta {
-      display: block;
-      margin-top: var(--space-xs);
-      font-size: 0.875rem;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .turno-card--modelado .turno-card__suelta { color: var(--blue); }
-    .turno-card--torno .turno-card__suelta { color: var(--yellow); }
-    .turno-nota { text-align: center; padding: 0 0 var(--space-xl); background: var(--cream); }
-    .turno-nota p { font-size: 0.875rem; color: #888; max-width: 480px; margin: 0 auto var(--space-sm); line-height: 1.6; }
-    .turno-nota__wa { display: inline-flex; align-items: center; gap: var(--space-xs); padding: 10px 24px; border-radius: var(--radius-pill); border: 2px solid #888; color: #555; font-weight: 700; font-size: 0.875rem; text-decoration: none; min-height: 44px; transition: border-color var(--transition-base), color var(--transition-base); }
-    .turno-nota__wa:hover { opacity: 1; border-color: var(--black); color: var(--black); }
-    .turno-nota__wa svg { width: 18px; height: 18px; fill: currentColor; }
-  </style>
 </head>
 <body>
 
@@ -109,6 +71,12 @@
     </nav>
   </header>
 
+  <section class="turno-back">
+    <div class="container">
+      <a href="/ca/#clases">← Tornar a classes</a>
+    </div>
+  </section>
+
   <main>
 
     <section class="turno-hero">
@@ -135,26 +103,32 @@
             <h2 class="turno-card__day">Dimecres<br>16:00h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
             <a class="btn btn--dark" href="https://buy.stripe.com/cNi8wRcdvdN29VfddebMQ05" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 16:00h">Reserva →</a>
-            <a href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:var(--space-xs); font-size:0.8rem; font-weight:600; text-decoration:none; color:var(--blue);">Sense places? Escriu-nos →</a>
+            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">Sense places? Escriu-nos →</a>
           </div>
 
           <div class="turno-card turno-card--modelado fade-in fade-in--delay-1">
             <h2 class="turno-card__day">Dimecres<br>18:30h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
             <a class="btn btn--dark" href="https://buy.stripe.com/aFa4gB2CV4cs8RbgpqbMQ04" target="_blank" rel="noopener" aria-label="Reserva torn dimecres 18:30h">Reserva →</a>
-            <a href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:var(--space-xs); font-size:0.8rem; font-weight:600; text-decoration:none; color:var(--blue);">Sense places? Escriu-nos →</a>
+            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">Sense places? Escriu-nos →</a>
           </div>
 
           <div class="turno-card turno-card--modelado fade-in fade-in--delay-2">
             <h2 class="turno-card__day">Dijous<br>11:00h</h2>
             <p class="turno-card__details">4 classes · 2h · 120€/mes</p>
             <a class="btn btn--dark" href="https://buy.stripe.com/cNidRba5n8sI9VfehibMQ03" target="_blank" rel="noopener" aria-label="Reserva torn dijous 11:00h">Reserva →</a>
-            <a href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer" style="display:block; margin-top:var(--space-xs); font-size:0.8rem; font-weight:600; text-decoration:none; color:var(--blue);">Sense places? Escriu-nos →</a>
+            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">Sense places? Escriu-nos →</a>
           </div>
 
         </div>
       </div>
     </section>
+
+    <div class="turno-suelta-banner">
+      <div class="container">
+        <a href="/ca/clases/suelta.html" style="color:var(--blue);">No estàs segur? Prova primer una Classe Suelta →</a>
+      </div>
+    </div>
 
     <section class="turno-nota">
       <div class="container">
