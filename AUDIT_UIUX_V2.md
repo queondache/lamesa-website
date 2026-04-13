@@ -11,10 +11,10 @@
 
 | # | Problema | Dove | Regola Skill | Severita | Fix |
 |---|---|---|---|---|---|
-| **C1** | **Nessun skip-link per navigazione tastiera** | Tutte le pagine: manca prima del `<header>` | `skip-links` (Accessibility #1) | CRITICO | Aggiungere `<a class="skip-link" href="#main">Ir al contenido</a>` prima del nav, con `main` come id sul tag `<main>`. Stile: `position:absolute; left:-9999px` + `:focus { left:auto }`. |
+| ~~**C1**~~ | ~~**Nessun skip-link per navigazione tastiera**~~ | ~~Tutte le pagine~~ | `skip-links` | ~~CRITICO~~ | **RISOLTO 2026-04-13.** Skip-link aggiunto in 15 pagine (ES/EN/CA) + CSS `.skip-link` in style.css + `id="main-content"` su `<main>`. |
 | **C2** | **Newsletter input `outline: none` senza sostituto custom visibile** | style.css:1625 `.newsletter-input` | `focus-states` (Accessibility #1) | CRITICO | L'input ha `outline: none` e come focus-state solo `box-shadow: 0 0 0 3px rgba(27,60,139,0.2)`. L'opacita 0.2 produce contrasto troppo debole su sfondo cream. Aumentare a `rgba(27,60,139,0.5)` o usare `:focus-visible` globale. |
 | **C3** | **Booking API placeholder non funzionante** | js/booking.js:10 `BOOKING_API = 'URL_DEL_TUO_GAS_DEPLOY'` | `error-feedback` (Touch #2) | CRITICO | URL API e un placeholder. Tutte le pagine dinamiche faranno fetch a URL invalido. Inserire URL reale dopo deploy GAS. |
-| **C4** | **Prezzo strutturato errato per Clase Semanal de Torno** | semanal-torno.html:56 `"price": "120"` | `consistency` (Style #4) | CRITICO | JSON-LD dichiara 120 EUR ma meta description dice "160 EUR/mes". Prezzo torno e 160 EUR. Correggere a `"price": "160"` in ES/EN/CA. |
+| ~~**C4**~~ | ~~**Prezzo strutturato errato per Clase Semanal de Torno**~~ | ~~semanal-torno.html:56~~ | `consistency` | ~~CRITICO~~ | **RISOLTO 2026-04-13.** JSON-LD corretto a `"price": "180"` in semanal-torno ES/EN/CA. |
 | **C5** | **Emoji come icona nel bottone workshops** | index.html, bottone workshops | `no-emoji-icons` (Style #4) | ALTO | Bottone usa emoji come icona. Rendering varia tra OS. Sostituire con SVG icon. |
 | **C6** | **Booking form usa placeholder-only come label** | js/booking.js form dinamici | `input-labels` (Forms #8), `form-labels` (Accessibility #1) | ALTO | Campi nome/email/telefono senza `<label>` ne `aria-label`. Viola WCAG 1.3.1 e 3.3.2. Aggiungere label visibili o `aria-label`. |
 
@@ -24,7 +24,7 @@
 
 | # | Problema | Dove | Regola Skill | Severita | Fix |
 |---|---|---|---|---|---|
-| **M1** | **Link cream su sfondo cream (torno suelta-banner)** | semanal-torno.html:204 `color:var(--cream)` | `color-contrast` (Accessibility #1) | ALTA | Link "Clase Suelta" con colore cream su sfondo cream = invisibile. Dovrebbe essere `color:var(--blue)` come nella versione modelado. Stesso problema in EN/CA. |
+| ~~**M1**~~ | ~~**Link cream su sfondo cream (torno suelta-banner)**~~ | ~~semanal-torno.html~~ | `color-contrast` | ~~ALTA~~ | **RISOLTO 2026-04-13.** Colore cambiato a `var(--yellow)` in semanal-torno ES/EN/CA. |
 | **M2** | **Errori booking mostrati con `alert()` nativo** | booking.js:318, 323, 369, 374 | `error-feedback` (Touch #2) | MEDIA | `alert()` e bloccante, non stilizzato, inaccessibile. Usare `showToast()` gia presente in main.js. |
 | **M3** | **Badge inline-style non manutenibile** | suelta.html:167 badge "Clase particular" | `consistency` (Style #4) | MEDIA | 7 proprieta CSS inline. Creare classe `.turno-card__badge--particular`. |
 | **M4** | **Form booking senza `autocomplete` attributes** | booking.js campi generati | `autofill-support` (Forms #8) | MEDIA | Aggiungere `autocomplete="name"`, `autocomplete="email"`, `autocomplete="tel"`. |
