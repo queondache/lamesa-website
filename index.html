@@ -55,6 +55,24 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180.png">
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ90MD674K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SQ90MD674K');
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('a[href*="wa.me/34711552030"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'click_whatsapp', {'event_category': 'conversion', 'event_label': 'whatsapp_contact'});
+        });
+      });
+    });
+  </script>
 </head>
 <body>
 
@@ -222,15 +240,19 @@
               <span class="clase-card__badge">Abono mensual · 4 clases · mismo día y hora</span>
               <div style="display:flex; flex-direction:column; gap:var(--space-xs); margin-top:var(--space-sm);">
                 <a class="clase-card__cta clase-card__cta--online"
+                   id="cta-taller-semanal"
                    href="/clases/semanal-modelado.html"
                    style="margin-top:0;"
-                   aria-label="Clase Semanal de Modelado">
+                   aria-label="Clase Semanal de Modelado"
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'});">
                   Clase Semanal →
                 </a>
                 <a class="clase-card__cta clase-card__cta--online"
+                   id="cta-clase-suelta"
                    href="/clases/suelta.html"
                    style="margin-top:0;"
-                   aria-label="Clase Suelta de Modelado">
+                   aria-label="Clase Suelta de Modelado"
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'});">
                   Clase Suelta →
                 </a>
               </div>
@@ -251,13 +273,15 @@
                 <a class="clase-card__cta clase-card__cta--whatsapp"
                    href="/clases/semanal-torno.html"
                    style="margin-top:0;"
-                   aria-label="Clase Semanal de Torno">
+                   aria-label="Clase Semanal de Torno"
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'});">
                   Clase Semanal →
                 </a>
                 <a class="clase-card__cta clase-card__cta--whatsapp"
                    href="/clases/suelta.html"
                    style="margin-top:0;"
-                   aria-label="Clase Suelta de Torno">
+                   aria-label="Clase Suelta de Torno"
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'});">
                   Clase Suelta →
                 </a>
               </div>
