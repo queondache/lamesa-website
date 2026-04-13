@@ -665,6 +665,11 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 - Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi, stato, prezzo, stripe_price_id, note
 - Foglio `PRENOTAZIONI`: prenotazione_id, slot_id, data_prenotazione, cliente_nombre/email/telefono, canale, importo, stato, note
 
+**Logica SLOTS — Semanal vs Suelta:**
+- **Semanal** (6 righe permanenti): `data` vuota, `slot_id` formato `semanal_[risorsa]_[giorno]_[ora]` (es. `semanal_mesa_mer_16`). Giorno in colonna `note` (Miércoles/Jueves). Rappresentano turni fissi mensili, non sessioni singole. Non scadono.
+- **Suelta** (righe con data): `data` contiene YYYY-MM-DD, `slot_id` formato `YYYY-MM-DD_HH:MM_suelta_[risorsa]`. Giorni: Mar/Mer/Ven. Orari: 11:00 e 15:00. Generate con `generaSlotSuelta(N)` per N settimane future.
+- **Generazione slot suelta**: eseguire `generaSlotSuelta` dall'editor GAS (default 4 settimane). Appende nuovi slot senza cancellare i precedenti.
+
 ### API Endpoints (GAS Web App)
 
 **GET:**
