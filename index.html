@@ -64,11 +64,31 @@
     gtag('js', new Date());
     gtag('config', 'G-SQ90MD674K');
   </script>
+  <!-- Meta Pixel -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '928743266641763');
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=928743266641763&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- Fine Meta Pixel -->
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('a[href*="wa.me/34711552030"]').forEach(function(link) {
         link.addEventListener('click', function() {
           gtag('event', 'click_whatsapp', {'event_category': 'conversion', 'event_label': 'whatsapp_contact'});
+          fbq('track', 'Contact');
         });
       });
     });
@@ -244,7 +264,7 @@
                    href="/clases/semanal-modelado.html"
                    style="margin-top:0;"
                    aria-label="Clase Semanal de Modelado"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'});">
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
                   Clase Semanal →
                 </a>
                 <a class="clase-card__cta clase-card__cta--online"
@@ -252,7 +272,7 @@
                    href="/clases/suelta.html"
                    style="margin-top:0;"
                    aria-label="Clase Suelta de Modelado"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'});">
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
                   Clase Suelta →
                 </a>
               </div>
@@ -274,14 +294,14 @@
                    href="/clases/semanal-torno.html"
                    style="margin-top:0;"
                    aria-label="Clase Semanal de Torno"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'});">
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
                   Clase Semanal →
                 </a>
                 <a class="clase-card__cta clase-card__cta--whatsapp"
                    href="/clases/suelta.html"
                    style="margin-top:0;"
                    aria-label="Clase Suelta de Torno"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'});">
+                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
                   Clase Suelta →
                 </a>
               </div>
