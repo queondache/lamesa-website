@@ -168,32 +168,11 @@
          ============================================================ -->
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid">
-
-          <!-- Turno 1: Miércoles 16:00h -->
-          <div class="turno-card turno-card--modelado fade-in">
-            <h2 class="turno-card__day">Miércoles<br>16:00h</h2>
-            <p class="turno-card__details">4 clases · 2h · 120€/mes</p>
-            <a class="btn btn--dark" href="https://buy.stripe.com/cNi8wRcdvdN29VfddebMQ05" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 16:00h">Reservar →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">¿Sin plazas? Escríbenos →</a>
-          </div>
-
-          <!-- Turno 2: Miércoles 18:30h -->
-          <div class="turno-card turno-card--modelado fade-in fade-in--delay-1">
-            <h2 class="turno-card__day">Miércoles<br>18:30h</h2>
-            <p class="turno-card__details">4 clases · 2h · 120€/mes</p>
-            <a class="btn btn--dark" href="https://buy.stripe.com/aFa4gB2CV4cs8RbgpqbMQ04" target="_blank" rel="noopener" aria-label="Reservar turno miércoles 18:30h">Reservar →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">¿Sin plazas? Escríbenos →</a>
-          </div>
-
-          <!-- Turno 3: Jueves 11:00h -->
-          <div class="turno-card turno-card--modelado fade-in fade-in--delay-2">
-            <h2 class="turno-card__day">Jueves<br>11:00h</h2>
-            <p class="turno-card__details">4 clases · 2h · 120€/mes</p>
-            <a class="btn btn--dark" href="https://buy.stripe.com/cNidRba5n8sI9VfehibMQ03" target="_blank" rel="noopener" aria-label="Reservar turno jueves 11:00h">Reservar →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa" target="_blank" rel="noopener noreferrer">¿Sin plazas? Escríbenos →</a>
-          </div>
-
+        <div class="turno-grid" id="booking-grid" data-tipo="semanal" data-risorsa="mesa">
+          <!-- Dynamic cards loaded by booking.js -->
+          <div class="turno-skeleton"></div>
+          <div class="turno-skeleton"></div>
+          <div class="turno-skeleton"></div>
         </div>
       </div>
     </section>
@@ -256,6 +235,7 @@
 
   <!-- Main script -->
   <script src="../js/main.js?v=3" defer></script>
+  <script src="../js/booking.js?v=1" defer></script>
 
 </body>
 </html>

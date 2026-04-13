@@ -117,7 +117,7 @@
       </div>
     </section>
 
-    <section class="turno-section" style="background: var(--cream);">
+    <section class="turno-section" style="background: var(--cream);" id="suelta-container">
       <div class="container">
         <div class="turno-grid turno-grid--2col">
 
@@ -125,7 +125,8 @@
             <h2 class="turno-card__title">Modelat</h2>
             <p class="turno-card__details">Treballem l'argila amb les mans.</p>
             <p class="turno-card__price">Des de 45€</p>
-            <a class="btn btn--dark" href="https://cal.com/la-mesa/clase-suelta-modelado" target="_blank" rel="noopener" aria-label="Reserva Classe Suelta de Modelat">Reserva →</a>
+            <button class="btn btn--dark" data-suelta-trigger data-risorsa="mesa" aria-label="Reserva Classe Suelta de Modelat">Reserva →</button>
+            <div class="suelta-slots" id="slots-mesa"></div>
           </div>
 
           <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
@@ -133,7 +134,8 @@
             <h2 class="turno-card__title">Torn</h2>
             <p class="turno-card__details">Classes particulars. Màxim 2 persones.</p>
             <p class="turno-card__price">Des de 65€</p>
-            <a class="btn btn--white" href="https://cal.com/la-mesa/clase-suelta-torno" target="_blank" rel="noopener" aria-label="Reserva Classe Suelta de Torn">Reserva →</a>
+            <button class="btn btn--white" data-suelta-trigger data-risorsa="torno" aria-label="Reserva Classe Suelta de Torn">Reserva →</button>
+            <div class="suelta-slots" id="slots-torno"></div>
           </div>
 
         </div>
@@ -166,5 +168,6 @@
   </a>
 
   <script src="../../js/main.js?v=3" defer></script>
+  <script src="../../js/booking.js?v=1" defer></script>
 </body>
 </html>

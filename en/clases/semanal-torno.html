@@ -136,29 +136,10 @@
 
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid">
-
-          <div class="turno-card turno-card--torno fade-in">
-            <h2 class="turno-card__day">Wednesday<br>4:00pm</h2>
-            <p class="turno-card__details">4 classes · 2h · €160/month</p>
-            <a class="btn btn--white" href="https://buy.stripe.com/14A8wRa5n4cs7N7a12bMQ02" target="_blank" rel="noopener" aria-label="Book Wednesday 4:00pm slot">Book →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer">No spots left? Message us →</a>
-          </div>
-
-          <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
-            <h2 class="turno-card__day">Wednesday<br>6:30pm</h2>
-            <p class="turno-card__details">4 classes · 2h · €160/month</p>
-            <a class="btn btn--white" href="https://buy.stripe.com/dRm4gBa5nfVa8RbgpqbMQ01" target="_blank" rel="noopener" aria-label="Book Wednesday 6:30pm slot">Book →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer">No spots left? Message us →</a>
-          </div>
-
-          <div class="turno-card turno-card--torno fade-in fade-in--delay-2">
-            <h2 class="turno-card__day">Thursday<br>11:00am</h2>
-            <p class="turno-card__details">4 classes · 2h · €160/month</p>
-            <a class="btn btn--white" href="https://buy.stripe.com/28E7sN3GZgZe3wR1uwbMQ00" target="_blank" rel="noopener" aria-label="Book Thursday 11:00am slot">Book →</a>
-            <a class="turno-card__waitlist" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer">No spots left? Message us →</a>
-          </div>
-
+        <div class="turno-grid" id="booking-grid" data-tipo="semanal" data-risorsa="torno">
+          <div class="turno-skeleton"></div>
+          <div class="turno-skeleton"></div>
+          <div class="turno-skeleton"></div>
         </div>
       </div>
     </section>
@@ -195,5 +176,6 @@
   </a>
 
   <script src="../../js/main.js?v=3" defer></script>
+  <script src="../../js/booking.js?v=1" defer></script>
 </body>
 </html>

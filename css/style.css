@@ -2102,3 +2102,107 @@ p {
   height: 18px;
   fill: currentColor;
 }
+
+/* ── Booking: dynamic slots ── */
+
+.turno-card__spots {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  opacity: 0.8;
+}
+.turno-card--torno .turno-card__spots,
+.turno-card--torno-primary .turno-card__spots {
+  color: var(--cream);
+}
+
+.turno-card__badge--urgent {
+  display: inline-block;
+  background: var(--pink);
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.turno-skeleton {
+  background: linear-gradient(90deg, rgba(255,255,255,0.1) 25%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0.1) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: var(--radius-lg);
+  height: 180px;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Booking: no-slots message */
+.turno-no-slots {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  font-size: 1rem;
+  color: var(--color-muted);
+}
+
+.turno-no-slots a {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* Booking: inline checkout form */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  margin-top: var(--space-sm);
+}
+
+.booking-form input {
+  padding: 10px 16px;
+  border-radius: var(--radius-pill);
+  border: 2px solid rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.15);
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  min-height: 44px;
+}
+
+.booking-form input::placeholder {
+  opacity: 0.6;
+}
+
+.turno-card--modelado .booking-form input {
+  border-color: rgba(0,0,0,0.15);
+  background: rgba(255,255,255,0.3);
+}
+
+/* Suelta: expandable slot picker */
+.suelta-slots {
+  display: none;
+  margin-top: var(--space-md);
+}
+
+.suelta-slots.active {
+  display: block;
+}
+
+.suelta-slot-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  background: rgba(255,255,255,0.15);
+  margin-bottom: var(--space-xs);
+  font-size: 0.875rem;
+}
+
+.suelta-slot-item button {
+  flex-shrink: 0;
+}
