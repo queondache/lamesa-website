@@ -152,30 +152,28 @@
     <!-- ============================================================
          CARD — 2 colonne
          ============================================================ -->
-    <section class="turno-section" style="background: var(--cream);" id="suelta-container">
+    <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid turno-grid--2col">
 
-          <!-- Modelado -->
-          <div class="turno-card turno-card--modelado fade-in">
-            <h2 class="turno-card__title">Modelado</h2>
-            <p class="turno-card__details">Trabajamos el barro con las manos.</p>
-            <p class="turno-card__price">Desde 45€</p>
-            <button class="btn btn--dark" data-suelta-trigger data-risorsa="mesa" aria-label="Reservar Clase Suelta de Modelado">Reservar →</button>
-            <div class="suelta-slots" id="slots-mesa"></div>
-          </div>
-
-          <!-- Torno -->
-          <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
-            <span style="display:inline-block;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:100px;margin-bottom:8px;">Clase particular</span>
-            <h2 class="turno-card__title">Torno</h2>
-            <p class="turno-card__details">Clases particulares. Máximo 2 personas.</p>
-            <p class="turno-card__price">Desde 65€</p>
-            <button class="btn btn--white" data-suelta-trigger data-risorsa="torno" aria-label="Reservar Clase Suelta de Torno">Reservar →</button>
-            <div class="suelta-slots" id="slots-torno"></div>
-          </div>
-
+        <!-- Discipline tabs -->
+        <div class="suelta-tabs" id="suelta-tabs">
+          <button class="suelta-tab suelta-tab--mesa suelta-tab--active" data-risorsa="mesa">
+            Modelado · Desde 45€
+          </button>
+          <button class="suelta-tab suelta-tab--torno" data-risorsa="torno">
+            Torno · Desde 65€
+            <span class="turno-card__badge--particular">Clase particular</span>
+          </button>
         </div>
+
+        <!-- Calendar -->
+        <div id="suelta-calendar">
+          <div class="turno-skeleton" style="height:320px;"></div>
+        </div>
+
+        <!-- Time slots -->
+        <div id="suelta-times"></div>
+
       </div>
     </section>
 

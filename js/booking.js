@@ -1,79 +1,72 @@
 /**
  * booking.js — La Mesa Booking Frontend
- * Fetches slots from GAS API and renders dynamic cards.
- * Handles checkout flow via Stripe.
+ * Calendar UI for suelta, improved cards for semanal.
  */
 (function() {
   'use strict';
 
-  /* ── Config ── */
   var BOOKING_API = 'https://script.google.com/macros/s/AKfycbzo26tz9qK4nN-6IdCcaI2bxccvKJL08nUaVWZs1ozSpNMetAdh5z2gkw-GeCvOtGsK/exec';
 
-  var WA_LINKS = {
+  var WA = {
     es: 'https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa',
     en: 'https://wa.me/34711552030?text=Hi!%20I\'d%20like%20to%20know%20more%20about%20La%20Mesa',
     ca: 'https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa'
   };
 
-  /* ── i18n labels ── */
-  var LABELS = {
+  /* ── i18n ── */
+
+  var L = {
     es: {
-      spots: '{n} plazas disponibles',
-      spot1: '1 plaza disponible',
-      urgent: '¡Últimas plazas!',
-      book: 'Reservar →',
+      spots: '{n} plazas disponibles', spot1: '1 plaza disponible',
+      urgent: '¡Últimas plazas!', book: 'Reservar →', completo: 'Completo',
       noSlots: 'No hay plazas disponibles. <a href="{wa}">Escríbenos</a>.',
       waitlist: '¿Sin plazas? Escríbenos →',
-      loading: 'Cargando turnos...',
       error: 'Error al cargar. <a href="{wa}">Escríbenos por WhatsApp</a>.',
-      formName: 'Tu nombre',
-      formEmail: 'Tu email',
-      formPhone: 'Tu teléfono',
-      formSubmit: 'Continuar al pago →',
-      formCancel: 'Cancelar',
-      semanalDetails4: '4 clases · 2h · {price}€/mes',
-      sueltaPickDate: 'Elige fecha y hora:',
-      sueltaSlotLabel: '{day} {date} · {time}h',
-      sueltaSpots: '{n} plazas'
+      formName: 'Tu nombre', formEmail: 'Tu email', formPhone: 'Tu teléfono',
+      formSubmit: 'Continuar al pago →', formCancel: 'Cancelar',
+      semanal4: '4 clases · 2h · {price}€/mes',
+      calSelect: 'Elige una fecha', calTime: 'Elige hora',
+      calNoSlots: 'Sin disponibilidad este mes',
+      calSpots: '{n} plazas', calSpot1: '1 plaza'
     },
     en: {
-      spots: '{n} spots available',
-      spot1: '1 spot available',
-      urgent: 'Last spots!',
-      book: 'Book →',
+      spots: '{n} spots available', spot1: '1 spot available',
+      urgent: 'Last spots!', book: 'Book →', completo: 'Full',
       noSlots: 'No spots available. <a href="{wa}">Message us</a>.',
       waitlist: 'No spots left? Message us →',
-      loading: 'Loading slots...',
       error: 'Loading error. <a href="{wa}">Message us on WhatsApp</a>.',
-      formName: 'Your name',
-      formEmail: 'Your email',
-      formPhone: 'Your phone',
-      formSubmit: 'Continue to payment →',
-      formCancel: 'Cancel',
-      semanalDetails4: '4 classes · 2h · €{price}/month',
-      sueltaPickDate: 'Choose date and time:',
-      sueltaSlotLabel: '{day} {date} · {time}',
-      sueltaSpots: '{n} spots'
+      formName: 'Your name', formEmail: 'Your email', formPhone: 'Your phone',
+      formSubmit: 'Continue to payment →', formCancel: 'Cancel',
+      semanal4: '4 classes · 2h · €{price}/month',
+      calSelect: 'Select a date', calTime: 'Select time',
+      calNoSlots: 'No availability this month',
+      calSpots: '{n} spots', calSpot1: '1 spot'
     },
     ca: {
-      spots: '{n} places disponibles',
-      spot1: '1 plaça disponible',
-      urgent: 'Últimes places!',
-      book: 'Reserva →',
+      spots: '{n} places disponibles', spot1: '1 plaça disponible',
+      urgent: 'Últimes places!', book: 'Reserva →', completo: 'Complet',
       noSlots: 'No hi ha places disponibles. <a href="{wa}">Escriu-nos</a>.',
       waitlist: 'Sense places? Escriu-nos →',
-      loading: 'Carregant torns...',
       error: 'Error al carregar. <a href="{wa}">Escriu-nos per WhatsApp</a>.',
-      formName: 'El teu nom',
-      formEmail: 'El teu email',
-      formPhone: 'El teu telèfon',
-      formSubmit: 'Continua al pagament →',
-      formCancel: 'Cancel·la',
-      semanalDetails4: '4 classes · 2h · {price}€/mes',
-      sueltaPickDate: 'Tria data i hora:',
-      sueltaSlotLabel: '{day} {date} · {time}h',
-      sueltaSpots: '{n} places'
+      formName: 'El teu nom', formEmail: 'El teu email', formPhone: 'El teu telèfon',
+      formSubmit: 'Continua al pagament →', formCancel: 'Cancel·la',
+      semanal4: '4 classes · 2h · {price}€/mes',
+      calSelect: 'Tria una data', calTime: 'Tria hora',
+      calNoSlots: 'Sense disponibilitat aquest mes',
+      calSpots: '{n} places', calSpot1: '1 plaça'
     }
+  };
+
+  var MONTHS = {
+    es: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+    en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    ca: ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
+  };
+
+  var DAY_HDR = {
+    es: ['L','M','X','J','V','S','D'],
+    en: ['Mo','Tu','We','Th','Fr','Sa','Su'],
+    ca: ['Dl','Dt','Dc','Dj','Dv','Ds','Dg']
   };
 
   var DAYS = {
@@ -82,360 +75,399 @@
     ca: { Domingo:'Diumenge', Lunes:'Dilluns', Martes:'Dimarts', 'Miércoles':'Dimecres', Jueves:'Dijous', Viernes:'Divendres', 'Sábado':'Dissabte' }
   };
 
-  /* ── Detect page context ── */
+  /* ── Context ── */
+
   var lang = document.documentElement.lang || 'es';
-  if (!LABELS[lang]) lang = 'es';
-  var L = LABELS[lang];
-  var waLink = WA_LINKS[lang] || WA_LINKS.es;
+  if (!L[lang]) lang = 'es';
+  var labels = L[lang];
+  var waLink = WA[lang] || WA.es;
 
-  function dayName(esDay) {
-    return (DAYS[lang] && DAYS[lang][esDay]) || esDay;
-  }
-
-  function label(key, replacements) {
-    var s = L[key] || key;
-    if (replacements) {
-      Object.keys(replacements).forEach(function(k) {
-        s = s.replace(new RegExp('\\{' + k + '\\}', 'g'), replacements[k]);
-      });
-    }
+  function t(key, r) {
+    var s = labels[key] || key;
+    if (r) Object.keys(r).forEach(function(k) { s = s.replace(new RegExp('\\{'+k+'\\}','g'), r[k]); });
     return s.replace(/\{wa\}/g, waLink);
   }
 
-  /* ── API helpers ── */
+  function dayName(esDay) { return (DAYS[lang] && DAYS[lang][esDay]) || esDay; }
 
-  function apiGet(params) {
-    var qs = Object.keys(params).map(function(k) {
-      return encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
-    }).join('&');
-    return fetch(BOOKING_API + '?' + qs).then(function(r) { return r.json(); });
+  function fmtTime(t24) {
+    if (lang !== 'en') return t24 + 'h';
+    var p = t24.split(':'), h = +p[0], m = p[1];
+    return (h > 12 ? h-12 : h||12) + ':' + m + (h >= 12 ? 'pm' : 'am');
   }
 
+  function pad(n) { return n < 10 ? '0'+n : ''+n; }
+  function dateKey(y,m,d) { return y+'-'+pad(m+1)+'-'+pad(d); }
+
+  /* ── API ── */
+
+  function apiGet(p) {
+    var qs = Object.keys(p).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(p[k]); }).join('&');
+    return fetch(BOOKING_API+'?'+qs).then(function(r){ return r.json(); });
+  }
   function apiPost(action, payload) {
-    return fetch(BOOKING_API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: action, payload: payload })
-    }).then(function(r) { return r.json(); });
+    return fetch(BOOKING_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:action,payload:payload})}).then(function(r){return r.json();});
   }
 
-  /* ── Skeleton loaders ── */
-
-  function showSkeletons(grid, count) {
-    grid.innerHTML = '';
-    for (var i = 0; i < count; i++) {
-      var sk = document.createElement('div');
-      sk.className = 'turno-skeleton';
-      grid.appendChild(sk);
-    }
-  }
-
-  /* ── Semanal page renderer ── */
+  /* ══════════════════════════════════════════════════════
+     SEMANAL — improved cards with dots + completo
+     ══════════════════════════════════════════════════════ */
 
   function initSemanalPage() {
     var grid = document.getElementById('booking-grid');
     if (!grid) return;
 
-    var tipo = grid.dataset.tipo;       // 'semanal'
-    var risorsa = grid.dataset.risorsa; // 'mesa' or 'torno'
-    var cardClass = risorsa === 'torno' ? 'turno-card--torno' : 'turno-card--modelado';
-    var btnClass = risorsa === 'torno' ? 'btn--white' : 'btn--dark';
+    var tipo = grid.dataset.tipo;
+    var risorsa = grid.dataset.risorsa;
+    var isTorno = risorsa === 'torno';
+    var cardCls = isTorno ? 'turno-card--torno' : 'turno-card--modelado';
+    var btnCls = isTorno ? 'btn--white' : 'btn--dark';
 
-    showSkeletons(grid, 3);
+    // Show skeletons
+    grid.innerHTML = '<div class="turno-skeleton"></div><div class="turno-skeleton"></div><div class="turno-skeleton"></div>';
 
     apiGet({ action: 'slots', tipo: tipo, risorsa: risorsa })
       .then(function(data) {
-        if (!data.ok || !data.slots || data.slots.length === 0) {
-          grid.innerHTML = '<div class="turno-no-slots">' +
-            label('noSlots') + '</div>';
+        if (!data.ok || !data.slots || !data.slots.length) {
+          grid.innerHTML = '<div class="turno-no-slots">' + t('noSlots') + '</div>';
           return;
         }
-
         grid.innerHTML = '';
         data.slots.forEach(function(slot, idx) {
+          var isFull = slot.posti_liberi <= 0;
+          var isUrgent = !isFull && slot.posti_liberi <= 2;
+          var day = dayName(slot.giorno_settimana);
+          var time = fmtTime(slot.ora_inizio);
+          var spotsText = slot.posti_liberi === 1 ? t('spot1') : t('spots', { n: slot.posti_liberi });
+
+          // Build dots
+          var dots = '';
+          for (var d = 0; d < slot.posti_totali; d++) {
+            dots += '<span class="turno-card__dot' + (d < (slot.posti_totali - slot.posti_liberi) ? ' turno-card__dot--filled' : '') + '"></span>';
+          }
+
           var card = document.createElement('div');
           var delay = idx > 0 ? ' fade-in--delay-' + Math.min(idx, 2) : '';
-          card.className = 'turno-card ' + cardClass + ' fade-in' + delay;
+          card.className = 'turno-card ' + cardCls + ' fade-in' + delay + (isFull ? ' turno-card--completo' : '');
 
-          var spotsText = slot.posti_liberi === 1
-            ? label('spot1')
-            : label('spots', { n: slot.posti_liberi });
+          var html = '<h2 class="turno-card__day">' + day + '<br>' + time + '</h2>' +
+            '<p class="turno-card__details">' + t('semanal4', { price: slot.prezzo }) + '</p>' +
+            '<div class="turno-card__dots">' + dots + '</div>' +
+            '<span class="turno-card__spots">' + spotsText + '</span>';
 
-          var urgentBadge = slot.posti_liberi <= 2
-            ? '<span class="turno-card__badge--urgent">' + label('urgent') + '</span>'
-            : '';
+          if (isFull) {
+            html += '<p class="turno-card__completo">' + t('completo') + '</p>';
+          } else {
+            if (isUrgent) html += '<span class="turno-card__badge--urgent">' + t('urgent') + '</span>';
+            html += '<button class="btn ' + btnCls + ' turno-card__cta" data-slot-id="' + slot.slot_id + '">' + t('book') + '</button>' +
+              '<a class="turno-card__waitlist" href="' + waLink + '" target="_blank" rel="noopener noreferrer">' + t('waitlist') + '</a>' +
+              '<div class="booking-form" style="display:none;" data-slot-id="' + slot.slot_id + '">' +
+                '<input type="text" name="nombre" placeholder="' + t('formName') + '" autocomplete="name">' +
+                '<input type="email" name="email" placeholder="' + t('formEmail') + '" required autocomplete="email">' +
+                '<input type="tel" name="telefono" placeholder="' + t('formPhone') + '" autocomplete="tel">' +
+                '<button class="btn ' + btnCls + '" type="submit">' + t('formSubmit') + '</button>' +
+                '<button class="btn btn--secondary" type="button" data-cancel>' + t('formCancel') + '</button>' +
+              '</div>';
+          }
 
-          var day = dayName(slot.giorno_settimana);
-          var timeDisplay = lang === 'en'
-            ? formatTimeEN(slot.ora_inizio)
-            : slot.ora_inizio + 'h';
-
-          card.innerHTML =
-            '<h2 class="turno-card__day">' + day + '<br>' + timeDisplay + '</h2>' +
-            '<p class="turno-card__details">' + label('semanalDetails4', { price: slot.prezzo }) + '</p>' +
-            '<span class="turno-card__spots">' + spotsText + '</span>' +
-            urgentBadge +
-            '<button class="btn ' + btnClass + ' turno-card__cta" data-slot-id="' + slot.slot_id + '">' +
-              label('book') +
-            '</button>' +
-            '<a class="turno-card__waitlist" href="' + waLink + '" target="_blank" rel="noopener noreferrer">' +
-              label('waitlist') +
-            '</a>' +
-            '<div class="booking-form" style="display:none;" data-slot-id="' + slot.slot_id + '">' +
-              '<input type="text" name="nombre" placeholder="' + label('formName') + '" required>' +
-              '<input type="email" name="email" placeholder="' + label('formEmail') + '" required>' +
-              '<input type="tel" name="telefono" placeholder="' + label('formPhone') + '">' +
-              '<button class="btn ' + btnClass + '" type="submit">' + label('formSubmit') + '</button>' +
-              '<button class="btn btn--secondary" type="button" data-cancel>' + label('formCancel') + '</button>' +
-            '</div>';
-
+          card.innerHTML = html;
           grid.appendChild(card);
-
-          // Trigger fade-in
-          requestAnimationFrame(function() {
-            card.classList.add('visible');
-          });
+          requestAnimationFrame(function() { card.classList.add('visible'); });
         });
-
-        // Bind events
-        bindBookingEvents(grid);
+        bindCheckout(grid);
       })
       .catch(function() {
-        grid.innerHTML = '<div class="turno-no-slots">' + label('error') + '</div>';
+        grid.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>';
       });
   }
 
-  /* ── Suelta page renderer ── */
+  /* ══════════════════════════════════════════════════════
+     SUELTA — calendar + time slots
+     ══════════════════════════════════════════════════════ */
+
+  var calState = { risorsa: 'mesa', year: 0, month: 0, slots: [], slotMap: {}, selectedDate: null };
 
   function initSueltaPage() {
-    var container = document.getElementById('suelta-container');
-    if (!container) return;
+    var tabs = document.getElementById('suelta-tabs');
+    var calEl = document.getElementById('suelta-calendar');
+    if (!tabs || !calEl) return;
 
-    // Bind "Reservar" buttons on the 2 static cards
-    var btns = container.querySelectorAll('[data-suelta-trigger]');
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        var risorsa = btn.dataset.risorsa;
-        var slotsDiv = document.getElementById('slots-' + risorsa);
-        if (!slotsDiv) return;
+    var now = new Date();
+    calState.year = now.getFullYear();
+    calState.month = now.getMonth();
 
-        if (slotsDiv.classList.contains('active')) {
-          slotsDiv.classList.remove('active');
-          return;
-        }
+    // Tab clicks
+    tabs.querySelectorAll('.suelta-tab').forEach(function(tab) {
+      tab.addEventListener('click', function() {
+        tabs.querySelector('.suelta-tab--active').classList.remove('suelta-tab--active');
+        tab.classList.add('suelta-tab--active');
+        calState.risorsa = tab.dataset.risorsa;
+        calState.selectedDate = null;
+        loadSueltaSlots();
+      });
+    });
 
-        // Fetch slots
-        slotsDiv.innerHTML = '<div class="turno-skeleton" style="height:60px;"></div>';
-        slotsDiv.classList.add('active');
+    loadSueltaSlots();
+  }
 
-        apiGet({ action: 'slots', tipo: 'suelta', risorsa: risorsa })
-          .then(function(data) {
-            if (!data.ok || !data.slots || data.slots.length === 0) {
-              slotsDiv.innerHTML = '<div class="turno-no-slots">' + label('noSlots') + '</div>';
-              return;
-            }
+  function loadSueltaSlots() {
+    var calEl = document.getElementById('suelta-calendar');
+    var timesEl = document.getElementById('suelta-times');
+    calEl.innerHTML = '<div class="turno-skeleton" style="height:320px;"></div>';
+    if (timesEl) timesEl.innerHTML = '';
 
-            var html = '<p style="font-weight:600; margin-bottom:8px;">' + label('sueltaPickDate') + '</p>';
-            data.slots.forEach(function(slot) {
-              var day = dayName(slot.giorno_settimana);
-              var time = lang === 'en' ? formatTimeEN(slot.ora_inizio) : slot.ora_inizio + 'h';
-              var spotsLabel = label('sueltaSpots', { n: slot.posti_liberi });
+    apiGet({ action: 'slots', tipo: 'suelta', risorsa: calState.risorsa })
+      .then(function(data) {
+        if (!data.ok) { calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>'; return; }
+        calState.slots = data.slots || [];
+        // Build date→slots map
+        calState.slotMap = {};
+        calState.slots.forEach(function(s) {
+          if (!calState.slotMap[s.data]) calState.slotMap[s.data] = [];
+          calState.slotMap[s.data].push(s);
+        });
+        renderCalendar();
+      })
+      .catch(function() {
+        calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>';
+      });
+  }
 
-              html += '<div class="suelta-slot-item">' +
-                '<span>' + day + ' ' + slot.data + ' · ' + time + ' — ' + spotsLabel + '</span>' +
-                '<button class="btn btn--dark" style="padding:8px 16px; font-size:0.8rem;" data-slot-id="' + slot.slot_id + '">' +
-                  label('book') +
-                '</button>' +
-              '</div>';
-            });
-            slotsDiv.innerHTML = html;
-            bindBookingEvents(slotsDiv);
-          })
-          .catch(function() {
-            slotsDiv.innerHTML = '<div class="turno-no-slots">' + label('error') + '</div>';
-          });
+  function renderCalendar() {
+    var calEl = document.getElementById('suelta-calendar');
+    var timesEl = document.getElementById('suelta-times');
+    var y = calState.year, m = calState.month;
+    var now = new Date();
+    var todayKey = dateKey(now.getFullYear(), now.getMonth(), now.getDate());
+
+    // Navigation
+    var html = '<div class="cal__header">' +
+      '<button class="cal__nav" data-cal-nav="-1" aria-label="Previous month">&#8249;</button>' +
+      '<span class="cal__month">' + (MONTHS[lang]||MONTHS.es)[m] + ' ' + y + '</span>' +
+      '<button class="cal__nav" data-cal-nav="1" aria-label="Next month">&#8250;</button>' +
+      '</div>';
+
+    // Day headers
+    html += '<div class="cal__grid">';
+    (DAY_HDR[lang]||DAY_HDR.es).forEach(function(d) {
+      html += '<span class="cal__day-label">' + d + '</span>';
+    });
+
+    // Calendar days
+    var firstDay = new Date(y, m, 1);
+    var startDow = (firstDay.getDay() + 6) % 7; // Monday = 0
+    var daysInMonth = new Date(y, m+1, 0).getDate();
+    var prevMonthDays = new Date(y, m, 0).getDate();
+
+    // Previous month filler
+    for (var p = startDow - 1; p >= 0; p--) {
+      html += '<span class="cal__day cal__day--other">' + (prevMonthDays - p) + '</span>';
+    }
+
+    // Current month
+    for (var d = 1; d <= daysInMonth; d++) {
+      var dk = dateKey(y, m, d);
+      var isToday = dk === todayKey;
+      var hasSlots = !!calState.slotMap[dk];
+      var isSelected = dk === calState.selectedDate;
+      var cls = 'cal__day';
+      if (isToday) cls += ' cal__day--today';
+      if (hasSlots) cls += ' cal__day--available';
+      if (isSelected) cls += ' cal__day--selected';
+      if (!hasSlots) cls += ' cal__day--disabled';
+
+      if (hasSlots) {
+        html += '<button class="' + cls + '" data-date="' + dk + '">' + d + '</button>';
+      } else {
+        html += '<span class="' + cls + '">' + d + '</span>';
+      }
+    }
+
+    // Next month filler
+    var totalCells = startDow + daysInMonth;
+    var remaining = (7 - totalCells % 7) % 7;
+    for (var n = 1; n <= remaining; n++) {
+      html += '<span class="cal__day cal__day--other">' + n + '</span>';
+    }
+
+    html += '</div>';
+    calEl.innerHTML = html;
+
+    // Hint if no slots this month
+    var hasAnyThisMonth = false;
+    for (var dd = 1; dd <= daysInMonth; dd++) {
+      if (calState.slotMap[dateKey(y,m,dd)]) { hasAnyThisMonth = true; break; }
+    }
+    if (!hasAnyThisMonth) {
+      calEl.insertAdjacentHTML('beforeend', '<p style="text-align:center; color:var(--color-muted); font-size:0.875rem; margin-top:var(--space-sm);">' + t('calNoSlots') + '</p>');
+    }
+
+    // Disable prev nav if current month
+    var prevBtn = calEl.querySelector('[data-cal-nav="-1"]');
+    if (y === now.getFullYear() && m === now.getMonth()) prevBtn.disabled = true;
+
+    // Nav events
+    calEl.querySelectorAll('[data-cal-nav]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var dir = +btn.dataset.calNav;
+        calState.month += dir;
+        if (calState.month > 11) { calState.month = 0; calState.year++; }
+        if (calState.month < 0) { calState.month = 11; calState.year--; }
+        calState.selectedDate = null;
+        renderCalendar();
+      });
+    });
+
+    // Day click events
+    calEl.querySelectorAll('[data-date]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        calState.selectedDate = btn.dataset.date;
+        renderCalendar(); // re-render to update selected state
+        renderTimeSlots(btn.dataset.date);
+      });
+    });
+
+    // If a date was already selected, show its times
+    if (calState.selectedDate && calState.slotMap[calState.selectedDate]) {
+      renderTimeSlots(calState.selectedDate);
+    } else if (timesEl) {
+      timesEl.innerHTML = '<p class="cal-times__label">' + t('calSelect') + '</p>';
+    }
+  }
+
+  function renderTimeSlots(dateStr) {
+    var timesEl = document.getElementById('suelta-times');
+    if (!timesEl) return;
+
+    var slots = calState.slotMap[dateStr] || [];
+    if (!slots.length) { timesEl.innerHTML = ''; return; }
+
+    // Find day name from first slot
+    var dayStr = slots[0].giorno_settimana ? dayName(slots[0].giorno_settimana) : '';
+    var dateParts = dateStr.split('-');
+    var dateDisplay = +dateParts[2] + ' ' + (MONTHS[lang]||MONTHS.es)[+dateParts[1]-1];
+
+    var html = '<p class="cal-times__label">' + dayStr + ' ' + dateDisplay + '</p>';
+    html += '<div class="cal-times__list">';
+
+    slots.forEach(function(slot) {
+      var spotsLabel = slot.posti_liberi === 1 ? t('calSpot1') : t('calSpots', { n: slot.posti_liberi });
+      var isUrgent = slot.posti_liberi <= 2;
+
+      html += '<div class="cal-time" data-slot-id="' + slot.slot_id + '">' +
+        '<div class="cal-time__info">' +
+          '<span class="cal-time__hour">' + fmtTime(slot.ora_inizio) + ' – ' + fmtTime(slot.ora_fine) + '</span>' +
+          '<span class="cal-time__spots">' + spotsLabel +
+            (isUrgent ? ' <span class="turno-card__badge--urgent">' + t('urgent') + '</span>' : '') +
+          '</span>' +
+        '</div>' +
+        '<button class="btn btn--dark" data-slot-id="' + slot.slot_id + '">' + t('book') + '</button>' +
+      '</div>';
+    });
+
+    html += '</div>';
+    timesEl.innerHTML = html;
+
+    // Bind booking on time slot buttons
+    timesEl.querySelectorAll('.cal-time .btn[data-slot-id]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var slotId = btn.dataset.slotId;
+        var calTime = btn.closest('.cal-time');
+        // Replace button with form
+        var formArea = calTime.querySelector('.btn[data-slot-id]');
+        var formHtml = '<div class="booking-form" style="display:flex;" data-slot-id="' + slotId + '">' +
+          '<input type="text" name="nombre" placeholder="' + t('formName') + '" autocomplete="name">' +
+          '<input type="email" name="email" placeholder="' + t('formEmail') + '" required autocomplete="email">' +
+          '<input type="tel" name="telefono" placeholder="' + t('formPhone') + '" autocomplete="tel">' +
+          '<button class="btn btn--dark" type="submit">' + t('formSubmit') + '</button>' +
+          '<button class="btn btn--secondary" type="button" data-cancel>' + t('formCancel') + '</button>' +
+        '</div>';
+        btn.style.display = 'none';
+        calTime.insertAdjacentHTML('beforeend', formHtml);
+        var form = calTime.querySelector('.booking-form');
+        form.querySelector('[name="nombre"]').focus();
+        bindCheckout(calTime);
       });
     });
   }
 
-  /* ── Checkout flow ── */
+  /* ══════════════════════════════════════════════════════
+     CHECKOUT — shared form handling
+     ══════════════════════════════════════════════════════ */
 
-  function bindBookingEvents(container) {
-    // "Reservar" buttons → show form
-    container.querySelectorAll('[data-slot-id]').forEach(function(btn) {
-      if (btn.tagName === 'BUTTON' && !btn.closest('.booking-form') && !btn.closest('.suelta-slot-item')) {
-        btn.addEventListener('click', function() {
-          var form = btn.parentElement.querySelector('.booking-form');
-          if (form) {
-            btn.style.display = 'none';
-            form.style.display = 'flex';
-            form.querySelector('input[name="nombre"]').focus();
-          }
-        });
-      }
+  function bindCheckout(container) {
+    // "Reservar" → show form (semanal cards)
+    container.querySelectorAll('.turno-card__cta[data-slot-id]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var form = btn.parentElement.querySelector('.booking-form');
+        if (form) { btn.style.display = 'none'; form.style.display = 'flex'; form.querySelector('[name="nombre"]').focus(); }
+      });
     });
 
-    // Cancel buttons
+    // Cancel
     container.querySelectorAll('[data-cancel]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var form = btn.closest('.booking-form');
-        if (form) {
-          form.style.display = 'none';
-          var ctaBtn = form.parentElement.querySelector('.turno-card__cta');
-          if (ctaBtn) ctaBtn.style.display = '';
-        }
+        if (!form) return;
+        form.style.display = 'none';
+        var cta = form.parentElement.querySelector('.turno-card__cta, .btn[data-slot-id]');
+        if (cta) cta.style.display = '';
       });
     });
 
-    // Submit buttons inside forms
+    // Submit
     container.querySelectorAll('.booking-form [type="submit"]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var form = btn.closest('.booking-form');
         var slotId = form.dataset.slotId;
-        var nombre = form.querySelector('[name="nombre"]').value.trim();
         var email = form.querySelector('[name="email"]').value.trim();
-        var telefono = form.querySelector('[name="telefono"]').value.trim();
-
-        if (!email) {
-          form.querySelector('[name="email"]').focus();
-          return;
-        }
+        if (!email) { form.querySelector('[name="email"]').focus(); return; }
 
         btn.disabled = true;
         btn.textContent = '...';
 
         apiPost('create_checkout', {
           slot_id: slotId,
-          cliente_nombre: nombre,
+          cliente_nombre: form.querySelector('[name="nombre"]').value.trim(),
           cliente_email: email,
-          cliente_telefono: telefono
-        }).then(function(data) {
-          if (data.ok && data.checkout_url) {
-            window.location.href = data.checkout_url;
-          } else {
-            alert(data.error || 'Error');
-            btn.disabled = false;
-            btn.textContent = label('formSubmit');
-          }
+          cliente_telefono: form.querySelector('[name="telefono"]').value.trim()
+        }).then(function(d) {
+          if (d.ok && d.checkout_url) { window.location.href = d.checkout_url; }
+          else { alert(d.error || 'Error'); btn.disabled = false; btn.textContent = t('formSubmit'); }
         }).catch(function() {
-          alert('Error de red');
-          btn.disabled = false;
-          btn.textContent = label('formSubmit');
+          alert('Error de red'); btn.disabled = false; btn.textContent = t('formSubmit');
         });
-      });
-    });
-
-    // Suelta slot item buttons → inline form or direct
-    container.querySelectorAll('.suelta-slot-item [data-slot-id]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var slotId = btn.dataset.slotId;
-        var item = btn.closest('.suelta-slot-item');
-
-        // Replace item content with mini form
-        item.innerHTML =
-          '<div class="booking-form" style="display:flex; width:100%;" data-slot-id="' + slotId + '">' +
-            '<input type="text" name="nombre" placeholder="' + label('formName') + '" style="flex:1;">' +
-            '<input type="email" name="email" placeholder="' + label('formEmail') + '" required style="flex:1;">' +
-            '<input type="tel" name="telefono" placeholder="' + label('formPhone') + '" style="flex:1;">' +
-            '<button class="btn btn--dark" type="submit" style="padding:8px 16px; font-size:0.8rem;">' + label('formSubmit') + '</button>' +
-          '</div>';
-
-        // Re-bind submit for this new form
-        var newForm = item.querySelector('.booking-form');
-        var submitBtn = newForm.querySelector('[type="submit"]');
-        submitBtn.addEventListener('click', function() {
-          var nombre = newForm.querySelector('[name="nombre"]').value.trim();
-          var email = newForm.querySelector('[name="email"]').value.trim();
-          var telefono = newForm.querySelector('[name="telefono"]').value.trim();
-
-          if (!email) {
-            newForm.querySelector('[name="email"]').focus();
-            return;
-          }
-
-          submitBtn.disabled = true;
-          submitBtn.textContent = '...';
-
-          apiPost('create_checkout', {
-            slot_id: slotId,
-            cliente_nombre: nombre,
-            cliente_email: email,
-            cliente_telefono: telefono
-          }).then(function(data) {
-            if (data.ok && data.checkout_url) {
-              window.location.href = data.checkout_url;
-            } else {
-              alert(data.error || 'Error');
-              submitBtn.disabled = false;
-              submitBtn.textContent = label('formSubmit');
-            }
-          }).catch(function() {
-            alert('Error de red');
-            submitBtn.disabled = false;
-            submitBtn.textContent = label('formSubmit');
-          });
-        });
-
-        newForm.querySelector('[name="nombre"]').focus();
       });
     });
   }
 
-  /* ── Gracias page ── */
+  /* ══════════════════════════════════════════════════════
+     GRACIAS page
+     ══════════════════════════════════════════════════════ */
 
   function initGraciasPage() {
-    var detail = document.getElementById('gracias-slot-detail');
-    if (!detail) return;
-
-    var params = new URLSearchParams(window.location.search);
-    var slotId = params.get('slot');
+    var el = document.getElementById('gracias-slot-detail');
+    if (!el) return;
+    var slotId = new URLSearchParams(window.location.search).get('slot');
     if (!slotId) return;
 
     apiGet({ action: 'slot_detail', slot_id: slotId })
-      .then(function(data) {
-        if (!data.ok || !data.slot) return;
-        var s = data.slot;
-        var day = dayName(s.giorno_settimana);
-        var time = lang === 'en' ? formatTimeEN(s.ora_inizio) : s.ora_inizio + 'h';
-
-        detail.innerHTML =
-          '<p style="font-size:1.1rem; margin-top:16px;">' +
-          '<strong>' + day + '</strong> · ' + time +
-          ' — ' + capitalize(s.tipo) + ' ' + capitalize(s.risorsa) +
-          '</p>';
-      })
-      .catch(function() { /* silently fail */ });
-  }
-
-  /* ── Utilities ── */
-
-  function formatTimeEN(time24) {
-    var parts = time24.split(':');
-    var h = parseInt(parts[0], 10);
-    var m = parts[1] || '00';
-    var ampm = h >= 12 ? 'pm' : 'am';
-    if (h > 12) h -= 12;
-    if (h === 0) h = 12;
-    return h + ':' + m + ampm;
-  }
-
-  function capitalize(s) {
-    return s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
+      .then(function(d) {
+        if (!d.ok || !d.slot) return;
+        var s = d.slot;
+        el.innerHTML = '<p style="font-size:1.1rem;margin-top:16px;"><strong>' +
+          dayName(s.giorno_settimana) + '</strong> · ' + fmtTime(s.ora_inizio) +
+          ' — ' + (s.tipo.charAt(0).toUpperCase()+s.tipo.slice(1)) + ' ' +
+          (s.risorsa.charAt(0).toUpperCase()+s.risorsa.slice(1)) + '</p>';
+      }).catch(function(){});
   }
 
   /* ── Init ── */
 
   document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('booking-grid')) {
-      initSemanalPage();
-    }
-    if (document.getElementById('suelta-container')) {
-      initSueltaPage();
-    }
-    if (document.getElementById('gracias-slot-detail')) {
-      initGraciasPage();
-    }
+    if (document.getElementById('booking-grid')) initSemanalPage();
+    if (document.getElementById('suelta-tabs')) initSueltaPage();
+    if (document.getElementById('gracias-slot-detail')) initGraciasPage();
   });
 
 })();

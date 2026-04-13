@@ -652,10 +652,14 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 ### Componenti
 
 **Frontend (Sito web):**
-- `js/booking.js` — fetch API, render card dinamiche, checkout flow, i18n (ES/EN/CA)
+- `js/booking.js` — fetch API, calendario suelta, card semanal migliorate, checkout flow, i18n (ES/EN/CA)
 - Pagine dinamiche: `semanal-modelado.html`, `semanal-torno.html`, `suelta.html` (×3 lingue)
 - `gracias.html` (×3 lingue) — post-checkout con dettaglio slot da URL param
-- CSS: `.turno-skeleton`, `.turno-card__spots`, `.turno-card__badge--urgent`, `.booking-form`, `.suelta-slots`
+- CSS calendario: `.cal`, `.cal__grid`, `.cal__day`, `.cal__day--available/selected/today`, `.cal-times`, `.cal-time`
+- CSS tabs suelta: `.suelta-tabs`, `.suelta-tab`, `.suelta-tab--active`
+- CSS semanal migliorato: `.turno-card__dots`, `.turno-card__dot--filled`, `.turno-card--completo`, `.turno-card__badge--particular`
+- UI suelta: calendario mensile navigabile (prev/next), giorni con slot gialli, click → orari disponibili
+- UI semanal: card con dots indicatore posti, badge "¡Últimas plazas!" (≤2), card grigia "Completo" (=0)
 
 **Backend (GAS — repo `la-mesa-appscript`):**
 - `Booking.js` — tutte le funzioni di booking (non in Codice.js)

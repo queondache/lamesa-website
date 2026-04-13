@@ -2124,18 +2124,7 @@ p {
   fill: currentColor;
 }
 
-/* ── Booking: dynamic slots ── */
-
-.turno-card__spots {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--blue);
-  opacity: 0.8;
-}
-.turno-card--torno .turno-card__spots,
-.turno-card--torno-primary .turno-card__spots {
-  color: var(--cream);
-}
+/* ── Booking: shared ── */
 
 .turno-card__badge--urgent {
   display: inline-block;
@@ -2146,6 +2135,18 @@ p {
   border-radius: var(--radius-pill);
   text-transform: uppercase;
   font-weight: 700;
+}
+
+.turno-card__badge--particular {
+  display: inline-block;
+  background: var(--pink);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-xs);
 }
 
 .turno-skeleton {
@@ -2161,7 +2162,6 @@ p {
   100% { background-position: -200% 0; }
 }
 
-/* Booking: no-slots message */
 .turno-no-slots {
   text-align: center;
   padding: var(--space-lg) var(--space-md);
@@ -2193,37 +2193,300 @@ p {
   min-height: 44px;
 }
 
-.booking-form input::placeholder {
-  opacity: 0.6;
-}
+.booking-form input::placeholder { opacity: 0.6; }
 
 .turno-card--modelado .booking-form input {
   border-color: rgba(0,0,0,0.15);
   background: rgba(255,255,255,0.3);
 }
 
-/* Suelta: expandable slot picker */
-.suelta-slots {
-  display: none;
-  margin-top: var(--space-md);
+/* ── Semanal: spots indicator ── */
+
+.turno-card__spots {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  opacity: 0.8;
 }
 
-.suelta-slots.active {
-  display: block;
+.turno-card--torno .turno-card__spots {
+  color: var(--cream);
 }
 
-.suelta-slot-item {
+.turno-card__dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.turno-card__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: background var(--transition-fast);
+}
+
+.turno-card--modelado .turno-card__dot {
+  background: rgba(0,0,0,0.15);
+}
+
+.turno-card--modelado .turno-card__dot--filled {
+  background: rgba(0,0,0,0.5);
+}
+
+.turno-card--torno .turno-card__dot {
+  background: rgba(255,255,255,0.25);
+}
+
+.turno-card--torno .turno-card__dot--filled {
+  background: rgba(255,255,255,0.7);
+}
+
+/* Semanal: completo state */
+.turno-card--completo {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.turno-card__completo {
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: var(--space-sm);
+  opacity: 0.7;
+}
+
+/* ── Suelta: discipline tabs ── */
+
+.suelta-tabs {
+  display: flex;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.suelta-tab {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-lg);
+  border: 2px solid transparent;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: all var(--transition-base);
+}
+
+.suelta-tab--mesa {
+  background: rgba(247,177,55,0.15);
+  color: var(--black);
+}
+
+.suelta-tab--mesa.suelta-tab--active {
+  background: var(--yellow);
+  border-color: var(--yellow);
+}
+
+.suelta-tab--torno {
+  background: rgba(27,60,139,0.1);
+  color: var(--blue);
+}
+
+.suelta-tab--torno.suelta-tab--active {
+  background: var(--blue);
+  color: var(--white);
+  border-color: var(--blue);
+}
+
+.suelta-tab--torno.suelta-tab--active .turno-card__badge--particular {
+  background: rgba(255,255,255,0.25);
+}
+
+@media (max-width: 375px) {
+  .suelta-tab { font-size: 0.875rem; padding: var(--space-xs) var(--space-sm); }
+}
+
+/* ── Suelta: calendar ── */
+
+.cal {
+  max-width: 420px;
+  margin: 0 auto var(--space-md);
+  user-select: none;
+}
+
+.cal__header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-sm);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
-  background: rgba(255,255,255,0.15);
-  margin-bottom: var(--space-xs);
-  font-size: 0.875rem;
+  margin-bottom: var(--space-sm);
 }
 
-.suelta-slot-item button {
+.cal__month {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--black);
+}
+
+.cal__nav {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  color: var(--blue);
+  transition: background var(--transition-fast);
+}
+
+.cal__nav:hover { background: rgba(27,60,139,0.08); }
+.cal__nav:disabled { opacity: 0.3; cursor: default; }
+.cal__nav:disabled:hover { background: transparent; }
+
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal__day-label {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  padding: 8px 0;
+  text-transform: uppercase;
+}
+
+.cal__day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  border: none;
+  background: transparent;
+  cursor: default;
+  min-height: 44px;
+  transition: all var(--transition-fast);
+}
+
+.cal__day--other {
+  color: rgba(0,0,0,0.15);
+}
+
+.cal__day--today {
+  box-shadow: inset 0 0 0 2px var(--blue);
+  color: var(--blue);
+}
+
+.cal__day--available {
+  background: var(--yellow);
+  color: var(--black);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.cal__day--available:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(247,177,55,0.4);
+}
+
+.cal__day--selected {
+  background: var(--blue);
+  color: var(--white);
+}
+
+.cal__day--selected:hover {
+  box-shadow: 0 4px 12px rgba(27,60,139,0.4);
+}
+
+/* ── Suelta: time slots ── */
+
+.cal-times {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.cal-times__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  margin-bottom: var(--space-xs);
+  text-align: center;
+}
+
+.cal-times__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.cal-time {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.cal-time:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.cal-time__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.cal-time__hour {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--black);
+}
+
+.cal-time__spots {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.cal-time .btn {
   flex-shrink: 0;
+  padding: 10px 20px;
+  font-size: 0.85rem;
+}
+
+/* Checkout form inside time slot */
+.cal-time .booking-form {
+  width: 100%;
+}
+
+.cal-time .booking-form input {
+  border-color: rgba(27,60,139,0.2);
+  background: var(--cream);
+  color: var(--black);
+}
+
+@media (max-width: 375px) {
+  .cal__day { min-height: 38px; font-size: 0.8rem; }
+  .cal-time { padding: var(--space-xs) var(--space-sm); }
 }

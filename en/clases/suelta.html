@@ -119,28 +119,25 @@
       </div>
     </section>
 
-    <section class="turno-section" style="background: var(--cream);" id="suelta-container">
+    <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid turno-grid--2col">
 
-          <div class="turno-card turno-card--modelado fade-in">
-            <h2 class="turno-card__title">Hand-building</h2>
-            <p class="turno-card__details">Working clay by hand.</p>
-            <p class="turno-card__price">From €45</p>
-            <button class="btn btn--dark" data-suelta-trigger data-risorsa="mesa" aria-label="Book Drop-in Hand-building Class">Book →</button>
-            <div class="suelta-slots" id="slots-mesa"></div>
-          </div>
-
-          <div class="turno-card turno-card--torno fade-in fade-in--delay-1">
-            <span style="display:inline-block;background:var(--pink);color:#fff;font-family:'Montserrat',sans-serif;font-size:.75rem;font-weight:700;padding:4px 14px;border-radius:100px;margin-bottom:8px;">Private class</span>
-            <h2 class="turno-card__title">Wheel throwing</h2>
-            <p class="turno-card__details">Private sessions. Maximum 2 people.</p>
-            <p class="turno-card__price">From €65</p>
-            <button class="btn btn--white" data-suelta-trigger data-risorsa="torno" aria-label="Book Drop-in Wheel Throwing Class">Book →</button>
-            <div class="suelta-slots" id="slots-torno"></div>
-          </div>
-
+        <div class="suelta-tabs" id="suelta-tabs">
+          <button class="suelta-tab suelta-tab--mesa suelta-tab--active" data-risorsa="mesa">
+            Hand-building · From €45
+          </button>
+          <button class="suelta-tab suelta-tab--torno" data-risorsa="torno">
+            Wheel throwing · From €65
+            <span class="turno-card__badge--particular">Private class</span>
+          </button>
         </div>
+
+        <div id="suelta-calendar">
+          <div class="turno-skeleton" style="height:320px;"></div>
+        </div>
+
+        <div id="suelta-times"></div>
+
       </div>
     </section>
 
