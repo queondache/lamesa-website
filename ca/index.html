@@ -18,7 +18,7 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="La Mesa – Taller de Ceràmica i Laboratori Creatiu a Barcelona">
+  <meta property="og:title" content="Taller de Ceràmica a Barcelona | La Mesa">
   <meta property="og:description" content="Taller de ceràmica, tallers creatius i comunitat a la Barceloneta, Barcelona.">
   <meta property="og:url" content="https://www.lamesabcn.com/ca/">
   <meta property="og:image" content="https://www.lamesabcn.com/images/og-lamesa.jpg">
@@ -49,7 +49,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /ca/) -->
-  <link rel="stylesheet" href="../css/style.css?v=2">
+  <link rel="stylesheet" href="../css/style.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -115,6 +115,7 @@
         <a class="navbar__link" href="#privadas" data-section="privadas">Privades</a>
         <a class="navbar__link" href="#faq">FAQ</a>
         <a class="navbar__link" href="#contacto" data-section="contacto">Contacte</a>
+        <a class="navbar__link" href="/blog/">Blog</a>
 
         <!-- Language switcher -->
         <div class="navbar__lang" aria-label="Canviar idioma">
@@ -151,6 +152,7 @@
       <a class="navbar__mobile-link" href="#privadas">Privades</a>
       <a class="navbar__mobile-link" href="#faq">FAQ</a>
       <a class="navbar__mobile-link" href="#contacto">Contacte</a>
+      <a class="navbar__mobile-link" href="/blog/">Blog</a>
       <div class="navbar__mobile-lang">
         <a href="/index.html" lang="es">ES</a>
         <a href="/en/index.html" lang="en">EN</a>
@@ -224,10 +226,13 @@
 
           <!-- Image column -->
           <div class="nosotras__image fade-in fade-in--delay-1">
-            <img src="../images/nosotras.jpg"
-  alt="Laura a La Mesa, laboratori creatiu de ceràmica a la Barceloneta, Barcelona"
-  width="600" height="450"
-  loading="lazy">
+            <picture>
+              <source srcset="../images/nosotras.webp" type="image/webp">
+              <img src="../images/nosotras.jpg"
+                alt="Laura a La Mesa, laboratori creatiu de ceràmica a la Barceloneta, Barcelona"
+                width="600" height="450"
+                loading="lazy">
+            </picture>
           </div>
 
         </div>
@@ -306,22 +311,6 @@
           </div>
 
         </div>
-
-        <!-- COWORKING -->
-        <article class="clase-card clase-card--secondary fade-in" style="margin-top:var(--space-md); max-width:720px; margin-left:auto; margin-right:auto;" aria-label="Coworking">
-          <h3 class="clase-card__title">Coworking</h3>
-          <p class="clase-card__subtitle">Per als que ja saben</p>
-          <p class="clase-card__body">
-            Si ja tens experiència i vols un espai per desenvolupar els teus projectes,
-            tenim taules i torns disponibles. Explica'ns què necessites.
-          </p>
-          <a class="clase-card__cta clase-card__cta--whatsapp"
-             href="https://wa.me/34711552030?text=Hola!%20M'interessa%20el%20Coworking.%20Hi%20ha%20disponibilitat%3F"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Escriu-nos sobre Coworking per WhatsApp">
-            Escriu-nos →
-          </a>
-        </article>
 
         <!-- NOTA -->
         <p class="fade-in" style="text-align:center; font-size:0.875rem; color:#888; margin-top:var(--space-lg); margin-bottom:var(--space-xl); line-height:1.6;">
@@ -408,15 +397,19 @@
         <div class="tienda__grid" aria-label="Galeria de peces de ceràmica artesanal">
 
           <div class="tienda__product fade-in fade-in--delay-1">
-            <img src="../images/pieza-01.jpg" alt="Peça de ceràmica artesanal de La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-1.jpg" alt="Peces de ceràmica artesanal a La Mesa Barcelona 1" width="400" height="400" loading="lazy">
           </div>
 
           <div class="tienda__product fade-in fade-in--delay-2">
-            <img src="../images/pieza-02.jpg" alt="Bol de ceràmica artesanal de La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-2.jpg" alt="Peces de ceràmica artesanal a La Mesa Barcelona 2" width="400" height="400" loading="lazy">
           </div>
 
           <div class="tienda__product fade-in fade-in--delay-3">
-            <img src="../images/pieza-03.jpg" alt="Gerro de ceràmica artesanal de La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-3.jpg" alt="Peces de ceràmica artesanal a La Mesa Barcelona 3" width="400" height="400" loading="lazy">
+          </div>
+
+          <div class="tienda__product fade-in">
+            <img src="../images/foto-tienda-4.jpg" alt="Peces de ceràmica artesanal a La Mesa Barcelona 4" width="400" height="400" loading="lazy">
           </div>
 
         </div>
@@ -510,11 +503,6 @@
           <div class="faq__list">
 
             <details class="faq__item">
-              <summary class="faq__question">Cal tenir experiència prèvia per apuntar-se?</summary>
-              <p class="faq__answer">No. Les classes de ceràmica a La Mesa estan pensades per a tots els nivells. El Taller Setmanal i la Sessió Lliure són perfectes per a qui mai ha tocat el fang. Per al Taller Flex i el Coworking Torn sí que cal experiència prèvia.</p>
-            </details>
-
-            <details class="faq__item">
               <summary class="faq__question">Quant costen les classes de ceràmica a Barcelona?</summary>
               <p class="faq__answer">A La Mesa els preus van des de 20€/hora per a la Sessió Lliure fins a 120€/mes per al Taller Setmanal. El nostre curs d'Intro al Torn surt a 90€.</p>
             </details>
@@ -525,18 +513,8 @@
             </details>
 
             <details class="faq__item">
-              <summary class="faq__question">On sou a Barcelona?</summary>
-              <p class="faq__answer">La Mesa es troba al Carrer de l'Atlàntida 47, al barri de la Barceloneta, Barcelona. Som l'únic taller de ceràmica a la Barceloneta, a cinc minuts a peu de la platja.</p>
-            </details>
-
-            <details class="faq__item">
               <summary class="faq__question">Puc reservar en línia?</summary>
               <p class="faq__answer">Sí. El Taller Setmanal i la Sessió Lliure es poden reservar directament en línia. Per al Taller Flex, l'Intro al Torn i el Coworking Torn escriu-nos per WhatsApp per coordinar.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Feu sessions per a grups o esdeveniments privats?</summary>
-              <p class="faq__answer">Sí. Organitzem team buildings, aniversaris, comiats de soltera i sessions familiars per a grups de fins a 10 persones. Escriu-nos per rebre un pressupost personalitzat.</p>
             </details>
 
             <details class="faq__item">
@@ -552,6 +530,11 @@
             <details class="faq__item">
               <summary class="faq__question">Feu esdeveniments privats, team buildings o despedides de soltera?</summary>
               <p class="faq__answer">Sí, organitzem sessions privades per a grups: aniversaris, despedides, team buildings i molt més. Escriu-nos per WhatsApp o mail per a un pressupost.</p>
+            </details>
+
+            <details class="faq__item">
+              <summary class="faq__question">Què és el Coworking de Torn i com funciona?</summary>
+              <p class="faq__answer">El Coworking de Torn és un espai per a ceramistes que ja saben usar el torn i volen practicar de forma autònoma. Disponible dimarts, dimecres i divendres de 14 a 18h. Reserva per WhatsApp.</p>
             </details>
 
           </div>
@@ -683,6 +666,11 @@
             <input type="checkbox" required name="privacy-footer">
             <span>Accepto la <a href="/ca/privacy.html" target="_blank">política de privacitat</a></span>
           </label>
+        </div>
+
+        <!-- Footer links -->
+        <div style="text-align: center; margin-bottom: var(--space-sm);">
+          <a href="/team-building.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Team Building</a>
         </div>
 
         <!-- Footer bottom bar -->
@@ -859,14 +847,6 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Cal tenir experiència prèvia per apuntar-se?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Les classes de ceràmica a La Mesa estan pensades per a tots els nivells. El Taller Setmanal i la Sessió Lliure són perfectes per a qui mai ha tocat el fang. Per al Taller Flex i el Coworking Torn sí que cal experiència prèvia."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Quant costen les classes de ceràmica a Barcelona?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -883,26 +863,10 @@
       },
       {
         "@type": "Question",
-        "name": "On sou a Barcelona?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "La Mesa es troba al Carrer de l'Atlàntida 47, al barri de la Barceloneta, Barcelona. Som l'únic taller de ceràmica a la Barceloneta, a cinc minuts a peu de la platja."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Puc reservar en línia?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Sí. El Taller Setmanal i la Sessió Lliure es poden reservar directament en línia. Per al Taller Flex, l'Intro al Torn i el Coworking Torn escriu-nos per WhatsApp per coordinar."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Feu sessions per a grups o esdeveniments privats?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Sí. Organitzem team buildings, aniversaris, comiats de soltera i sessions familiars per a grups de fins a 10 persones. Escriu-nos per rebre un pressupost personalitzat."
         }
       },
       {
@@ -928,13 +892,21 @@
           "@type": "Answer",
           "text": "Sí, organitzem sessions privades per a grups: aniversaris, despedides, team buildings i molt més. Escriu-nos per WhatsApp o mail per a un pressupost."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "Què és el Coworking de Torn i com funciona?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "El Coworking de Torn és un espai per a ceramistes que ja saben usar el torn i volen practicar de forma autònoma. Disponible dimarts, dimecres i divendres de 14 a 18h. Reserva per WhatsApp."
+        }
       }
     ]
   }
   </script>
 
   <!-- Main script (relative path from /ca/) -->
-  <script src="../js/main.js?v=2" defer></script>
+  <script src="../js/main.js?v=3" defer></script>
 
 </body>
 </html>

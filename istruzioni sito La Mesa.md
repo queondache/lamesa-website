@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-03-31
+> Ultimo aggiornamento: 2026-04-13 (sessione 2: coworking→FAQ, tienda foto, sitemap completa)
 
 ---
 
@@ -59,7 +59,8 @@ lamesa-website/
 │   └── main.js             # Navbar, scroll, lazy load, toast, smooth scroll (267 righe)
 ├── images/
 │   ├── hero.jpg            # Hero background (747 KB)
-│   ├── nosotras.jpg        # Sezione nosotras (4.5 MB) ⚠️ DA OTTIMIZZARE
+│   ├── nosotras.jpg        # Sezione nosotras (237 KB, ottimizzato)
+│   ├── nosotras.webp       # Versione WebP (201 KB)
 │   ├── pieza-01.jpg        # Tienda grid (139 KB)
 │   ├── pieza-02.jpg        # Tienda grid (116 KB)
 │   ├── pieza-03.jpg        # Tienda grid (91 KB)
@@ -70,6 +71,32 @@ lamesa-website/
 │   ├── favicon-32.png      # Favicon 32x32
 │   └── favicon-180.png     # Apple touch icon 180x180
 ├── fonts/                  # Font custom: Garet-Black.woff2, HighCruiser.woff2
+├── blog/
+│   ├── index.html          # Blog index
+│   ├── que-esperar-primera-clase-ceramica.html   # Post 1 ES
+│   ├── guia-talleres-ceramica-barcelona.html     # Post 2 ES
+│   ├── que-es-el-torno-ceramica.html             # Post 3 ES
+│   ├── cosas-que-hacer-en-barceloneta.html       # Post 4 ES
+│   ├── plan-diferente-barcelona-ceramica.html    # Post 5 ES
+│   ├── ceramica-para-principiantes-barcelona.html # Post 6 ES
+│   ├── what-to-expect-first-pottery-class.html   # Post 1 EN
+│   ├── ceramics-classes-barcelona-guide.html     # Post 2 EN
+│   ├── wheel-throwing-barcelona-beginners.html   # Post 3 EN
+│   ├── things-to-do-barceloneta-barcelona.html   # Post 4 EN
+│   ├── unique-date-ideas-barcelona-pottery.html  # Post 5 EN
+│   ├── pottery-for-beginners-barcelona.html      # Post 6 EN
+│   ├── que-esperar-primera-classe-ceramica.html  # Post 1 CA
+│   ├── guia-tallers-ceramica-barcelona.html      # Post 2 CA
+│   ├── torn-ceramica-barcelona-guia.html         # Post 3 CA
+│   ├── pla-diferent-barcelona-ceramica.html      # Post 5 CA
+│   ├── ceramica-per-a-principiants-barcelona.html # Post 6 CA
+│   ├── como-elegir-taller-ceramica-barcelona.html # Post 7 ES
+│   ├── how-to-choose-pottery-class-barcelona.html # Post 7 EN
+│   ├── com-triar-taller-ceramica-barcelona.html   # Post 7 CA
+│   ├── cuanto-cuesta-clase-ceramica-barcelona.html # Post 8 ES
+│   ├── pottery-class-prices-barcelona.html        # Post 8 EN
+│   └── preu-classe-ceramica-barcelona.html        # Post 8 CA
+├── team-building.html      # Landing page Team Building ES
 ├── privacy.html            # Politica privacy ES (noindex)
 ├── 404.html                # Pagina errore custom
 ├── sitemap.xml             # Sitemap con hreflang (ES, EN, CA + privacy)
@@ -81,7 +108,7 @@ lamesa-website/
 
 ### Note critiche sui file
 
-- **nosotras.jpg** e' 4.5 MB — troppo pesante per il web, da comprimere.
+- **nosotras.jpg** ottimizzato: 237 KB (JPG) + 201 KB (WebP). Tag `<picture>` con fallback in tutti i file index.html.
 - Le 3 versioni linguistiche (ES, EN, CA) sono file HTML separati con contenuto tradotto manualmente. **Non esiste un sistema i18n automatico.**
 - CSS e JS sono condivisi: un solo `style.css` e un solo `main.js` per tutte le lingue.
 - EN e CA usano path relativi (`../css/style.css`, `../images/...`), ES usa path dalla root (`css/style.css`, `images/...`) o assoluti (`/images/...` per favicon).
@@ -310,7 +337,6 @@ section.clases.section--lg > div.container
             > p.clases__bloque-label
             > div.clases__bloque-grid
                 > article.clase-card.clase-card--torno-primary (Intro al Torno)
-                > article.clase-card.clase-card--secondary (Coworking Torno)
     > div.clase-suelta.fade-in (banner separato)
         > div.clase-suelta__inner
             > div.clase-suelta__text > p.clase-suelta__eyebrow + h3 + p
@@ -334,7 +360,7 @@ section.workshops.section--lg > div.container > div.workshops__inner.fade-in
 section.tienda.section--lg > div.container
     > div.tienda__header.fade-in > h2 + p.tienda__subheadline + p.tienda__text
     > div.tienda__grid (3col, 2col tablet, 1col small mobile)
-        > div.tienda__product x3 (con fade-in delay progressivo)
+        > div.tienda__product x4 (con fade-in delay progressivo, foto-tienda-1/2/3/4.jpg)
     > div.tienda__gift.fade-in (vale-regalo box)
     > div.tienda__ctas.fade-in > a.btn.btn--dark#etsy-link
 ```
@@ -356,7 +382,15 @@ section.faq.section--lg > div.container > div.faq__inner.fade-in
             > summary.faq__question
             > p.faq__answer
 ```
-6 domande FAQ identiche nelle 3 lingue (tradotte).
+10 domande FAQ identiche nelle 3 lingue (tradotte):
+1. Quanto costano le classi
+2. Materiali inclusi
+3. Prenotazione online
+4. Dove si trova La Mesa
+5. Posso provare senza esperienza
+6. Eventi privati / team building
+7-9. (aggiunte apr 2026: location, esperienza, eventi privati)
+10. Coworking di Torno (aggiunta apr 2026)
 
 **#artistas**
 ```
@@ -520,16 +554,18 @@ Ogni pagina (ES, EN, CA) contiene 2 blocchi:
 - hasOfferCatalog con 5 servizi (nome, descrizione, prezzo)
 
 **2. FAQPage**
-- 6 domande/risposte tradotte nella lingua della pagina
+- 10 domande/risposte tradotte nella lingua della pagina (6 originali + 3 aggiunte apr 2026: location, esperienza, eventi privati + 1 Coworking Torno apr 2026)
 
 ### Sitemap (sitemap.xml)
 
-5 URL indicizzate:
-1. `https://www.lamesabcn.com/` — priority 1.0, con xhtml:link hreflang
-2. `https://www.lamesabcn.com/en/` — priority 0.9, con xhtml:link hreflang
-3. `https://www.lamesabcn.com/ca/` — priority 0.9, con xhtml:link hreflang
-4. `https://www.lamesabcn.com/privacy.html` — priority 0.3
-5. `https://www.lamesabcn.com/en/privacy.html` — priority 0.3
+URL indicizzate (aggiornato apr 2026):
+- 3 homepage (ES/EN/CA) — priority 1.0/0.9 con hreflang
+- 9 pagine /clases/ (3 classi × 3 lingue) — priority 0.7 con hreflang
+- 1 blog index — priority 0.8
+- 23 blog post (8 temi × 2-3 lingue) — priority 0.8 con hreflang
+- 1 team-building.html — priority 0.8
+- 2 privacy (ES/EN) — priority 0.3
+- **Totale: 39 URL**
 
 ### robots.txt
 
@@ -569,7 +605,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 - **NON creare nuovi file CSS o JS** — tutto deve restare in un singolo `style.css` e un singolo `main.js`.
 - **NON usare `!important`** a meno che non sia strettamente necessario (al momento c'e' solo `#clases { padding-bottom: 0 !important }`).
 - **NON rimuovere i commenti di sezione** nel CSS e HTML — servono per navigazione rapida.
-- **NON aggiungere Google Analytics, cookie banner o tracker** senza richiesta esplicita.
+- **NON rimuovere GA4 o Meta Pixel** — installati e funzionanti (vedi sezione 11).
 - **NON committare file .DS_Store** (gia' presenti nel repo, da aggiungere a .gitignore).
 
 ---
@@ -580,7 +616,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 1. ~~**hero.JPG estensione maiuscola**~~ — **RISOLTO**: il file e' gia' `hero.jpg` con estensione minuscola.
 
-2. **nosotras.jpg troppo pesante** — 4.5 MB e' eccessivo per un'immagine web. Comprimere a ~200-300 KB max.
+2. ~~**nosotras.jpg troppo pesante**~~ — **RISOLTO**: compresso da 322 KB a 237 KB (JPG quality 78, progressive, mozjpeg) + creato `nosotras.webp` (201 KB). Tag `<picture>` con WebP + fallback JPG in tutti e 3 i file `index.html`.
 
 3. **Manca .gitignore** — I file `.DS_Store` sono nel repo. Creare un `.gitignore` con almeno `.DS_Store` e `*.swp`.
 
@@ -594,10 +630,24 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 8. ~~**Font directory vuota**~~ — **RISOLTO**: la cartella `fonts/` contiene Garet-Black e HighCruiser, caricati via @font-face. Montserrat caricato da Google Fonts CDN.
 
+### Modifiche sessione 13 apr 2026
+
+- **Coworking Torno**: rimosso da sezione #clases → ora solo in FAQ (domanda dedicata in tutte e 3 le lingue + JSON-LD)
+- **Tienda**: foto sostituite con foto-tienda-1/2/3/4.jpg (convertite da HEIC, ottimizzate 38-140 KB). Grid ora 4 immagini.
+- **/team-building.html**: landing page team building creata (ES), link nel footer di tutti e 3 i file index.html
+- **Blog**: 6 nuovi post creati (como-elegir-taller ES/EN/CA + precios ES/EN/CA), totale 24 file in /blog/ (23 post + index)
+- **Sitemap**: aggiornata con tutti i post blog + team-building (39 URL totali)
+
+### Pendenti futuri
+
+- **Blog**: creare versioni EN/CA di team-building page
+- **Blog**: verificare post CA mancante per "cosas que hacer en barceloneta" (esiste solo ES/EN, manca CA)
+- **TripAdvisor**: profilo da creare (Vick)
+- **Google Business Profile**: verifica in attesa
+
 ### Miglioramenti possibili (non urgenti)
 
-- Aggiungere `loading="lazy"` alle immagini tienda nelle versioni EN e CA (gia' presente in ES).
-- Ottimizzare immagini in formato WebP con fallback.
+- Ottimizzare altre immagini in formato WebP con fallback (nosotras gia' fatto).
 - Aggiungere `<meta name="author">`.
 - Self-hosting dei font Montserrat per eliminare dipendenza Google Fonts.
 - Aggiungere `aria-label` piu' specifici al language switcher.
@@ -639,6 +689,116 @@ In **Settings > Pages**:
 - Branch: `main` / `/ (root)`
 - Custom domain: `lamesabcn.com`
 - Enforce HTTPS: Si
+
+---
+
+## 11. Tracking & Analytics (installati apr 2026)
+
+### Google Analytics 4
+
+- **ID**: G-SQ90MD674K
+- **Snippet**: nel `<head>` di tutti e 3 i file HTML (ES/EN/CA)
+- **Eventi conversione**:
+  - `click_cta` con label `taller_semanal` — sui 4 CTA Clase Semanal (modelado + torno)
+  - `click_cta` con label `clase_suelta` — sui 4 CTA Clase Suelta (modelado + torno)
+  - `click_whatsapp` — event delegation su tutti i link `wa.me/34711552030`
+- **CTA IDs**: `id="cta-taller-semanal"` e `id="cta-clase-suelta"` sulla prima occorrenza (modelado)
+- **Commit**: `2616841`
+
+### Meta Pixel
+
+- **ID**: 928743266641763
+- **Snippet**: nel `<head>` di tutti e 3 i file HTML, dopo GA4
+- **Eventi conversione**:
+  - `fbq('track', 'Lead', {content_name: 'taller_semanal'})` — sui CTA Clase Semanal
+  - `fbq('track', 'Lead', {content_name: 'clase_suelta'})` — sui CTA Clase Suelta
+  - `fbq('track', 'Contact')` — event delegation su tutti i link WhatsApp
+- **Commit**: `3df3780`
+
+### Cache busting
+
+- CSS e JS con `?v=2` in tutti e 3 i file HTML
+- **Commit**: `a6cbc00`
+
+### Ordine script nel `<head>`
+
+```
+1. GA4 loader (async)
+2. GA4 config
+3. Meta Pixel (IIFE + noscript fallback)
+4. DOMContentLoaded — event delegation WhatsApp (gtag + fbq)
+```
+
+---
+
+## 12. Aggiunte SEO/GEO (apr 2026)
+
+1. **Title tag keyword-first** in tutte e 3 le lingue:
+   - ES: `Taller de Cerámica en Barcelona | La Mesa`
+   - EN: `Ceramics Studio in Barcelona | La Mesa`
+   - CA: `Taller de Ceràmica a Barcelona | La Mesa`
+
+2. **Hero subtitle SEO** (`<p class="hero-subtitle">`) aggiunto sotto H1 poetico in tutte e 3 le lingue. Subtitles ridondanti (`hero__subtitle`, `hero__subtitle-ca`) rimossi.
+
+3. **H2 aggiornati con keyword** in 4 sezioni:
+   - Workshops: "Sesiones Creativas" → "Workshops creativos en Barcelona"
+   - Tienda: "Tienda" → "Tienda de cerámica artesanal"
+   - Privadas: "Sesiones Privadas" → "Sesiones privadas y team building"
+   - Contacto: "Encuéntranos" → "Encuéntranos en La Barceloneta"
+
+4. **3 nuove FAQ** aggiunte (location, esperienza, eventi privati) — HTML + JSON-LD sincronizzati. Duplicati rimossi apr 2026: FAQ #1/#4/#6 ridondanti eliminate, mantenute #7/#8/#9. Totale attuale: **6 FAQ per pagina**.
+
+5. **FAQ arricchite per GEO** — risposte self-contained con brand name + citta' (es. "La Mesa se encuentra en..." invece di "Estamos en...").
+
+6. **Copy tienda** — rimossi punti esclamativi.
+
+- **Commit SEO/GEO**: `3ba4173`
+- **Commit FAQ**: `ae33c64`
+
+### Pendenti SEO/GEO (non ancora implementati)
+
+- [x] robots.txt — Allow esplicito per GPTBot, PerplexityBot, ClaudeBot, Google-Extended
+- [x] llms.txt — creato nella root del sito (servizi, location, contatti, orari, Etsy)
+- [x] sitemap.xml — aggiornato con 9 pagine /clases/ + blog posts (ES/EN/CA) con hreflang
+- [ ] Schema Course (JSON-LD) — aggiungere nelle 9 pagine /clases/
+- [x] Blog statico — /blog/ creato con 17 post (6 ES + 6 EN + 5 CA), vedi sezione 13
+- [x] nosotras.jpg — compresso a 237 KB + WebP 201 KB, tag `<picture>` aggiunto
+- [ ] Google Business Profile — verifica in attesa
+
+---
+
+## 13. Blog (/blog/)
+
+### Struttura
+
+- `/blog/index.html` — indice blog con lista post (ES, con sezioni EN/CA)
+- 17 post in totale: 6 ES + 6 EN + 5 CA
+- Layout: container 760px, font-size 1.05rem, line-height 1.85
+- Navbar e footer condivisi con homepage (stessa struttura)
+- CSS/JS condivisi: `../css/style.css?v=2`, `../js/main.js?v=2`
+- GA4 + Meta Pixel + WhatsApp click tracking installati
+
+### Post pubblicati
+
+| # | Tema | ES | EN | CA |
+|---|------|----|----|-----|
+| 1 | Primera clase ceramica | `que-esperar-primera-clase-ceramica.html` | `what-to-expect-first-pottery-class.html` | `que-esperar-primera-classe-ceramica.html` |
+| 2 | Guia talleres Barcelona | `guia-talleres-ceramica-barcelona.html` | `ceramics-classes-barcelona-guide.html` | `guia-tallers-ceramica-barcelona.html` |
+| 3 | Torno ceramica | `que-es-el-torno-ceramica.html` | `wheel-throwing-barcelona-beginners.html` | `torn-ceramica-barcelona-guia.html` |
+| 4 | Cosas que hacer Barceloneta | `cosas-que-hacer-en-barceloneta.html` | `things-to-do-barceloneta-barcelona.html` | — |
+| 5 | Plan diferente / date ideas | `plan-diferente-barcelona-ceramica.html` | `unique-date-ideas-barcelona-pottery.html` | `pla-diferent-barcelona-ceramica.html` |
+| 6 | Ceramica per principianti | `ceramica-para-principiantes-barcelona.html` | `pottery-for-beginners-barcelona.html` | `ceramica-per-a-principiants-barcelona.html` |
+
+### Structured Data blog
+
+- Ogni post ha `Article` schema (JSON-LD) con headline, author, publisher, datePublished, dateModified, image, inLanguage, mainEntityOfPage.
+- Tutti i post presenti in `sitemap.xml` con hreflang (ES/EN/CA).
+
+### Note blog
+
+- Post #4 (Barceloneta) non ha versione CA.
+- Tutti i path nel blog usano `../` per CSS/JS/images (come EN/CA).
+- CTA in fondo a ogni post: WhatsApp + link clases.
 
 ---
 

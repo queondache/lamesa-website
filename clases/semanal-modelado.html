@@ -22,12 +22,50 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Taller Semanal de Cerámica – Modelado",
+    "description": "Clase semanal de cerámica manual en Barcelona. Ideal para principiantes y quienes buscan un hobby creativo. Incluye materiales y hornadas.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "La Mesa",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Carrer de l'Atlàntida 47",
+        "addressLocality": "Barcelona",
+        "addressRegion": "Catalonia",
+        "postalCode": "08003",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es",
+    "courseMode": "onsite",
+    "educationalLevel": "Beginner",
+    "offers": {
+      "@type": "Offer",
+      "price": "120",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "referenceQuantity": {
+          "@type": "QuantitativeValue",
+          "value": "1",
+          "unitText": "month"
+        }
+      }
+    }
+  }
+  </script>
 
 </head>
 <body>
@@ -217,7 +255,7 @@
   </a>
 
   <!-- Main script -->
-  <script src="../js/main.js" defer></script>
+  <script src="../js/main.js?v=3" defer></script>
 
 </body>
 </html>

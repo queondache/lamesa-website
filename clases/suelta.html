@@ -22,12 +22,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/style.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Clase Suelta de Cerámica en Barcelona",
+    "description": "Reserva una clase suelta de cerámica en La Barceloneta. Mínimo 2 horas, sin compromiso mensual. Disponible martes, miércoles y viernes.",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "La Mesa",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Carrer de l'Atlàntida 47",
+        "addressLocality": "Barcelona",
+        "addressRegion": "Catalonia",
+        "postalCode": "08003",
+        "addressCountry": "ES"
+      }
+    },
+    "inLanguage": "es",
+    "courseMode": "onsite",
+    "educationalLevel": "Beginner"
+  }
+  </script>
 
 </head>
 <body>
@@ -192,7 +217,7 @@
   </a>
 
   <!-- Main script -->
-  <script src="../js/main.js" defer></script>
+  <script src="../js/main.js?v=3" defer></script>
 
 </body>
 </html>

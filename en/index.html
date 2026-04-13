@@ -18,7 +18,7 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="La Mesa – Ceramics Studio and Creative Lab in Barcelona">
+  <meta property="og:title" content="Ceramics Studio in Barcelona | La Mesa">
   <meta property="og:description" content="Ceramics studio, creative workshops and community in La Barceloneta, Barcelona.">
   <meta property="og:url" content="https://www.lamesabcn.com/en/">
   <meta property="og:image" content="https://www.lamesabcn.com/images/og-lamesa.jpg">
@@ -49,7 +49,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /en/) -->
-  <link rel="stylesheet" href="../css/style.css?v=2">
+  <link rel="stylesheet" href="../css/style.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -115,6 +115,7 @@
         <a class="navbar__link" href="#privadas" data-section="privadas">Private</a>
         <a class="navbar__link" href="#faq">FAQ</a>
         <a class="navbar__link" href="#contacto" data-section="contacto">Contact</a>
+        <a class="navbar__link" href="/blog/">Blog</a>
 
         <!-- Language switcher -->
         <div class="navbar__lang" aria-label="Change language">
@@ -151,6 +152,7 @@
       <a class="navbar__mobile-link" href="#privadas">Private</a>
       <a class="navbar__mobile-link" href="#faq">FAQ</a>
       <a class="navbar__mobile-link" href="#contacto">Contact</a>
+      <a class="navbar__mobile-link" href="/blog/">Blog</a>
       <div class="navbar__mobile-lang">
         <a href="/index.html" lang="es">ES</a>
         <a href="/en/index.html" class="active" aria-current="page" lang="en">EN</a>
@@ -224,10 +226,13 @@
 
           <!-- Image column (placeholder) -->
           <div class="nosotras__image fade-in fade-in--delay-1">
-            <img src="../images/nosotras.jpg"
-  alt="Laura at La Mesa, creative ceramics lab in La Barceloneta, Barcelona"
-  width="600" height="450"
-  loading="lazy">
+            <picture>
+              <source srcset="../images/nosotras.webp" type="image/webp">
+              <img src="../images/nosotras.jpg"
+                alt="Laura at La Mesa, creative ceramics lab in La Barceloneta, Barcelona"
+                width="600" height="450"
+                loading="lazy">
+            </picture>
           </div>
 
         </div>
@@ -306,22 +311,6 @@
           </div>
 
         </div>
-
-        <!-- COWORKING -->
-        <article class="clase-card clase-card--secondary fade-in" style="margin-top:var(--space-md); max-width:720px; margin-left:auto; margin-right:auto;" aria-label="Coworking">
-          <h3 class="clase-card__title">Coworking</h3>
-          <p class="clase-card__subtitle">For those who already know</p>
-          <p class="clase-card__body">
-            If you have experience and want a space to work on your own projects,
-            we have tables and wheels available. Tell us what you need.
-          </p>
-          <a class="clase-card__cta clase-card__cta--whatsapp"
-             href="https://wa.me/34711552030?text=Hi!%20I'm%20interested%20in%20Coworking.%20Is%20there%20availability%3F"
-             target="_blank" rel="noopener noreferrer"
-             aria-label="Get in touch about Coworking on WhatsApp">
-            Get in touch →
-          </a>
-        </article>
 
         <!-- NOTE -->
         <p class="fade-in" style="text-align:center; font-size:0.875rem; color:#888; margin-top:var(--space-lg); margin-bottom:var(--space-xl); line-height:1.6;">
@@ -408,15 +397,19 @@
         <div class="tienda__grid" aria-label="Gallery of handmade ceramic pieces">
 
           <div class="tienda__product fade-in fade-in--delay-1">
-            <img src="../images/pieza-01.jpg" alt="Handmade ceramic piece from La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-1.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 1" width="400" height="400" loading="lazy">
           </div>
 
           <div class="tienda__product fade-in fade-in--delay-2">
-            <img src="../images/pieza-02.jpg" alt="Handmade ceramic bowl from La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-2.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 2" width="400" height="400" loading="lazy">
           </div>
 
           <div class="tienda__product fade-in fade-in--delay-3">
-            <img src="../images/pieza-03.jpg" alt="Handmade ceramic vase from La Mesa Barcelona" width="400" height="400" loading="lazy">
+            <img src="../images/foto-tienda-3.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 3" width="400" height="400" loading="lazy">
+          </div>
+
+          <div class="tienda__product fade-in">
+            <img src="../images/foto-tienda-4.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 4" width="400" height="400" loading="lazy">
           </div>
 
         </div>
@@ -510,11 +503,6 @@
           <div class="faq__list">
 
             <details class="faq__item">
-              <summary class="faq__question">Do I need previous experience?</summary>
-              <p class="faq__answer">No. Ceramics classes at La Mesa are designed for all levels. The Weekly Studio and Drop-in Session are perfect for beginners who have never touched clay before. The Flex Studio and Wheel Coworking do require some prior experience.</p>
-            </details>
-
-            <details class="faq__item">
               <summary class="faq__question">How much do ceramics classes in Barcelona cost?</summary>
               <p class="faq__answer">At La Mesa prices start from 20€/hour for Drop-in Sessions up to 120€/month for the Weekly Studio. Our Wheel Intro course is 90€.</p>
             </details>
@@ -525,18 +513,8 @@
             </details>
 
             <details class="faq__item">
-              <summary class="faq__question">Where are you in Barcelona?</summary>
-              <p class="faq__answer">La Mesa is located at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. We are the only ceramics studio in La Barceloneta, a five-minute walk from the beach.</p>
-            </details>
-
-            <details class="faq__item">
               <summary class="faq__question">Can I book online?</summary>
               <p class="faq__answer">Yes. The Weekly Studio and Drop-in Session can be booked directly online. For the Flex Studio, Wheel Intro and Wheel Coworking, message us on WhatsApp to arrange a time.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Do you do private group sessions or events?</summary>
-              <p class="faq__answer">Yes. We organise team buildings, birthdays, hen parties and family sessions for groups of up to 10 people. Message us for a personalised quote.</p>
             </details>
 
             <details class="faq__item">
@@ -552,6 +530,11 @@
             <details class="faq__item">
               <summary class="faq__question">Do you offer private events, team buildings or hen parties?</summary>
               <p class="faq__answer">Yes! We organise private sessions for groups: birthdays, hen parties, team buildings and more. Contact us via WhatsApp or email for a custom quote.</p>
+            </details>
+
+            <details class="faq__item">
+              <summary class="faq__question">What is Wheel Coworking and how does it work?</summary>
+              <p class="faq__answer">Wheel Coworking is a space for ceramicists who already know how to use the wheel and want to practice independently. Available Tuesday, Wednesday and Friday 14:00–18:00. Book via WhatsApp.</p>
             </details>
 
           </div>
@@ -683,6 +666,11 @@
             <input type="checkbox" required name="privacy-footer">
             <span>I accept the <a href="/en/privacy.html" target="_blank">privacy policy</a></span>
           </label>
+        </div>
+
+        <!-- Footer links -->
+        <div style="text-align: center; margin-bottom: var(--space-sm);">
+          <a href="/team-building.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Team Building</a>
         </div>
 
         <!-- Footer bottom bar -->
@@ -859,14 +847,6 @@
     "mainEntity": [
       {
         "@type": "Question",
-        "name": "Do I need previous experience?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "No. Ceramics classes at La Mesa are designed for all levels. The Weekly Studio and Drop-in Session are perfect for beginners who have never touched clay before. The Flex Studio and Wheel Coworking do require some prior experience."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "How much do ceramics classes in Barcelona cost?",
         "acceptedAnswer": {
           "@type": "Answer",
@@ -883,26 +863,10 @@
       },
       {
         "@type": "Question",
-        "name": "Where are you in Barcelona?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "La Mesa is located at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. We are the only ceramics studio in La Barceloneta, a five-minute walk from the beach."
-        }
-      },
-      {
-        "@type": "Question",
         "name": "Can I book online?",
         "acceptedAnswer": {
           "@type": "Answer",
           "text": "Yes. The Weekly Studio and Drop-in Session can be booked directly online. For the Flex Studio, Wheel Intro and Wheel Coworking, message us on WhatsApp to arrange a time."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you do private group sessions or events?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. We organise team buildings, birthdays, hen parties and family sessions for groups of up to 10 people. Message us for a personalised quote."
         }
       },
       {
@@ -928,13 +892,21 @@
           "@type": "Answer",
           "text": "Yes! We organise private sessions for groups: birthdays, hen parties, team buildings and more. Contact us via WhatsApp or email for a custom quote."
         }
+      },
+      {
+        "@type": "Question",
+        "name": "What is Wheel Coworking and how does it work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Wheel Coworking is a space for ceramicists who already know how to use the wheel and want to practice independently. Available Tuesday, Wednesday and Friday 14:00–18:00. Book via WhatsApp."
+        }
       }
     ]
   }
   </script>
 
   <!-- Main script (relative path from /en/) -->
-  <script src="../js/main.js?v=2" defer></script>
+  <script src="../js/main.js?v=3" defer></script>
 
 </body>
 </html>

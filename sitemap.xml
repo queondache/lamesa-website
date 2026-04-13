@@ -6,7 +6,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -15,7 +15,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -24,19 +24,345 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/"/>
-    <lastmod>2026-03-27</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Clases: Semanal Modelado -->
+  <url>
+    <loc>https://www.lamesabcn.com/clases/semanal-modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-modelado.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/en/clases/semanal-modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-modelado.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/ca/clases/semanal-modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-modelado.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Clases: Semanal Torno -->
+  <url>
+    <loc>https://www.lamesabcn.com/clases/semanal-torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-torno.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/en/clases/semanal-torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-torno.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/ca/clases/semanal-torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/semanal-torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/semanal-torno.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Clases: Suelta -->
+  <url>
+    <loc>https://www.lamesabcn.com/clases/suelta.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/suelta.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/en/clases/suelta.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/suelta.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/ca/clases/suelta.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/en/clases/suelta.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/ca/clases/suelta.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Blog index -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Primera clase de cerámica (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/que-esperar-primera-clase-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-esperar-primera-clase-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/what-to-expect-first-pottery-class.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/que-esperar-primera-classe-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/what-to-expect-first-pottery-class.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-esperar-primera-clase-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/what-to-expect-first-pottery-class.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/que-esperar-primera-classe-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/que-esperar-primera-classe-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-esperar-primera-clase-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/what-to-expect-first-pottery-class.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/que-esperar-primera-classe-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Guía talleres cerámica (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/guia-talleres-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/guia-talleres-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/ceramics-classes-barcelona-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/guia-tallers-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/ceramics-classes-barcelona-guide.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/guia-talleres-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/ceramics-classes-barcelona-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/guia-tallers-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/guia-tallers-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/guia-talleres-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/ceramics-classes-barcelona-guide.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/guia-tallers-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Torno cerámica guía (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/que-es-el-torno-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-es-el-torno-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/torn-ceramica-barcelona-guia.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-es-el-torno-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/torn-ceramica-barcelona-guia.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/torn-ceramica-barcelona-guia.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/que-es-el-torno-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/torn-ceramica-barcelona-guia.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Cosas que hacer en Barceloneta (ES/EN) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/cosas-que-hacer-en-barceloneta.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/cosas-que-hacer-en-barceloneta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/things-to-do-barceloneta-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/things-to-do-barceloneta-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/cosas-que-hacer-en-barceloneta.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/things-to-do-barceloneta-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Plan diferente cerámica (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/plan-diferente-barcelona-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/plan-diferente-barcelona-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/pla-diferent-barcelona-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/plan-diferente-barcelona-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/pla-diferent-barcelona-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/pla-diferent-barcelona-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/plan-diferente-barcelona-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/pla-diferent-barcelona-ceramica.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Cerámica para principiantes (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-for-beginners-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/ceramica-per-a-principiants-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/pottery-for-beginners-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-for-beginners-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/ceramica-per-a-principiants-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/ceramica-per-a-principiants-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-for-beginners-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/ceramica-per-a-principiants-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Cómo elegir taller (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/como-elegir-taller-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/como-elegir-taller-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/com-triar-taller-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/como-elegir-taller-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/com-triar-taller-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/com-triar-taller-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/como-elegir-taller-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/com-triar-taller-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog: Precios cerámica (ES/EN/CA) -->
+  <url>
+    <loc>https://www.lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-class-prices-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/preu-classe-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/pottery-class-prices-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-class-prices-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/preu-classe-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.lamesabcn.com/blog/preu-classe-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.lamesabcn.com/blog/pottery-class-prices-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://www.lamesabcn.com/blog/preu-classe-ceramica-barcelona.html"/>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Landing: Team Building -->
+  <url>
+    <loc>https://www.lamesabcn.com/team-building.html</loc>
+    <lastmod>2026-04-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Privacy -->
   <url>
     <loc>https://www.lamesabcn.com/privacy.html</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.lamesabcn.com/en/privacy.html</loc>
-    <lastmod>2026-03-26</lastmod>
+    <lastmod>2026-04-13</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
