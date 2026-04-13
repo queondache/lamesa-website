@@ -7,7 +7,7 @@
   'use strict';
 
   /* ── Config ── */
-  var BOOKING_API = 'URL_DEL_TUO_GAS_DEPLOY'; // Replace after GAS deploy
+  var BOOKING_API = 'https://script.google.com/macros/s/AKfycbzo26tz9qK4nN-6IdCcaI2bxccvKJL08nUaVWZs1ozSpNMetAdh5z2gkw-GeCvOtGsK/exec';
 
   var WA_LINKS = {
     es: 'https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa',
