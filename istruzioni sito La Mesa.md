@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-13 (sessione 2: coworking→FAQ, tienda foto, sitemap completa)
+> Ultimo aggiornamento: 2026-04-13 (sessione 3: booking system sprint 1 — pagine dinamiche + Stripe checkout)
 
 ---
 
@@ -96,6 +96,11 @@ lamesa-website/
 │   ├── cuanto-cuesta-clase-ceramica-barcelona.html # Post 8 ES
 │   ├── pottery-class-prices-barcelona.html        # Post 8 EN
 │   └── preu-classe-ceramica-barcelona.html        # Post 8 CA
+├── gracias.html            # Pagina post-checkout ES (noindex)
+├── en/
+│   └── gracias.html        # Pagina post-checkout EN (noindex)
+├── ca/
+│   └── gracias.html        # Pagina post-checkout CA (noindex)
 ├── team-building.html      # Landing page Team Building ES
 ├── privacy.html            # Politica privacy ES (noindex)
 ├── 404.html                # Pagina errore custom
@@ -580,6 +585,8 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 - `404.html` — `<meta name="robots" content="noindex">`
 - `privacy.html` — `<meta name="robots" content="noindex">`
+- `gracias.html` (ES/EN/CA) — `<meta name="robots" content="noindex">`
+- Tutte le pagine `/clases/` — `<meta name="robots" content="noindex">`
 
 ---
 
@@ -602,7 +609,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 - **NON modificare i link Koalendar o WhatsApp** senza conferma esplicita del proprietario.
 - **NON cambiare i prezzi** nei testi o nello structured data senza conferma.
 - **NON toccare il form Mailchimp** (action URL, honeypot field name) — e' collegato a un account esterno.
-- **NON creare nuovi file CSS o JS** — tutto deve restare in un singolo `style.css` e un singolo `main.js`.
+- **NON creare nuovi file CSS o JS** — tutto deve restare in un singolo `style.css` e un singolo `main.js` (eccezione: `js/booking.js` per il sistema di prenotazione).
 - **NON usare `!important`** a meno che non sia strettamente necessario (al momento c'e' solo `#clases { padding-bottom: 0 !important }`).
 - **NON rimuovere i commenti di sezione** nel CSS e HTML — servono per navigazione rapida.
 - **NON rimuovere GA4 o Meta Pixel** — installati e funzionanti (vedi sezione 11).
@@ -629,6 +636,76 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 7. **Nessun favicon .ico** — Solo PNG. Alcuni browser vecchi potrebbero non trovare il favicon.
 
 8. ~~**Font directory vuota**~~ — **RISOLTO**: la cartella `fonts/` contiene Garet-Black e HighCruiser, caricati via @font-face. Montserrat caricato da Google Fonts CDN.
+
+---
+
+## 10. Sistema di Prenotazione (Sprint 1 — Aprile 2026)
+
+### Architettura
+
+```
+Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZIONI)
+                                           → Stripe Checkout Sessions
+                                           → Email (MailApp)
+```
+
+### Componenti
+
+**Frontend (Sito web):**
+- `js/booking.js` — fetch API, render card dinamiche, checkout flow, i18n (ES/EN/CA)
+- Pagine dinamiche: `semanal-modelado.html`, `semanal-torno.html`, `suelta.html` (×3 lingue)
+- `gracias.html` (×3 lingue) — post-checkout con dettaglio slot da URL param
+- CSS: `.turno-skeleton`, `.turno-card__spots`, `.turno-card__badge--urgent`, `.booking-form`, `.suelta-slots`
+
+**Backend (GAS — repo `la-mesa-appscript`):**
+- `Booking.js` — tutte le funzioni di booking (non in Codice.js)
+- `Codice.js` — esteso doGet/doPost con nuovi action handler
+
+**Google Sheets:**
+- Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi, stato, prezzo, stripe_price_id, note
+- Foglio `PRENOTAZIONI`: prenotazione_id, slot_id, data_prenotazione, cliente_nombre/email/telefono, canale, importo, stato, note
+
+### API Endpoints (GAS Web App)
+
+**GET:**
+- `?action=slots&tipo=semanal&risorsa=mesa` — slot aperti con posti liberi
+- `?action=slots&tipo=suelta` — tutti gli slot suelta aperti
+- `?action=slot_detail&slot_id=XXX` — dettaglio singolo slot
+- `?action=ical` — feed iCal (.ics) con tutti gli slot aperti
+
+**POST (body JSON `{action, payload}`):**
+- `create_checkout` — crea Stripe Checkout Session → ritorna `checkout_url`
+- `add_slot` — aggiunge nuovo slot (uso interno PWA)
+- `close_slot` / `open_slot` — cambia stato slot
+- `manual_booking` — prenotazione manuale (WhatsApp/Airbnb/direct)
+
+**POST (URL param `?action=stripe_webhook`):**
+- Riceve eventi Stripe → `checkout.session.completed` → conferma posto + email
+
+### Flusso prenotazione
+
+1. Utente apre pagina semanal → JS fetcha slot da API → mostra card dinamiche
+2. Click "Reservar" → mini-form (nome, email, telefono)
+3. Submit → POST `create_checkout` → redirect a Stripe Checkout
+4. Pagamento completato → Stripe webhook → `confermaPosto_()`:
+   - Incrementa `posti_occupati` nello slot
+   - Se pieno, stato → `chiuso`
+   - Aggiunge riga in PRENOTAZIONI
+   - Email conferma al cliente
+   - Email notifica a lamesa.lc@gmail.com
+5. Redirect a `gracias.html?slot=XXX`
+
+### Configurazione necessaria
+
+1. `clasp push` nel repo GAS + redeploy web app
+2. Aggiornare `BOOKING_API` in `js/booking.js` con URL del deploy GAS
+3. In GAS DocumentProperties: `STRIPE_SECRET_KEY = sk_live_...`
+4. In Stripe Dashboard: webhook endpoint → `[GAS_URL]?action=stripe_webhook` → evento `checkout.session.completed`
+5. Per ogni slot nel foglio SLOTS: inserire `stripe_price_id` dal Stripe Dashboard → Products
+
+### PWA Mobile (repo separato)
+
+Parte 4 dello sprint (sezioni Calendario e Reservas) non implementata — il repo `la-mesa-mobile` non era disponibile localmente. Da fare in sessione separata.
 
 ### Modifiche sessione 13 apr 2026
 
