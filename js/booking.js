@@ -106,7 +106,7 @@
     return fetch(BOOKING_API+'?'+qs).then(function(r){ return r.json(); });
   }
   function apiPost(action, payload) {
-    return fetch(BOOKING_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:action,payload:payload})}).then(function(r){return r.json();});
+    return fetch(BOOKING_API,{method:'POST',body:JSON.stringify({action:action,payload:payload})}).then(function(r){return r.json();});
   }
 
   /* ══════════════════════════════════════════════════════
@@ -185,42 +185,52 @@
      SUELTA — calendar + time slots
      ══════════════════════════════════════════════════════ */
 
-  var calState = { risorsa: 'mesa', year: 0, month: 0, slots: [], slotMap: {}, selectedDate: null };
+  var calState = { risorsa: 'mesa', year: 0, month: 0, slots: [], slotMap: {}, selectedDate: null, activeCard: null };
 
   function initSueltaPage() {
-    var tabs = document.getElementById('suelta-tabs');
-    var calEl = document.getElementById('suelta-calendar');
-    if (!tabs || !calEl) return;
+    var cards = document.getElementById('suelta-cards');
+    if (!cards) return;
 
     var now = new Date();
     calState.year = now.getFullYear();
     calState.month = now.getMonth();
 
-    // Tab clicks
-    tabs.querySelectorAll('.suelta-tab').forEach(function(tab) {
-      tab.addEventListener('click', function() {
-        tabs.querySelector('.suelta-tab--active').classList.remove('suelta-tab--active');
-        tab.classList.add('suelta-tab--active');
-        calState.risorsa = tab.dataset.risorsa;
+    cards.querySelectorAll('.suelta-card__cta').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var card = btn.closest('.suelta-card');
+        var body = card.querySelector('.suelta-card__body');
+        var wasOpen = body.classList.contains('suelta-card__body--open');
+
+        // Close all open cards
+        cards.querySelectorAll('.suelta-card__body--open').forEach(function(b) {
+          b.classList.remove('suelta-card__body--open');
+        });
+
+        if (wasOpen && calState.activeCard === card) {
+          calState.activeCard = null;
+          return;
+        }
+
+        calState.risorsa = card.dataset.risorsa;
         calState.selectedDate = null;
+        calState.activeCard = card;
+        body.classList.add('suelta-card__body--open');
         loadSueltaSlots();
       });
     });
-
-    loadSueltaSlots();
   }
 
   function loadSueltaSlots() {
-    var calEl = document.getElementById('suelta-calendar');
-    var timesEl = document.getElementById('suelta-times');
-    calEl.innerHTML = '<div class="turno-skeleton" style="height:320px;"></div>';
+    if (!calState.activeCard) return;
+    var calEl = calState.activeCard.querySelector('.suelta-card__cal');
+    var timesEl = calState.activeCard.querySelector('.suelta-card__times');
+    calEl.innerHTML = '<div class="turno-skeleton" style="height:200px;"></div>';
     if (timesEl) timesEl.innerHTML = '';
 
     apiGet({ action: 'slots', tipo: 'suelta', risorsa: calState.risorsa })
       .then(function(data) {
         if (!data.ok) { calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>'; return; }
         calState.slots = data.slots || [];
-        // Build date→slots map
         calState.slotMap = {};
         calState.slots.forEach(function(s) {
           if (!calState.slotMap[s.data]) calState.slotMap[s.data] = [];
