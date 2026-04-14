@@ -2435,8 +2435,8 @@ p {
 }
 
 .cal__nav {
-  width: 32px;
-  height: 32px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: none;
   background: transparent;
@@ -2444,14 +2444,15 @@ p {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.5rem;
   color: var(--blue);
   transition: background var(--transition-fast);
 }
 
-.cal__nav:hover { background: rgba(27,60,139,0.08); }
+.cal__nav:hover { background: rgba(0,0,0,0.08); }
 .cal__nav:disabled { opacity: 0.3; cursor: default; }
 .cal__nav:disabled:hover { background: transparent; }
+.suelta-card--torno .cal__nav:hover { background: rgba(255,255,255,0.15); }
 
 .cal__grid {
   display: grid;
@@ -2526,7 +2527,6 @@ p {
 /* Torno card: color overrides */
 .suelta-card--torno .cal__month { color: var(--white); }
 .suelta-card--torno .cal__nav { color: var(--cream); }
-.suelta-card--torno .cal__nav:hover { background: rgba(255,255,255,0.1); }
 .suelta-card--torno .cal__day-label { color: rgba(255,255,255,0.5); }
 .suelta-card--torno .cal__day { color: rgba(255,255,255,0.4); }
 .suelta-card--torno .cal__day--other { color: rgba(255,255,255,0.15); }

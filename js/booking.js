@@ -253,17 +253,21 @@
   }
 
   function loadSueltaSlots() {
-    if (!calState.activeCard) return;
-    var calEl = calState.activeCard.querySelector('.suelta-card__cal');
-    var timesEl = calState.activeCard.querySelector('.suelta-card__times');
+    var card = calState.activeCard;
+    if (!card) return;
+    var calEl = card.querySelector('.suelta-card__cal');
+    var timesEl = card.querySelector('.suelta-card__times');
     calEl.innerHTML = '<div class="turno-skeleton" style="height:280px;"></div>';
     if (timesEl) timesEl.innerHTML = '';
 
-    var cached = calState.risorsa === 'mesa' ? _prefetchMesa : _prefetchTorno;
-    if (calState.risorsa === 'mesa') _prefetchMesa = null; else _prefetchTorno = null;
-    var dataPromise = cached || apiGet({ action: 'slots', tipo: 'suelta', risorsa: calState.risorsa });
+    var risorsa = calState.risorsa;
+    var cached = risorsa === 'mesa' ? _prefetchMesa : _prefetchTorno;
+    if (risorsa === 'mesa') _prefetchMesa = null; else _prefetchTorno = null;
+    var dataPromise = cached || apiGet({ action: 'slots', tipo: 'suelta', risorsa: risorsa });
 
     dataPromise.then(function(data) {
+        // Stale callback — user switched card before this resolved
+        if (calState.activeCard !== card) return;
         if (!data.ok) { calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>'; return; }
         calState.slots = data.slots || [];
         calState.slotMap = {};
