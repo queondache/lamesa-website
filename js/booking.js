@@ -457,12 +457,14 @@
         btn.textContent = t('formProcessing');
         btn.classList.add('btn--loading');
 
+        console.log('create_checkout → slot_id:', slotId, 'email:', email);
         apiPost('create_checkout', {
           slot_id: slotId,
           cliente_nombre: form.querySelector('[name="nombre"]').value.trim(),
           cliente_email: email,
           cliente_telefono: form.querySelector('[name="telefono"]').value.trim()
         }).then(function(d) {
+          console.log('create_checkout response:', d);
           if (d.ok && d.checkout_url) { window.location.href = d.checkout_url; }
           else { alert(d.error || 'Error'); btn.disabled = false; btn.textContent = t('formSubmit'); btn.classList.remove('btn--loading'); }
         }).catch(function() {
