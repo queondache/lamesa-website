@@ -27,7 +27,9 @@
       semanal4: '4 clases · 2h · {price}€/mes',
       calSelect: 'Elige una fecha', calTime: 'Elige hora',
       calNoSlots: 'Sin disponibilidad este mes',
-      calSpots: '{n} plazas', calSpot1: '1 plaza'
+      calSpots: '{n} plazas', calSpot1: '1 plaza',
+      formProcessing: 'Procesando...',
+      loadTimeout: 'No se han podido cargar los turnos. <a href="{wa}">Escríbenos</a>.'
     },
     en: {
       spots: '{n} spots available', spot1: '1 spot available',
@@ -40,7 +42,9 @@
       semanal4: '4 classes · 2h · €{price}/month',
       calSelect: 'Select a date', calTime: 'Select time',
       calNoSlots: 'No availability this month',
-      calSpots: '{n} spots', calSpot1: '1 spot'
+      calSpots: '{n} spots', calSpot1: '1 spot',
+      formProcessing: 'Processing...',
+      loadTimeout: 'Could not load schedules. <a href="{wa}">Message us</a>.'
     },
     ca: {
       spots: '{n} places disponibles', spot1: '1 plaça disponible',
@@ -53,7 +57,9 @@
       semanal4: '4 classes · 2h · {price}€/mes',
       calSelect: 'Tria una data', calTime: 'Tria hora',
       calNoSlots: 'Sense disponibilitat aquest mes',
-      calSpots: '{n} places', calSpot1: '1 plaça'
+      calSpots: '{n} places', calSpot1: '1 plaça',
+      formProcessing: 'Processant...',
+      loadTimeout: 'No s\'han pogut carregar els torns. <a href="{wa}">Escriu-nos</a>.'
     }
   };
 
@@ -101,9 +107,14 @@
 
   /* ── API ── */
 
+  var API_TIMEOUT = 8000;
+
   function apiGet(p) {
     var qs = Object.keys(p).map(function(k){ return encodeURIComponent(k)+'='+encodeURIComponent(p[k]); }).join('&');
-    return fetch(BOOKING_API+'?'+qs).then(function(r){ return r.json(); });
+    return Promise.race([
+      fetch(BOOKING_API+'?'+qs).then(function(r){ return r.json(); }),
+      new Promise(function(_, reject) { setTimeout(function() { reject(new Error('timeout')); }, API_TIMEOUT); })
+    ]);
   }
   function apiPost(action, payload) {
     return fetch(BOOKING_API,{method:'POST',body:JSON.stringify({action:action,payload:payload})}).then(function(r){return r.json();});
@@ -176,8 +187,9 @@
         });
         bindCheckout(grid);
       })
-      .catch(function() {
-        grid.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>';
+      .catch(function(err) {
+        var msg = (err && err.message === 'timeout') ? t('loadTimeout') : t('error');
+        grid.innerHTML = '<div class="turno-no-slots">' + msg + '</div>';
       });
   }
 
@@ -238,8 +250,9 @@
         });
         renderCalendar();
       })
-      .catch(function() {
-        calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>';
+      .catch(function(err) {
+        var msg = (err && err.message === 'timeout') ? t('loadTimeout') : t('error');
+        calEl.innerHTML = '<div class="turno-no-slots">' + msg + '</div>';
       });
   }
 
@@ -418,7 +431,8 @@
         if (!email) { form.querySelector('[name="email"]').focus(); return; }
 
         btn.disabled = true;
-        btn.textContent = '...';
+        btn.textContent = t('formProcessing');
+        btn.classList.add('btn--loading');
 
         apiPost('create_checkout', {
           slot_id: slotId,
@@ -427,9 +441,9 @@
           cliente_telefono: form.querySelector('[name="telefono"]').value.trim()
         }).then(function(d) {
           if (d.ok && d.checkout_url) { window.location.href = d.checkout_url; }
-          else { alert(d.error || 'Error'); btn.disabled = false; btn.textContent = t('formSubmit'); }
+          else { alert(d.error || 'Error'); btn.disabled = false; btn.textContent = t('formSubmit'); btn.classList.remove('btn--loading'); }
         }).catch(function() {
-          alert('Error de red'); btn.disabled = false; btn.textContent = t('formSubmit');
+          alert('Error de red'); btn.disabled = false; btn.textContent = t('formSubmit'); btn.classList.remove('btn--loading');
         });
       });
     });
