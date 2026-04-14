@@ -2081,7 +2081,12 @@ p {
 }
 
 .turno-nota--suelta {
+  padding-top: var(--space-md);
   padding-bottom: calc(var(--space-xl) + 80px);
+}
+
+.turno-nota--suelta .container > p {
+  margin-bottom: var(--space-md);
 }
 
 .turno-nota p {
@@ -2317,7 +2322,7 @@ p {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-sm);
-  align-items: start;
+  align-items: stretch;
 }
 
 .suelta-card {
@@ -2485,6 +2490,13 @@ p {
 .cal__day--selected:hover {
   box-shadow: 0 2px 8px rgba(27,60,139,0.4);
 }
+
+/* Mesa card: calendar color overrides */
+.suelta-card--mesa .cal__day--available { background: var(--blue); color: var(--cream); }
+.suelta-card--mesa .cal__day--available:hover { background: var(--blue); opacity: 0.85; transform: scale(1.08); }
+.suelta-card--mesa .cal__day--selected { background: var(--black); color: var(--cream); }
+.suelta-card--mesa .cal__day--selected:hover { box-shadow: 0 2px 8px rgba(26,26,26,0.4); }
+.suelta-card--mesa .cal__day--today { box-shadow: inset 0 0 0 2px var(--blue); }
 
 /* Torno card: color overrides */
 .suelta-card--torno .cal__month { color: var(--white); }

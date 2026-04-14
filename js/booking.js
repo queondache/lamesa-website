@@ -120,6 +120,18 @@
     return fetch(BOOKING_API,{method:'POST',body:JSON.stringify({action:action,payload:payload})}).then(function(r){return r.json();});
   }
 
+  /* ── Prefetch — fire ASAP before DOMContentLoaded ── */
+
+  var _prefetchMesa, _prefetchTorno, _semanalPrefetch;
+  var _semanalGrid = document.getElementById('booking-grid');
+  if (_semanalGrid) {
+    _semanalPrefetch = apiGet({ action: 'slots', tipo: _semanalGrid.dataset.tipo, risorsa: _semanalGrid.dataset.risorsa });
+  }
+  if (document.getElementById('suelta-cards')) {
+    _prefetchMesa = apiGet({ action: 'slots', tipo: 'suelta', risorsa: 'mesa' });
+    _prefetchTorno = apiGet({ action: 'slots', tipo: 'suelta', risorsa: 'torno' });
+  }
+
   /* ══════════════════════════════════════════════════════
      SEMANAL — improved cards with dots + completo
      ══════════════════════════════════════════════════════ */
@@ -137,7 +149,9 @@
     // Show skeletons
     grid.innerHTML = '<div class="turno-skeleton"></div><div class="turno-skeleton"></div><div class="turno-skeleton"></div>';
 
-    apiGet({ action: 'slots', tipo: tipo, risorsa: risorsa })
+    var dataPromise = _semanalPrefetch || apiGet({ action: 'slots', tipo: tipo, risorsa: risorsa });
+    _semanalPrefetch = null;
+    dataPromise
       .then(function(data) {
         if (!data.ok || !data.slots || !data.slots.length) {
           grid.innerHTML = '<div class="turno-no-slots">' + t('noSlots') + '</div>';
@@ -236,11 +250,14 @@
     if (!calState.activeCard) return;
     var calEl = calState.activeCard.querySelector('.suelta-card__cal');
     var timesEl = calState.activeCard.querySelector('.suelta-card__times');
-    calEl.innerHTML = '<div class="turno-skeleton" style="height:200px;"></div>';
+    calEl.innerHTML = '<div class="turno-skeleton" style="height:280px;"></div>';
     if (timesEl) timesEl.innerHTML = '';
 
-    apiGet({ action: 'slots', tipo: 'suelta', risorsa: calState.risorsa })
-      .then(function(data) {
+    var cached = calState.risorsa === 'mesa' ? _prefetchMesa : _prefetchTorno;
+    if (calState.risorsa === 'mesa') _prefetchMesa = null; else _prefetchTorno = null;
+    var dataPromise = cached || apiGet({ action: 'slots', tipo: 'suelta', risorsa: calState.risorsa });
+
+    dataPromise.then(function(data) {
         if (!data.ok) { calEl.innerHTML = '<div class="turno-no-slots">' + t('error') + '</div>'; return; }
         calState.slots = data.slots || [];
         calState.slotMap = {};
