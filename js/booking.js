@@ -244,37 +244,33 @@
   }
 
   function renderCalendar() {
-    var calEl = document.getElementById('suelta-calendar');
-    var timesEl = document.getElementById('suelta-times');
+    if (!calState.activeCard) return;
+    var calEl = calState.activeCard.querySelector('.suelta-card__cal');
+    var timesEl = calState.activeCard.querySelector('.suelta-card__times');
     var y = calState.year, m = calState.month;
     var now = new Date();
     var todayKey = dateKey(now.getFullYear(), now.getMonth(), now.getDate());
 
-    // Navigation
     var html = '<div class="cal__header">' +
       '<button class="cal__nav" data-cal-nav="-1" aria-label="Previous month">&#8249;</button>' +
       '<span class="cal__month">' + (MONTHS[lang]||MONTHS.es)[m] + ' ' + y + '</span>' +
       '<button class="cal__nav" data-cal-nav="1" aria-label="Next month">&#8250;</button>' +
       '</div>';
 
-    // Day headers
     html += '<div class="cal__grid">';
     (DAY_HDR[lang]||DAY_HDR.es).forEach(function(d) {
       html += '<span class="cal__day-label">' + d + '</span>';
     });
 
-    // Calendar days
     var firstDay = new Date(y, m, 1);
-    var startDow = (firstDay.getDay() + 6) % 7; // Monday = 0
+    var startDow = (firstDay.getDay() + 6) % 7;
     var daysInMonth = new Date(y, m+1, 0).getDate();
     var prevMonthDays = new Date(y, m, 0).getDate();
 
-    // Previous month filler
     for (var p = startDow - 1; p >= 0; p--) {
       html += '<span class="cal__day cal__day--other">' + (prevMonthDays - p) + '</span>';
     }
 
-    // Current month
     for (var d = 1; d <= daysInMonth; d++) {
       var dk = dateKey(y, m, d);
       var isToday = dk === todayKey;
@@ -293,7 +289,6 @@
       }
     }
 
-    // Next month filler
     var totalCells = startDow + daysInMonth;
     var remaining = (7 - totalCells % 7) % 7;
     for (var n = 1; n <= remaining; n++) {
@@ -303,20 +298,17 @@
     html += '</div>';
     calEl.innerHTML = html;
 
-    // Hint if no slots this month
     var hasAnyThisMonth = false;
     for (var dd = 1; dd <= daysInMonth; dd++) {
       if (calState.slotMap[dateKey(y,m,dd)]) { hasAnyThisMonth = true; break; }
     }
     if (!hasAnyThisMonth) {
-      calEl.insertAdjacentHTML('beforeend', '<p style="text-align:center; color:var(--color-muted); font-size:0.875rem; margin-top:var(--space-sm);">' + t('calNoSlots') + '</p>');
+      calEl.insertAdjacentHTML('beforeend', '<p style="text-align:center; color:var(--color-muted); font-size:0.8rem; margin-top:var(--space-xs);">' + t('calNoSlots') + '</p>');
     }
 
-    // Disable prev nav if current month
     var prevBtn = calEl.querySelector('[data-cal-nav="-1"]');
     if (y === now.getFullYear() && m === now.getMonth()) prevBtn.disabled = true;
 
-    // Nav events
     calEl.querySelectorAll('[data-cal-nav]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var dir = +btn.dataset.calNav;
@@ -328,16 +320,14 @@
       });
     });
 
-    // Day click events
     calEl.querySelectorAll('[data-date]').forEach(function(btn) {
       btn.addEventListener('click', function() {
         calState.selectedDate = btn.dataset.date;
-        renderCalendar(); // re-render to update selected state
+        renderCalendar();
         renderTimeSlots(btn.dataset.date);
       });
     });
 
-    // If a date was already selected, show its times
     if (calState.selectedDate && calState.slotMap[calState.selectedDate]) {
       renderTimeSlots(calState.selectedDate);
     } else if (timesEl) {
@@ -346,57 +336,51 @@
   }
 
   function renderTimeSlots(dateStr) {
-    var timesEl = document.getElementById('suelta-times');
+    if (!calState.activeCard) return;
+    var timesEl = calState.activeCard.querySelector('.suelta-card__times');
     if (!timesEl) return;
 
     var slots = calState.slotMap[dateStr] || [];
     if (!slots.length) { timesEl.innerHTML = ''; return; }
 
-    // Find day name from first slot
     var dayStr = slots[0].giorno_settimana ? dayName(slots[0].giorno_settimana) : '';
     var dateParts = dateStr.split('-');
     var dateDisplay = +dateParts[2] + ' ' + (MONTHS[lang]||MONTHS.es)[+dateParts[1]-1];
 
     var html = '<p class="cal-times__label">' + dayStr + ' ' + dateDisplay + '</p>';
-    html += '<div class="cal-times__list">';
+    html += '<div class="cal-times__pills">';
 
     slots.forEach(function(slot) {
       var spotsLabel = slot.posti_liberi === 1 ? t('calSpot1') : t('calSpots', { n: slot.posti_liberi });
       var isUrgent = slot.posti_liberi <= 2;
 
-      html += '<div class="cal-time" data-slot-id="' + slot.slot_id + '">' +
-        '<div class="cal-time__info">' +
-          '<span class="cal-time__hour">' + fmtTime(slot.ora_inizio) + ' – ' + fmtTime(slot.ora_fine) + '</span>' +
-          '<span class="cal-time__spots">' + spotsLabel +
-            (isUrgent ? ' <span class="turno-card__badge--urgent">' + t('urgent') + '</span>' : '') +
-          '</span>' +
-        '</div>' +
-        '<button class="btn btn--dark" data-slot-id="' + slot.slot_id + '">' + t('book') + '</button>' +
-      '</div>';
+      html += '<button class="cal-pill" data-slot-id="' + slot.slot_id + '">' +
+        '<span class="cal-pill__time">' + fmtTime(slot.ora_inizio) + '</span>' +
+        '<span class="cal-pill__spots">' + spotsLabel + '</span>' +
+        (isUrgent ? '<span class="cal-pill__urgent">' + t('urgent') + '</span>' : '') +
+      '</button>';
     });
 
     html += '</div>';
+    html += '<div class="cal-checkout"></div>';
     timesEl.innerHTML = html;
 
-    // Bind booking on time slot buttons
-    timesEl.querySelectorAll('.cal-time .btn[data-slot-id]').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var slotId = btn.dataset.slotId;
-        var calTime = btn.closest('.cal-time');
-        // Replace button with form
-        var formArea = calTime.querySelector('.btn[data-slot-id]');
-        var formHtml = '<div class="booking-form" style="display:flex;" data-slot-id="' + slotId + '">' +
+    timesEl.querySelectorAll('.cal-pill').forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        timesEl.querySelectorAll('.cal-pill--active').forEach(function(p) { p.classList.remove('cal-pill--active'); });
+        pill.classList.add('cal-pill--active');
+
+        var slotId = pill.dataset.slotId;
+        var checkout = timesEl.querySelector('.cal-checkout');
+        checkout.innerHTML = '<div class="booking-form" style="display:flex;" data-slot-id="' + slotId + '">' +
           '<input type="text" name="nombre" placeholder="' + t('formName') + '" autocomplete="name">' +
           '<input type="email" name="email" placeholder="' + t('formEmail') + '" required autocomplete="email">' +
           '<input type="tel" name="telefono" placeholder="' + t('formPhone') + '" autocomplete="tel">' +
           '<button class="btn btn--dark" type="submit">' + t('formSubmit') + '</button>' +
           '<button class="btn btn--secondary" type="button" data-cancel>' + t('formCancel') + '</button>' +
         '</div>';
-        btn.style.display = 'none';
-        calTime.insertAdjacentHTML('beforeend', formHtml);
-        var form = calTime.querySelector('.booking-form');
-        form.querySelector('[name="nombre"]').focus();
-        bindCheckout(calTime);
+        checkout.querySelector('[name="nombre"]').focus();
+        bindCheckout(checkout);
       });
     });
   }
@@ -476,7 +460,7 @@
 
   document.addEventListener('DOMContentLoaded', function() {
     if (document.getElementById('booking-grid')) initSemanalPage();
-    if (document.getElementById('suelta-tabs')) initSueltaPage();
+    if (document.getElementById('suelta-cards')) initSueltaPage();
     if (document.getElementById('gracias-slot-detail')) initGraciasPage();
   });
 

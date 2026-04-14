@@ -22,7 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="../css/style.css?v=3">
+  <link rel="stylesheet" href="../css/style.css?v=4">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -155,24 +155,29 @@
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
 
-        <!-- Discipline tabs -->
-        <div class="suelta-tabs" id="suelta-tabs">
-          <button class="suelta-tab suelta-tab--mesa suelta-tab--active" data-risorsa="mesa">
-            Modelado · Desde 45€
-          </button>
-          <button class="suelta-tab suelta-tab--torno" data-risorsa="torno">
-            Torno · Desde 65€
-            <span class="turno-card__badge--particular">Clase particular</span>
-          </button>
+        <div class="suelta-cards" id="suelta-cards">
+          <!-- Card Modelado -->
+          <div class="suelta-card suelta-card--mesa" data-risorsa="mesa">
+            <h2 class="suelta-card__title">Modelado</h2>
+            <p class="suelta-card__price">Desde 45€</p>
+            <button class="btn btn--dark suelta-card__cta">Reservar →</button>
+            <div class="suelta-card__body">
+              <div class="suelta-card__cal"></div>
+              <div class="suelta-card__times"></div>
+            </div>
+          </div>
+          <!-- Card Torno -->
+          <div class="suelta-card suelta-card--torno" data-risorsa="torno">
+            <h2 class="suelta-card__title">Torno</h2>
+            <p class="suelta-card__price">Desde 65€</p>
+            <span class="suelta-card__badge">Clase particular</span>
+            <button class="btn btn--white suelta-card__cta">Reservar →</button>
+            <div class="suelta-card__body">
+              <div class="suelta-card__cal"></div>
+              <div class="suelta-card__times"></div>
+            </div>
+          </div>
         </div>
-
-        <!-- Calendar -->
-        <div id="suelta-calendar">
-          <div class="turno-skeleton" style="height:320px;"></div>
-        </div>
-
-        <!-- Time slots -->
-        <div id="suelta-times"></div>
 
       </div>
     </section>
@@ -221,7 +226,7 @@
 
   <!-- Main script -->
   <script src="../js/main.js?v=3" defer></script>
-  <script src="../js/booking.js?v=2" defer></script>
+  <script src="../js/booking.js?v=3" defer></script>
 
 </body>
 </html>
