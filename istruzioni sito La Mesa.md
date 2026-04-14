@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-14 (sessione 7: suelta solo Jueves 16-18h, GAS Calendar sync/test/audit, semanal cache bump)
+> Ultimo aggiornamento: 2026-04-15 (sessione 8: sistema booking completo — Stripe checkout, webhook idempotenza, email HTML, Calendar, audit/cleanup)
 
 ---
 
@@ -23,9 +23,11 @@
 | Hosting | GitHub Pages, deploy da branch `main`, root `/` |
 | Dominio | lamesabcn.com via file `CNAME` |
 | Newsletter | Mailchimp (form POST verso `lamesabcn.us1.list-manage.com`) |
-| Prenotazioni | Koalendar (link esterni) + WhatsApp |
+| Prenotazioni | Stripe Checkout Sessions (dinamiche) + WhatsApp. GAS Booking.js backend, js/booking.js frontend |
 | Etsy | https://www.etsy.com/es/shop/LaMesaLC |
-| Cookie Banner | Cookiebot (`consent.cookiebot.com/uc.js`), `data-blockingmode="auto"`, primo script in `<head>` di ogni pagina |
+| Cookie Banner | Cookiebot (CBID: `0c496daf-df8d-4640-8875-84e193803d9a`), `data-blockingmode="auto"`, primo script in `<head>` di ogni pagina |
+| Pagamenti | Stripe (account La Mesa), Checkout Sessions dinamiche, webhook su GAS |
+| Calendari | Google Calendar: Mesa + Torno (calendari separati, eventi automatici da prenotazioni) |
 
 ---
 
@@ -119,9 +121,9 @@ lamesa-website/
 - CSS e JS sono condivisi: un solo `style.css` e un solo `main.js` per tutte le lingue.
 - EN e CA usano path relativi (`../css/style.css`, `../images/...`), ES usa path dalla root (`css/style.css`, `images/...`) o assoluti (`/images/...` per favicon).
 - Le 9 pagine intermedie `/clases/` non hanno blocchi `<style>` inline — tutti gli stili sono nel CSS condiviso sotto il commento `/* ============ PAGINE CLASES ============ */`.
-- **Cache-busting:** `style.css?v=7`, `booking.js?v=6`, `main.js?v=5`. Incrementare ad ogni modifica.
+- **Cache-busting:** `style.css?v=8`, `booking.js?v=7`, `main.js?v=5`. Incrementare ad ogni modifica.
 - **Suelta cards:** ogni card ha `<details class="suelta-card__info">` con descrizione espandibile (ES/EN/CA). Quando si apre una card, il JS svuota il contenuto delle altre (cal/times/checkout).
-- **Cookiebot** è il primo script in `<head>` di tutte le 45 pagine HTML. Il CBID placeholder `INSERISCI_QUI_IL_TUO_CBID` va sostituito col CBID reale dall'account Cookiebot. In `privacy.html` c'è anche lo script `CookieDeclaration` per la tabella cookie automatica.
+- **Cookiebot** è il primo script in `<head>` di tutte le 45 pagine HTML (CBID: `0c496daf-df8d-4640-8875-84e193803d9a`). In `privacy.html` c'è anche lo script `CookieDeclaration` per la tabella cookie automatica. Script `booking.js` e `main.js` hanno `data-cookieconsent="ignore"` per evitare che Cookiebot blocchi i fetch verso `script.google.com`.
 
 ---
 
@@ -454,25 +456,22 @@ section.contacto > div.container
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
 
-### Sistema di prenotazione
+### Sistema di prenotazione — Stripe Checkout Sessions (dinamiche)
 
-**Clase Semanal (abbonamento mensile) — Stripe Payment Links:**
+Le prenotazioni semanal e suelta usano Stripe Checkout Sessions dinamiche (non Payment Links statici, non Cal.com).
 
-| Tipo | Turno | Stripe Link |
+**Stripe Price IDs (live):**
+
+| Slot | Prezzo | Price ID |
 |---|---|---|
-| Modelado | Miercoles 16h | `https://buy.stripe.com/cNi8wRcdvdN29VfddebMQ05` |
-| Modelado | Miercoles 18:30h | `https://buy.stripe.com/aFa4gB2CV4cs8RbgpqbMQ04` |
-| Modelado | Jueves 11h | `https://buy.stripe.com/cNidRba5n8sI9VfehibMQ03` |
-| Torno | Miercoles 16h | `https://buy.stripe.com/14A8wRa5n4cs7N7a12bMQ02` |
-| Torno | Miercoles 18:30h | `https://buy.stripe.com/dRm4gBa5nfVa8RbgpqbMQ01` |
-| Torno | Jueves 11h | `https://buy.stripe.com/28E7sN3GZgZe3wR1uwbMQ00` |
-
-**Clase Suelta (prenotazione singola) — Cal.com:**
-
-| Tipo | Cal.com Link |
-|---|---|
-| Modelado | `https://cal.com/la-mesa/clase-suelta-modelado` |
-| Torno | `https://cal.com/la-mesa/clase-suelta-torno` |
+| Semanal Modelado Mer 16h | 120€ | `price_1TM1KmQgp3kTxQ2Zshm7YyT9` |
+| Semanal Modelado Mer 18:30h | 120€ | `price_1TJGyWQgp3kTxQ2ZFJ855jlZ` |
+| Semanal Modelado Jue 11h | 120€ | `price_1TJGytQgp3kTxQ2ZxOQ95YxB` |
+| Semanal Torno Mer 16h | 180€ | `price_1TJGzVQgp3kTxQ2Z56D215Mc` |
+| Semanal Torno Mer 18:30h | 180€ | `price_1TJH05Qgp3kTxQ2Z7SeeeJpx` |
+| Semanal Torno Jue 11h | 180€ | `price_1TJH0LQgp3kTxQ2Zo1ZjQrxV` |
+| Suelta Mesa | 50€ | `price_1TM1KoQgp3kTxQ2ZZsj08666` |
+| Suelta Torno | 70€ | `price_1TM1KpQgp3kTxQ2ZICg92EqJ` |
 
 **Coworking** — Solo WhatsApp, nessun link di prenotazione online.
 
@@ -625,33 +624,29 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 ### Problemi da risolvere
 
-1. ~~**hero.JPG estensione maiuscola**~~ — **RISOLTO**: il file e' gia' `hero.jpg` con estensione minuscola.
-
-2. ~~**nosotras.jpg troppo pesante**~~ — **RISOLTO**: compresso da 322 KB a 237 KB (JPG quality 78, progressive, mozjpeg) + creato `nosotras.webp` (201 KB). Tag `<picture>` con WebP + fallback JPG in tutti e 3 i file `index.html`.
-
-3. **Manca .gitignore** — I file `.DS_Store` sono nel repo. Creare un `.gitignore` con almeno `.DS_Store` e `*.swp`.
-
-4. **Privacy page solo in ES** — Esiste `privacy.html` (ES) ma la versione EN (`/en/privacy.html`) e' linkata nel sitemap ma non presente nel repo. La versione CA (`/ca/privacy.html`) e' linkata dalla pagina CA ma non presente.
-
-5. **Sitemap incompleta** — Manca `https://www.lamesabcn.com/ca/` nella privacy (ma la pagina CA non esiste ancora, vedi punto 4).
-
-6. **robots.txt** — Disallow solo `/en/privacy.html`, non blocca `/privacy.html` ne' `/ca/privacy.html` (che hanno noindex nel meta ma non nel robots).
-
-7. **Nessun favicon .ico** — Solo PNG. Alcuni browser vecchi potrebbero non trovare il favicon.
-
-8. ~~**Font directory vuota**~~ — **RISOLTO**: la cartella `fonts/` contiene Garet-Black e HighCruiser, caricati via @font-face. Montserrat caricato da Google Fonts CDN.
+1. ~~**hero.JPG**~~ — **RISOLTO**
+2. ~~**nosotras.jpg**~~ — **RISOLTO** (compresso + WebP)
+3. **Manca .gitignore** — `.DS_Store` nel repo.
+4. **Privacy page solo in ES** — EN (`/en/privacy.html`) esiste ma CA mancante.
+5. **Sitemap** — aggiornare con pagine /clases/ hreflang.
+6. **robots.txt** — Disallow solo `/en/privacy.html`.
+7. **Nessun favicon .ico** — Solo PNG.
+8. ~~**Font directory**~~ — **RISOLTO**
 
 ---
 
-## 10. Sistema di Prenotazione (Sprint 1 — Aprile 2026)
+## 10. Sistema di Prenotazione (Booking System)
 
 ### Architettura
 
 ```
 Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZIONI)
                                            → Stripe Checkout Sessions
-                                           → Email (MailApp)
+                                           → GmailApp (email HTML branded)
+                                           → Google Calendar (Mesa + Torno)
 ```
+
+**GAS URL deploy:** `https://script.google.com/macros/s/AKfycbzo26tz9qK4nN-6IdCcaI2bxccvKJL08nUaVWZs1ozSpNMetAdh5z2gkw-GeCvOtGsK/exec`
 
 ### Componenti
 
@@ -659,80 +654,110 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 - `js/booking.js` — fetch API, calendario suelta, card semanal migliorate, checkout flow, i18n (ES/EN/CA), prefetch ASAP
 - Pagine dinamiche: `semanal-modelado.html`, `semanal-torno.html`, `suelta.html` (×3 lingue)
 - `gracias.html` (×3 lingue) — post-checkout con dettaglio slot da URL param
-- CSS card suelta: `.suelta-cards` (grid 2col, stretch), `.suelta-card`, `.suelta-card--mesa/--torno`, `.suelta-card__body--open` (fade-in)
-- CSS calendario compatto: `.cal__grid`, `.cal__day` (40×40px max), `.cal__day--available/selected/today`
-  - Mesa card: available = blue/cream, selected = black/cream
-  - Torno card: available = cream/black, selected = cream/blue
+- CSS card suelta: `.suelta-cards` (grid 2col), `.suelta-card--mesa/--torno`, `.suelta-card__body--open` (fade-in)
+- CSS calendario: `.cal__grid`, `.cal__day--available/selected/today`, `.cal__nav` (44×44px)
 - CSS time pills: `.cal-times__pills`, `.cal-pill`, `.cal-pill--active`
-- CSS semanal migliorato: `.turno-card__dots`, `.turno-card__dot--filled`, `.turno-card--completo`, `.turno-card__badge--particular`
-- CSS form inputs: stili specifici per card gialle (bg dark, focus blue) e card blu (bg cream, focus cream)
-- CSS checkout: `.btn--loading` con spinner CSS
-- UI suelta: 2 card (Modelado/Torno) con "Reservar" → calendario inline sotto card, orari come pill buttons
-- UI semanal: card con dots indicatore posti, badge "¡Últimas plazas!" (≤2), card grigia "Completo" (=0)
-- Performance: prefetch suelta (mesa+torno) e semanal a script load (prima di DOMContentLoaded), timeout 8s con messaggio specifico
+- CSS semanal: `.turno-card__dots`, `.turno-card__dot--filled`, `.turno-card--completo`, `.turno-card__badge--urgent`
+- `<details class="suelta-card__info">` — descrizione espandibile in ogni card suelta (ES/EN/CA)
+- Performance: prefetch suelta (mesa+torno) e semanal a script load, timeout 8s, stale callback guard
+- `data-cookieconsent="ignore"` su booking.js e main.js per evitare blocco Cookiebot
 
 **Backend (GAS — repo `la-mesa-appscript`):**
-- `Booking.js` — tutte le funzioni di booking (non in Codice.js)
-- `Codice.js` — esteso doGet/doPost con nuovi action handler
+- `Booking.js` — tutte le funzioni di booking (~900+ righe)
+- `Codice.js` — doGet/doPost con action routing + webhook idempotenza
 - `fetchSlots_()` — CacheService 60s per ridurre letture foglio SLOTS
-- `fetchSlotDetail_()` — include stripe_price_id; `createCheckout_()` lo usa direttamente (zero doppia lettura)
-- `creaEventoCalendar_()` — crea evento Google Calendar per ogni prenotazione confermata
-- `sincronizzaPrenotazioniCalendar()` — backfill Calendar per prenotazioni esistenti
-- `testSistemaCompleto()` — test end-to-end con PASS/FAIL (slots, iCal, Calendar)
-- `auditSlots()` — report stato foglio SLOTS (semanal, suelta aperte, price_id vuoti)
-- `generaSlotSuelta_()` — solo Jueves 16-18h, mesa+torno, stripe_price_id automatico
-- `warmUp()` — trigger ogni 5 min per mantenere CacheService caldo
+- `fetchSlotDetail_()` — scansiona tutte le righe, preferisce `stato=aperto` tra duplicati
+- `createCheckout_()` — logging completo, usa stripe_price_id da slot
+- `handleStripeWebhook_()` — processa `checkout.session.completed`
+- `confermaPosto_()` — LockService, incrementa posti, crea prenotazione, email, Calendar
+- `creaEventoCalendar_()` — calendario Mesa o Torno in base a risorsa
+- `inviaEmailCliente_()` — email HTML branded con card blu La Mesa (GmailApp, mittente "La Mesa")
+- `notificaRagazze_()` — email notifica a lamesa.lc@gmail.com (mittente "La Mesa Reservas")
 
 **Google Sheets:**
-- Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi, stato, prezzo, stripe_price_id, note
+- Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi (formula), stato, prezzo, stripe_price_id, note
 - Foglio `PRENOTAZIONI`: prenotazione_id, slot_id, data_prenotazione, cliente_nombre/email/telefono, canale, importo, stato, note
 
 **Logica SLOTS — Semanal vs Suelta:**
-- **Semanal** (6 righe permanenti): `data` vuota, `slot_id` formato `semanal_[risorsa]_[giorno]_[ora]` (es. `semanal_mesa_mer_16`). Giorno in colonna `note` (Miércoles/Jueves). Rappresentano turni fissi mensili, non sessioni singole. Non scadono.
-- **Suelta** (righe con data): `data` contiene YYYY-MM-DD, `slot_id` formato `YYYY-MM-DD_HH:MM_suelta_[risorsa]`. Giorni: Mar/Mer/Ven. Orari: 11:00 e 15:00. Generate con `generaSlotSuelta(N)` per N settimane future.
-- **Generazione slot suelta**: eseguire `generaSlotSuelta` dall'editor GAS (default 4 settimane). Appende nuovi slot senza cancellare i precedenti.
+- **Semanal** (6 righe permanenti): `data` vuota, `slot_id` formato `semanal_[risorsa]_[giorno]_[ora]`. Giorno in colonna `note`. Non scadono.
+- **Suelta** (righe con data): solo **Jueves 16:00-18:00**, `slot_id` formato `YYYY-MM-DD_16:00_suelta_[risorsa]`. Mesa (8 posti, 50€) + Torno (2 posti, 70€). `stripe_price_id` inserito automaticamente da `generaSlotSuelta_()`.
+- **Generazione**: `generaSlotSuelta(N)` aggiunge N settimane dal prossimo giovedì, con anti-duplicati. `resetSlotsSuelta(N)` cancella tutti e rigenera.
+
+**Google Calendar:**
+- Calendario Mesa: `56799356f8774916d556d0a5fe22fc89844d5e7478e5bff7d1f666e2ca2c8f5b@group.calendar.google.com`
+- Calendario Torno: `6f8ab63ea9450068404e579a29f7e8f7bc918c59678542a3ab40ed6ce434128e@group.calendar.google.com`
+- Account GAS (owner file): `andrea.pesce@zeroco2.eco`
+- Ogni prenotazione confermata crea evento nel calendario corretto
+
+**Stripe Webhook:**
+- Endpoint: `[GAS_URL]?action=stripe_webhook`
+- Evento: `checkout.session.completed`
+- Anti-duplicati: CacheService con TTL 24h per `event_id` — skip se già processato
+- Signing secret: `whsec_oV0WcnTp7pxszbsWBmtU4VeDTLqv6lAT`
 
 ### API Endpoints (GAS Web App)
 
 **GET:**
 - `?action=slots&tipo=semanal&risorsa=mesa` — slot aperti con posti liberi
-- `?action=slots&tipo=suelta` — tutti gli slot suelta aperti
+- `?action=slots&tipo=suelta&risorsa=mesa` — slot suelta aperti
 - `?action=slot_detail&slot_id=XXX` — dettaglio singolo slot
 - `?action=ical` — feed iCal (.ics) con tutti gli slot aperti
 
 **POST (body JSON `{action, payload}`):**
 - `create_checkout` — crea Stripe Checkout Session → ritorna `checkout_url`
-- `add_slot` — aggiunge nuovo slot (uso interno PWA)
+- `add_slot` — aggiunge nuovo slot
 - `close_slot` / `open_slot` — cambia stato slot
 - `manual_booking` — prenotazione manuale (WhatsApp/Airbnb/direct)
 
 **POST (URL param `?action=stripe_webhook`):**
-- Riceve eventi Stripe → `checkout.session.completed` → conferma posto + email
+- Riceve eventi Stripe → `checkout.session.completed` → conferma posto + email + Calendar
 
 ### Flusso prenotazione
 
-1. Utente apre pagina semanal → JS fetcha slot da API → mostra card dinamiche
-2. Click "Reservar" → mini-form (nome, email, telefono)
+1. Utente apre pagina → JS fetcha slot da API → mostra card/calendario dinamici
+2. Click "Reservar" → form inline (nome, email, telefono)
 3. Submit → POST `create_checkout` → redirect a Stripe Checkout
 4. Pagamento completato → Stripe webhook → `confermaPosto_()`:
    - Incrementa `posti_occupati` nello slot
    - Se pieno, stato → `chiuso`
    - Aggiunge riga in PRENOTAZIONI
-   - Email conferma al cliente
+   - Email HTML branded al cliente (GmailApp)
    - Email notifica a lamesa.lc@gmail.com
+   - Evento Google Calendar (Mesa o Torno)
 5. Redirect a `gracias.html?slot=XXX`
 
-### Configurazione necessaria
+### DocumentProperties necessarie (GAS)
 
-1. `clasp push` nel repo GAS + redeploy web app
-2. Aggiornare `BOOKING_API` in `js/booking.js` con URL del deploy GAS
-3. In GAS DocumentProperties: `STRIPE_SECRET_KEY = sk_live_...`
-4. In Stripe Dashboard: webhook endpoint → `[GAS_URL]?action=stripe_webhook` → evento `checkout.session.completed`
-5. Per ogni slot nel foglio SLOTS: inserire `stripe_price_id` dal Stripe Dashboard → Products
+- `STRIPE_SECRET_KEY`: chiave live Stripe `sk_live_...`
+- `STRIPE_WEBHOOK_SECRET`: `whsec_oV0WcnTp7pxszbsWBmtU4VeDTLqv6lAT`
+- `DASHBOARD_TOKEN`: per dashboard KPI
 
-### PWA Mobile (repo separato)
+**⚠️ REGOLA CRITICA:** Non sovrascrivere mai STRIPE_SECRET_KEY o STRIPE_WEBHOOK_SECRET con 'PASTE_HERE'. Sono già impostate nelle DocumentProperties. La funzione `setStripeProperties()` ha placeholder — NON eseguirla.
 
-Parte 4 dello sprint (sezioni Calendario e Reservas) non implementata — il repo `la-mesa-mobile` non era disponibile localmente. Da fare in sessione separata.
+### Funzioni manuali (eseguire da editor Apps Script)
+
+| Funzione | Cosa fa |
+|---|---|
+| `generaSlotSuelta(N)` | Aggiunge N settimane di slot suelta Jueves (default 4) |
+| `resetSlotsSuelta(N)` | Cancella tutti suelta + rigenera N settimane (default 8) |
+| `fixSueltaPriceIds()` | Backfill stripe_price_id su slot suelta esistenti |
+| `sincronizzaPrenotazioniCalendar()` | Crea eventi Calendar per prenotazioni confermate |
+| `auditSlots()` | Verifica duplicati e stato slot |
+| `rimuoviDuplicatiSlots()` | Elimina righe duplicate (mantiene aperto) |
+| `clearSlotsCache()` | Svuota cache GAS 60s |
+| `testCreateCheckout()` | Test end-to-end checkout con primo slot suelta aperto |
+| `testCalendarBasic()` | Test scrittura su entrambi i calendari |
+| `warmUp()` | Chiamata da trigger ogni 5 min |
+| `setupWarmUpTrigger()` | Installa trigger warm-up |
+| `listProperties()` | Mostra chiavi DocumentProperties (senza valori) |
+
+### Prenotazioni manuali registrate
+
+Nel foglio PRENOTAZIONI:
+- Tori | tel 695052393 | semanal_mesa_mer_1830 | whatsapp
+- Valerie | valerie.jaeck@gmail.com | tel 4915731631759 | semanal_mesa_mer_16 | whatsapp
+- Jazmin | jbalegh@gmail.com | tel 613949398 | semanal_torno_mer_16 | whatsapp
+- Elise | elisedespert@gmail.com | tel +33630472452 | semanal_mesa_mer_16 | whatsapp
 
 ### Modifiche sessione 13 apr 2026
 
@@ -744,17 +769,21 @@ Parte 4 dello sprint (sezioni Calendario e Reservas) non implementata — il rep
 
 ### Pendenti futuri
 
-- **Blog**: creare versioni EN/CA di team-building page
-- **Blog**: verificare post CA mancante per "cosas que hacer en barceloneta" (esiste solo ES/EN, manca CA)
-- **TripAdvisor**: profilo da creare (Vick)
-- **Google Business Profile**: verifica in attesa
+- Privacy page EN e CA (mancanti)
+- Sitemap: aggiornare con pagine /clases/ (noindex non serve, ma hreflang sì)
+- Google Business Profile: verifica in corso
+- PWA mobile: aggiungere sezioni Calendario e Reservas
+- Email mittente: ora è andrea.pesce@zeroco2.eco — ideale trasferire ownership GAS a lamesa.lc@gmail.com
+- Coupon Stripe: funzionanti ma richiedono codice promozionale associato al coupon
+- Blog: creare versioni EN/CA di team-building page
+- Blog: verificare post CA mancante per "cosas que hacer en barceloneta"
+- TripAdvisor: profilo da creare (Vick)
 
 ### Miglioramenti possibili (non urgenti)
 
-- Ottimizzare altre immagini in formato WebP con fallback (nosotras gia' fatto).
-- Aggiungere `<meta name="author">`.
-- Self-hosting dei font Montserrat per eliminare dipendenza Google Fonts.
-- Aggiungere `aria-label` piu' specifici al language switcher.
+- Ottimizzare altre immagini in formato WebP con fallback (nosotras già fatto)
+- Self-hosting dei font Montserrat per eliminare dipendenza Google Fonts
+- Aggiungere `aria-label` più specifici al language switcher
 
 ---
 
@@ -821,16 +850,23 @@ In **Settings > Pages**:
 
 ### Cache busting
 
-- `style.css?v=5` e `booking.js?v=4` uniformi in tutti i 45 file HTML
-- `main.js?v=3` invariato (solo pagine clases/)
+- `style.css?v=8`, `booking.js?v=7`, `main.js?v=5` in tutti i file HTML
+- Incrementare ad ogni modifica CSS/JS
 
 ### Ordine script nel `<head>`
 
 ```
-1. GA4 loader (async)
-2. GA4 config
-3. Meta Pixel (IIFE + noscript fallback)
-4. DOMContentLoaded — event delegation WhatsApp (gtag + fbq)
+1. Cookiebot (async, primo script assoluto)
+2. GA4 loader (async)
+3. GA4 config
+4. Meta Pixel (IIFE + noscript fallback)
+5. DOMContentLoaded — event delegation WhatsApp (gtag + fbq)
+```
+
+Nel `<body>` (fine pagina, solo pagine clases/gracias):
+```
+1. main.js (defer, data-cookieconsent="ignore")
+2. booking.js (defer, data-cookieconsent="ignore")
 ```
 
 ---
