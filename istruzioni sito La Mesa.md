@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-14 (sessione 4: UI suelta card + calendario compatto + performance prefetch + GAS cache)
+> Ultimo aggiornamento: 2026-04-14 (sessione 5: cookie banner Cookiebot + sezione cookie policy in privacy.html)
 
 ---
 
@@ -25,6 +25,7 @@
 | Newsletter | Mailchimp (form POST verso `lamesabcn.us1.list-manage.com`) |
 | Prenotazioni | Koalendar (link esterni) + WhatsApp |
 | Etsy | https://www.etsy.com/es/shop/LaMesaLC |
+| Cookie Banner | Cookiebot (`consent.cookiebot.com/uc.js`), `data-blockingmode="auto"`, primo script in `<head>` di ogni pagina |
 
 ---
 
@@ -118,6 +119,8 @@ lamesa-website/
 - CSS e JS sono condivisi: un solo `style.css` e un solo `main.js` per tutte le lingue.
 - EN e CA usano path relativi (`../css/style.css`, `../images/...`), ES usa path dalla root (`css/style.css`, `images/...`) o assoluti (`/images/...` per favicon).
 - Le 9 pagine intermedie `/clases/` non hanno blocchi `<style>` inline — tutti gli stili sono nel CSS condiviso sotto il commento `/* ============ PAGINE CLASES ============ */`.
+- **Cache-busting CSS:** attualmente `style.css?v=6`. Incrementare ad ogni modifica CSS.
+- **Cookiebot** è il primo script in `<head>` di tutte le 45 pagine HTML. Il CBID placeholder `INSERISCI_QUI_IL_TUO_CBID` va sostituito col CBID reale dall'account Cookiebot. In `privacy.html` c'è anche lo script `CookieDeclaration` per la tabella cookie automatica.
 
 ---
 
