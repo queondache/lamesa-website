@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-14 (sessione 6: fix card reset suelta + descrizione espandibile details/summary)
+> Ultimo aggiornamento: 2026-04-14 (sessione 7: suelta solo Jueves 16-18h, GAS Calendar sync/test/audit, semanal cache bump)
 
 ---
 
@@ -449,7 +449,7 @@ section.contacto > div.container
 | **Taller Flex** | Ceramica modelado/torno | 120 EUR | Con esperienza | Flessibile | WhatsApp |
 | **Intro al Torno** | Torno | 90 EUR (2 sessioni) | Principianti torno | Da concordare | WhatsApp |
 | **Coworking Torno** | Torno | 20 EUR/ora | Ceramisti autonomi | Mar, Mer, Ven 14-18h | WhatsApp |
-| **Clase Suelta** | Mesa o torno | 20 EUR/ora | Chiunque | Mar, Mer, Ven 14-18h | Koalendar |
+| **Clase Suelta** | Mesa o torno | 50/70 EUR | Chiunque | Jueves 16-18h | Sito web (Stripe) |
 | **Workshops creativi** | Varie discipline | Variabile | Tutti | Puntuali | Drive + WhatsApp |
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
@@ -676,6 +676,12 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 - `Codice.js` — esteso doGet/doPost con nuovi action handler
 - `fetchSlots_()` — CacheService 60s per ridurre letture foglio SLOTS
 - `fetchSlotDetail_()` — include stripe_price_id; `createCheckout_()` lo usa direttamente (zero doppia lettura)
+- `creaEventoCalendar_()` — crea evento Google Calendar per ogni prenotazione confermata
+- `sincronizzaPrenotazioniCalendar()` — backfill Calendar per prenotazioni esistenti
+- `testSistemaCompleto()` — test end-to-end con PASS/FAIL (slots, iCal, Calendar)
+- `auditSlots()` — report stato foglio SLOTS (semanal, suelta aperte, price_id vuoti)
+- `generaSlotSuelta_()` — solo Jueves 16-18h, mesa+torno, stripe_price_id automatico
+- `warmUp()` — trigger ogni 5 min per mantenere CacheService caldo
 
 **Google Sheets:**
 - Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi, stato, prezzo, stripe_price_id, note
