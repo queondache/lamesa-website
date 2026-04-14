@@ -227,9 +227,15 @@
         var body = card.querySelector('.suelta-card__body');
         var wasOpen = body.classList.contains('suelta-card__body--open');
 
-        // Close all open cards
+        // Close all open cards and clear their content
         cards.querySelectorAll('.suelta-card__body--open').forEach(function(b) {
           b.classList.remove('suelta-card__body--open');
+          var cal = b.querySelector('.suelta-card__cal');
+          var times = b.querySelector('.suelta-card__times');
+          var checkout = b.querySelector('.cal-checkout');
+          if (cal) cal.innerHTML = '';
+          if (times) times.innerHTML = '';
+          if (checkout) checkout.innerHTML = '';
         });
 
         if (wasOpen && calState.activeCard === card) {

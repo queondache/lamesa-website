@@ -2368,6 +2368,31 @@ p {
   border-radius: var(--radius-pill);
 }
 
+.suelta-card__info {
+  margin: var(--space-xs) 0;
+  cursor: pointer;
+}
+.suelta-card__info-trigger {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--blue);
+  list-style: none;
+  cursor: pointer;
+}
+.suelta-card__info-trigger::-webkit-details-marker { display: none; }
+.suelta-card--torno .suelta-card__info-trigger {
+  color: var(--cream);
+}
+.suelta-card__info[open] .suelta-card__info-trigger {
+  opacity: 0.7;
+}
+.suelta-card__info-text {
+  font-size: 0.8rem;
+  margin-top: var(--space-xs);
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
 .suelta-card__cta {
   margin-top: var(--space-xs);
 }
