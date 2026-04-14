@@ -2,7 +2,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-13 (sessione 3: booking system sprint 1 — pagine dinamiche + Stripe checkout)
+> Ultimo aggiornamento: 2026-04-14 (sessione 4: UI suelta card + calendario compatto + performance prefetch + GAS cache)
 
 ---
 
@@ -652,18 +652,26 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 ### Componenti
 
 **Frontend (Sito web):**
-- `js/booking.js` — fetch API, calendario suelta, card semanal migliorate, checkout flow, i18n (ES/EN/CA)
+- `js/booking.js` — fetch API, calendario suelta, card semanal migliorate, checkout flow, i18n (ES/EN/CA), prefetch ASAP
 - Pagine dinamiche: `semanal-modelado.html`, `semanal-torno.html`, `suelta.html` (×3 lingue)
 - `gracias.html` (×3 lingue) — post-checkout con dettaglio slot da URL param
-- CSS calendario: `.cal`, `.cal__grid`, `.cal__day`, `.cal__day--available/selected/today`, `.cal-times`, `.cal-time`
-- CSS tabs suelta: `.suelta-tabs`, `.suelta-tab`, `.suelta-tab--active`
+- CSS card suelta: `.suelta-cards` (grid 2col, stretch), `.suelta-card`, `.suelta-card--mesa/--torno`, `.suelta-card__body--open` (fade-in)
+- CSS calendario compatto: `.cal__grid`, `.cal__day` (40×40px max), `.cal__day--available/selected/today`
+  - Mesa card: available = blue/cream, selected = black/cream
+  - Torno card: available = cream/black, selected = cream/blue
+- CSS time pills: `.cal-times__pills`, `.cal-pill`, `.cal-pill--active`
 - CSS semanal migliorato: `.turno-card__dots`, `.turno-card__dot--filled`, `.turno-card--completo`, `.turno-card__badge--particular`
-- UI suelta: calendario mensile navigabile (prev/next), giorni con slot gialli, click → orari disponibili
+- CSS form inputs: stili specifici per card gialle (bg dark, focus blue) e card blu (bg cream, focus cream)
+- CSS checkout: `.btn--loading` con spinner CSS
+- UI suelta: 2 card (Modelado/Torno) con "Reservar" → calendario inline sotto card, orari come pill buttons
 - UI semanal: card con dots indicatore posti, badge "¡Últimas plazas!" (≤2), card grigia "Completo" (=0)
+- Performance: prefetch suelta (mesa+torno) e semanal a script load (prima di DOMContentLoaded), timeout 8s con messaggio specifico
 
 **Backend (GAS — repo `la-mesa-appscript`):**
 - `Booking.js` — tutte le funzioni di booking (non in Codice.js)
 - `Codice.js` — esteso doGet/doPost con nuovi action handler
+- `fetchSlots_()` — CacheService 60s per ridurre letture foglio SLOTS
+- `fetchSlotDetail_()` — include stripe_price_id; `createCheckout_()` lo usa direttamente (zero doppia lettura)
 
 **Google Sheets:**
 - Foglio `SLOTS`: slot_id, data, ora_inizio/fine, tipo, risorsa, posti_totali/occupati/liberi, stato, prezzo, stripe_price_id, note
@@ -803,8 +811,8 @@ In **Settings > Pages**:
 
 ### Cache busting
 
-- CSS e JS con `?v=2` in tutti e 3 i file HTML
-- **Commit**: `a6cbc00`
+- `style.css?v=5` e `booking.js?v=4` uniformi in tutti i 45 file HTML
+- `main.js?v=3` invariato (solo pagine clases/)
 
 ### Ordine script nel `<head>`
 
