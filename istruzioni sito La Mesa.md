@@ -770,7 +770,7 @@ Nel foglio PRENOTAZIONI:
 - **Blog**: 6 nuovi post creati (como-elegir-taller ES/EN/CA + precios ES/EN/CA), totale 24 file in /blog/ (23 post + index)
 - **Sitemap**: aggiornata con tutti i post blog + team-building (39 URL totali)
 
-### PWA Reservas (Sprint 1+2 — apr 2026)
+### PWA Reservas (Sprint 1-3 — apr 2026)
 
 **Repo:** `queondache/la-mesa-reservas`
 **URL:** https://queondache.github.io/la-mesa-reservas/
@@ -779,21 +779,36 @@ Nel foglio PRENOTAZIONI:
 **Auth:** PIN 4 cifre in DocumentProperties GAS (`PWA_RESERVAS_PIN`)
 
 **Tab implementati:**
-- **Hoy** — prenotazioni di oggi (semanal + suelta), contatti rapidi WhatsApp/email/tel
-- **Semana** — calendario settimanale L-D, slot per giorno con occupazione, barra progresso, lista clienti espandibile. Navigazione ◀ ▶ settimana
-- **Turnos** — 6 turni semanal con lista clienti espandibile, copia lista per WhatsApp
+- **Hoy** — prenotazioni di oggi (semanal + suelta), contatti rapidi WhatsApp/email/tel, badge scadenza abbonamento
+- **Mes** — calendario mensile con dots per giorno, tap giorno → dettaglio slot con barra occupazione e lista clienti espandibile
+- **Turnos** — 6 turni semanal con lista clienti espandibile, copia lista WhatsApp, bottone "+ Añadir alumna" per prenotazione manuale
 
-**Endpoint GAS (GET in Codice.js doGet):**
+**Funzionalità Sprint 3:**
+- Precaricamento parallelo dati al login + refresh automatico ogni 5 minuti
+- Edit cliente: tap nome → modal con campi editabili (nombre/email/tel) + guardar
+- Cancel reserva: conferma → stato=cancellata + posto liberato nello slot
+- Add booking manuale: form con nome/email/tel/canale → manual_booking
+- Alert subscription: badge arancione "⚠️ Vence en Xd" su clienti con abbonamento in scadenza entro 7 giorni
+- Email daily recap: ogni mattina alle 8:00 a lamesa.lc@gmail.com con chi viene oggi + abbonamenti in scadenza
+
+**Endpoint GAS GET (Codice.js doGet):**
 - `?action=today_bookings` — prenotazioni di oggi
 - `?action=slot_bookings&slot_id=X` — clienti per slot
-- `?action=week_slots&date=YYYY-MM-DD` — tutti gli slot della settimana con clienti
+- `?action=week_slots&date=YYYY-MM-DD` — slot settimanali con clienti
+- `?action=month_slots&month=YYYY-MM` — slot mensili (calendario)
+- `?action=expiring_subscriptions&days=N` — abbonamenti in scadenza
 - `?action=verify_pin&pin=X` — verifica PIN
 
-**Performance:** skeleton loader immediato, timeout 8s con messaggio errore + link WhatsApp
+**Endpoint GAS POST (Codice.js doPost):**
+- `update_booking` — modifica nome/email/tel prenotazione
+- `cancel_booking` — cancella prenotazione + libera posto
+- `manual_booking` — prenotazione manuale (già esistente)
 
-**Setup richiesto:** impostare `PWA_RESERVAS_PIN` nelle DocumentProperties GAS, poi redeploy web app.
+**Email trigger:** `setupDailyRecapTrigger()` — installa trigger dailyRecap alle 8:00
 
-**Debug helpers (Booking.js):** `testTodayBookings_()`, `testSlotBookings_()`, `testWeekSlots_()` — eseguire dall'editor GAS per debug con logging dettagliato.
+**Performance:** prefetch parallelo al login, timeout 15s, refresh 5 min
+
+**Setup richiesto:** impostare `PWA_RESERVAS_PIN` nelle DocumentProperties GAS, poi redeploy web app. Per email daily: eseguire `setupDailyRecapTrigger()` dall'editor.
 
 **Strategia completa:** vedere `PWA_RESERVAS_STRATEGY.md` nel repo GAS.
 
@@ -802,7 +817,7 @@ Nel foglio PRENOTAZIONI:
 - Privacy page EN e CA (mancanti)
 - Sitemap: aggiornare con pagine /clases/ (noindex non serve, ma hreflang sì)
 - Google Business Profile: verifica in corso
-- PWA Reservas Sprint 3: prenotazione manuale + gestione slot (apri/chiudi) + service worker offline
+- PWA Reservas: gestione slot (apri/chiudi dalla PWA), dark mode
 - Email mittente: ora è andrea.pesce@zeroco2.eco — ideale trasferire ownership GAS a lamesa.lc@gmail.com
 - Coupon Stripe: funzionanti ma richiedono codice promozionale associato al coupon
 - Blog: creare versioni EN/CA di team-building page
