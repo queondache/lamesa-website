@@ -770,7 +770,7 @@ Nel foglio PRENOTAZIONI:
 - **Blog**: 6 nuovi post creati (como-elegir-taller ES/EN/CA + precios ES/EN/CA), totale 24 file in /blog/ (23 post + index)
 - **Sitemap**: aggiornata con tutti i post blog + team-building (39 URL totali)
 
-### PWA Reservas (Sprint 1-3 — apr 2026)
+### PWA Reservas (Sprint 1-4 — apr 2026)
 
 **Repo:** `queondache/la-mesa-reservas`
 **URL:** https://queondache.github.io/la-mesa-reservas/
@@ -779,38 +779,36 @@ Nel foglio PRENOTAZIONI:
 **Auth:** PIN 4 cifre in DocumentProperties GAS (`PWA_RESERVAS_PIN`)
 
 **Tab implementati:**
-- **Hoy** — prenotazioni di oggi (semanal + suelta), contatti rapidi WhatsApp/email/tel, badge scadenza abbonamento
-- **Mes** — calendario mensile con dots per giorno, tap giorno → dettaglio slot con barra occupazione e lista clienti espandibile
-- **Turnos** — 6 turni semanal con lista clienti espandibile, copia lista WhatsApp, bottone "+ Añadir alumna" per prenotazione manuale
+- **Hoy** — prenotazioni di oggi, contatori, sezione "Subscripciones por vencer", bottoni WA/tel/email, badge scadenza, bottone ✕ cancella
+- **Mes** — calendario mensile con dots, tap giorno → dettaglio slot con barra occupazione, lista clienti espandibile, frecce ◀ ▶ navigazione giorno, bottone + Añadir
+- **Turnos** — 6 turni semanal con lista clienti completa inline (NON richiede fetch extra), copia lista WhatsApp, bottone "+ Añadir alumna", bottone ✕ cancella
 
-**Funzionalità Sprint 3:**
-- Precaricamento parallelo dati al login + refresh automatico ogni 5 minuti
-- Edit cliente: tap nome → modal con campi editabili (nombre/email/tel) + guardar
-- Cancel reserva: conferma → stato=cancellata + posto liberato nello slot
-- Add booking manuale: form con nome/email/tel/canale → manual_booking
-- Alert subscription: badge arancione "⚠️ Vence en Xd" su clienti con abbonamento in scadenza entro 7 giorni
-- Email daily recap: ogni mattina alle 8:00 a lamesa.lc@gmail.com con chi viene oggi + abbonamenti in scadenza
+**Architettura Sprint 4 — mega endpoint:**
+- UNA sola fetch `init_pwa_reservas` al login → ritorna TUTTO (today, week, month, turnos, expiring)
+- Legge ogni foglio Sheets UNA volta, costruisce tutti i dati in memoria
+- Zero fetch navigando tra tab — tutto dalla cache
+- Refresh automatico ogni 10 minuti con singola chiamata
+- Solo azioni (add/edit/cancel) fanno POST, poi reload completo
 
 **Endpoint GAS GET (Codice.js doGet):**
-- `?action=today_bookings` — prenotazioni di oggi
-- `?action=slot_bookings&slot_id=X` — clienti per slot
-- `?action=week_slots&date=YYYY-MM-DD` — slot settimanali con clienti
-- `?action=month_slots&month=YYYY-MM` — slot mensili (calendario)
+- `?action=init_pwa_reservas` — **mega endpoint** con tutti i dati (Sprint 4)
+- `?action=today_bookings` — prenotazioni di oggi (legacy)
+- `?action=slot_bookings&slot_id=X` — clienti per slot (legacy)
+- `?action=week_slots&date=YYYY-MM-DD` — slot settimanali (usato per mesi diversi)
+- `?action=month_slots&month=YYYY-MM` — slot mensili (usato per mesi diversi)
 - `?action=expiring_subscriptions&days=N` — abbonamenti in scadenza
 - `?action=verify_pin&pin=X` — verifica PIN
 
 **Endpoint GAS POST (Codice.js doPost):**
 - `update_booking` — modifica nome/email/tel prenotazione
 - `cancel_booking` — cancella prenotazione + libera posto
-- `manual_booking` — prenotazione manuale (già esistente)
+- `manual_booking` — prenotazione manuale
 
-**Email trigger:** `setupDailyRecapTrigger()` — installa trigger dailyRecap alle 8:00
+**Email trigger:** `setupDailyRecapTrigger()` — dailyRecap alle 8:00 con chi viene oggi + abbonamenti in scadenza
 
-**Performance:** prefetch parallelo al login, timeout 15s, refresh 5 min
+**Performance:** 1 fetch init, timeout 15s, refresh 10 min, `testInitPwa()` per debug performance
 
-**Setup richiesto:** impostare `PWA_RESERVAS_PIN` nelle DocumentProperties GAS, poi redeploy web app. Per email daily: eseguire `setupDailyRecapTrigger()` dall'editor.
-
-**Strategia completa:** vedere `PWA_RESERVAS_STRATEGY.md` nel repo GAS.
+**Setup:** `PWA_RESERVAS_PIN` in DocumentProperties GAS → redeploy. Email: `setupDailyRecapTrigger()`.
 
 ### Pendenti futuri
 
