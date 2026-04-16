@@ -1,5 +1,8 @@
 # Istruzioni Sito La Mesa — Fonte di Verita Tecnica
 
+> ⚠️ ATTENZIONE: questo file non deve contenere API keys, secrets o password.
+> Tutti i valori sensibili vanno nelle DocumentProperties GAS. Mai committare credentials.
+
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
 > Ultimo aggiornamento: 2026-04-15 (sessione 8: sistema booking completo — Stripe checkout, webhook idempotenza, email HTML, Calendar, audit/cleanup)
