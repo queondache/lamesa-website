@@ -693,7 +693,7 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 - Endpoint: `[GAS_URL]?action=stripe_webhook`
 - Evento: `checkout.session.completed`
 - Anti-duplicati: CacheService con TTL 24h per `event_id` — skip se già processato
-- Signing secret: `whsec_oV0WcnTp7pxszbsWBmtU4VeDTLqv6lAT`
+- Signing secret: `STRIPE_WEBHOOK_SECRET=<impostato nelle DocumentProperties GAS>`
 
 ### API Endpoints (GAS Web App)
 
@@ -729,7 +729,7 @@ Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZ
 ### DocumentProperties necessarie (GAS)
 
 - `STRIPE_SECRET_KEY`: chiave live Stripe `sk_live_...`
-- `STRIPE_WEBHOOK_SECRET`: `whsec_oV0WcnTp7pxszbsWBmtU4VeDTLqv6lAT`
+- `STRIPE_WEBHOOK_SECRET`: `<impostato nelle DocumentProperties GAS>`
 - `DASHBOARD_TOKEN`: per dashboard KPI
 
 **⚠️ REGOLA CRITICA:** Non sovrascrivere mai STRIPE_SECRET_KEY o STRIPE_WEBHOOK_SECRET con 'PASTE_HERE'. Sono già impostate nelle DocumentProperties. La funzione `setStripeProperties()` ha placeholder — NON eseguirla.
