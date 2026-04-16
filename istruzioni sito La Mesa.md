@@ -770,7 +770,7 @@ Nel foglio PRENOTAZIONI:
 - **Blog**: 6 nuovi post creati (como-elegir-taller ES/EN/CA + precios ES/EN/CA), totale 24 file in /blog/ (23 post + index)
 - **Sitemap**: aggiornata con tutti i post blog + team-building (39 URL totali)
 
-### PWA Reservas (Sprint 1 — apr 2026)
+### PWA Reservas (Sprint 1+2 — apr 2026)
 
 **Repo:** `queondache/la-mesa-reservas`
 **URL:** https://queondache.github.io/la-mesa-reservas/
@@ -780,14 +780,20 @@ Nel foglio PRENOTAZIONI:
 
 **Tab implementati:**
 - **Hoy** — prenotazioni di oggi (semanal + suelta), contatti rapidi WhatsApp/email/tel
+- **Semana** — calendario settimanale L-D, slot per giorno con occupazione, barra progresso, lista clienti espandibile. Navigazione ◀ ▶ settimana
 - **Turnos** — 6 turni semanal con lista clienti espandibile, copia lista per WhatsApp
 
-**Endpoint GAS aggiunti (GET in Codice.js doGet):**
+**Endpoint GAS (GET in Codice.js doGet):**
 - `?action=today_bookings` — prenotazioni di oggi
 - `?action=slot_bookings&slot_id=X` — clienti per slot
+- `?action=week_slots&date=YYYY-MM-DD` — tutti gli slot della settimana con clienti
 - `?action=verify_pin&pin=X` — verifica PIN
 
+**Performance:** skeleton loader immediato, timeout 8s con messaggio errore + link WhatsApp
+
 **Setup richiesto:** impostare `PWA_RESERVAS_PIN` nelle DocumentProperties GAS, poi redeploy web app.
+
+**Debug helpers (Booking.js):** `testTodayBookings_()`, `testSlotBookings_()`, `testWeekSlots_()` — eseguire dall'editor GAS per debug con logging dettagliato.
 
 **Strategia completa:** vedere `PWA_RESERVAS_STRATEGY.md` nel repo GAS.
 
@@ -796,8 +802,7 @@ Nel foglio PRENOTAZIONI:
 - Privacy page EN e CA (mancanti)
 - Sitemap: aggiornare con pagine /clases/ (noindex non serve, ma hreflang sì)
 - Google Business Profile: verifica in corso
-- PWA Reservas Sprint 2: vista Calendario settimanale + gestione slot
-- PWA Reservas Sprint 3: prenotazione manuale + service worker offline
+- PWA Reservas Sprint 3: prenotazione manuale + gestione slot (apri/chiudi) + service worker offline
 - Email mittente: ora è andrea.pesce@zeroco2.eco — ideale trasferire ownership GAS a lamesa.lc@gmail.com
 - Coupon Stripe: funzionanti ma richiedono codice promozionale associato al coupon
 - Blog: creare versioni EN/CA di team-building page
