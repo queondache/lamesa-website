@@ -5,7 +5,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-20 (bonifica: rimossi riferimenti Koalendar/Cal.com, canali reali allineati a Stripe+WhatsApp)
+> Ultimo aggiornamento: 2026-04-20 (cutover prenotazioni: Taller Semanal → WhatsApp, Clase Suelta → gestionale v2 via booking-v2.js; bonifica Koalendar/Cal.com)
 
 ---
 
@@ -450,33 +450,29 @@ section.contacto > div.container
 
 | Servizio | Categoria | Prezzo | Per chi | Giorni | Canale prenotazione |
 |---|---|---|---|---|---|
-| **Taller Semanal** | Ceramica modelado | 120 EUR/mese | Principianti | Lun, Mar, Mer, Ven | Sito web (Stripe) |
+| **Taller Semanal** | Ceramica modelado/torno | 120/180 EUR/mese | Principianti | Lun, Mar, Mer, Ven | **WhatsApp** (primo contatto → admin crea sub manuale nel gestionale) |
 | **Taller Flex** | Ceramica modelado/torno | 120 EUR | Con esperienza | Flessibile | WhatsApp |
 | **Intro al Torno** | Torno | 90 EUR (2 sessioni) | Principianti torno | Da concordare | WhatsApp |
 | **Coworking Torno** | Torno | 20 EUR/ora | Ceramisti autonomi | Mar, Mer, Ven 14-18h | WhatsApp |
-| **Clase Suelta** | Mesa o torno | 50/70 EUR | Chiunque | Jueves 16-18h | Sito web (Stripe) |
+| **Clase Suelta** | Mesa o torno | 50/70 EUR | Chiunque | Jueves 16-18h | **Sito vetrina → gestionale v2 (Stripe Checkout)** |
 | **Workshops creativi** | Varie discipline | Variabile | Tutti | Puntuali | Drive + WhatsApp |
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
 
-### Sistema di prenotazione — Stripe Checkout Sessions (dinamiche)
+### Sistema di prenotazione — stato post-cutover (2026-04-20)
 
-Le prenotazioni semanal e suelta usano Stripe Checkout Sessions dinamiche (non Payment Links statici).
+**Clase Suelta** → gestionale v2 (`app.lamesabcn.com` + backend Render `la-mesa-v2-backend.onrender.com`). Flusso:
+1. Sito `clases/suelta.html` (ES/EN/CA) carica `js/booking-v2.js`
+2. Fetch `GET https://la-mesa-v2-backend.onrender.com/bookings/public-slots?service=suelta&days=60`
+3. Click slot → redirect a `https://app.lamesabcn.com/book.html?slot_id=<id>`
+4. `book.html` crea Stripe Checkout Session dinamica (prezzo da `services.price_default` DB)
+5. Webhook `POST /webhooks/stripe` crea customer + transaction + booking + GCal + email
 
-**Stripe Price IDs (live):**
+**Taller Semanal** → NON più via Stripe online. CTA sui 3 index.html puntano direttamente a WhatsApp. Admin crea subscription manuale nel gestionale via `POST /subscriptions/with-payment`.
 
-| Slot | Prezzo | Price ID |
-|---|---|---|
-| Semanal Modelado Mer 16h | 120€ | `price_1TM1KmQgp3kTxQ2Zshm7YyT9` |
-| Semanal Modelado Mer 18:30h | 120€ | `price_1TJGyWQgp3kTxQ2ZFJ855jlZ` |
-| Semanal Modelado Jue 11h | 120€ | `price_1TJGytQgp3kTxQ2ZxOQ95YxB` |
-| Semanal Torno Mer 16h | 180€ | `price_1TJGzVQgp3kTxQ2Z56D215Mc` |
-| Semanal Torno Mer 18:30h | 180€ | `price_1TJH05Qgp3kTxQ2Z7SeeeJpx` |
-| Semanal Torno Jue 11h | 180€ | `price_1TJH0LQgp3kTxQ2Zo1ZjQrxV` |
-| Suelta Mesa | 50€ | `price_1TM1KoQgp3kTxQ2ZZsj08666` |
-| Suelta Torno | 70€ | `price_1TM1KpQgp3kTxQ2ZICg92EqJ` |
+**GAS — stato legacy:** ancora attivo ma non più collegato al sito per i canali principali. Resta raggiungibile per PWA Reservas e GAS interno. `js/booking.js` storico conservato in repo ma non più referenziato dai 3 `suelta.html`.
 
-**Coworking** — Solo WhatsApp, nessun link di prenotazione online.
+**Coworking, Flex, Intro Torno, Workshops, Privadas, Vale** — Solo WhatsApp, invariati.
 
 ### Link WhatsApp
 
@@ -640,9 +636,25 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 ## 10. Sistema di Prenotazione (Booking System)
 
-### Architettura
+### Architettura attuale (post-cutover 2026-04-20)
+
+**Clase Suelta → gestionale v2:**
+```
+Browser (lamesabcn.com/clases/suelta.html)
+  → js/booking-v2.js
+  → GET https://la-mesa-v2-backend.onrender.com/bookings/public-slots
+  → click slot → https://app.lamesabcn.com/book.html?slot_id=X
+  → POST /bookings/checkout (Stripe Checkout Session dinamica)
+  → webhook POST /webhooks/stripe
+  → DB Postgres (customers, transactions, bookings) + Google Calendar + SMTP email
+```
+
+**Taller Semanal → WhatsApp:** primo contatto `wa.me/34711552030`. Admin crea subscription + tx manuale via gestionale.
+
+### Architettura legacy (ancora in piedi ma sganciata dal sito)
 
 ```
+(legacy, non più referenziato da suelta.html/semanal-*.html)
 Browser → js/booking.js → GAS Web App API → Google Sheets (SLOTS, PRENOTAZIONI)
                                            → Stripe Checkout Sessions
                                            → GmailApp (email HTML branded)
