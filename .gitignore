@@ -3,3 +3,8 @@
 *.swp
 *.swo
 Thumbs.db
+
+# Temp / working files (not for site build)
+audit-screenshots/
+audit-ux-ui-lamesa.md
+.claude/
