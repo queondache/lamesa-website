@@ -5,7 +5,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-20 (cutover prenotazioni: Taller Semanal → WhatsApp, Clase Suelta → gestionale v2 via booking-v2.js; bonifica Koalendar/Cal.com)
+> Ultimo aggiornamento: 2026-04-20 (cutover **fase 2**: Taller Semanal ORA checkout online via v2 — 4 sesiones consecutive, pago unico Stripe 120€ modelado / 160€ torno; Clase Suelta invariata su v2)
 
 ---
 
@@ -450,7 +450,7 @@ section.contacto > div.container
 
 | Servizio | Categoria | Prezzo | Per chi | Giorni | Canale prenotazione |
 |---|---|---|---|---|---|
-| **Taller Semanal** | Ceramica modelado/torno | 120/180 EUR/mese | Principianti | Lun, Mar, Mer, Ven | **WhatsApp** (primo contatto → admin crea sub manuale nel gestionale) |
+| **Taller Semanal** | Ceramica modelado/torno | 120 (mesa) / 160 (torno) EUR per 4 sesiones | Principianti | Mer (Modelado/Torno), Jue (Modelado/Torno) | **Sito vetrina → gestionale v2 (Stripe Checkout unico 4 sesiones)** |
 | **Taller Flex** | Ceramica modelado/torno | 120 EUR | Con esperienza | Flessibile | WhatsApp |
 | **Intro al Torno** | Torno | 90 EUR (2 sessioni) | Principianti torno | Da concordare | WhatsApp |
 | **Coworking Torno** | Torno | 20 EUR/ora | Ceramisti autonomi | Mar, Mer, Ven 14-18h | WhatsApp |
@@ -459,7 +459,7 @@ section.contacto > div.container
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
 
-### Sistema di prenotazione — stato post-cutover (2026-04-20)
+### Sistema di prenotazione — stato post-cutover fase 2 (2026-04-20)
 
 **Clase Suelta** → gestionale v2 (`app.lamesabcn.com` + backend Render `la-mesa-v2-backend.onrender.com`). Flusso:
 1. Sito `clases/suelta.html` (ES/EN/CA) carica `js/booking-v2.js`
@@ -468,9 +468,20 @@ section.contacto > div.container
 4. `book.html` crea Stripe Checkout Session dinamica (prezzo da `services.price_default` DB)
 5. Webhook `POST /webhooks/stripe` crea customer + transaction + booking + GCal + email
 
-**Taller Semanal** → NON più via Stripe online. CTA sui 3 index.html puntano direttamente a WhatsApp. Admin crea subscription manuale nel gestionale via `POST /subscriptions/with-payment`.
+**Taller Semanal** → gestionale v2 con checkout **4 sesiones pago único**. Flusso:
+1. Sito `clases/semanal-modelado.html` / `semanal-torno.html` (ES/EN/CA) carica `js/booking-v2.js?v=2`
+2. Fetch `GET /bookings/public-slots-semanal` → ritorna 6 template filtrati per `data-risorsa` (3 modelado giallo + 3 torno blu)
+3. Ogni card mostra solo "Disponible" / "Completo por ahora" (NON espone conteggio posti)
+4. Click card → date picker inline con `validStartDates` (max 6) = date in cui tutte 4 settimane consecutive hanno posto
+5. Seleziona data + form inline (nome/email/telefono) → POST `/bookings/checkout-semanal` con `{first_slot_id, customer_*, cancel_url}`
+6. Backend crea Stripe Session `mode=payment` `metadata.type=semanal` `metadata.slot_ids=CSV(4 UUID)` → ritorna `checkout_url`
+7. Webhook branch `handleSemanalWebhook`: LOCK + 4× SELECT FOR UPDATE → atomic: 1 subscription (startDate=min, endDate=max, service=nome) + 1 transaction (`isSubscriptionPayment=true`, FK sub, amount totale) + 4 bookings (`channel=stripe`, `paid=true`, `notes='semanal N/4'`) + 4× GCal + email con 4 date
+8. Redirect `https://app.lamesabcn.com/gracias-semanal.html?session_id=X` con polling status `processing→confirmed`
+9. Race conflict → 200 a Stripe + log `MANUAL REFUND REQUIRED` (Andrea fa refund manuale dalla dashboard Stripe)
 
-**GAS — stato legacy:** ancora attivo ma non più collegato al sito per i canali principali. Resta raggiungibile per PWA Reservas e GAS interno. `js/booking.js` storico conservato in repo ma non più referenziato dai 3 `suelta.html`.
+Prezzi: **Modelado 120€** (8 posti, Mer 16/Mer 18:30/Jue 11), **Torno 160€** (2 posti, Mer 16/Mer 18:30/Jue 11). Rinnovo post-4 settimane = WhatsApp o in loco (admin manuale).
+
+**GAS — stato legacy:** ancora attivo ma non più collegato al sito per i canali principali. Resta raggiungibile per PWA Reservas e GAS interno. `js/booking.js` storico conservato in repo ma non più referenziato da nessuna pagina `clases/` (semanal + suelta tutti su `booking-v2.js?v=2`).
 
 **Coworking, Flex, Intro Torno, Workshops, Privadas, Vale** — Solo WhatsApp, invariati.
 
@@ -636,20 +647,40 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 
 ## 10. Sistema di Prenotazione (Booking System)
 
-### Architettura attuale (post-cutover 2026-04-20)
+### Architettura attuale (post-cutover fase 2 — 2026-04-20)
 
 **Clase Suelta → gestionale v2:**
 ```
 Browser (lamesabcn.com/clases/suelta.html)
-  → js/booking-v2.js
+  → js/booking-v2.js?v=2
   → GET https://la-mesa-v2-backend.onrender.com/bookings/public-slots
   → click slot → https://app.lamesabcn.com/book.html?slot_id=X
-  → POST /bookings/checkout (Stripe Checkout Session dinamica)
-  → webhook POST /webhooks/stripe
-  → DB Postgres (customers, transactions, bookings) + Google Calendar + SMTP email
+  → POST /bookings/checkout (Stripe Session mode=payment)
+  → webhook POST /webhooks/stripe (metadata.type != semanal → flusso suelta)
+  → DB (customer + tx + booking channel=stripe) + GCal + email
 ```
 
-**Taller Semanal → WhatsApp:** primo contatto `wa.me/34711552030`. Admin crea subscription + tx manuale via gestionale.
+**Taller Semanal → gestionale v2 (4 sesiones, pago único):**
+```
+Browser (lamesabcn.com/clases/semanal-modelado.html | semanal-torno.html)
+  → js/booking-v2.js?v=2 (detecta data-tipo="semanal", data-risorsa="mesa|torno")
+  → GET /bookings/public-slots-semanal
+  → rende 3 card template per categoria con "Disponible"/"Completo" (NO count)
+  → click card → date picker inline (primi 6 validStartDates) + form inline
+  → POST /bookings/checkout-semanal {first_slot_id, customer_*, cancel_url}
+  → Stripe Session mode=payment metadata.type=semanal metadata.slot_ids=CSV(4)
+  → webhook POST /webhooks/stripe (branch handleSemanalWebhook)
+      LOCK + 4× SELECT FOR UPDATE
+      → atomic: 1 subscription + 1 transaction (isSubscriptionPayment=true, FK sub)
+                + 4 bookings (channel=stripe, notes="semanal N/4")
+                + 4× GCal + email 4 date
+  → redirect https://app.lamesabcn.com/gracias-semanal.html?session_id=X
+  → polling checkout-info-semanal: status processing→confirmed
+```
+
+Rinnovo dopo 4 sesiones: **manuale via WhatsApp o in loco**, nessun automatismo Stripe (no `mode=subscription`).
+
+Race conflict nel webhook (4 slot pieni per pagamento contemporaneo): 200 a Stripe + log `MANUAL REFUND REQUIRED` con session_id → Andrea refund dashboard.
 
 ### Architettura legacy (ancora in piedi ma sganciata dal sito)
 
