@@ -5,7 +5,7 @@
 
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
-> Ultimo aggiornamento: 2026-04-15 (sessione 8: sistema booking completo — Stripe checkout, webhook idempotenza, email HTML, Calendar, audit/cleanup)
+> Ultimo aggiornamento: 2026-04-20 (bonifica: rimossi riferimenti Koalendar/Cal.com, canali reali allineati a Stripe+WhatsApp)
 
 ---
 
@@ -450,7 +450,7 @@ section.contacto > div.container
 
 | Servizio | Categoria | Prezzo | Per chi | Giorni | Canale prenotazione |
 |---|---|---|---|---|---|
-| **Taller Semanal** | Ceramica modelado | 120 EUR/mese | Principianti | Lun, Mar, Mer, Ven | Koalendar |
+| **Taller Semanal** | Ceramica modelado | 120 EUR/mese | Principianti | Lun, Mar, Mer, Ven | Sito web (Stripe) |
 | **Taller Flex** | Ceramica modelado/torno | 120 EUR | Con esperienza | Flessibile | WhatsApp |
 | **Intro al Torno** | Torno | 90 EUR (2 sessioni) | Principianti torno | Da concordare | WhatsApp |
 | **Coworking Torno** | Torno | 20 EUR/ora | Ceramisti autonomi | Mar, Mer, Ven 14-18h | WhatsApp |
@@ -461,7 +461,7 @@ section.contacto > div.container
 
 ### Sistema di prenotazione — Stripe Checkout Sessions (dinamiche)
 
-Le prenotazioni semanal e suelta usano Stripe Checkout Sessions dinamiche (non Payment Links statici, non Cal.com).
+Le prenotazioni semanal e suelta usano Stripe Checkout Sessions dinamiche (non Payment Links statici).
 
 **Stripe Price IDs (live):**
 
@@ -612,7 +612,7 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 ### NON FARE mai
 
 - **NON aggiungere dipendenze npm, framework CSS o JS** — il sito e' puro HTML/CSS/JS per scelta.
-- **NON modificare i link Koalendar o WhatsApp** senza conferma esplicita del proprietario.
+- **NON modificare i link Stripe (Price IDs, pagine /clases/) o WhatsApp** senza conferma esplicita del proprietario.
 - **NON cambiare i prezzi** nei testi o nello structured data senza conferma.
 - **NON toccare il form Mailchimp** (action URL, honeypot field name) — e' collegato a un account esterno.
 - **NON creare nuovi file CSS o JS** — tutto deve restare in un singolo `style.css` e un singolo `main.js` (eccezione: `js/booking.js` per il sistema di prenotazione).
@@ -855,7 +855,7 @@ GitHub Pages si aggiorna automaticamente dal push su `main`. Non c'e' CI/CD, non
 2. Controllare https://www.lamesabcn.com/en/ — versione EN
 3. Controllare https://www.lamesabcn.com/ca/ — versione CA
 4. Verificare che le immagini si carichino (specialmente hero)
-5. Testare link WhatsApp e Koalendar
+5. Testare link WhatsApp e flusso Stripe Checkout (/clases/semanal-*, /clases/suelta.html)
 6. Validare structured data con Google Rich Results Test
 
 ### Configurazione GitHub Pages
