@@ -15,7 +15,7 @@
 1. **0/6 menzioni LLM** su 6 query (incluso "estudio ceramica Barceloneta", dove La Mesa è l'unico studio del quartiere) — STOP CONDITION strategica.
 2. **17/23 Article schema mancano campo `image`** → blog post NON eligible Rich Results + Google Discover (perdita silenziosa traffic 23 post in 3 lingue).
 3. **`hero.jpg` 730 KB** sopra-the-fold con `fetchpriority="high"` su 3 home → LCP degradato, ranking factor Core Web Vitals fail.
-4. **URL UTM-tagged indicizzato come pagina separata** (`/?utm_source=google&utm_medium=gbp...` con 837 impressions = 71% del totale impressions home, CTR 0.6%) → equity SEO sparsa, canale GBP penalizzato. Canonical mancante. **Nuovo P0-7.**
+4. **URL UTM-tagged indicizzato come pagina separata** (`/?utm_source=google&utm_medium=gbp...` con 837 impressions = 71% del totale impressions home, CTR 0.6%). **Verifica 2026-05-13: canonical già presente** — false positive iniziale di F3. Problema reale: lag consolidamento Google, no fix tecnico, ma monitorare in 4-8 settimane se URL UTM-tagged scompare da GSC indexed.
 5. **GA4 zero conversion event configurate** nonostante 67 `click_cta` e 8 `click_whatsapp` registrati in 31 giorni → ogni report di acquisizione mostra ROI nullo mentre il sito converte effettivamente al 37% (click_cta/session). **Nuovo P0-9.**
 
 **3 top opportunità**:
@@ -66,7 +66,23 @@ Vedi `03_PERFORMANCE_REPORT.md` per dettaglio completo (6 sezioni, 10 file JSON 
 
 Aggregati F1 + F2 + F3 + F4 (con dedupe). Totale: **9 P0 · 22 P1 · 19 P2**.
 
-### P0 — Blocca o danno strategico (9)
+### P0 — Stato post-esecuzione 2026-05-13
+
+**Eseguite in questa sessione (5 commit):**
+- ✅ **P0-2** hero.webp + `<picture>` (`d74c22c`) — 730 KB → 161 KB (-78%)
+- ✅ **P0-3** Article schema image + description + dateModified su 23 blog (`10e3296`)
+- ✅ **P0-4** rimossa `noindex` da 9 pagine /clases/* opt A (`f58ce9e`)
+- ✅ **P0-5** canonical self su 9 pagine /clases/* (`f58ce9e`)
+- ✅ **P0-6** FAQ #1 prezzo corretto Clase Suelta 50€/70€ + JSON-LD (`ebe94d8`)
+- ✅ **P1-7** bonus CA suelta.html "Suelta"→"Solta" (`f58ce9e`)
+
+**Da fare manualmente / decisioni Andrea:**
+- ⚠️ **P0-1** roadmap 90gg LLM citation — fuori scope tech, segue Sprint 1-2-3
+- ⚠️ **P0-7** ~~canonical home UTM~~ → **FALSO POSITIVO** (canonical già presente line 14, audit F1 corretto, F3 sbagliato). Il consolidamento Google del URL UTM-tagged è solo questione di lag temporale (settimane). Nessun fix richiesto.
+- ⚠️ **P0-8** 301 redirect www vs non-www — richiede config DNS esterna (Cloudflare/registrar), 30 min Andrea
+- ⚠️ **P0-9** mark `click_cta` + `click_whatsapp` come conversion in GA4 — 2 min Andrea UI Admin
+
+### P0 — Lista originale (9)
 
 | # | Issue | Source | URL/File | Impatto | Effort | Fix |
 |---|---|---|---|---|---|---|
@@ -76,7 +92,7 @@ Aggregati F1 + F2 + F3 + F4 (con dedupe). Totale: **9 P0 · 22 P1 · 19 P2**.
 | **P0-4** | Conflitto sitemap/noindex su 9 `/clases/*` (priority 0.7 + `<meta robots noindex>`) | F1 P0-3 + F2 G10 | `sitemap.xml` + clases pages | GSC warning "submitted URL not indexed" + spreco crawl budget | 5-15 min | Decisione: (a) **rimuovere `<meta robots noindex>`** dalle clases (preferibile — hanno schema Course + prezzo + valore SEO) o (b) rimuovere 9 entries dal sitemap.xml |
 | **P0-5** | Canonical mancante su 9 `/clases/*` | F1 P0-4 | 9 `clases/*.html` (ES+EN+CA) | Se rimuovi noindex (P0-4 opt a), Google non sa canonicalizzare | 10 min | Aggiungere `<link rel="canonical" href="<self>">` su ogni pagina |
 | **P0-6** | FAQ #1 prezzo errato (20€/hora) → confusione utente + LLM hallucination prezzi La Mesa | F2 G2 | 3 home HTML body + JSON-LD FAQPage ES/EN/CA | LLM cita "20€/hora" come prezzo Clase Suelta → ChatGPT/Perplexity rispondono prezzo errato | 30 min | Riscrivere risposta: "Clase Suelta cuesta 50€ modelado o 70€ torno por 2 horas. Taller Semanal 120€/mes (modelado) o 160€/mes (torno). Coworking Torno 20€/hora." × 3 lingue + JSON-LD |
-| **P0-7** | Home URL UTM-tagged indicizzato come pagina separata (`/?utm_source=google&utm_medium=gbp...` 837 impr / 0.6% CTR = 71% impressions home value) | F3 GSC | `index.html` (ES/EN/CA) | Equity SEO sparsa, canale GBP penalizzato, CTR aggregato distrutto | 5 min | Aggiungere `<link rel="canonical" href="https://www.lamesabcn.com/">` (+ /en/ + /ca/ self-canonical) in `<head>` |
+| ~~P0-7~~ | ~~Home URL UTM-tagged indicizzato come pagina separata~~ — **FALSO POSITIVO** | F3 GSC | — | — | — | **Canonical già presente** in 3 home (line 14). Consolidamento Google = lag temporale, no fix. |
 | **P0-8** | Duplicazione www/non-www su tutte le 3 home (GSC tratta come pagine distinte: `lamesabcn.com/` 55 impr + `lamesabcn.com/en/` 215 impr + `www.lamesabcn.com/en/` 12 impr) | F3 GSC | DNS + GitHub Pages config | Ranking diluito, equity split | 30 min | 301 redirect non-www → www (o viceversa) via custom CNAME + force-HTTPS + HSTS |
 | **P0-9** | GA4 nessun evento marked-as-conversion → tutti i report acquisizione mostrano 0 conversion mentre 67 `click_cta` + 8 `click_whatsapp` sparati in 31g | F3 GA4 | Admin GA4 property `532584494` | Cieco su ROI canale, impossibile decidere budget IG vs SEO | 2 min | GA4 Admin → Events → marca `click_cta` + `click_whatsapp` come conversion |
 
