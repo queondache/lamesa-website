@@ -230,7 +230,27 @@ In `ca/index.html`:
 
 **Commit**: `feat(seo): rel=canonical self su 3 home (P0-7, consolidate UTM-tagged URL)`
 
-### TASK 7 — Decisione + 301 redirect www vs non-www (P0-8)
+### ~~TASK 7~~ — Apex canonical alignment (P0-8) ✅ CHIUSA 2026-05-13
+
+**Stato**: completata. Decisione Andrea = apex (senza www).
+
+**Eseguito**:
+- CNAME file: `lamesabcn.com` (apex) ✓
+- Redirect `www → apex` server-side già attivo (GitHub Pages auto-handle) ✓
+- 45 file rewrite: 457 occorrenze `www.lamesabcn.com` → `lamesabcn.com`
+- Affected: 38 HTML (canonical, og:url, og:image, twitter:image, JSON-LD url/@id/image/mainEntityOfPage), sitemap.xml (39 loc), robots.txt (Sitemap), llms.txt
+- `sameAs` JSON-LD (Instagram, Etsy) preservato intoccato
+- JSON-LD validità verificata (Python json.loads su 6 blocchi)
+
+**Pendente Andrea**:
+- GSC: aggiungere proprietà `https://lamesabcn.com/` come URL-prefix property (se non già presente)
+- GSC: re-submit sitemap.xml dalla proprietà apex
+- Bing Webmaster Tools (se attivo): update canonical
+- Monitorare 7-14g consolidamento URL
+
+### ~~TASK 7~~ ORIGINALE (preserved for reference)
+
+**~~Decisione strategica richiesta ad Andrea PRIMA di eseguire~~**: chiusa.
 
 **Decisione strategica richiesta ad Andrea PRIMA di eseguire**:
 

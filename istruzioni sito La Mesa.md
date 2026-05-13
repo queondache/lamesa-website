@@ -13,7 +13,7 @@
 
 **Progetto:** Sito vetrina di La Mesa, studio di ceramica e laboratorio creativo a Barceloneta, Barcelona.
 **Dominio:** lamesabcn.com (CNAME nel repo)
-**Live:** https://www.lamesabcn.com
+**Live:** https://lamesabcn.com (apex — vedi sez. **Canonical URL Policy** in fondo)
 
 ### Stack
 
@@ -1037,3 +1037,27 @@ Nel `<body>` (fine pagina, solo pagine clases/gracias):
 | Instagram | @lamesa.lc |
 | Indirizzo | Carrer de l'Atlantida 47, Barceloneta, 08003 Barcelona |
 | Coordinate | 41.3783, 2.1894 |
+
+---
+
+## Canonical URL Policy (apex)
+
+> Aggiornato 2026-05-13 — decisione P0-8 audit SEO.
+
+- **Canonical**: `https://lamesabcn.com/` (senza www)
+- Redirect `www → apex` già attivo lato GitHub Pages (verificato `curl -I` HTTP/2 301)
+- TUTTI i tag canonical, `og:url`, `og:image`, `twitter:image`, JSON-LD `url`/`@id`/`image`/`mainEntityOfPage`, `sitemap.xml`, `robots.txt` Sitemap directive: usano apex senza www
+- Link interni nav/menu: sempre relativi (`/clases/...`, `/blog/...`, `#inicio`)
+- Link in JSON-LD `sameAs` (Instagram, Etsy esterni): NON sono `lamesabcn.com` — restano `https://www.instagram.com/lamesa.lc` e `https://www.etsy.com/es/shop/LaMesaLC` invariati
+
+### Come testare
+
+```bash
+curl -I https://www.lamesabcn.com/  # deve essere 301 → https://lamesabcn.com/
+curl -I https://lamesabcn.com/      # deve essere 200
+grep canonical index.html            # deve mostrare href="https://lamesabcn.com/" (senza www)
+```
+
+### Regola d'oro
+
+Quando aggiungi un nuovo URL assoluto al sito (canonical, og, schema, sitemap): **usa apex senza www**. Mai mischiare. Un mismatch riapre il bug GSC P0-8.

@@ -68,18 +68,18 @@ Aggregati F1 + F2 + F3 + F4 (con dedupe). Totale: **9 P0 · 22 P1 · 19 P2**.
 
 ### P0 — Stato post-esecuzione 2026-05-13
 
-**Eseguite in questa sessione (5 commit):**
+**Eseguite in questa sessione (7+ commit):**
 - ✅ **P0-2** hero.webp + `<picture>` (`d74c22c`) — 730 KB → 161 KB (-78%)
 - ✅ **P0-3** Article schema image + description + dateModified su 23 blog (`10e3296`)
 - ✅ **P0-4** rimossa `noindex` da 9 pagine /clases/* opt A (`f58ce9e`)
 - ✅ **P0-5** canonical self su 9 pagine /clases/* (`f58ce9e`)
 - ✅ **P0-6** FAQ #1 prezzo corretto Clase Suelta 50€/70€ + JSON-LD (`ebe94d8`)
+- ✅ **P0-8** Apex canonical alignment — 45 file / 457 occorrenze `www.lamesabcn.com` → `lamesabcn.com` (commit `[TBD post commit]`). Redirect www→apex già attivo server-side. Decisione: apex (senza www) come scelto da Andrea 2026-05-13.
 - ✅ **P1-7** bonus CA suelta.html "Suelta"→"Solta" (`f58ce9e`)
 
 **Da fare manualmente / decisioni Andrea:**
 - ⚠️ **P0-1** roadmap 90gg LLM citation — fuori scope tech, segue Sprint 1-2-3
-- ⚠️ **P0-7** ~~canonical home UTM~~ → **FALSO POSITIVO** (canonical già presente line 14, audit F1 corretto, F3 sbagliato). Il consolidamento Google del URL UTM-tagged è solo questione di lag temporale (settimane). Nessun fix richiesto.
-- ⚠️ **P0-8** 301 redirect www vs non-www — richiede config DNS esterna (Cloudflare/registrar), 30 min Andrea
+- ⚠️ **P0-7** ~~canonical home UTM~~ → **FALSO POSITIVO** (canonical già presente line 14, audit F1 corretto, F3 sbagliato). Post P0-8 ora con apex consolidato + sitemap apex + redirect attivo, consolidamento Google atteso 4-8 settimane.
 - ⚠️ **P0-9** mark `click_cta` + `click_whatsapp` come conversion in GA4 — 2 min Andrea UI Admin
 
 ### P0 — Lista originale (9)
@@ -93,7 +93,7 @@ Aggregati F1 + F2 + F3 + F4 (con dedupe). Totale: **9 P0 · 22 P1 · 19 P2**.
 | **P0-5** | Canonical mancante su 9 `/clases/*` | F1 P0-4 | 9 `clases/*.html` (ES+EN+CA) | Se rimuovi noindex (P0-4 opt a), Google non sa canonicalizzare | 10 min | Aggiungere `<link rel="canonical" href="<self>">` su ogni pagina |
 | **P0-6** | FAQ #1 prezzo errato (20€/hora) → confusione utente + LLM hallucination prezzi La Mesa | F2 G2 | 3 home HTML body + JSON-LD FAQPage ES/EN/CA | LLM cita "20€/hora" come prezzo Clase Suelta → ChatGPT/Perplexity rispondono prezzo errato | 30 min | Riscrivere risposta: "Clase Suelta cuesta 50€ modelado o 70€ torno por 2 horas. Taller Semanal 120€/mes (modelado) o 160€/mes (torno). Coworking Torno 20€/hora." × 3 lingue + JSON-LD |
 | ~~P0-7~~ | ~~Home URL UTM-tagged indicizzato come pagina separata~~ — **FALSO POSITIVO** | F3 GSC | — | — | — | **Canonical già presente** in 3 home (line 14). Consolidamento Google = lag temporale, no fix. |
-| **P0-8** | Duplicazione www/non-www su tutte le 3 home (GSC tratta come pagine distinte: `lamesabcn.com/` 55 impr + `lamesabcn.com/en/` 215 impr + `www.lamesabcn.com/en/` 12 impr) | F3 GSC | DNS + GitHub Pages config | Ranking diluito, equity split | 30 min | 301 redirect non-www → www (o viceversa) via custom CNAME + force-HTTPS + HSTS |
+| ~~P0-8~~ | ~~Duplicazione www/non-www~~ — **CHIUSA 2026-05-13** | F3 GSC | 45 file rewrite | Risolto: apex canonical + redirect server-side attivo | done | Decisione apex (no www) di Andrea. 457 occorrenze `www.lamesabcn.com` → `lamesabcn.com` su HTML/XML/TXT. Redirect 301 server-side già operativo. |
 | **P0-9** | GA4 nessun evento marked-as-conversion → tutti i report acquisizione mostrano 0 conversion mentre 67 `click_cta` + 8 `click_whatsapp` sparati in 31g | F3 GA4 | Admin GA4 property `532584494` | Cieco su ROI canale, impossibile decidere budget IG vs SEO | 2 min | GA4 Admin → Events → marca `click_cta` + `click_whatsapp` come conversion |
 
 ⚠️ **9 P0 > soglia 5** → suggerimento: spaccare esecuzione in 2 sprint (foundazionali tech P0-2/3/4/5/7/8/9 + content/copy P0-1/6). Vedi `EXECUTE_FIXES_P0.md`.
