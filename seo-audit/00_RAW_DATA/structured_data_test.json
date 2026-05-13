@@ -1,0 +1,117 @@
+{
+  "audit_date": "2026-05-13",
+  "method": "static_inspection_of_inline_ld_json",
+  "schemas_found": {
+    "LocalBusiness": {
+      "instances": 4,
+      "pages": ["/", "/en/", "/ca/", "/team-building.html"],
+      "fields_present": {
+        "name": true,
+        "alternateName": true,
+        "description": true,
+        "url": true,
+        "telephone": true,
+        "email": true,
+        "image": true,
+        "address": true,
+        "geo": true,
+        "priceRange": true,
+        "openingHoursSpecification": true,
+        "sameAs": true,
+        "hasOfferCatalog": true
+      },
+      "fields_missing_recommended": [
+        "currenciesAccepted",
+        "paymentAccepted",
+        "aggregateRating (richiede Google reviews — non implementabile senza dati reali)",
+        "review (richiede recensioni testuali)"
+      ],
+      "openingHoursSpecification_count": 4,
+      "openingHoursSpecification_note": "OK: Mar/Mer/Ven/Lun. Sito però mostra anche orari diversi (Mar 14-20:30) — verifica allineamento con orari reali correnti"
+    },
+    "FAQPage": {
+      "instances": 3,
+      "pages": ["/", "/en/", "/ca/"],
+      "mainEntity_count": 7,
+      "all_have_Question_and_Answer": true,
+      "fields_ok": true
+    },
+    "Course": {
+      "instances": 9,
+      "pages": [
+        "/clases/semanal-modelado.html",
+        "/clases/semanal-torno.html",
+        "/clases/suelta.html",
+        "/en/clases/semanal-modelado.html",
+        "/en/clases/semanal-torno.html",
+        "/en/clases/suelta.html",
+        "/ca/clases/semanal-modelado.html",
+        "/ca/clases/semanal-torno.html",
+        "/ca/clases/suelta.html"
+      ],
+      "fields_present": ["name", "description", "provider", "inLanguage", "courseMode", "educationalLevel", "offers"],
+      "fields_missing_recommended": [
+        "hasCourseInstance (orari e date concrete dei corsi — molto raccomandato per Course rich results 2024+)",
+        "courseWorkload",
+        "image"
+      ],
+      "conflict_with_noindex": "TUTTE le 9 pagine Course sono <meta robots noindex>. Schema valido ma NON appare in SERP perché Google non indicizza la pagina. P1: rimuovere noindex (le pagine sono booking page con valore) o spostare schema su pagina parent."
+    },
+    "Article": {
+      "instances": 23,
+      "pages_pattern": "tutti i blog post in /blog/",
+      "fields_present_in_all": ["headline", "author", "publisher", "datePublished", "inLanguage", "mainEntityOfPage"],
+      "fields_missing": {
+        "image": "17 su 23 post NON hanno il campo `image`. Article senza `image` non passa Rich Results test e perde eligibilità per Google Discover. CRITICO.",
+        "dateModified": "La maggior parte dei post manca `dateModified` (presente solo su com-triar… e como-elegir…). Google preferisce articoli con dateModified per ranking freshness.",
+        "description": "Mancante in tutti gli Article schema",
+        "wordCount": "raccomandato per Article lunghi (SEO blog)"
+      }
+    },
+    "BlogPosting": {
+      "instances": 0,
+      "note": "Si usa `Article` invece di `BlogPosting`. Article è valido, BlogPosting sarebbe più semanticamente preciso per contenuti di blog (sottotipo di Article)."
+    },
+    "Service": {
+      "instances_standalone": 1,
+      "page": "/team-building.html",
+      "note": "Solo team-building ha Service standalone. Gli altri 5 servizi (Taller Semanal, Clase Suelta, Coworking, Taller Flex, Intro Torno) esistono SOLO annidati in `hasOfferCatalog` del LocalBusiness — Google li indicizza ma con minore eligibilità per rich results SERP rispetto a Service+Offer standalone."
+    },
+    "Event": {
+      "instances": 0,
+      "note": "Workshops sono linkati su Google Drive — NON ci sono pagine Event nel sito. Se in futuro si pubblicano workshop con data fissa, raccomandato schema `Event` con `offers` e `location`."
+    },
+    "BreadcrumbList": {
+      "instances": 0,
+      "note": "Mai presente. Raccomandato su blog post + clases per breadcrumb rich result SERP."
+    },
+    "Organization": {
+      "instances_explicit": 0,
+      "note": "Si usa LocalBusiness (sottoclasse di Organization) — OK. Manca Organization-level @id linked-data tra le diverse pagine (frammento `#lamesa` usato solo su index e team-building)."
+    },
+    "WebSite": {
+      "instances": 0,
+      "note": "Raccomandato aggiungere WebSite schema su homepage con SearchAction per sitelinks searchbox in SERP (anche se La Mesa non ha search interna potrebbe usare site: query)"
+    },
+    "AggregateRating": {
+      "instances": 0,
+      "note": "Non implementabile finché non ci sono review strutturate. Se Google My Business ha rating, importarle manualmente NON è permesso (deve essere dato proprio del sito)."
+    }
+  },
+  "hasOfferCatalog_check": {
+    "expected_services": ["Taller Semanal", "Clase Suelta", "Taller Flex", "Intro Torno", "Coworking Torno"],
+    "found_in_LocalBusiness": ["Taller Semanal de Cerámica (120 EUR/mes)", "Clase Suelta Mesa (20 EUR/hora)", "Coworking Torno (20 EUR/hora)", "Taller Flex (120 EUR)", "Intro al Torno (90 EUR)"],
+    "all_5_present": true,
+    "missing_unitText_on_Taller_Flex_and_Intro_Torno": "P2 — manca priceSpecification per definire se prezzo è per sessione/corso totale/mese"
+  },
+  "recommended_new_schemas_p0_p1": [
+    "P0: Aggiungere `image` ai 17 Article schema mancanti (Rich Results fail oggi)",
+    "P1: Aggiungere `Service` standalone per ogni servizio sulla pagina dedicata (oggi annidato solo in LocalBusiness)",
+    "P1: Aggiungere `BreadcrumbList` su blog post e pagine clases",
+    "P1: Aggiungere `Event` schema per workshops se mai avranno pagina dedicata",
+    "P2: Convertire `Article` in `BlogPosting` (sottotipo, più preciso)",
+    "P2: Aggiungere `WebSite` schema su homepage con potentialAction SearchAction",
+    "P2: Aggiungere `hasCourseInstance` ai Course schema per soddisfare Google Course rich results requisiti 2024+"
+  ],
+  "schema_validation_status": "Validazione formale via Google Rich Results Test richiesta come step manuale — il file inline è sintatticamente valido JSON ma alcuni campi richiesti per rich results SERP (Article.image, hasCourseInstance) mancano."
+}

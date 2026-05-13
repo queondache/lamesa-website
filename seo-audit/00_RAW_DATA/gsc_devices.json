@@ -1,0 +1,10 @@
+{
+  "source": "GSC export Dispositivos.csv",
+  "date_range": "Últimos 3 meses (~2026-02-13 → 2026-05-13)",
+  "rows": [
+    {"device": "Móviles", "clicks": 16, "impressions": 571, "ctr": "2.8%", "position": 5.97},
+    {"device": "Ordenador", "clicks": 12, "impressions": 592, "ctr": "2.03%", "position": 9.59},
+    {"device": "Tablet", "clicks": 0, "impressions": 8, "ctr": "0%", "position": 9}
+  ],
+  "INSIGHT": "Mobile rankka MEGLIO di desktop (pos 5.97 vs 9.59) e CTR superiore (2.8% vs 2.03%). Mobile-first SEO funziona. GA4 confirms mobile 62% sessions traffic share. SERP mobile-first index attivo."
+}

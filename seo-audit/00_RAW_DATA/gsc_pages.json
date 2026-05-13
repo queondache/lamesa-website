@@ -1,0 +1,47 @@
+{
+  "source": "GSC export Páginas.csv",
+  "date_range": "Últimos 3 meses (~2026-02-13 → 2026-05-13)",
+  "rows": [
+    {"page": "https://www.lamesabcn.com/", "clicks": 13, "impressions": 201, "ctr": "6.47%", "position": 11.33},
+    {"page": "https://lamesabcn.com/en/", "clicks": 10, "impressions": 215, "ctr": "4.65%", "position": 5.7},
+    {"page": "https://www.lamesabcn.com/?utm_source=google&utm_medium=gbp&utm_campaign=business-profile", "clicks": 5, "impressions": 837, "ctr": "0.6%", "position": 7.24},
+    {"page": "https://lamesabcn.com/", "clicks": 0, "impressions": 55, "ctr": "0%", "position": 7.6},
+    {"page": "https://lamesabcn.com/ca/", "clicks": 0, "impressions": 22, "ctr": "0%", "position": 7.09},
+    {"page": "https://www.lamesabcn.com/en/", "clicks": 0, "impressions": 12, "ctr": "0%", "position": 4.08},
+    {"page": "https://lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html", "clicks": 0, "impressions": 4, "ctr": "0%", "position": 8},
+    {"page": "https://lamesabcn.com/en/index.html", "clicks": 0, "impressions": 1, "ctr": "0%", "position": 1}
+  ],
+  "CRITICAL_ISSUES": [
+    {
+      "id": "P0_DUPLICATE_UTM_INDEXED",
+      "evidence": "URL con ?utm_source=google&utm_medium=gbp ricevuta 837 impressions (più del 70% delle impressions totali della home). Solo 0.6% CTR perché canonical sbagliato/mancante: Google considera l'URL UTM-tagged come pagina separata.",
+      "impact": "Equity SEO sparsa, CTR distrutto, GBP profile traffic non consolidato",
+      "fix": "Aggiungere <link rel=\"canonical\" href=\"https://www.lamesabcn.com/\"> in index.html"
+    },
+    {
+      "id": "P0_WWW_DUPLICATE",
+      "evidence": "https://www.lamesabcn.com/ (201 impr) E https://lamesabcn.com/ (55 impr) entrambi indicizzati come pagine distinte.",
+      "impact": "55 impressions sprecate, 0 clicks. Equity split.",
+      "fix": "301 redirect non-www → www (o viceversa, scegliere uno) + HSTS"
+    },
+    {
+      "id": "P0_EN_WWW_DUPLICATE",
+      "evidence": "https://lamesabcn.com/en/ (215 impr / 10 clicks / pos 5.7) E https://www.lamesabcn.com/en/ (12 impr / 0 clicks / pos 4.08) duplicato",
+      "impact": "Versione EN performante non consolidata",
+      "fix": "Stesso redirect rule applicato a /en/ + /ca/"
+    },
+    {
+      "id": "P1_CA_INVISIBLE",
+      "evidence": "https://lamesabcn.com/ca/ 22 impr 0 clicks pos 7.09",
+      "impact": "Versione catalana mai cliccata — content scarso o meta tag debole",
+      "fix": "Audit /ca/ content + meta description + hreflang"
+    },
+    {
+      "id": "P1_BLOG_ARTICLE_VISIBILE",
+      "evidence": "/blog/ceramica-para-principiantes-barcelona.html 4 impr pos 8 — content marketing post visibile ma traffico minimo",
+      "impact": "Articolo blog generato post-audit, troppo recente per accumulare equity",
+      "fix": "Continuare publishing schedule blog ITA + interlinking da home"
+    }
+  ],
+  "INSIGHT_CTR_VS_POSITION": "/en pos 5.7 CTR 4.65% (sotto media 7-10% pos 5-6). / pos 11.33 CTR 6.47% (sopra media 2-4% pos 11). Possibile: /en title/desc debole, / title/desc forte. Verificare metadati."
+}

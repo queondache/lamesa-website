@@ -1,0 +1,25 @@
+{
+  "source": "GSC export Países.csv",
+  "date_range": "Últimos 3 meses (~2026-02-13 → 2026-05-13)",
+  "total_countries_visible": 33,
+  "rows": [
+    {"country": "España", "clicks": 19, "impressions": 995, "ctr": "1.91%", "position": 8.19},
+    {"country": "Alemania", "clicks": 2, "impressions": 10, "ctr": "20%", "position": 4.3},
+    {"country": "Países Bajos", "clicks": 2, "impressions": 5, "ctr": "40%", "position": 3.2},
+    {"country": "Estados Unidos", "clicks": 1, "impressions": 81, "ctr": "1.23%", "position": 3.33},
+    {"country": "Brasil", "clicks": 1, "impressions": 3, "ctr": "33.33%", "position": 3.33},
+    {"country": "Malasia", "clicks": 1, "impressions": 2, "ctr": "50%", "position": 1},
+    {"country": "Portugal", "clicks": 1, "impressions": 2, "ctr": "50%", "position": 2},
+    {"country": "Turquía", "clicks": 1, "impressions": 1, "ctr": "100%", "position": 1},
+    {"country": "Reino Unido", "clicks": 0, "impressions": 13, "ctr": "0%", "position": 9.69},
+    {"country": "Francia", "clicks": 0, "impressions": 11, "ctr": "0%", "position": 6.73},
+    {"country": "Suiza", "clicks": 0, "impressions": 6, "ctr": "0%", "position": 4.33}
+  ],
+  "INSIGHTS": [
+    "Spagna 85% impressions (995/1171) e 68% clicks (19/28) — core market confermato",
+    "USA 81 impr 1 click 1.23% CTR pos 3.33 — pos buona ma intent low conversion (mismatch geo)",
+    "Alemania/Netherlands engagement alto (20-40% CTR) ma volume basso 10-15 impr — micro-segments expat in BCN",
+    "UK 13 impr 0 clicks pos 9.69 — anglofoni non convertono dalla SERP",
+    "Geo GA4 vs GSC concordanti: BCN dominante, US secondario, Germania micro-loyalty"
+  ]
+}

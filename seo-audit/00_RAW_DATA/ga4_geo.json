@@ -1,0 +1,33 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range": "2026-03-14 → 2026-05-13 (effettivo 2026-04-13 →)"
+  },
+  "countries_top10": [
+    {"country": "Spain", "sessions": 106, "engagedSessions": 53, "engagementRate": 0.5},
+    {"country": "United States", "sessions": 21, "engagedSessions": 4, "engagementRate": 0.1904},
+    {"country": "Canada", "sessions": 7, "engagedSessions": 0, "engagementRate": 0},
+    {"country": "Germany", "sessions": 7, "engagedSessions": 5, "engagementRate": 0.7142},
+    {"country": "Saudi Arabia", "sessions": 5, "engagedSessions": 0, "engagementRate": 0},
+    {"country": "India", "sessions": 4, "engagedSessions": 3, "engagementRate": 0.75},
+    {"country": "Italy", "sessions": 4, "engagedSessions": 2, "engagementRate": 0.5},
+    {"country": "Poland", "sessions": 4, "engagedSessions": 1, "engagementRate": 0.25},
+    {"country": "Ireland", "sessions": 3, "engagedSessions": 0, "engagementRate": 0},
+    {"country": "Argentina", "sessions": 2, "engagedSessions": 1, "engagementRate": 0.5}
+  ],
+  "cities_top10": [
+    {"city": "Barcelona", "sessions": 80, "engagedSessions": 37},
+    {"city": "(not set)", "sessions": 16, "engagedSessions": 11},
+    {"city": "Valencia", "sessions": 10, "engagedSessions": 5},
+    {"city": "Burnaby", "sessions": 6, "engagedSessions": 0},
+    {"city": "Hyderabad", "sessions": 4, "engagedSessions": 3},
+    {"city": "Riyadh", "sessions": 4, "engagedSessions": 0},
+    {"city": "Warsaw", "sessions": 4, "engagedSessions": 1},
+    {"city": "Boardman", "sessions": 3, "engagedSessions": 1},
+    {"city": "Dublin", "sessions": 3, "engagedSessions": 0},
+    {"city": "Frankfurt am Main", "sessions": 3, "engagedSessions": 1}
+  ],
+  "total_countries_seen": 25,
+  "total_cities_seen": 55,
+  "INSIGHT": "Spain 58.6% sessions. Barcelona 44% sessions (target ICP perfect). US 21 ma engagement 19% (low intent vs Spain 50%). Burnaby Canada + Boardman US + Hyderabad = likely bot/scraper traffic. Germany engagement 71% migliore di Spain — micro-segment di interesse."
+}

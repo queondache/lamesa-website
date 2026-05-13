@@ -1,0 +1,42 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range": "2026-03-14 → 2026-05-13 (effettivo 2026-04-13 →)"
+  },
+  "events_summary": [
+    {"event": "page_view", "count": 221, "users": 156},
+    {"event": "session_start", "count": 182, "users": 156},
+    {"event": "first_visit", "count": 158, "users": 156},
+    {"event": "click_cta", "count": 67, "users": 36},
+    {"event": "user_engagement", "count": 53, "users": 44},
+    {"event": "click", "count": 36, "users": 28},
+    {"event": "scroll", "count": 24, "users": 23},
+    {"event": "click_whatsapp", "count": 8, "users": 6}
+  ],
+  "click_cta_by_source": [
+    {"source": "(direct) / (none)", "count": 21},
+    {"source": "google / gbp", "count": 18},
+    {"source": "instagram / social", "count": 16},
+    {"source": "google / organic", "count": 5},
+    {"source": "ig / social", "count": 3},
+    {"source": "chatgpt.com / referral", "count": 2},
+    {"source": "(not set)", "count": 1},
+    {"source": "scouts.yutori.com / referral", "count": 1}
+  ],
+  "click_whatsapp_by_source": [
+    {"source": "(direct) / (none)", "count": 3},
+    {"source": "instagram / social", "count": 3},
+    {"source": "google / gbp", "count": 1},
+    {"source": "google / organic", "count": 1}
+  ],
+  "click_cta_linkUrl_breakdown": {
+    "BUG": "linkUrl dimension restituisce empty string per tutti i 67 click_cta. Tracking event NON passa link_url param → impossibile distinguere taller_semanal vs clase_suelta.",
+    "fix_required": "Aggiungere link_url o cta_label param all'evento click_cta in tracking.js"
+  },
+  "INSIGHTS": [
+    "CTR click_cta su sessions: 67/181 = 37% — alto ma 0 conversions tracked = errata configurazione mark-as-conversion.",
+    "GBP 22 sessions → 18 click_cta = 82% CTR. Profilo Google Business Profile è IL miglior canale conversion.",
+    "WhatsApp solo 8 clicks (4.4% sessions) — direct/IG dominanti, GBP+organic quasi mute. CTA WhatsApp meno prominente vs CTA primary.",
+    "Direct 80 sessions → 21 click_cta (26% CTR) — magnitude alta ma engagement (32% engagementRate) basso, possibili visit ripetuti da clienti esistenti."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range": "2026-03-14 → 2026-05-13 (effettivo 2026-04-13 →)",
+    "dimensions": ["sessionSourceMedium"],
+    "metrics": ["sessions", "engagedSessions", "engagementRate", "conversions"]
+  },
+  "CRITICAL_NOTE": "conversions=0 ovunque → nessun evento conversion configurato in GA4. click_cta + click_whatsapp NON sono mark-as-conversion.",
+  "previous_period_rows": 0,
+  "rows": [
+    {"sourceMedium": "(direct) / (none)", "sessions": 80, "engagedSessions": 26, "engagementRate": 0.325, "conversions": 0},
+    {"sourceMedium": "instagram / social", "sessions": 29, "engagedSessions": 16, "engagementRate": 0.5517, "conversions": 0},
+    {"sourceMedium": "google / gbp", "sessions": 22, "engagedSessions": 12, "engagementRate": 0.5454, "conversions": 0},
+    {"sourceMedium": "google / organic", "sessions": 21, "engagedSessions": 12, "engagementRate": 0.5714, "conversions": 0},
+    {"sourceMedium": "ig / social", "sessions": 15, "engagedSessions": 4, "engagementRate": 0.2666, "conversions": 0},
+    {"sourceMedium": "facebook.com / referral", "sessions": 5, "engagedSessions": 3, "engagementRate": 0.6, "conversions": 0},
+    {"sourceMedium": "chatgpt.com / referral", "sessions": 3, "engagedSessions": 3, "engagementRate": 1.0, "conversions": 0},
+    {"sourceMedium": "(not set)", "sessions": 2, "engagedSessions": 0, "engagementRate": 0, "conversions": 0},
+    {"sourceMedium": "bing / organic", "sessions": 1, "engagedSessions": 0, "engagementRate": 0, "conversions": 0},
+    {"sourceMedium": "chatgpt.com / (not set)", "sessions": 1, "engagedSessions": 0, "engagementRate": 0, "conversions": 0}
+  ]
+}

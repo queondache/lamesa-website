@@ -1,0 +1,19 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range": "2026-03-14 → 2026-05-13 (effettivo 2026-04-13 →)"
+  },
+  "device": [
+    {"category": "mobile", "sessions": 112, "engagedSessions": 49, "engagementRate": 0.4375, "bounceRate": 0.5625},
+    {"category": "desktop", "sessions": 68, "engagedSessions": 28, "engagementRate": 0.4117, "bounceRate": 0.5882},
+    {"category": "tablet", "sessions": 1, "engagedSessions": 0, "engagementRate": 0, "bounceRate": 1}
+  ],
+  "language_top5": [
+    {"language": "English", "sessions": 87, "engagedSessions": 28},
+    {"language": "Spanish", "sessions": 54, "engagedSessions": 27},
+    {"language": "German", "sessions": 10, "engagedSessions": 6},
+    {"language": "Italian", "sessions": 9, "engagedSessions": 4},
+    {"language": "Catalan", "sessions": 7, "engagedSessions": 3}
+  ],
+  "INSIGHT": "Mobile 62% sessions confirmed → mobile-first è giusto. Lingua browser EN 48% vs ES 30% — disconnesso da geo (Spain 58.6%). Spanish-speaking users con browser EN frequente in BCN (expat audience)."
+}

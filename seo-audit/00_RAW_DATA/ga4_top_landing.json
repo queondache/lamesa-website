@@ -1,0 +1,16 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range": "2026-03-14 → 2026-05-13 (effettivo 2026-04-13 →)",
+    "dimensions": ["landingPage"],
+    "metrics": ["sessions", "engagedSessions", "bounceRate", "averageSessionDuration"]
+  },
+  "rows": [
+    {"landingPage": "/", "sessions": 165, "engagedSessions": 69, "bounceRate": 0.5818, "averageSessionDuration_sec": 109.07},
+    {"landingPage": "/en", "sessions": 12, "engagedSessions": 8, "bounceRate": 0.3333, "averageSessionDuration_sec": 234.21},
+    {"landingPage": "(empty)", "sessions": 2, "engagedSessions": 0, "bounceRate": 1, "averageSessionDuration_sec": 0},
+    {"landingPage": "(not set)", "sessions": 2, "engagedSessions": 0, "bounceRate": 1, "averageSessionDuration_sec": 0},
+    {"landingPage": "/en/index.html", "sessions": 1, "engagedSessions": 0, "bounceRate": 1, "averageSessionDuration_sec": 0}
+  ],
+  "INSIGHT": "/en bounceRate 33% vs / 58% + avgDuration 234s vs 109s → EN audience engagement 2.1× SUPERIOR. Underexploited."
+}

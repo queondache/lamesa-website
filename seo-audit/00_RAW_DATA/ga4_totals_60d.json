@@ -1,0 +1,20 @@
+{
+  "query": {
+    "property_id": "532584494",
+    "date_range_current": "2026-03-14 → 2026-05-13",
+    "date_range_previous": "2026-01-13 → 2026-03-13",
+    "metrics": ["totalUsers", "newUsers", "sessions", "engagedSessions", "engagementRate", "averageSessionDuration", "bounceRate", "screenPageViews"]
+  },
+  "CRITICAL_NOTE": "GA4 first session date = 2026-04-13. Range 'current 60g' contiene SOLO 31g effettivi (2026-04-13 → 2026-05-13). Periodo 'previous 60g' = 0 rows. NO comparison possibile fino al 2026-06-12.",
+  "current_31d_effective": {
+    "totalUsers": 157,
+    "newUsers": 158,
+    "sessions": 181,
+    "engagedSessions": 77,
+    "engagementRate": 0.4254,
+    "averageSessionDuration_sec": 114.96,
+    "bounceRate": 0.5746,
+    "screenPageViews": 221
+  },
+  "previous": "NO_DATA — GA4 installation post 2026-03-13"
+}
