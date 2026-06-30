@@ -44,9 +44,9 @@ lamesa-website/
 ├── ca/
 │   └── index.html          # Versione CA (lang="ca")
 ├── clases/
-│   ├── semanal-modelado.html  # Pagina turni Clase Semanal Modelado (noindex)
-│   ├── semanal-torno.html     # Pagina turni Clase Semanal Torno (noindex)
-│   └── suelta.html            # Pagina scelta Clase Suelta (noindex)
+│   ├── semanal-modelado.html  # Pagina turni Clase Semanal Modelado (indicizzabile)
+│   ├── semanal-torno.html     # Pagina turni Clase Semanal Torno (indicizzabile)
+│   └── suelta.html            # Pagina scelta Clase Suelta (indicizzabile)
 ├── en/
 │   ├── index.html          # Versione EN (lang="en")
 │   └── clases/
@@ -599,7 +599,8 @@ Sitemap: https://www.lamesabcn.com/sitemap.xml
 - `404.html` — `<meta name="robots" content="noindex">`
 - `privacy.html` — `<meta name="robots" content="noindex">`
 - `gracias.html` (ES/EN/CA) — `<meta name="robots" content="noindex">`
-- Tutte le pagine `/clases/` — `<meta name="robots" content="noindex">`
+
+> ⚠️ Le pagine `/clases/` (ES/EN/CA) **NON sono noindex** — sono **indicizzabili**: nessun `<meta name="robots">`, nessun header `X-Robots-Tag`, canonical self-referente, presenti in `sitemap.xml`, permesse da `robots.txt`. Verificato in vivo (chrome-devtools) il 2026-06-30. (In passato la doc le dava per noindex: claim obsoleto.)
 
 ---
 
@@ -856,7 +857,7 @@ Nel foglio PRENOTAZIONI:
 ### Pendenti futuri
 
 - Privacy page EN e CA (mancanti)
-- Sitemap: aggiornare con pagine /clases/ (noindex non serve, ma hreflang sì)
+- Sitemap: /clases/ già incluse con hreflang (le `/clases/` sono indicizzabili — nessun noindex)
 - Google Business Profile: verifica in corso
 - PWA Reservas: gestione slot (apri/chiudi dalla PWA), dark mode
 - Email mittente: ora è andrea.pesce@zeroco2.eco — ideale trasferire ownership GAS a lamesa.lc@gmail.com
