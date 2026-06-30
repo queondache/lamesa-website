@@ -3,13 +3,21 @@
 > La Mesa is a ceramics studio and multidisciplinary creative lab located in La Barceloneta, Barcelona. We offer weekly classes, drop-in sessions, wheel throwing courses, creative workshops and private sessions. Tone: welcoming, informal, community-focused. We are hosts, not teachers.
 
 ## Services
-- Weekly ceramics class (hand-building): €120/month, 1×/week, 2h per session
-- Drop-in class (Clase Suelta): minimum 2 hours, booking via Cal.com
-- Wheel intro course (Intro al Torno): €90, 2 sessions × 2h, max 2 people
-- Taller Flex (flexible hours): 8h=€120 / 12h=€180 / 16h=€240 / 20h=€300
-- Wheel coworking: contact via WhatsApp
-- Creative workshops: variable, see website
-- Private sessions (team building, birthdays, bachelorette): custom quote
+- Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
+- Taller Semanal Torno (weekly wheel-throwing class): €160/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
+- Clase Suelta Modelado (drop-in hand-building): €50 — minimum 2 hours. Book online via Stripe Checkout.
+- Clase Suelta Torno (drop-in wheel, private, max 2 people): €70 — minimum 2 hours. Book online via Stripe Checkout.
+- Intro al Torno (wheel intro course): €90 — 2 sessions of 2h, max 2 people. Book via WhatsApp.
+- Coworking Torno (open wheel access for experienced potters): €20/hour — minimum 2 hours. Book via WhatsApp.
+- Taller Flex (flexible classes for students with prior experience): from €120 (8h). More hours via WhatsApp (https://wa.me/34711552030).
+- Creative workshops (with guest artists): variable, see website.
+- Private sessions (team building, birthdays, bachelorette): custom quote.
+
+All materials and firings included. High-temperature clay. Full machine-readable pricing: https://lamesabcn.com/pricing.md
+
+## Booking
+- Online (Stripe Checkout): Taller Semanal (Modelado/Torno) and Clase Suelta (Modelado/Torno).
+- WhatsApp (https://wa.me/34711552030): Intro al Torno, Coworking Torno, Taller Flex, creative workshops and private sessions.
 
 ## Location
 Carrer de l'Atlàntida 47, La Barceloneta, 08003 Barcelona, Spain
