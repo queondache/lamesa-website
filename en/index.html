@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ceramics Studio in Barcelona | La Mesa</title>
-  <meta name="description" content="Ceramics studio in La Barceloneta, Barcelona. Weekly classes, drop-in sessions, wheel coworking, wheel intro course and creative workshops. Materials included. Book online!">
+  <meta name="description" content="Ceramics studio in La Barceloneta, Barcelona. Weekly classes, drop-in sessions and creative workshops. Materials included. Book online.">
 
   <!-- Canonical & Hreflang -->
   <link rel="canonical" href="https://lamesabcn.com/en/">
@@ -707,7 +707,10 @@
   </a>
 
   <!-- ============================================================
-       JSON-LD STRUCTURED DATA — Schema.org LocalBusiness (EN)
+       JSON-LD STRUCTURED DATA — Schema.org @graph (EN):
+       LocalBusiness + Organization + WebSite (enlazados por @id)
+       sameAs pendiente: Google Business Profile + TripAdvisor (tras claim).
+       Facebook: sin página pública indexable.
        ============================================================ -->
   <script type="application/ld+json">
   {
@@ -718,6 +721,7 @@
         "@id": "https://lamesabcn.com/#lamesa",
         "name": "La Mesa – Creative Lab",
         "alternateName": "La Mesa Barcelona",
+        "parentOrganization": { "@id": "https://lamesabcn.com/#organization" },
         "description": "Multidisciplinary creative space in La Barceloneta, Barcelona. Ceramics workshops, sessions with guest artists, handmade ceramics shop and private sessions.",
         "url": "https://lamesabcn.com",
         "telephone": "+34711552030",
@@ -765,7 +769,8 @@
         ],
         "sameAs": [
           "https://www.instagram.com/lamesa.lc",
-          "https://www.etsy.com/es/shop/LaMesaLC"
+          "https://www.etsy.com/es/shop/LaMesaLC",
+          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html"
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
@@ -841,6 +846,29 @@
             }
           ]
         }
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://lamesabcn.com/#organization",
+        "name": "La Mesa – Creative Lab",
+        "url": "https://lamesabcn.com",
+        "logo": "https://lamesabcn.com/images/logo-lamesa.png",
+        "image": "https://lamesabcn.com/images/og-lamesa.jpg",
+        "sameAs": [
+          "https://www.instagram.com/lamesa.lc",
+          "https://www.etsy.com/es/shop/LaMesaLC",
+          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html"
+        ],
+        "location": { "@id": "https://lamesabcn.com/#lamesa" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://lamesabcn.com/en/#website",
+        "url": "https://lamesabcn.com/en/",
+        "name": "La Mesa",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://lamesabcn.com/#organization" },
+        "about": { "@id": "https://lamesabcn.com/#lamesa" }
       }
     ]
   }
