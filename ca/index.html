@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /ca/) -->
-  <link rel="stylesheet" href="../css/style.css?v=8">
+  <link rel="stylesheet" href="../css/style.css?v=9">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -98,6 +98,32 @@
 <body>
 
   <a href="#main-content" class="skip-link">Saltar al contingut</a>
+
+  <!-- ============================================================
+       LANGUAGE SUGGESTION BAR
+       Suggerisce EN/CA (o EN come lingua franca per de/fr/it/pt)
+       quando la lingua del browser non coincide con quella della
+       pagina. Testo nella lingua SUGGERITA, non in quella corrente.
+       Nascosta di default (attributo "hidden"): se JS è disattivato
+       resta invisibile, lo switcher statico in navbar resta comunque
+       raggiungibile. La rivelazione avviene in modo sincrono, PRIMA
+       del primo paint, per non causare layout shift (CLS).
+       ============================================================ -->
+  <div id="lang-suggest-bar" class="lang-suggest" hidden role="region" aria-label="Suggeriment d’idioma">
+    <div class="lang-suggest__inner">
+      <p class="lang-suggest__message">
+        <span class="lang-suggest__text" id="lang-suggest-text"></span>
+        <a href="#" class="lang-suggest__cta" id="lang-suggest-link"></a>
+      </p>
+      <button type="button" class="lang-suggest__close" id="lang-suggest-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="4" x2="20" y2="20"></line>
+          <line x1="20" y1="4" x2="4" y2="20"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <script src="../js/lang-suggest.js?v=1" data-cookieconsent="ignore"></script>
 
   <!-- ============================================================
        NAVBAR
@@ -940,7 +966,7 @@
   </script>
 
   <!-- Main script (relative path from /ca/) -->
-  <script src="../js/main.js?v=5" data-cookieconsent="ignore" defer></script>
+  <script src="../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
 
 </body>
 </html>

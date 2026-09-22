@@ -264,3 +264,55 @@ function showToast(message, duration = 4000) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+/* ============================================================
+   9. LANGUAGE SUGGESTION — tracking GA4 sullo switcher di navbar
+   La barra di suggerimento (funzione di decisione, mostra/nascondi,
+   dismiss, click sul CTA) vive interamente in js/lang-suggest.js,
+   caricato SENZA "defer" nello stesso punto in cui prima stava lo
+   script inline: deve girare prima del primo paint per evitare CLS,
+   quindi non può dipendere da questo file (caricato con "defer",
+   gira dopo il render iniziale). Qui si traccia solo il click sullo
+   switcher di lingua sempre visibile in navbar (desktop, mobile in
+   barra, e duplicato nel menu hamburger), che esiste solo dopo che
+   l'intero documento — incluso questo script deferred — è stato
+   parsato.
+   ============================================================ */
+(function initLangSuggest() {
+  const STORAGE_KEY = 'lamesa_lang_suggest_dismissed';
+  const pageLang = document.documentElement.lang || 'es';
+
+  // Ricorda che l'utente ha cambiato lingua a mano, così il banner di
+  // suggerimento non gli viene più riproposto. In navigazione privata
+  // l'accesso a localStorage può lanciare: si ignora, il sito funziona
+  // comunque.
+  function rememberDismissed() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, '1');
+    } catch (e) {
+      // no-op: storage non disponibile
+    }
+  }
+
+  function trackLanguageSwitch(fromLang, toLang, source) {
+    if (typeof gtag === 'function') {
+      gtag('event', 'language_switch', {
+        from_lang: fromLang,
+        to_lang: toLang,
+        source: source
+      });
+    }
+  }
+
+  // Click sullo switcher sempre visibile in navbar (desktop, mobile
+  // in barra, e duplicato nel menu hamburger)
+  const switcherLinks = document.querySelectorAll('.navbar__lang a, .navbar__mobile-lang a');
+  switcherLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (link.classList.contains('active')) return; // già sulla lingua corrente, nessuno switch reale
+      const toLang = link.getAttribute('lang') || '';
+      trackLanguageSwitch(pageLang, toLang, 'switcher');
+      rememberDismissed();
+    });
+  });
+})();
