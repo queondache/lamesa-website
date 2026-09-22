@@ -6,6 +6,7 @@
 > Questo file viene letto da Claude Code ad ogni sessione.
 > Contiene tutto il contesto necessario per lavorare sul sito senza domande.
 > Ultimo aggiornamento: 2026-04-20 (cutover **fase 2**: Taller Semanal ORA checkout online via v2 — 4 sesiones consecutive, pago unico Stripe 120€ modelado / 160€ torno; Clase Suelta invariata su v2)
+> 2026-09-22: corretto refuso prezzo Clase Suelta nella tabella §5 "Servizi e prezzi" (50/70€ → **45€ modelado / 65€ torno**, valore reale in produzione — vedi `clases/suelta.html`). La sezione "Architettura legacy" (§ GAS) resta invariata: descrive uno stato storico esplicitamente etichettato come non più collegato al sito.
 
 ---
 
@@ -454,7 +455,7 @@ section.contacto > div.container
 | **Taller Flex** | Ceramica modelado/torno | 120 EUR | Con esperienza | Flessibile | WhatsApp |
 | **Intro al Torno** | Torno | 90 EUR (2 sessioni) | Principianti torno | Da concordare | WhatsApp |
 | **Coworking Torno** | Torno | 20 EUR/ora | Ceramisti autonomi | Mar, Mer, Ven 14-18h | WhatsApp |
-| **Clase Suelta** | Mesa o torno | 50/70 EUR | Chiunque | Jueves 16-18h | **Sito vetrina → gestionale v2 (Stripe Checkout)** |
+| **Clase Suelta** | Mesa o torno | 45/65 EUR | Chiunque | Jueves 16-18h | **Sito vetrina → gestionale v2 (Stripe Checkout)** |
 | **Workshops creativi** | Varie discipline | Variabile | Tutti | Puntuali | Drive + WhatsApp |
 | **Sessioni private** | Su misura | Preventivo | Gruppi max 10 | Da concordare | WhatsApp |
 | **Vale-regalo** | Transversale | Variabile | Regalo | — | WhatsApp |
