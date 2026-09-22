@@ -2,7 +2,7 @@
 
 > Ceramics studio and creative lab in La Barceloneta, Barcelona.
 > All prices in EUR (€). All materials, tools and firings included. High-temperature clay.
-> Last updated: 2026-06-30.
+> Last updated: 2026-09-22.
 
 ## Price table
 
@@ -10,8 +10,8 @@
 |---|---|---|---|
 | Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
 | Taller Semanal Torno (weekly wheel throwing) | €160 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
-| Clase Suelta Modelado (drop-in hand-building) | €50 | 1 session, minimum 2h | Online (Stripe Checkout) |
-| Clase Suelta Torno (drop-in wheel, private) | €70 | 1 session, minimum 2h, max 2 people | Online (Stripe Checkout) |
+| Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session, minimum 2h | Online (Stripe Checkout) |
+| Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session, minimum 2h, max 2 people | Online (Stripe Checkout) |
 | Intro al Torno (wheel intro course) | €90 | 2 sessions × 2h, max 2 people | WhatsApp |
 | Coworking Torno (open wheel access) | €20 / hour | minimum 2h, experienced potters | WhatsApp |
 | Taller Flex (flexible classes) | from €120 (8h) | students with prior experience | WhatsApp |
@@ -33,13 +33,13 @@
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Modelado
-- Price: €50.
+- Price: €45.
 - Includes: one drop-in hand-building session, minimum 2 hours, all materials and firing. No monthly commitment.
 - Availability: Tuesday, Wednesday, Friday.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
-- Price: €70.
+- Price: €65.
 - Includes: one private wheel-throwing session, minimum 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
 - Availability: Tuesday, Wednesday, Friday.
 - Booking: online via Stripe Checkout.

@@ -5,8 +5,8 @@
 ## Services
 - Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
 - Taller Semanal Torno (weekly wheel-throwing class): €160/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
-- Clase Suelta Modelado (drop-in hand-building): €50 — minimum 2 hours. Book online via Stripe Checkout.
-- Clase Suelta Torno (drop-in wheel, private, max 2 people): €70 — minimum 2 hours. Book online via Stripe Checkout.
+- Clase Suelta Modelado (drop-in hand-building): €45 — minimum 2 hours. Book online via Stripe Checkout.
+- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — minimum 2 hours. Book online via Stripe Checkout.
 - Intro al Torno (wheel intro course): €90 — 2 sessions of 2h, max 2 people. Book via WhatsApp.
 - Coworking Torno (open wheel access for experienced potters): €20/hour — minimum 2 hours. Book via WhatsApp.
 - Taller Flex (flexible classes for students with prior experience): from €120 (8h). More hours via WhatsApp (https://wa.me/34711552030).
