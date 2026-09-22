@@ -580,12 +580,14 @@ p {
 .lang-suggest__cta {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
   color: var(--white);
   white-space: nowrap;
   padding: 4px 2px;
+  touch-action: manipulation;
 }
 
 .lang-suggest__cta:hover {
@@ -724,6 +726,72 @@ p {
   max-width: 55ch;
   text-align: center;
   text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+}
+
+/* Gruppo CTA hero: prenotazione (primaria) + WhatsApp (secondaria) */
+.hero__cta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.hero__cta-group .btn--secondary {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Prova sociale: badge cliccabile verso la scheda Google reale */
+.hero__social-proof {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: var(--space-sm);
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  background-color: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+  transition: background-color var(--transition-base);
+}
+
+.hero__social-proof:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.hero__social-proof-stars {
+  color: var(--yellow);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 600px) {
+  .hero__cta-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero__social-proof {
+    width: 100%;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }
 
 /* ============================================================
