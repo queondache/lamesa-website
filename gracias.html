@@ -23,6 +23,38 @@
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/favicon-180.png">
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ90MD674K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-SQ90MD674K');
+    // Deduplica booking_confirmed: un reload della stessa gracias.html non deve
+    // contare come nuova conversione. Chiave stabile su path+querystring cosi'
+    // due prenotazioni diverse (querystring diversa) nella stessa sessione
+    // contano comunque, ma un refresh della stessa URL no.
+    (function () {
+      var dedupeKey = 'bc:' + location.pathname + location.search;
+      var alreadySent = false;
+      try {
+        alreadySent = sessionStorage.getItem(dedupeKey) !== null;
+      } catch (e) {
+        // sessionStorage non accessibile (navigazione privata o storage bloccato):
+        // meglio un doppione raro che perdere la conversione, quindi si procede a sparare l'evento.
+        alreadySent = false;
+      }
+      if (!alreadySent) {
+        gtag('event', 'booking_confirmed', {'event_category': 'conversion', 'event_label': 'es'});
+        try {
+          sessionStorage.setItem(dedupeKey, '1');
+        } catch (e) {
+          // scrittura non possibile: l'evento sopra e' comunque gia' stato inviato, nessun problema di deduplica futura oltre a questo caso limite.
+        }
+      }
+    })();
+  </script>
 </head>
 <body>
 
