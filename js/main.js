@@ -4,6 +4,53 @@
    ============================================================ */
 
 /* ============================================================
+   0. LANGUAGE SUGGESTION — funzione pura di decisione
+   Stessa identica logica è duplicata (di proposito) nello script
+   inline in testa al <body> di index.html / en/index.html /
+   ca/index.html: lì deve girare in modo sincrono PRIMA del primo
+   paint per evitare layout shift (CLS), quindi non può dipendere
+   da questo file che è caricato con "defer" (gira dopo il render
+   iniziale). Questa copia è la fonte di verità testabile via Node:
+     node -e "const {decideLangSuggestion}=require('./js/main.js');
+       console.log(decideLangSuggestion(['en-US'],'es',false));"
+   ============================================================ */
+var AVAILABLE_LANGS = ['es', 'en', 'ca'];
+var FALLBACK_TO_EN  = ['de', 'fr', 'it', 'pt'];
+
+function decideLangSuggestion(browserLanguages, pageLang, dismissed) {
+  if (dismissed) return null;
+  if (!browserLanguages || !browserLanguages.length) return null;
+
+  for (var i = 0; i < browserLanguages.length; i++) {
+    var code = String(browserLanguages[i]).slice(0, 2).toLowerCase();
+
+    if (code === pageLang) return null; // il browser preferisce già questa lingua
+
+    if (AVAILABLE_LANGS.indexOf(code) !== -1) {
+      return { lang: code };
+    }
+
+    if (FALLBACK_TO_EN.indexOf(code) !== -1 && pageLang !== 'en') {
+      return { lang: 'en' };
+    }
+  }
+
+  return null;
+}
+
+// Export Node per il test del gate di verifica. Zero dipendenze nuove:
+// è un controllo d'ambiente, il browser ignora questo ramo (module
+// non esiste su window).
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { decideLangSuggestion: decideLangSuggestion };
+}
+
+// Il resto del file manipola il DOM: viene eseguito solo in browser
+// (guardia utile anche a rendere questo file require()-abile da Node
+// per il test della funzione pura sopra, senza side-effect).
+if (typeof document !== 'undefined') {
+
+/* ============================================================
    1. NAVBAR — Scroll shadow & hamburger menu
    ============================================================ */
 (function initNavbar() {
@@ -264,3 +311,54 @@ function showToast(message, duration = 4000) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 })();
+
+/* ============================================================
+   9. LANGUAGE SUGGESTION — tracking GA4 sullo switcher di navbar
+   La barra di suggerimento (mostra/nascondi, dismiss, click sul CTA)
+   è gestita dallo script inline sincrono in testa al <body> di ogni
+   pagina (necessario per evitare CLS ed eseguito prima che la navbar
+   stessa sia parsata). Qui si traccia solo il click sullo switcher
+   di lingua sempre visibile in navbar (desktop, mobile in barra, e
+   duplicato nel menu hamburger), che esiste solo dopo che l'intero
+   documento — incluso questo script deferred — è stato parsato.
+   ============================================================ */
+(function initLangSuggest() {
+  const STORAGE_KEY = 'lamesa_lang_suggest_dismissed';
+  const pageLang = document.documentElement.lang || 'es';
+
+  // Ricorda che l'utente ha cambiato lingua a mano, così il banner di
+  // suggerimento non gli viene più riproposto. In navigazione privata
+  // l'accesso a localStorage può lanciare: si ignora, il sito funziona
+  // comunque.
+  function rememberDismissed() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, '1');
+    } catch (e) {
+      // no-op: storage non disponibile
+    }
+  }
+
+  function trackLanguageSwitch(fromLang, toLang, source) {
+    if (typeof gtag === 'function') {
+      gtag('event', 'language_switch', {
+        from_lang: fromLang,
+        to_lang: toLang,
+        source: source
+      });
+    }
+  }
+
+  // Click sullo switcher sempre visibile in navbar (desktop, mobile
+  // in barra, e duplicato nel menu hamburger)
+  const switcherLinks = document.querySelectorAll('.navbar__lang a, .navbar__mobile-lang a');
+  switcherLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (link.classList.contains('active')) return; // già sulla lingua corrente, nessuno switch reale
+      const toLang = link.getAttribute('lang') || '';
+      trackLanguageSwitch(pageLang, toLang, 'switcher');
+      rememberDismissed();
+    });
+  });
+})();
+
+} // fine guardia typeof document !== 'undefined'

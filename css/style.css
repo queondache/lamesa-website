@@ -541,6 +541,96 @@ p {
 }
 
 /* ============================================================
+   7bis. LANGUAGE SUGGESTION BAR
+   Banner dismissibile per la scoperta delle versioni EN/CA.
+   La visibilità viene decisa da uno script sincrono in testa al
+   <body> (vedi index.html/en/ca), PRIMA del primo paint: qui la
+   barra parte sempre "hidden" via attributo HTML nativo, quindi
+   non introduce layout shift (CLS) quando appare.
+   ============================================================ */
+.lang-suggest {
+  background-color: var(--blue);
+  color: var(--cream);
+}
+
+.lang-suggest[hidden] {
+  display: none;
+}
+
+.lang-suggest__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 10px var(--container-pad);
+}
+
+.lang-suggest__message {
+  flex: 1 1 auto;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.lang-suggest__text {
+  font-weight: 600;
+}
+
+.lang-suggest__cta {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--white);
+  white-space: nowrap;
+  padding: 4px 2px;
+}
+
+.lang-suggest__cta:hover {
+  color: var(--yellow);
+}
+
+.lang-suggest__close {
+  flex: 0 0 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--cream);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lang-suggest__close:hover {
+  opacity: 0.75;
+}
+
+.lang-suggest__close svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+  pointer-events: none;
+}
+
+@media (max-width: 480px) {
+  .lang-suggest__inner {
+    padding: 8px 12px;
+    gap: var(--space-xs);
+  }
+
+  .lang-suggest__message {
+    font-size: 0.8125rem;
+  }
+}
+
+/* ============================================================
    8. HERO SECTION
    ============================================================ */
 .hero {
@@ -1394,10 +1484,30 @@ p {
     --container-pad: 16px;
   }
 
-  /* Navbar */
-  .navbar__links,
-  .navbar__lang {
+  /* Navbar — i link testuali restano nel menu hamburger, ma lo
+     switcher lingua deve restare raggiungibile SENZA aprire il
+     menu: il 61% del traffico è mobile e oggi la lingua era
+     scoperta solo a menu aperto. */
+  .navbar__links {
+    display: flex;
+  }
+
+  .navbar__links > .navbar__link {
     display: none;
+  }
+
+  .navbar__lang {
+    display: flex;
+    margin-left: 0;
+  }
+
+  .navbar__lang a {
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
   }
 
   .navbar__hamburger {
