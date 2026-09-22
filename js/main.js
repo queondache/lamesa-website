@@ -4,53 +4,6 @@
    ============================================================ */
 
 /* ============================================================
-   0. LANGUAGE SUGGESTION — funzione pura di decisione
-   Stessa identica logica è duplicata (di proposito) nello script
-   inline in testa al <body> di index.html / en/index.html /
-   ca/index.html: lì deve girare in modo sincrono PRIMA del primo
-   paint per evitare layout shift (CLS), quindi non può dipendere
-   da questo file che è caricato con "defer" (gira dopo il render
-   iniziale). Questa copia è la fonte di verità testabile via Node:
-     node -e "const {decideLangSuggestion}=require('./js/main.js');
-       console.log(decideLangSuggestion(['en-US'],'es',false));"
-   ============================================================ */
-var AVAILABLE_LANGS = ['es', 'en', 'ca'];
-var FALLBACK_TO_EN  = ['de', 'fr', 'it', 'pt'];
-
-function decideLangSuggestion(browserLanguages, pageLang, dismissed) {
-  if (dismissed) return null;
-  if (!browserLanguages || !browserLanguages.length) return null;
-
-  for (var i = 0; i < browserLanguages.length; i++) {
-    var code = String(browserLanguages[i]).slice(0, 2).toLowerCase();
-
-    if (code === pageLang) return null; // il browser preferisce già questa lingua
-
-    if (AVAILABLE_LANGS.indexOf(code) !== -1) {
-      return { lang: code };
-    }
-
-    if (FALLBACK_TO_EN.indexOf(code) !== -1 && pageLang !== 'en') {
-      return { lang: 'en' };
-    }
-  }
-
-  return null;
-}
-
-// Export Node per il test del gate di verifica. Zero dipendenze nuove:
-// è un controllo d'ambiente, il browser ignora questo ramo (module
-// non esiste su window).
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { decideLangSuggestion: decideLangSuggestion };
-}
-
-// Il resto del file manipola il DOM: viene eseguito solo in browser
-// (guardia utile anche a rendere questo file require()-abile da Node
-// per il test della funzione pura sopra, senza side-effect).
-if (typeof document !== 'undefined') {
-
-/* ============================================================
    1. NAVBAR — Scroll shadow & hamburger menu
    ============================================================ */
 (function initNavbar() {
@@ -314,13 +267,16 @@ function showToast(message, duration = 4000) {
 
 /* ============================================================
    9. LANGUAGE SUGGESTION — tracking GA4 sullo switcher di navbar
-   La barra di suggerimento (mostra/nascondi, dismiss, click sul CTA)
-   è gestita dallo script inline sincrono in testa al <body> di ogni
-   pagina (necessario per evitare CLS ed eseguito prima che la navbar
-   stessa sia parsata). Qui si traccia solo il click sullo switcher
-   di lingua sempre visibile in navbar (desktop, mobile in barra, e
-   duplicato nel menu hamburger), che esiste solo dopo che l'intero
-   documento — incluso questo script deferred — è stato parsato.
+   La barra di suggerimento (funzione di decisione, mostra/nascondi,
+   dismiss, click sul CTA) vive interamente in js/lang-suggest.js,
+   caricato SENZA "defer" nello stesso punto in cui prima stava lo
+   script inline: deve girare prima del primo paint per evitare CLS,
+   quindi non può dipendere da questo file (caricato con "defer",
+   gira dopo il render iniziale). Qui si traccia solo il click sullo
+   switcher di lingua sempre visibile in navbar (desktop, mobile in
+   barra, e duplicato nel menu hamburger), che esiste solo dopo che
+   l'intero documento — incluso questo script deferred — è stato
+   parsato.
    ============================================================ */
 (function initLangSuggest() {
   const STORAGE_KEY = 'lamesa_lang_suggest_dismissed';
@@ -360,5 +316,3 @@ function showToast(message, duration = 4000) {
     });
   });
 })();
-
-} // fine guardia typeof document !== 'undefined'

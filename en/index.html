@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /en/) -->
-  <link rel="stylesheet" href="../css/style.css?v=8">
+  <link rel="stylesheet" href="../css/style.css?v=9">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -123,105 +123,7 @@
       </button>
     </div>
   </div>
-  <script>
-  (function () {
-    // Decisione sincrona (blocking, non-defer) eseguita PRIMA del primo
-    // paint per evitare CLS. Stessa logica di decideLangSuggestion in
-    // js/main.js, duplicata qui di proposito: main.js è caricato con
-    // "defer" e girerebbe troppo tardi, dopo che la pagina è già
-    // visibile, causando uno spostamento di layout.
-    var STORAGE_KEY = 'lamesa_lang_suggest_dismissed';
-    var AVAILABLE_LANGS = ['es', 'en', 'ca'];
-    var FALLBACK_TO_EN = ['de', 'fr', 'it', 'pt'];
-
-    var LABELS = {
-      es: { notice: 'Esta página también está disponible en español.', cta: 'Ver en español →', close: 'Cerrar aviso de idioma' },
-      en: { notice: 'This page is also available in English.', cta: 'View in English →', close: 'Close language notice' },
-      ca: { notice: 'Aquesta pàgina també està disponible en català.', cta: 'Veure en català →', close: 'Tancar avís d’idioma' }
-    };
-    var URLS = { es: '/index.html', en: '/en/index.html', ca: '/ca/index.html' };
-
-    function isDismissed() {
-      try {
-        return window.localStorage.getItem(STORAGE_KEY) === '1';
-      } catch (e) {
-        // Navigazione privata o storage disabilitato: nessun blocco,
-        // il sito deve funzionare comunque (semplicemente non ricorda).
-        return false;
-      }
-    }
-
-    // Funzione pura di decisione — identica a decideLangSuggestion in
-    // js/main.js (vedi commento lì per i test via Node).
-    function decide(browserLanguages, pageLang, dismissed) {
-      if (dismissed) return null;
-      if (!browserLanguages || !browserLanguages.length) return null;
-
-      for (var i = 0; i < browserLanguages.length; i++) {
-        var code = String(browserLanguages[i]).slice(0, 2).toLowerCase();
-        if (code === pageLang) return null; // il browser preferisce già questa lingua
-        if (AVAILABLE_LANGS.indexOf(code) !== -1) return { lang: code };
-        if (FALLBACK_TO_EN.indexOf(code) !== -1 && pageLang !== 'en') return { lang: 'en' };
-      }
-      return null;
-    }
-
-    var pageLang = document.documentElement.lang || 'es';
-    var browserLanguages = (navigator.languages && navigator.languages.length)
-      ? navigator.languages
-      : [navigator.language || ''];
-
-    var suggestion = decide(browserLanguages, pageLang, isDismissed());
-    if (!suggestion) return;
-
-    var labels = LABELS[suggestion.lang];
-    var url = URLS[suggestion.lang];
-    if (!labels || !url) return;
-
-    var bar = document.getElementById('lang-suggest-bar');
-    if (!bar) return;
-
-    document.getElementById('lang-suggest-text').textContent = labels.notice;
-
-    var link = document.getElementById('lang-suggest-link');
-    link.textContent = labels.cta;
-    link.href = url;
-    link.lang = suggestion.lang;
-
-    var closeLabel = labels.close;
-    var closeBtn = document.getElementById('lang-suggest-close');
-    closeBtn.setAttribute('aria-label', closeLabel);
-
-    // Ricorda la chiusura/scelta in localStorage: try/catch perché in
-    // navigazione privata l'accesso puo' lanciare (il sito deve
-    // funzionare comunque, semplicemente non ricordera' la scelta).
-    function rememberDismissed() {
-      try {
-        window.localStorage.setItem(STORAGE_KEY, '1');
-      } catch (e) {
-        // no-op: storage non disponibile
-      }
-    }
-
-    closeBtn.addEventListener('click', function () {
-      bar.hidden = true;
-      rememberDismissed();
-    });
-
-    link.addEventListener('click', function () {
-      if (typeof gtag === 'function') {
-        gtag('event', 'language_switch', {
-          from_lang: pageLang,
-          to_lang: suggestion.lang,
-          source: 'suggestion_bar'
-        });
-      }
-      rememberDismissed();
-    });
-
-    bar.hidden = false;
-  })();
-  </script>
+  <script src="../js/lang-suggest.js?v=1" data-cookieconsent="ignore"></script>
 
   <!-- ============================================================
        NAVBAR
@@ -1064,7 +966,7 @@
   </script>
 
   <!-- Main script (relative path from /en/) -->
-  <script src="../js/main.js?v=5" data-cookieconsent="ignore" defer></script>
+  <script src="../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
 
 </body>
 </html>
