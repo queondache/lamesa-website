@@ -1,0 +1,12 @@
+# Configurazione Jekyll di GitHub Pages.
+# Documenti interni (audit, istruzioni, script, screenshot) restano nel repo
+# ma NON vengono pubblicati su lamesabcn.com.
+# pricing.md e llms.txt restano pubblici: li leggono gli assistenti AI.
+exclude:
+  - seo-audit/
+  - audit-screenshots/
+  - scripts/
+  - README.md
+  - AUDIT_UIUX_V2.md
+  - audit-ux-ui-lamesa.md
+  - "istruzioni sito La Mesa.md"
