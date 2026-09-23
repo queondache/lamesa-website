@@ -35,13 +35,13 @@
 ### Clase Suelta Modelado
 - Price: €45.
 - Includes: one drop-in hand-building session of 2 hours, all materials and firing. No monthly commitment.
-- Availability: Tuesday to Saturday.
+- Availability: Tuesday to Saturday, at the time you prefer within opening hours. If your time is not shown online, ask via WhatsApp.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
 - Price: €65.
 - Includes: one private wheel-throwing session of 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
-- Availability: Tuesday, Wednesday, Friday and Saturday at 11:00; Wednesday also at 18:30.
+- Availability: Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability. If your time is not shown online, ask via WhatsApp.
 - Booking: online via Stripe Checkout.
 
 ### Intro al Torno
