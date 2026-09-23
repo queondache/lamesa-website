@@ -2,7 +2,7 @@
 
 > Ceramics studio and creative lab in La Barceloneta, Barcelona.
 > All prices in EUR (€). All materials, tools and firings included. High-temperature clay.
-> Last updated: 2026-09-22.
+> Last updated: 2026-09-23. Closed Monday and Sunday.
 
 ## Price table
 
@@ -35,13 +35,13 @@
 ### Clase Suelta Modelado
 - Price: €45.
 - Includes: one drop-in hand-building session, minimum 2 hours, all materials and firing. No monthly commitment.
-- Availability: Tuesday, Wednesday, Friday.
+- Availability: Tuesday to Saturday.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
 - Price: €65.
 - Includes: one private wheel-throwing session, minimum 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
-- Availability: Tuesday, Wednesday, Friday.
+- Availability: Tuesday, Wednesday, Friday and Saturday at 11:00; Wednesday also at 18:30.
 - Booking: online via Stripe Checkout.
 
 ### Intro al Torno

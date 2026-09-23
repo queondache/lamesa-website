@@ -10,3 +10,6 @@ exclude:
   - AUDIT_UIUX_V2.md
   - audit-ux-ui-lamesa.md
   - "istruzioni sito La Mesa.md"
+  # foto sorgente (12,9 MB), nessuna pagina le usa
+  - "images/FOTO TIENDA 1.jpg"
+  - "images/FOTO TIENDA 2.jpg"
