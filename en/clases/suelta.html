@@ -48,7 +48,9 @@
     "description": "Book a drop-in ceramics class in La Barceloneta. 2-hour class, no monthly commitment. Tuesday to Saturday, at the time you prefer within opening hours, subject to availability.",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "La Mesa",
+      "@id": "https://lamesabcn.com/#lamesa",
+      "name": "La Mesa – Laboratorio Creativo",
+      "url": "https://lamesabcn.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Carrer de l'Atlàntida 47",
@@ -75,6 +77,58 @@
         "category": "Paid",
         "price": "65",
         "priceCurrency": "EUR"
+      }
+    ],
+    "hasCourseInstance": [
+      {
+        "@type": "CourseInstance",
+        "courseMode": "Onsite",
+        "location": {
+          "@type": "Place",
+          "name": "La Mesa – Laboratorio Creativo",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Carrer de l'Atlàntida 47",
+            "addressLocality": "Barcelona",
+            "addressRegion": "Catalonia",
+            "postalCode": "08003",
+            "addressCountry": "ES"
+          }
+        },
+        "courseWorkload": "PT2H",
+        "courseSchedule": {
+          "@type": "Schedule",
+          "repeatFrequency": "P1D",
+          "repeatCount": 1,
+          "duration": "PT2H",
+          "byDay": [
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday",
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday",
+            "https://schema.org/Saturday"
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lamesabcn.com/en/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Drop-in Ceramics Class",
+        "item": "https://lamesabcn.com/en/clases/suelta.html"
       }
     ]
   }

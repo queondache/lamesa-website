@@ -200,6 +200,7 @@
       <!-- Background image -->
       <div class="hero__bg" aria-hidden="true">
         <picture>
+          <source media="(max-width: 767px)" srcset="../images/hero-mobile.webp" type="image/webp">
           <source srcset="../images/hero.webp" type="image/webp">
           <img class="hero__bg-img"
             src="../images/hero.jpg"
@@ -769,7 +770,9 @@
         "@id": "https://lamesabcn.com/#lamesa",
         "name": "La Mesa – Laboratori Creatiu",
         "alternateName": "La Mesa Barcelona",
-        "parentOrganization": { "@id": "https://lamesabcn.com/#organization" },
+        "parentOrganization": {
+          "@id": "https://lamesabcn.com/#organization"
+        },
         "description": "Espai creatiu multidisciplinari a la Barceloneta, Barcelona. Tallers de ceràmica, sessions amb artistes convidats, botiga de peces artesanals i sessions privades.",
         "url": "https://lamesabcn.com",
         "telephone": "+34711552030",
@@ -824,7 +827,8 @@
         "sameAs": [
           "https://www.instagram.com/lamesa.lc",
           "https://www.etsy.com/es/shop/LaMesaLC",
-          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html"
+          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+          "https://www.google.com/maps?cid=8399713182337560112"
         ],
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
@@ -919,7 +923,8 @@
               "priceCurrency": "EUR"
             }
           ]
-        }
+        },
+        "hasMap": "https://www.google.com/maps?cid=8399713182337560112"
       },
       {
         "@type": "Organization",
@@ -931,9 +936,22 @@
         "sameAs": [
           "https://www.instagram.com/lamesa.lc",
           "https://www.etsy.com/es/shop/LaMesaLC",
-          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html"
+          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+          "https://www.google.com/maps?cid=8399713182337560112"
         ],
-        "location": { "@id": "https://lamesabcn.com/#lamesa" }
+        "location": {
+          "@id": "https://lamesabcn.com/#lamesa"
+        },
+        "founder": [
+          {
+            "@type": "Person",
+            "name": "Lau"
+          },
+          {
+            "@type": "Person",
+            "name": "Vick"
+          }
+        ]
       },
       {
         "@type": "WebSite",
@@ -941,8 +959,12 @@
         "url": "https://lamesabcn.com/ca/",
         "name": "La Mesa",
         "inLanguage": "ca",
-        "publisher": { "@id": "https://lamesabcn.com/#organization" },
-        "about": { "@id": "https://lamesabcn.com/#lamesa" }
+        "publisher": {
+          "@id": "https://lamesabcn.com/#organization"
+        },
+        "about": {
+          "@id": "https://lamesabcn.com/#lamesa"
+        }
       }
     ]
   }

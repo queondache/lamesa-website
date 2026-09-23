@@ -48,7 +48,9 @@
     "description": "Weekly hand-building ceramics class in Barcelona. Perfect for beginners and anyone looking for a creative hobby. Materials and firings included.",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "La Mesa",
+      "@id": "https://lamesabcn.com/#lamesa",
+      "name": "La Mesa – Laboratorio Creativo",
+      "url": "https://lamesabcn.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Carrer de l'Atlàntida 47",
@@ -61,19 +63,72 @@
     "inLanguage": "en",
     "courseMode": "onsite",
     "educationalLevel": "Beginner",
-    "offers": {
-      "@type": "Offer",
-      "price": "120",
-      "priceCurrency": "EUR",
-      "priceSpecification": {
-        "@type": "UnitPriceSpecification",
-        "referenceQuantity": {
-          "@type": "QuantitativeValue",
-          "value": "1",
+    "offers": [
+      {
+        "@type": "Offer",
+        "category": "Paid",
+        "price": "120",
+        "priceCurrency": "EUR",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "120",
+          "priceCurrency": "EUR",
+          "unitCode": "MON",
           "unitText": "month"
         }
       }
-    }
+    ],
+    "hasCourseInstance": [
+      {
+        "@type": "CourseInstance",
+        "courseMode": "Onsite",
+        "location": {
+          "@type": "Place",
+          "name": "La Mesa – Laboratorio Creativo",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Carrer de l'Atlàntida 47",
+            "addressLocality": "Barcelona",
+            "addressRegion": "Catalonia",
+            "postalCode": "08003",
+            "addressCountry": "ES"
+          }
+        },
+        "courseSchedule": {
+          "@type": "Schedule",
+          "repeatFrequency": "P1W",
+          "repeatCount": 4,
+          "duration": "PT2H",
+          "byDay": [
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday",
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday",
+            "https://schema.org/Saturday"
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://lamesabcn.com/en/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Weekly Ceramics Class",
+        "item": "https://lamesabcn.com/en/clases/semanal-modelado.html"
+      }
+    ]
   }
   </script>
 

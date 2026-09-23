@@ -48,7 +48,9 @@
     "description": "Reserva una clase suelta de cerámica en La Barceloneta. Clase de 2 horas, sin compromiso mensual. De martes a sábado, a la hora que prefieras dentro del horario de apertura, según disponibilidad.",
     "provider": {
       "@type": "LocalBusiness",
-      "name": "La Mesa",
+      "@id": "https://lamesabcn.com/#lamesa",
+      "name": "La Mesa – Laboratorio Creativo",
+      "url": "https://lamesabcn.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Carrer de l'Atlàntida 47",
@@ -75,6 +77,58 @@
         "category": "Paid",
         "price": "65",
         "priceCurrency": "EUR"
+      }
+    ],
+    "hasCourseInstance": [
+      {
+        "@type": "CourseInstance",
+        "courseMode": "Onsite",
+        "location": {
+          "@type": "Place",
+          "name": "La Mesa – Laboratorio Creativo",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Carrer de l'Atlàntida 47",
+            "addressLocality": "Barcelona",
+            "addressRegion": "Catalonia",
+            "postalCode": "08003",
+            "addressCountry": "ES"
+          }
+        },
+        "courseWorkload": "PT2H",
+        "courseSchedule": {
+          "@type": "Schedule",
+          "repeatFrequency": "P1D",
+          "repeatCount": 1,
+          "duration": "PT2H",
+          "byDay": [
+            "https://schema.org/Tuesday",
+            "https://schema.org/Wednesday",
+            "https://schema.org/Thursday",
+            "https://schema.org/Friday",
+            "https://schema.org/Saturday"
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Inicio",
+        "item": "https://lamesabcn.com/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Clase Suelta de Cerámica",
+        "item": "https://lamesabcn.com/clases/suelta.html"
       }
     ]
   }
