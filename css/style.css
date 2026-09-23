@@ -2791,3 +2791,66 @@ p {
   .suelta-card__title { font-size: 1.1rem; }
   .cal__day { height: 36px; max-width: 36px; font-size: 0.75rem; }
 }
+
+/* ============================================================
+   PAGINE CLASSE — in sintesi + FAQ
+   ============================================================ */
+.turno-resumen {
+  background: var(--cream);
+  padding: var(--space-lg) 0 0;
+}
+
+.turno-resumen__box {
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--white);
+  border: 1.5px solid rgba(27, 60, 139, 0.15);
+  border-radius: 12px;
+  padding: 20px 24px;
+}
+
+.turno-resumen h2 {
+  font-size: 1.15rem;
+  color: var(--blue);
+  margin: 0 0 12px;
+}
+
+.turno-resumen dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 16px;
+  margin: 0;
+}
+
+.turno-resumen dt {
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.turno-resumen dd {
+  margin: 0;
+  color: var(--color-text-tertiary);
+}
+
+.turno-faq {
+  padding: var(--space-lg) 0 var(--space-xl);
+}
+
+.turno-faq .faq__inner h2 {
+  margin-bottom: 24px;
+}
+
+.faq__answer a {
+  color: var(--blue);
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .turno-resumen dl {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .turno-resumen dd {
+    margin-bottom: 8px;
+  }
+}
