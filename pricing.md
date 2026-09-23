@@ -10,8 +10,8 @@
 |---|---|---|---|
 | Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
 | Taller Semanal Torno (weekly wheel throwing) | €160 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
-| Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session, minimum 2h | Online (Stripe Checkout) |
-| Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session, minimum 2h, max 2 people | Online (Stripe Checkout) |
+| Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session of 2h | Online (Stripe Checkout) |
+| Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
 | Intro al Torno (wheel intro course) | €90 | 2 sessions × 2h, max 2 people | WhatsApp |
 | Coworking Torno (open wheel access) | €20 / hour | minimum 2h, experienced potters | WhatsApp |
 | Taller Flex (flexible classes) | from €120 (8h) | students with prior experience | WhatsApp |
@@ -29,18 +29,18 @@
 ### Taller Semanal Torno
 - Price: €160 per month.
 - Includes: 4 weekly sessions of 2 hours, wheel throwing (torno), all materials and firings.
-- For: beginners welcome, no experience required.
+- For: all levels, beginners and students with some experience; each class is adapted to the person.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Modelado
 - Price: €45.
-- Includes: one drop-in hand-building session, minimum 2 hours, all materials and firing. No monthly commitment.
+- Includes: one drop-in hand-building session of 2 hours, all materials and firing. No monthly commitment.
 - Availability: Tuesday to Saturday.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
 - Price: €65.
-- Includes: one private wheel-throwing session, minimum 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
+- Includes: one private wheel-throwing session of 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
 - Availability: Tuesday, Wednesday, Friday and Saturday at 11:00; Wednesday also at 18:30.
 - Booking: online via Stripe Checkout.
 
