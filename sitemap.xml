@@ -407,6 +407,30 @@
   <!-- Landing: Team Building -->
   <url>
     <loc>https://lamesabcn.com/team-building.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/team-building.html"/>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/team-building.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/team-building.html"/>
+    <lastmod>2026-09-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/team-building.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/team-building.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/team-building.html"/>
     <lastmod>2026-09-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
