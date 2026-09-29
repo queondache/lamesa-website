@@ -404,6 +404,38 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Landing: Encargos (vajilla para restaurantes) -->
+  <url>
+    <loc>https://lamesabcn.com/encargos.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/encargos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/custom-tableware.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/encarrecs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/encargos.html"/>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/custom-tableware.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/encargos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/custom-tableware.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/encarrecs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/encargos.html"/>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/encarrecs.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/encargos.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/custom-tableware.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/encarrecs.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/encargos.html"/>
+    <lastmod>2026-09-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Landing: Team Building -->
   <url>
     <loc>https://lamesabcn.com/team-building.html</loc>
