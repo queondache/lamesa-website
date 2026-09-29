@@ -2854,3 +2854,425 @@ p {
     margin-bottom: 8px;
   }
 }
+
+/* ============================================================
+   PAGINA ENCARGOS (vajilla per ristoranti e privati)
+   Classi .enc-* usate solo da encargos.html / ca/encarrecs.html / en/custom-tableware.html
+   ============================================================ */
+.enc [id] {
+  scroll-margin-top: calc(var(--nav-height) + 16px);
+}
+
+.enc-section {
+  padding: var(--space-xl) 0;
+}
+
+.enc-section--cream { background: var(--cream); }
+.enc-section--white { background: var(--white); }
+
+.enc-kicker {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: var(--space-xs);
+}
+
+.enc-h1,
+.enc-h2 {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.15;
+}
+
+.enc-h1 {
+  font-size: clamp(2.1rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-sm);
+}
+
+.enc-h2 {
+  font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+  margin-bottom: var(--space-sm);
+}
+
+.enc-h3 {
+  font-family: var(--font-sub);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.enc-lead {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--color-text-tertiary);
+  max-width: 60ch;
+}
+
+.enc-text {
+  line-height: 1.7;
+  color: var(--color-text-tertiary);
+  max-width: 62ch;
+}
+
+.enc-text + .enc-text { margin-top: 12px; }
+
+.enc-head {
+  max-width: 760px;
+  margin-bottom: var(--space-lg);
+}
+
+/* --- Hero --- */
+.enc-hero {
+  background: var(--cream);
+  padding: calc(var(--nav-height) + var(--space-lg)) 0 var(--space-xl);
+}
+
+.enc-hero__grid {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.enc-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 24px;
+  margin-top: var(--space-md);
+}
+
+.enc-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.enc-link:hover { opacity: 0.8; }
+
+.enc-hero__media {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #ececec;
+  aspect-ratio: 3 / 2;
+}
+
+.enc-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (min-width: 900px) {
+  .enc-hero__grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- Punti "quiénes somos" --- */
+.enc-points {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0 0;
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.enc-points li {
+  background: var(--white);
+  border: 1.5px solid rgba(27, 60, 139, 0.1);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  font-weight: 700;
+  color: var(--black);
+}
+
+@media (min-width: 768px) {
+  .enc-points { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Scorciatoie catalogo --- */
+.enc-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
+}
+
+.enc-jump a,
+.enc-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid rgba(27, 60, 139, 0.25);
+  background: var(--white);
+  color: var(--blue);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.enc-jump a:hover { border-color: var(--blue); opacity: 1; }
+
+.enc-chip {
+  min-height: 36px;
+  font-weight: 600;
+  color: var(--color-text-tertiary);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.enc-chips {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* --- Famiglie e griglie foto --- */
+.enc-family + .enc-family {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-lg);
+  border-top: 1.5px solid rgba(27, 60, 139, 0.1);
+}
+
+.enc-family__head { margin-bottom: var(--space-md); }
+
+.enc-family__use {
+  color: var(--color-text-tertiary);
+  line-height: 1.6;
+}
+
+.enc-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .enc-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .enc-grid--3 { grid-template-columns: repeat(3, 1fr); max-width: 75%; }
+  .enc-grid--2 { grid-template-columns: repeat(2, 1fr); max-width: 50%; }
+}
+
+.enc-piece { margin: 0; }
+
+.enc-piece img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-md);
+  background: #ececec;
+}
+
+.enc-piece figcaption {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--color-text-tertiary);
+}
+
+.enc-piece figcaption strong {
+  display: block;
+  color: var(--black);
+}
+
+.enc-sub {
+  margin: var(--space-md) 0 12px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.enc-note {
+  margin-top: 12px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-tertiary);
+}
+
+/* --- Blocco testo + foto --- */
+.enc-split {
+  display: grid;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+.enc-split__media {
+  margin: 0;
+}
+
+.enc-split__media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-lg);
+  background: #ececec;
+}
+
+@media (min-width: 900px) {
+  .enc-split { grid-template-columns: 1fr 1fr; }
+  .enc-split--reverse .enc-split__media { order: -1; }
+}
+
+/* --- Card compra / alquiler --- */
+.enc-cards {
+  display: grid;
+  gap: var(--space-md);
+}
+
+@media (min-width: 900px) {
+  .enc-cards { grid-template-columns: 1fr 1fr; }
+}
+
+.enc-card {
+  background: var(--white);
+  border: 1.5px solid rgba(27, 60, 139, 0.12);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.enc-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+}
+
+.enc-list li {
+  position: relative;
+  padding-left: 20px;
+  line-height: 1.6;
+  color: var(--color-text-tertiary);
+}
+
+.enc-list li + li { margin-top: 8px; }
+
+.enc-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--yellow);
+}
+
+/* --- Resistencia --- */
+.enc-care {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 0 0 var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .enc-care { grid-template-columns: repeat(4, 1fr); }
+}
+
+.enc-care div {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm);
+  border: 1.5px solid rgba(27, 60, 139, 0.1);
+}
+
+.enc-care dt {
+  font-size: 0.875rem;
+  color: var(--color-text-tertiary);
+}
+
+.enc-care dd {
+  margin: 4px 0 0;
+  font-weight: 900;
+  font-size: 1.25rem;
+  color: var(--blue);
+}
+
+.enc-care dd.is-no { color: var(--pink); }
+
+/* --- Passi --- */
+.enc-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--space-md);
+  counter-reset: enc-step;
+}
+
+@media (min-width: 768px) {
+  .enc-steps { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .enc-steps { grid-template-columns: repeat(4, 1fr); }
+}
+
+.enc-steps li {
+  counter-increment: enc-step;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  border: 1.5px solid rgba(27, 60, 139, 0.1);
+}
+
+.enc-steps li::before {
+  content: counter(enc-step);
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+
+.enc-faq {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.enc-faq .faq__item + .faq__item { margin-top: var(--space-sm); }
+
+/* --- CTA finale --- */
+.enc-cta {
+  background: var(--blue);
+  color: var(--white);
+  text-align: center;
+  padding: var(--space-xl) 0;
+}
+
+.enc-cta .enc-h2 { color: var(--white); }
+
+.enc-cta p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.7;
+  max-width: 52ch;
+  margin: 0 auto;
+}
+
+.enc-cta .enc-actions { justify-content: center; }
+
+.enc-cta .enc-link { color: var(--white); }
+
+@media (max-width: 480px) {
+  .enc-actions .btn { width: 100%; justify-content: center; }
+}
