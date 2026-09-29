@@ -42,6 +42,8 @@
   font-family: 'HighCruiser';
   src: url('../fonts/HighCruiser.woff2') format('woff2'),
        url('../fonts/HighCruiser.otf') format('opentype');
+  /* Il font ha solo A-Z a-z: accenti, ñ, ç e punteggiatura cadono su Montserrat */
+  unicode-range: U+0020, U+0041-005A, U+0061-007A;
   font-weight: 400;
   font-style: normal;
   font-display: swap;
