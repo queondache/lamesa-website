@@ -380,6 +380,7 @@ p {
 .navbar__logo {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
   text-decoration: none;
   cursor: pointer;
   transition: opacity var(--transition-base);
@@ -409,6 +410,26 @@ p {
 .navbar__link:hover {
   color: var(--yellow);
   opacity: 1;
+}
+
+/* Tablet e desktop stretto: 8 voci di menu + lingua devono stare su una riga */
+.navbar__link { white-space: nowrap; }
+
+@media (min-width: 769px) and (max-width: 1279px) {
+  .navbar__links { gap: var(--space-sm); }
+  .navbar__link { font-size: 0.8125rem; letter-spacing: 0.03em; }
+  .navbar__lang { margin-left: var(--space-xs); }
+}
+
+@media (min-width: 769px) and (max-width: 899px) {
+  .navbar__links { gap: 12px; }
+  .navbar__link { font-size: 0.75rem; letter-spacing: 0.02em; }
+}
+
+@media (min-width: 769px) and (max-width: 819px) {
+  .navbar__inner { padding: 0 var(--space-sm); }
+  .navbar__links { gap: 8px; }
+  .navbar__link { font-size: 0.6875rem; letter-spacing: 0.01em; }
 }
 
 /* Language switcher */
