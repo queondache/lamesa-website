@@ -67,3 +67,14 @@ test('Guest widget synthetic browser scenarios (not real DB or Stripe proof)',{s
   console.log('Synthetic frontend scenarios PASS: two-person90/130€,375/390/1440,locale resume,capacity conflict,provider failure,POST lost+same-key replay,mismatch acknowledgment,pending-confirmed,failed/expired/staff,cancel-preserve,no PII/token URL or terminal storage');
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });
+
+test('Standalone synthetic preview HTTP: loopback flow and explicit no-database health',{skip:!playwright?'Existing Playwright runtime required':false},async()=>{
+ const {startFixturePreview}=await import('../dev/fixture-preview.mjs');const preview=await startFixturePreview();const browser=await playwright.chromium.launch({headless:true});
+ try{const page=await browser.newPage({viewport:{width:390,height:900}});await page.route('https://**',r=>r.abort());
+ const health=await fetch('http://127.0.0.1:8800/__fixture').then(r=>r.json());assert.deepEqual(health,{mode:'synthetic',database:false,stripe:false,email:false,persistence:false});
+ await page.goto(origin+'/experiencias/modelado.html');await page.locator('.guest-day:not(:disabled)').first().waitFor();assert.match(await page.locator('.guest-sandbox').innerText(),/Demo simulata/);
+ assert.equal(await page.locator('meta[name="booking-preview-mode"]').getAttribute('content'),'synthetic-in-memory-no-database');
+ await page.locator('[data-qty="1"]').click();await page.locator('[data-action=checkout]').click();assert.equal(await page.locator('#guest-email').inputValue(),'demo@example.com');await page.locator('.guest-dialog button[type=submit]').click();await page.waitForURL('http://127.0.0.1:8800/**');assert.match(await page.locator('body').innerText(),/non usa un database/);
+ await page.getByRole('button',{name:'Simula pagamento riuscito'}).click();await page.locator('[data-calendar]').waitFor();assert.match(await page.locator('.guest-order').innerText(),/90/);assert.match(await page.locator('.guest-sandbox').innerText(),/Nessuna prenotazione/);
+ }finally{await browser.close();await preview.close();}
+});
