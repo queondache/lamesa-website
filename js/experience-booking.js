@@ -99,16 +99,33 @@ export class GuestWidget{
   else if(saved&&this.state.intent?.experience===this.experience){this.attempt=saved;this.renderAttempt();if(saved.status==='pending')await this.poll();return;}
   await this.load();
  }
+ captureFocus(){
+  const active=document.activeElement;if(!this.root.contains(active))return null;
+  for(const attribute of ['data-qty','data-date','data-session','data-month','data-action','data-calendar'])if(active.hasAttribute(attribute))return {attribute,value:active.getAttribute(attribute)};
+  return null;
+ }
+ restoreFocus(target){
+  if(!target)return;const select=(attribute,value)=>this.root.querySelector(`[${attribute}="${CSS.escape(value)}"]`);let next=select(target.attribute,target.value);
+  if(!next||next.disabled){
+   if(target.attribute==='data-qty')next=select('data-qty',String(-Number(target.value)));
+   else if(target.attribute==='data-month')next=select('data-month',String(-Number(target.value)));
+   else if(target.attribute==='data-session')next=this.root.querySelector('.guest-time.selected:not(:disabled)');
+   else if(target.attribute==='data-date')next=this.root.querySelector('.guest-day.selected:not(:disabled)');
+   else if(target.attribute==='data-action')next=this.root.querySelector('[data-action=status],[data-action=reset]');
+  }
+  if(!next||next.disabled){next=this.root.querySelector('h2')||this.root.querySelector('button:not(:disabled),a[href]');if(next?.tagName==='H2')next.setAttribute('tabindex','-1');}
+  next?.focus({preventScroll:true});
+ }
  async load(){
-  const sequence=++this.loadSequence;this.root.innerHTML=this.banner()+`<p role="status">${this.c.loading}</p>`;
+  const focus=this.captureFocus();const sequence=++this.loadSequence;this.root.innerHTML=this.banner()+`<p role="status">${this.c.loading}</p>`;
   try{const r=range(this.month);const data=await this.api.sessions(r.from,r.to);if(sequence!==this.loadSequence)return;
    this.sessions=sessionsFor(data.sessions,this.config.experiences[this.experience].classTypeIds);
    if(!this.sessions.some(s=>s.id===this.selectedId&&s.remainingSeats>0))this.selectedId=this.sessions.find(s=>s.remainingSeats>0)?.id;
-   this.quantity=Math.max(1,Math.min(this.quantity,Math.min(100,this.selected()?.remainingSeats||1)));this.render();this.persist();
-  }catch(e){if(sequence!==this.loadSequence)return;this.root.innerHTML=this.banner()+`<p role="alert">${this.message(e.message)}</p><button class="button" data-action="load">${this.c.retry}</button>`;this.root.querySelector('button').onclick=()=>this.load();}
+   this.quantity=Math.max(1,Math.min(this.quantity,Math.min(100,this.selected()?.remainingSeats||1)));this.render();this.persist();this.restoreFocus(focus);
+  }catch(e){if(sequence!==this.loadSequence)return;this.root.innerHTML=this.banner()+`<p role="alert">${this.message(e.message)}</p><button class="button" data-action="load">${this.c.retry}</button>`;this.root.querySelector('button').onclick=()=>this.load();this.restoreFocus(focus);}
  }
  render(){
-  const s=this.selected();const selectedDate=s?civilDate(s.startAt,s.timezone):'';const[y,m]=this.month.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const offset=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7;let cells='';
+  const focus=this.captureFocus();const s=this.selected();const selectedDate=s?civilDate(s.startAt,s.timezone):'';const[y,m]=this.month.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const offset=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7;let cells='';
   const weekdays=Array.from({length:7},(_,i)=>new Intl.DateTimeFormat(this.locale,{weekday:'narrow',timeZone:'UTC'}).format(new Date(Date.UTC(2026,0,5+i))));
   cells+=weekdays.map(day=>`<span class="guest-weekday">${day}</span>`).join('');cells+='<span></span>'.repeat(offset);
   for(let d=1;d<=days;d++){const date=`${this.month}-${String(d).padStart(2,'0')}`;const available=this.sessions.some(t=>civilDate(t.startAt,t.timezone)===date&&t.remainingSeats>0);const label=new Intl.DateTimeFormat(this.locale,{dateStyle:'long',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z'));cells+=`<button type="button" class="guest-day${date===selectedDate?' selected':''}" data-date="${date}" ${available?'':'disabled'} aria-pressed="${date===selectedDate}" aria-label="${escape(label)} · ${available?this.c.available:this.c.unavailableDay}">${d}</button>`;}
@@ -119,7 +136,7 @@ export class GuestWidget{
   this.root.querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>{const candidates=this.sessions.filter(t=>civilDate(t.startAt,t.timezone)===b.dataset.date&&t.remainingSeats>0);this.selectedId=(candidates.find(t=>t.remainingSeats>=this.quantity)||candidates[0]).id;this.quantity=Math.min(this.quantity,this.selected().remainingSeats);this.error='';this.render();this.persist();});
   this.root.querySelectorAll('[data-session]').forEach(b=>b.onclick=()=>{this.selectedId=b.dataset.session;this.error='';this.render();this.persist();});
   this.root.querySelectorAll('[data-qty]').forEach(b=>b.onclick=()=>{this.quantity=Math.max(1,Math.min(100,s.remainingSeats,this.quantity+Number(b.dataset.qty)));this.render();this.persist();});
-  this.root.querySelector('[data-action="checkout"]')?.addEventListener('click',()=>this.openCheckout());
+  this.root.querySelector('[data-action="checkout"]')?.addEventListener('click',()=>this.openCheckout());this.restoreFocus(focus);
  }
  summary(attempt){const s=attempt?.session||this.selected();return `<div class="guest-order"><strong>${escape(s.title)}</strong><p>${this.date(s)} · ${this.time(s)}</p><p>${attempt?.quantity||this.quantity} ${this.c.people.toLowerCase()} · La Mesa, Barceloneta</p><div>${this.c.total}<strong>${this.money(attempt?.totalCents||s.unitPriceCents*this.quantity)}</strong></div></div>`;}
  openCheckout(){
@@ -139,13 +156,13 @@ export class GuestWidget{
  formError(message){const p=this.dialog.querySelector('.guest-error');p.hidden=false;p.textContent=message;}
  redirect(a){try{location.assign(paymentUrl(a.checkoutUrl,this.config));}catch(e){this.formError(this.c.unavailable);}}
  renderAttempt(){
-  const a=this.attempt;const status=a.status;const label=status==='confirmed'?this.c.confirmed:status==='pending'?this.c.pending:status==='expired'?this.c.expired:status==='paid_needs_staff'?this.c.staff:this.c.failed;
+  const focus=this.captureFocus();const a=this.attempt;const status=a.status;const label=status==='confirmed'?this.c.confirmed:status==='pending'?this.c.pending:status==='expired'?this.c.expired:status==='paid_needs_staff'?this.c.staff:this.c.failed;
   this.root.innerHTML=this.banner()+`<h2 tabindex="-1">${label}</h2>${this.summary(a)}<p role="status">${status==='confirmed'?this.c.confirmedNote:status==='pending'?this.c.pendingNote:status==='paid_needs_staff'?this.c.staffNote:''}</p>${status==='pending'?`<button class="button" data-action="status">${this.c.check}</button>${a.checkoutUrl?`<button class="guest-secondary" data-action="resume">${this.c.resume}</button>`:''}`:status==='confirmed'?`<a class="button" data-calendar download="la-mesa.ics">${this.c.calendar}</a>`:status==='paid_needs_staff'?'':`<button class="button" data-action="reset">${this.c.choose}</button>`}${this.error?`<p class="guest-error" role="alert">${escape(this.error)}</p>`:''}`;
   this.root.querySelector('[data-action="status"]')?.addEventListener('click',()=>this.poll());
   this.root.querySelector('[data-action="resume"]')?.addEventListener('click',()=>{try{location.assign(paymentUrl(a.checkoutUrl,this.config));}catch{this.error=this.c.unavailable;this.renderAttempt();}});
   this.root.querySelector('[data-action="reset"]')?.addEventListener('click',()=>{clearTimeout(this.timer);this.attempt=null;this.store.clearAttempt();this.error='';this.load();});
   if(status==='confirmed'){this.store.terminal(a);if(this.icsUrl)URL.revokeObjectURL(this.icsUrl);this.icsUrl=URL.createObjectURL(new Blob([calendarIcs(a)],{type:'text/calendar;charset=utf-8'}));this.root.querySelector('[data-calendar]').href=this.icsUrl;}
-  if(['failed','expired'].includes(status))this.store.terminal(a);
+  if(['failed','expired'].includes(status))this.store.terminal(a);this.restoreFocus(focus);
  }
  async poll(){
   clearTimeout(this.timer);if(this.busy||!this.attempt?.accessToken)return;this.busy=true;

@@ -64,7 +64,25 @@ test('Guest widget synthetic browser scenarios (not real DB or Stripe proof)',{s
    await context.route('**/*',async route=>{const req=route.request(),u=new URL(req.url());if(u.origin!==origin)return route.abort();if(u.pathname.startsWith('/api/')){const r=await fixture.handle(u.href,req.method(),null,null);return route.fulfill({status:r.status,contentType:'application/json',body:JSON.stringify(r.body)});}return route.continue();});
    await page.goto(origin+'/experiencias/modelado.html');await page.locator('.guest-widget [role=status]').filter({hasText:'No hay fechas'}).waitFor();assert.equal(await page.locator('[data-action=checkout]').count(),0);await context.close();
   }
-  console.log('Synthetic frontend scenarios PASS: two-person90/130€,375/390/1440,locale resume,capacity conflict,provider failure,POST lost+same-key replay,mismatch acknowledgment,pending-confirmed,failed/expired/staff,cancel-preserve,no PII/token URL or terminal storage');
+  for(const width of [375,390,768,1440]){
+   const x=await setup({width});const page=x.page;
+   await page.locator('[data-qty="1"]').focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-qty')),'1');
+   await page.keyboard.press('Tab');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-action')),'checkout');
+   await page.locator('[data-qty="-1"]').focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-qty')),'1','Disabled minus gives focus to enabled plus');
+   const day=await page.locator('.guest-day:not(:disabled)').first().getAttribute('data-date');await page.locator(`[data-date="${day}"]`).focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-date')),day);
+   await page.locator('[data-session="modelado-16"]').focus();await page.keyboard.press('Enter');assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-session')),'modelado-16');
+   await page.locator('[data-month="1"]').focus();await page.keyboard.press('Enter');await page.locator('.guest-calendar').waitFor();assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-month')),'1');
+   await page.locator('[data-month="-1"]').focus();await page.keyboard.press('Enter');await page.locator('.guest-day:not(:disabled)').first().waitFor();assert.equal(await page.evaluate(()=>document.activeElement.getAttribute('data-month')),'1','Disabled previous month gives focus to next month');
+   assert.deepEqual(x.errors,[]);await x.context.close();
+  }
+  {
+   const x=await setup({kind:'torno'});await x.page.locator('[data-qty="1"]').focus();await x.page.keyboard.press('Enter');assert.equal(await x.page.evaluate(()=>document.activeElement.getAttribute('data-qty')),'-1','At max capacity disabled plus gives focus to minus');await x.context.close();
+  }
+  {
+   const x=await setup();await pay(x.page);await returned(x,'pending');await x.page.locator('[data-action=status]').waitFor();await x.page.locator('[data-action=status]').focus();await x.page.keyboard.press('Enter');await x.page.waitForTimeout(100);assert.equal(await x.page.evaluate(()=>document.activeElement.getAttribute('data-action')),'status');
+   x.fixture.payment(new URL([...x.fixture.attempts.values()][0].checkoutUrl).pathname.split('/').at(-1),'confirmed');await x.page.keyboard.press('Enter');await x.page.locator('[data-calendar]').waitFor();assert.equal(await x.page.evaluate(()=>document.activeElement.tagName),'H2','Terminal status announces heading, does not drop focus on body');await x.page.keyboard.press('Tab');assert.equal(await x.page.evaluate(()=>document.activeElement.hasAttribute('data-calendar')),true);await x.context.close();
+  }
+  console.log('Synthetic frontend scenarios PASS: two-person90/130€,375/390/1440,locale resume,capacity conflict,provider failure,POST lost+same-key replay,mismatch acknowledgment,pending-confirmed,failed/expired/staff,cancel-preserve,no PII/token URL or terminal storage,keyboard focus+Tab375/390/768/1440');
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}
 });
 
