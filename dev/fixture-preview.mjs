@@ -18,7 +18,7 @@ export async function startFixturePreview(){
     const input=req.method==='POST'?JSON.parse(await body(req)):null;
     // Ignore any entered real purchaser details: the observational fixture only retains examples.
     if(input){input.name='Andrea Demo';input.email='demo@example.com';}
-    const result=await fixture.handle(u.href,req.method(),input,req.headers.authorization);
+    const result=await fixture.handle(u.href,req.method,input,req.headers.authorization);
     return reply(res,result.status,result.body);
    }
    if(u.pathname==='/__fixture')return reply(res,200,{mode:'synthetic',database:false,stripe:false,email:false,persistence:false});
