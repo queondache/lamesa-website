@@ -29,7 +29,8 @@ for(const lang of languages)for(const kind of experiences){
   assert.equal(blocks[1]['@type'],'BreadcrumbList');
   assert.equal(blocks[1].itemListElement.at(-1).item,pageUrl(lang,kind));
   assert.doesNotMatch(source,/aggregateRating|reviewCount|priceValidUntil|startDate|endDate|"@type":\s*"Event"/);
-  assert.equal((source.match(/<script/g)||[]).length,2,'No executable scripts, pixels or remote booking code');
+  assert.equal((source.match(/<script/g)||[]).length,kind==='workshops'?2:3,'Only JSON-LD and explicitly gated local booking module');
+  if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js"><\/script>/);
   assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking|<iframe/i);
   assert.match(source,/class="preview-banner" role="note"/);
   assert.ok((source.match(/<details>/g)||[]).length>=3);
