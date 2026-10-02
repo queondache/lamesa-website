@@ -79,7 +79,7 @@ test('Guest widget synthetic browser scenarios (not real DB or Stripe proof)',{s
   {
    const context=await browser.newContext({viewport:{width:375,height:900}});const page=await context.newPage();let apiCalls=0;
    await context.route('**/*',async route=>{const u=new URL(route.request().url());if(u.origin!==origin)return route.abort();if(u.pathname.startsWith('/api/')){apiCalls++;return route.fulfill({contentType:'application/json',body:JSON.stringify({data:{sessions:[]},error:null})});}if(u.pathname.endsWith('modelado.html')){const response=await route.fetch();const body=(await response.text()).replace(/<script>window\.LA_MESA_GUEST_BOOKING=.*?<\/script>/,'');return route.fulfill({response,body});}return route.continue();});
-   await page.goto(origin+'/experiencias/modelado.html');await page.waitForTimeout(100);assert.equal(apiCalls,0);assert.match(await page.locator('#reserva').innerText(),/vista previa/);assert.equal(await page.locator('.guest-calendar').count(),0);await context.close();
+   await page.goto(origin+'/experiencias/modelado.html');await page.waitForTimeout(100);assert.equal(apiCalls,0);assert.match(await page.locator('#reserva').innerText(),/La reserva online directa está en preparación/);assert.equal(await page.locator('.guest-calendar').count(),0);await context.close();
   }
   {
    const context=await browser.newContext({viewport:{width:375,height:900}});const page=await context.newPage();const fixture=createFixture();fixture.scenario='empty';
