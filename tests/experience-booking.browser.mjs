@@ -12,30 +12,52 @@ test('Guest widget synthetic browser scenarios (not real DB or Stripe proof)',{s
  const server=createPreviewServer();await new Promise((resolve,reject)=>{server.once('error',reject);server.listen(8801,'127.0.0.1',resolve);});
  const browser=await playwright.chromium.launch({headless:true});
  try{
-  async function setup({width=390,kind='modelado',locale='es',scenario='normal'}={}){
+  async function setup({width=390,kind='modelado',locale='es',scenario='normal',sessionFailure=false,sessionDelay=0}={}){
    const fixture=createFixture();fixture.scenario=scenario;const context=await browser.newContext({viewport:{width,height:900}});const page=await context.newPage();const errors=[];const network=[];page.on('pageerror',e=>errors.push(e.message));
    await context.route('**/*',async route=>{
     const req=route.request();const u=new URL(req.url());
-    if(u.origin===origin&&u.pathname.startsWith('/api/')){const result=await fixture.handle(u.href,req.method(),req.postDataJSON(),req.headers().authorization);if(result.abort)return route.abort('connectionreset');return route.fulfill({status:result.status,contentType:'application/json',body:JSON.stringify(result.body)});}
+    if(u.origin===origin&&u.pathname.startsWith('/api/')){if(u.pathname.endsWith('/guest-sessions')){if(sessionDelay)await new Promise(resolve=>setTimeout(resolve,sessionDelay));if(sessionFailure)return route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({data:null,error:{code:'provider_unavailable'}})});}const result=await fixture.handle(u.href,req.method(),req.postDataJSON(),req.headers().authorization);if(result.abort)return route.abort('connectionreset');return route.fulfill({status:result.status,contentType:'application/json',body:JSON.stringify(result.body)});}
     if(u.origin==='http://127.0.0.1:8800'&&u.pathname.startsWith('/synthetic-pay/'))return route.fulfill({contentType:'text/html',body:'<!doctype html><html><body><h1>SYNTHETIC PAYMENT · no real charge</h1><button id="synthetic-confirm" onclick="location.href=\''+origin+'/experiencias/reserva.html?checkout=return\'">Return</button><button id="synthetic-cancel" onclick="location.href=\''+origin+'/experiencias/reserva.html?checkout=cancel\'">Cancel</button></body></html>'});
     if(u.origin!==origin){network.push(u.origin);return route.abort();}return route.continue();
    });
-   await page.goto(`${origin}/${locale==='es'?'':locale+'/'}experiencias/${kind}.html`);await page.locator('.guest-day:not(:disabled)').first().waitFor();
+   await page.goto(`${origin}/${locale==='es'?'':locale+'/'}experiencias/${kind}.html`);await page.locator(sessionFailure?'.guest-widget [role=alert]':'.guest-day:not(:disabled)').first().waitFor();
    return {page,fixture,context,errors,network};
   }
   async function fill(page){await page.locator('[data-action="checkout"]').click();await page.locator('#guest-name').fill('Example Guest');await page.locator('#guest-email').fill('example@example.com');}
   async function pay(page){await fill(page);await page.locator('.guest-dialog button[type=submit]').click();}
   async function returned(x,status='confirmed'){await x.page.waitForURL('http://127.0.0.1:8800/**');const id=new URL(x.page.url()).pathname.split('/').at(-1);x.fixture.payment(id,status);await x.page.locator('#synthetic-confirm').click();}
+  async function selectorProof(page,kind,locale='es'){
+   const prefix=locale==='es'?'':locale+'/';assert.equal(await page.locator('main > .experience-nav').count(),0);assert.equal(await page.locator('.experience-nav').count(),1);
+   const nav=page.locator(kind==='workshops'?'#agenda > .experience-nav':'#reserva > .experience-nav');assert.equal(await nav.count(),1,'Choice belongs inside booking/agenda');
+   assert.equal(await nav.locator('[aria-current=page]').getAttribute('href'),`/${prefix}experiencias/${kind}.html#${kind==='workshops'?'agenda':'reserva'}`);
+   assert.equal(await page.evaluate(()=>document.querySelector('main').firstElementChild.className),'intro');
+   assert.equal(await nav.evaluate(el=>[...el.querySelectorAll('a')].every(a=>{const r=a.getBoundingClientRect();return r.width>=44&&r.height>=44;})),true);
+   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+  }
+  for(const locale of ['es','en','ca'])for(const width of [375,390,768,1440]){
+   const x=await setup({locale,width});await selectorProof(x.page,'modelado',locale);assert.match(await x.page.locator('.guest-widget .price').innerText(),/45/);
+   const nav=x.page.locator('#reserva > .experience-nav');await nav.locator('a').nth(1).focus();await x.page.keyboard.press('Enter');await x.page.waitForURL('**/torno.html#reserva');await x.page.locator('.guest-day:not(:disabled)').first().waitFor();await selectorProof(x.page,'torno',locale);assert.match(await x.page.locator('.guest-widget .price').innerText(),/65/);
+   await x.page.locator('[data-qty="1"]').click();assert.equal(await x.page.locator('[data-qty="1"]').isDisabled(),true);assert.match(await x.page.locator('.guest-total').innerText(),/130/);
+   await x.page.locator('#reserva .experience-nav a').first().click();await x.page.waitForURL('**/modelado.html#reserva');await x.page.locator('.guest-day:not(:disabled)').first().waitFor();await selectorProof(x.page,'modelado',locale);assert.match(await x.page.locator('.guest-widget .price').innerText(),/45/);
+   await x.page.locator('#reserva .experience-nav a').last().click();await x.page.waitForURL('**/workshops.html#agenda');await selectorProof(x.page,'workshops',locale);assert.equal(await x.page.locator('.guest-calendar,[data-action=checkout]').count(),0);await x.context.close();
+  }
+  for(const locale of ['es','en','ca'])for(const kind of ['modelado','torno','workshops']){
+   const context=await browser.newContext({javaScriptEnabled:false,viewport:{width:375,height:900}});const page=await context.newPage();await context.route('https://**/*',route=>route.abort());await page.goto(`${origin}/${locale==='es'?'':locale+'/'}experiencias/${kind}.html`);await selectorProof(page,kind,locale);await context.close();
+  }
+  {
+   const x=await setup({sessionFailure:true});await selectorProof(x.page,'modelado');await x.context.close();
+   const y=await setup({sessionDelay:200});await y.page.locator('[data-month="1"]').click();await y.page.locator('.guest-widget [role=status]').waitFor();await selectorProof(y.page,'modelado');await y.page.locator('.guest-calendar').waitFor();await selectorProof(y.page,'modelado');await y.context.close();
+  }
   for(const width of [375,390,1440]){
    const x=await setup({width});await x.page.locator('[data-qty="1"]').click();assert.match(await x.page.locator('.guest-total').innerText(),/90/);assert.equal(await x.page.evaluate(()=>document.documentElement.scrollWidth),width);
    const small=await x.page.locator('.guest-widget').evaluate(root=>[...root.querySelectorAll('button')].map(e=>e.getBoundingClientRect()).filter(r=>r.width<43.99||r.height<43.99).length);assert.equal(small,0);
-   await pay(x.page);await returned(x);await x.page.locator('[data-calendar]').waitFor();assert.match(await x.page.locator('.guest-order').innerText(),/90/);
+   await pay(x.page);await returned(x);await x.page.locator('[data-calendar]').waitFor();assert.equal(await x.page.locator('.guest-widget .experience-nav').count(),0,'Payment confirmation stays focused on the attempt');assert.match(await x.page.locator('.guest-order').innerText(),/90/);
    const storage=await x.page.evaluate(()=>sessionStorage.getItem('lamesa.guest.booking.v1'));assert.ok(!storage.includes('accessToken'));assert.ok(!storage.includes('Example Guest'));assert.ok(!storage.includes('example@example.com'));
    assert.deepEqual(Object.keys(x.fixture.posts[0]).sort(),['email','idempotencyKey','locale','name','quantity','sessionId'].sort());assert.deepEqual(x.errors,[]);await x.context.close();
   }
   {
    const x=await setup({kind:'torno'});await x.page.locator('[data-qty="1"]').click();assert.match(await x.page.locator('.guest-total').innerText(),/130/);assert.equal(await x.page.locator('[data-session="torno-16"]').isDisabled(),true);
-   await x.page.locator('.languages a[lang=en]').click();await x.page.locator('.guest-total').waitFor();assert.match(await x.page.locator('.guest-total').innerText(),/130/);assert.equal(await x.page.locator('.guest-participants output').innerText(),'2');await pay(x.page);await returned(x);await x.page.waitForURL('**/en/experiencias/reserva.html?checkout=return');await x.page.locator('[data-calendar]').waitFor();assert.match(await x.page.locator('.guest-widget').innerText(),/See you at La Mesa/);await x.context.close();
+   await x.page.locator('.languages a[lang=en]').click();await x.page.locator('.guest-total').waitFor();assert.match(await x.page.locator('.guest-total').innerText(),/130/);assert.equal(await x.page.locator('.guest-participants output').innerText(),'2');await pay(x.page);await returned(x);await x.page.waitForURL('**/en/experiencias/reserva.html?checkout=return');await x.page.locator('[data-calendar]').waitFor();assert.equal(await x.page.locator('.guest-widget .experience-nav').count(),0,'Payment confirmation stays focused on the attempt');assert.match(await x.page.locator('.guest-widget').innerText(),/See you at La Mesa/);await x.context.close();
   }
   for(const scenario of ['capacity','provider','lost']){
    const x=await setup({scenario});await fill(x.page);await x.page.locator('.guest-dialog button[type=submit]').click();await x.page.locator('.guest-dialog .guest-error:not([hidden])').waitFor();assert.equal(await x.page.locator('[data-calendar]').count(),0);
@@ -62,7 +84,7 @@ test('Guest widget synthetic browser scenarios (not real DB or Stripe proof)',{s
   {
    const context=await browser.newContext({viewport:{width:375,height:900}});const page=await context.newPage();const fixture=createFixture();fixture.scenario='empty';
    await context.route('**/*',async route=>{const req=route.request(),u=new URL(req.url());if(u.origin!==origin)return route.abort();if(u.pathname.startsWith('/api/')){const r=await fixture.handle(u.href,req.method(),null,null);return route.fulfill({status:r.status,contentType:'application/json',body:JSON.stringify(r.body)});}return route.continue();});
-   await page.goto(origin+'/experiencias/modelado.html');await page.locator('.guest-widget [role=status]').filter({hasText:'No hay fechas'}).waitFor();assert.equal(await page.locator('[data-action=checkout]').count(),0);await context.close();
+   await page.goto(origin+'/experiencias/modelado.html');await page.locator('.guest-widget [role=status]').filter({hasText:'No hay fechas'}).waitFor();await selectorProof(page,'modelado');assert.equal(await page.locator('[data-action=checkout]').count(),0);await context.close();
   }
   for(const width of [375,390,768,1440]){
    const x=await setup({width});const page=x.page;

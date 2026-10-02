@@ -33,6 +33,13 @@ for(const lang of languages)for(const kind of experiences){
   if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js"><\/script>/);
   assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking|<iframe/i);
   assert.match(source,/class="preview-banner" role="note"/);
+  assert.equal((source.match(/<nav class="experience-nav"/g)||[]).length,1);
+  assert.match(source,/<main[^>]*>\s*<section class="intro">/,'Experience title comes first');
+  const selector=source.match(/<nav class="experience-nav"[^>]*>[\s\S]*?<\/nav>/)[0];
+  const owner=kind==='workshops'?source.match(/<section class="empty-state" id="agenda">([\s\S]*?)<\/section>/)[1]:source.match(/<aside class="booking-preview"[^>]*>([\s\S]*?)<\/aside>/)[1];
+  assert.ok(owner.startsWith(selector),'Selector belongs inside booking or agenda, before price/date');
+  for(const type of experiences)assert.ok(selector.includes(`href="/${pagePath(lang,type)}#${type==='workshops'?'agenda':'reserva'}"`));
+  assert.match(selector,new RegExp(`href="/${pagePath(lang,kind)}#${kind==='workshops'?'agenda':'reserva'}" aria-current="page"`));
   assert.ok((source.match(/<details>/g)||[]).length>=3);
   assert.match(source,/Carrer de l’Atlàntida, 47/);
   if(kind==='workshops'){

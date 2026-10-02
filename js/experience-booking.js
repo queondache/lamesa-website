@@ -79,7 +79,7 @@ const range=month=>{const [y,m]=month.split('-').map(Number);return {from:`${mon
 const addMonth=(month,n)=>{const[y,m]=month.split('-').map(Number);return new Date(Date.UTC(y,m-1+n,1)).toISOString().slice(0,7);};
 const iconArrow='<span aria-hidden="true">→</span>';
 export class GuestWidget{
- constructor(root,config){this.root=root;this.config=config;this.api=new GuestApi(config);this.locale=document.documentElement.lang in COPY?document.documentElement.lang:'es';this.c=COPY[this.locale];this.store=new BookingStorage(sessionStorage);this.state=this.store.read();this.experience=root.dataset.experience;this.sessions=[];this.month=civilDate(Date.now()).slice(0,7);this.quantity=1;this.busy=false;this.timer=null;this.icsUrl=null;this.attempt=null;this.error='';this.loadSequence=0;
+ constructor(root,config){this.root=root;this.config=config;this.api=new GuestApi(config);this.locale=document.documentElement.lang in COPY?document.documentElement.lang:'es';this.c=COPY[this.locale];this.store=new BookingStorage(sessionStorage);this.state=this.store.read();this.experience=root.dataset.experience;this.sessions=[];this.month=civilDate(Date.now()).slice(0,7);this.quantity=1;this.busy=false;this.timer=null;this.icsUrl=null;this.attempt=null;this.error='';this.loadSequence=0;this.selector=root.querySelector('.experience-nav');
   const intent=this.state.intent;
   if(intent?.experience===this.experience){this.store.intent({...intent,locale:this.locale});this.selectedId=intent.sessionId;this.quantity=intent.quantity||1;if(intent.date)this.month=intent.date.slice(0,7);}
   this.root.className='booking-preview guest-widget';this.root.removeAttribute('aria-labelledby');this.root.setAttribute('aria-label',this.c.date);
@@ -99,6 +99,7 @@ export class GuestWidget{
   else if(saved&&this.state.intent?.experience===this.experience){this.attempt=saved;this.renderAttempt();if(saved.status==='pending')await this.poll();return;}
   await this.load();
  }
+ showSelector(){if(this.selector)this.root.prepend(this.selector);}
  captureFocus(){
   const active=document.activeElement;if(!this.root.contains(active))return null;
   for(const attribute of ['data-qty','data-date','data-session','data-month','data-action','data-calendar'])if(active.hasAttribute(attribute))return {attribute,value:active.getAttribute(attribute)};
@@ -117,12 +118,12 @@ export class GuestWidget{
   next?.focus({preventScroll:true});
  }
  async load(){
-  const focus=this.captureFocus();const sequence=++this.loadSequence;this.root.innerHTML=this.banner()+`<p role="status">${this.c.loading}</p>`;
+  const focus=this.captureFocus();const sequence=++this.loadSequence;this.root.innerHTML=this.banner()+`<p role="status">${this.c.loading}</p>`;this.showSelector();
   try{const r=range(this.month);const data=await this.api.sessions(r.from,r.to);if(sequence!==this.loadSequence)return;
    this.sessions=sessionsFor(data.sessions,this.config.experiences[this.experience].classTypeIds);
    if(!this.sessions.some(s=>s.id===this.selectedId&&s.remainingSeats>0))this.selectedId=this.sessions.find(s=>s.remainingSeats>0)?.id;
    this.quantity=Math.max(1,Math.min(this.quantity,Math.min(100,this.selected()?.remainingSeats||1)));this.render();this.persist();this.restoreFocus(focus);
-  }catch(e){if(sequence!==this.loadSequence)return;this.root.innerHTML=this.banner()+`<p role="alert">${this.message(e.message)}</p><button class="button" data-action="load">${this.c.retry}</button>`;this.root.querySelector('button').onclick=()=>this.load();this.restoreFocus(focus);}
+  }catch(e){if(sequence!==this.loadSequence)return;this.root.innerHTML=this.banner()+`<p role="alert">${this.message(e.message)}</p><button class="button" data-action="load">${this.c.retry}</button>`;this.showSelector();this.root.querySelector('button').onclick=()=>this.load();this.restoreFocus(focus);}
  }
  render(){
   const focus=this.captureFocus();const s=this.selected();const selectedDate=s?civilDate(s.startAt,s.timezone):'';const[y,m]=this.month.split('-').map(Number);const days=new Date(Date.UTC(y,m,0)).getUTCDate();const offset=(new Date(Date.UTC(y,m-1,1)).getUTCDay()+6)%7;let cells='';
@@ -132,7 +133,7 @@ export class GuestWidget{
   const times=this.sessions.filter(t=>civilDate(t.startAt,t.timezone)===selectedDate).map(t=>`<button type="button" class="guest-time${t.id===this.selectedId?' selected':''}" data-session="${escape(t.id)}" ${t.remainingSeats<this.quantity?'disabled':''} aria-pressed="${t.id===this.selectedId}">${this.time(t)}<small>${t.remainingSeats} ${this.c.seats}</small></button>`).join('');
   const monthLabel=new Intl.DateTimeFormat(this.locale,{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(`${this.month}-01T12:00:00Z`));
   this.root.innerHTML=this.banner()+`<div class="price">${s?this.money(s.unitPriceCents):'—'}<small>${this.c.currency}</small></div><h2>${this.c.date}</h2><div class="guest-month"><strong>${monthLabel}</strong><div><button type="button" data-month="-1" aria-label="${this.c.prev}">‹</button><button type="button" data-month="1" aria-label="${this.c.next}">›</button></div></div><div class="guest-calendar" role="group" aria-label="${this.c.date}">${cells}</div>${s?`<div class="guest-field">${this.c.time}</div><div class="guest-times" role="group" aria-label="${this.c.time}">${times}</div><div class="guest-participants"><span>${this.c.people}</span><div><button type="button" data-qty="-1" aria-label="${this.c.less}" ${this.quantity<=1?'disabled':''}>−</button><output aria-live="polite">${this.quantity}</output><button type="button" data-qty="1" aria-label="${this.c.more}" ${this.quantity>=Math.min(100,s.remainingSeats)?'disabled':''}>+</button></div></div><div class="guest-total" aria-live="polite"><span>${this.c.total}<small>${this.quantity} × ${this.money(s.unitPriceCents)}</small></span><strong>${this.money(s.unitPriceCents*this.quantity)}</strong></div><button type="button" class="button" data-action="checkout">${this.c.pay} ${iconArrow}</button><p class="guest-note">${this.c.secure}</p>`:`<p role="status">${this.c.empty}</p>`}${this.error?`<p class="guest-error" role="alert">${escape(this.error)}</p>`:''}`;
-  this.root.querySelectorAll('[data-month]').forEach(b=>{if(b.dataset.month==='-1'&&this.month<=civilDate(Date.now()).slice(0,7))b.disabled=true;b.onclick=()=>{this.month=addMonth(this.month,Number(b.dataset.month));this.load();};});
+  this.showSelector();this.root.querySelectorAll('[data-month]').forEach(b=>{if(b.dataset.month==='-1'&&this.month<=civilDate(Date.now()).slice(0,7))b.disabled=true;b.onclick=()=>{this.month=addMonth(this.month,Number(b.dataset.month));this.load();};});
   this.root.querySelectorAll('[data-date]').forEach(b=>b.onclick=()=>{const candidates=this.sessions.filter(t=>civilDate(t.startAt,t.timezone)===b.dataset.date&&t.remainingSeats>0);this.selectedId=(candidates.find(t=>t.remainingSeats>=this.quantity)||candidates[0]).id;this.quantity=Math.min(this.quantity,this.selected().remainingSeats);this.error='';this.render();this.persist();});
   this.root.querySelectorAll('[data-session]').forEach(b=>b.onclick=()=>{this.selectedId=b.dataset.session;this.error='';this.render();this.persist();});
   this.root.querySelectorAll('[data-qty]').forEach(b=>b.onclick=()=>{this.quantity=Math.max(1,Math.min(100,s.remainingSeats,this.quantity+Number(b.dataset.qty)));this.render();this.persist();});
