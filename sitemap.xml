@@ -476,4 +476,86 @@
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+  <!-- Direct experiences: online booking in preparation -->
+  <url>
+    <loc>https://lamesabcn.com/experiencias/modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/experiencias/torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/experiencias/workshops.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/experiencias/modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/experiencias/torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/experiencias/workshops.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/experiencias/modelado.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/modelado.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/modelado.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/experiencias/torno.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/torno.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/torno.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/experiencias/workshops.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/experiencias/workshops.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/experiencias/workshops.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

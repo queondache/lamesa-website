@@ -29,10 +29,10 @@ for(const lang of languages)for(const kind of experiences){
   assert.equal(blocks[1]['@type'],'BreadcrumbList');
   assert.equal(blocks[1].itemListElement.at(-1).item,pageUrl(lang,kind));
   assert.doesNotMatch(source,/aggregateRating|reviewCount|priceValidUntil|startDate|endDate|"@type":\s*"Event"/);
-  assert.equal((source.match(/<script/g)||[]).length,kind==='workshops'?2:3,'Only JSON-LD and explicitly gated local booking module');
+  assert.equal((source.match(/<script/g)||[]).length,kind==='workshops'?2:4,'JSON-LD, disabled configuration and gated booking module');
   if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js"><\/script>/);
-  assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking|<iframe/i);
-  assert.match(source,/class="preview-banner" role="note"/);
+  assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking\.js|<iframe/i);
+  assert.doesNotMatch(source,/class="preview-banner"|href="\/demo\/|vista previa|vista prèvia|this preview|Local preview/i);
   assert.equal((source.match(/<nav class="experience-nav"/g)||[]).length,1);
   assert.match(source,/<main[^>]*>\s*<section class="intro">/,'Experience title comes first');
   const selector=source.match(/<nav class="experience-nav"[^>]*>[\s\S]*?<\/nav>/)[0];
@@ -48,8 +48,8 @@ for(const lang of languages)for(const kind of experiences){
   }else{
    assert.equal(entity.offers.price,kind==='modelado'?'45':'65');assert.equal(entity.offers.priceCurrency,'EUR');
    assert.equal(entity.timeRequired,'PT2H');assert.equal(entity.provider.address.streetAddress,'Carrer de l’Atlàntida, 47');
-   assert.match(source,new RegExp(`id="reserva" data-experience="${kind}" data-booking-state="prelaunch"`));
-   assert.match(source,/href="\/demo\/prenotazione.html#reserva" lang="es"/);
+   assert.match(source,new RegExp(`id="reserva" data-experience="${kind}" data-booking-state="standby"`));
+   assert.match(source,/href="https:\/\/wa.me\/34711552030"/);
    assert.equal((source.match(/<li>/g)||[]).length,3,'Included materials and firing are static');
   }
   for(const m of source.matchAll(/(?:href|src)="(\/[^\"]*)"/g)){
