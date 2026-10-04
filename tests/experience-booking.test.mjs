@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
-import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,calendarIcs,BookingStorage,GuestApi} from '../js/experience-booking.js';
+import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,calendarIcs,BookingStorage,GuestApi,GuestWidget} from '../js/experience-booking.js';
 const location={href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'};
 const raw={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado']}}};
 const session={id:'s1',classTypeId:'modelado',title:'Class',startAt:'2026-10-25T00:30:00Z',endAt:'2026-10-25T02:30:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:2};
@@ -38,11 +38,49 @@ test('Guest feed description and photo appear when supplied, and absent content 
  assert.equal(sessionDetails(session),'');
  assert.equal(sessionDetails({...content,imageUrl:'javascript:alert(1)'}).includes('<img'),false);
 });
-test('Quantity uses the server seat limit and payment copy describes conditional wallets',()=>{
+test('Payment copy describes conditional wallets',()=>{
  const source=readFileSync(resolve(dirname(fileURLToPath(import.meta.url)),'../js/experience-booking.js'),'utf8');
- assert.match(source,/Math\.min\(100,s\.remainingSeats\)/);
- assert.match(source,/quantity:this\.quantity/);
  for(const wallet of ['Apple Pay','Google Pay'])assert.match(source,new RegExp(wallet));
+});
+test('Widget limits plus clicks to server seats and POSTs the selected quantity in the strict schema',async()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage,location:globalThis.location};
+ const calls=[];
+ const button=(attributes={})=>({dataset:attributes,disabled:false,addEventListener(_name,handler){this.onclick=handler;},focus(){}});
+ const root={dataset:{experience:'modelado'},className:'',setAttribute(){},removeAttribute(){},contains(){return false;},querySelector(selector){return selector==='[data-action="checkout"]'?this.checkout:null;},querySelectorAll(selector){return this.buttons[selector]||[];},buttons:{}};
+ Object.defineProperty(root,'innerHTML',{set(html){
+  this.html=html;this.buttons={};
+  for(const key of ['month','date','session','qty'])this.buttons[`[data-${key}]`]=[...html.matchAll(new RegExp(`<button\\b([^>]*)data-${key}="([^"]+)"([^>]*)>`, 'g'))].map(([,before,value,after])=>{const el=button({[key]:value});el.disabled=/\bdisabled\b/.test(before+after);return el;});
+  this.checkout=html.includes('data-action="checkout"')?button():null;
+ }});
+ const close=button(),submitButton=button();submitButton.type='submit';
+ const form={elements:{name:{value:'Example Guest'},email:{value:'guest@example.com'}},reportValidity:()=>true,querySelector:()=>submitButton};
+ const error={hidden:true,textContent:''};
+ const dialog={className:'',setAttribute(){},addEventListener(){},showModal(){},close(){},remove(){},querySelector(selector){return selector==='form'?form:selector==='[data-close]'?close:selector==='.guest-error'?error:null;}};
+ globalThis.document={documentElement:{lang:'es'},activeElement:null,querySelectorAll:()=>[],createElement:()=>dialog,body:{append(){} }};
+ globalThis.sessionStorage=memory();
+ globalThis.location={...location,assign(){}};
+ try{
+  const widget=new GuestWidget(root,validateConfig(raw,location));
+  widget.api=new GuestApi(widget.config,async(url,options)=>{
+   calls.push({url,options});
+   return {ok:true,json:async()=>({data:options.method==='POST'?{...attempt,status:'pending',quantity:2,checkoutUrl:'http://127.0.0.1:8800/pay/test'}:{sessions:[{...session,remainingSeats:3}]},error:null})};
+  });
+  await widget.init();
+  const plus=root.querySelectorAll('[data-qty]').find(el=>el.dataset.qty==='1');
+  for(let i=0;i<4;i++)plus.onclick();
+  assert.equal(widget.quantity,3);
+  assert.equal(root.querySelectorAll('[data-qty]').find(el=>el.dataset.qty==='1').disabled,true);
+  root.querySelectorAll('[data-qty]').find(el=>el.dataset.qty==='-1').onclick();
+  assert.equal(widget.quantity,2);
+  root.querySelector('[data-action="checkout"]').onclick();
+  await widget.submit();
+  const post=calls.find(call=>call.options.method==='POST');
+  assert.ok(post.url.endsWith('/public/studios/test/guest-checkouts'));
+  const payload=JSON.parse(post.options.body);
+  assert.deepEqual(Object.keys(payload).sort(),['sessionId','quantity','name','email','locale','idempotencyKey'].sort());
+  assert.match(payload.idempotencyKey,/^[A-Za-z0-9_-]{16,128}$/);
+  assert.deepEqual({...payload,idempotencyKey:'key'},{sessionId:'s1',quantity:2,name:'Example Guest',email:'guest@example.com',locale:'es',idempotencyKey:'key'});
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;globalThis.location=original.location;}
 });
 test('Retry preserves idempotency key; changed quantity/purchaser/locale gets a fresh intent; no PII stored',async()=>{
  const backing=memory(),storage=new BookingStorage(backing);const input={sessionId:'s1',quantity:2,name:'Example Person',email:'example@example.com',locale:'es'};
