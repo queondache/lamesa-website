@@ -1,6 +1,9 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {validateConfig,paymentUrl,civilDate,sessionsFor,validAttempt,calendarIcs,BookingStorage,GuestApi} from '../js/experience-booking.js';
+import {readFileSync} from 'node:fs';
+import {fileURLToPath} from 'node:url';
+import {resolve,dirname} from 'node:path';
+import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,calendarIcs,BookingStorage,GuestApi} from '../js/experience-booking.js';
 const location={href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'};
 const raw={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado']}}};
 const session={id:'s1',classTypeId:'modelado',title:'Class',startAt:'2026-10-25T00:30:00Z',endAt:'2026-10-25T02:30:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:2};
@@ -27,6 +30,19 @@ test('Stable class IDs, validated API prices/capacity and Madrid civil dates acr
  assert.equal(civilDate('2026-10-24T23:30:00Z'),'2026-10-25');
  assert.deepEqual(sessionsFor([session,{...session,id:'other',classTypeId:'another'}],['modelado']),[session]);
  for(const invalid of [{unitPriceCents:0},{remainingSeats:-1},{currency:'USD'},{timezone:'UTC'},{endAt:'bad'}])assert.throws(()=>sessionsFor([{...session,...invalid}],['modelado']));
+});
+test('Guest feed description and photo appear when supplied, and absent content stays optional',()=>{
+ const content={...session,description:'Turno & torno <para todos>',imageUrl:'https://cdn.example.test/torno.jpg'};
+ assert.match(sessionDetails(content),/Turno &amp; torno &lt;para todos&gt;/);
+ assert.match(sessionDetails(content),/src="https:\/\/cdn\.example\.test\/torno\.jpg"/);
+ assert.equal(sessionDetails(session),'');
+ assert.equal(sessionDetails({...content,imageUrl:'javascript:alert(1)'}).includes('<img'),false);
+});
+test('Quantity uses the server seat limit and payment copy describes conditional wallets',()=>{
+ const source=readFileSync(resolve(dirname(fileURLToPath(import.meta.url)),'../js/experience-booking.js'),'utf8');
+ assert.match(source,/Math\.min\(100,s\.remainingSeats\)/);
+ assert.match(source,/quantity:this\.quantity/);
+ for(const wallet of ['Apple Pay','Google Pay'])assert.match(source,new RegExp(wallet));
 });
 test('Retry preserves idempotency key; changed quantity/purchaser/locale gets a fresh intent; no PII stored',async()=>{
  const backing=memory(),storage=new BookingStorage(backing);const input={sessionId:'s1',quantity:2,name:'Example Person',email:'example@example.com',locale:'es'};
