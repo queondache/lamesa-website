@@ -2,6 +2,13 @@
 
 Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisponde a un accesso presente in una pagina; ES, EN e CA indicano la lingua della pagina, anche quando un articolo del blog è nella cartella comune `blog/`. Il rischio riguarda la vendita doppia di **posti per esperienze**. È una valutazione del percorso nel codice, non una prova che il pagamento sia oggi raggiungibile in produzione.
 
+## RIEPILOGO — cosa cambiare prima
+
+- **Classi singole (suelta): 37 righe ad alto rischio nella tabella.** Le pagine ES/EN/CA aprono La Mesa v2 tramite `js/booking-v2.js:171`; sostituire il calendario e tutti i link che vi conducono con Mesana.
+- **Corsi settimanali (semanal): 36 righe ad alto rischio.** Le pagine ES/EN/CA inviano a `/bookings/checkout-semanal` e al pagamento Stripe; sostituire questo percorso con Mesana.
+- **Prenotazioni via WhatsApp: 9 righe ad alto rischio.** Dai pulsanti suelta e semanal si può chiedere un posto fuori calendario; inoltre `js/booking-v2.js:14,151,242` genera un accesso WhatsApp quando mancano posti o il caricamento fallisce. Mostrare Mesana; per eccezioni, registrare il posto prima di confermarlo.
+- **Totale ad alto rischio: 82 righe della tabella**, più 3 flussi generati da JavaScript descritti sotto. I 54 selettori ES/EN/CA restano documentati come «basso — navigazione» e non rientrano in questo totale. Preventivi privati e team building restano aperti solo se ogni data confermata viene registrata in Mesana.
+
 ## Destinazioni e criterio
 
 - **Alto**: la lezione si può scegliere nel gestionale La Mesa v2 o chiedere esplicitamente via WhatsApp fuori da Mesana; la stessa disponibilità può essere confermata due volte.
@@ -178,34 +185,34 @@ Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisp
 | `ca/blog/index.html:284` | CA | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/blog/index.html:293` | CA | Escriu-nos → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/blog/index.html:306` | CA | Contactar La Mesa per WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `ca/clases/semanal-modelado.html:211` | CA | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-modelado.html:213` | CA | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-modelado.html:215` | CA | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-modelado.html:231` | CA | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-modelado.html:232` | CA | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-modelado.html:233` | CA | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `ca/clases/semanal-modelado.html:211` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-modelado.html:213` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-modelado.html:215` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-modelado.html:231` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-modelado.html:232` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-modelado.html:233` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `ca/clases/semanal-modelado.html:274` | CA | No estàs segur? Prova primer una Classe Suelta → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-modelado.html:281` | CA | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `ca/clases/semanal-modelado.html:325` | CA | classe solta de modelat | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-modelado.html:329` | CA | classe setmanal de torn | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-modelado.html:347` | CA | Contactar La Mesa per WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `ca/clases/semanal-torno.html:214` | CA | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-torno.html:216` | CA | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-torno.html:218` | CA | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-torno.html:234` | CA | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-torno.html:235` | CA | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/semanal-torno.html:236` | CA | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `ca/clases/semanal-torno.html:214` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-torno.html:216` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-torno.html:218` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-torno.html:234` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-torno.html:235` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/semanal-torno.html:236` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `ca/clases/semanal-torno.html:278` | CA | No estàs segur? Prova primer una Classe Suelta → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-torno.html:285` | CA | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `ca/clases/semanal-torno.html:334` | CA | classe solta de torn | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-torno.html:334` | CA | classe setmanal de modelat | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/semanal-torno.html:352` | CA | Contactar La Mesa per WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `ca/clases/suelta.html:225` | CA | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/suelta.html:227` | CA | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/suelta.html:229` | CA | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/suelta.html:245` | CA | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/suelta.html:246` | CA | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `ca/clases/suelta.html:247` | CA | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `ca/clases/suelta.html:225` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/suelta.html:227` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/suelta.html:229` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/suelta.html:245` | CA | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/suelta.html:246` | CA | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `ca/clases/suelta.html:247` | CA | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `ca/clases/suelta.html:312` | CA | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `ca/clases/suelta.html:361` | CA | Modelat | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `ca/clases/suelta.html:361` | CA | torn | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
@@ -235,42 +242,42 @@ Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisp
 | `ca/index.html:698` | CA | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/index.html:717` | CA | Escriu-nos → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/index.html:775` | CA | Contactar La Mesa per WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `ca/team-building.html:188` | CA | Reserva per WhatsApp → | WhatsApp per preventivo/prenotazione di sessione privata | medio | lasciare per preventivo; bloccare il posto in Mesana prima della conferma |
-| `ca/team-building.html:189` | CA | Escriu-nos un correu | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
-| `ca/team-building.html:302` | CA | WhatsApp → | WhatsApp per preventivo/prenotazione di sessione privata | medio | lasciare per preventivo; bloccare il posto in Mesana prima della conferma |
-| `ca/team-building.html:305` | CA | lamesa.lc@gmail.com | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
+| `ca/team-building.html:188` | CA | Reserva per WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `ca/team-building.html:189` | CA | Escriu-nos un correu | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `ca/team-building.html:302` | CA | WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `ca/team-building.html:305` | CA | lamesa.lc@gmail.com | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
 | `ca/team-building.html:328` | CA | lamesa.lc@gmail.com | Email generica a lamesa.lc@gmail.com | basso | lasciare come contatto; prenotazioni di esperienze solo via Mesana |
 | `ca/team-building.html:334` | CA | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/team-building.html:343` | CA | Escriu-nos → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `ca/team-building.html:357` | CA | Contactar La Mesa per WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `clases/semanal-modelado.html:220` | ES | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-modelado.html:222` | ES | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-modelado.html:224` | ES | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-modelado.html:255` | ES | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-modelado.html:256` | ES | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-modelado.html:257` | ES | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `clases/semanal-modelado.html:220` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-modelado.html:222` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-modelado.html:224` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-modelado.html:255` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-modelado.html:256` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-modelado.html:257` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `clases/semanal-modelado.html:308` | ES | ¿No estás seguro? Prueba primero una Clase Suelta → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-modelado.html:318` | ES | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `clases/semanal-modelado.html:370` | ES | clase suelta de modelado | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-modelado.html:374` | ES | clase semanal de torno | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-modelado.html:398` | ES | Contactar La Mesa por WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `clases/semanal-torno.html:223` | ES | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-torno.html:225` | ES | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-torno.html:227` | ES | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-torno.html:258` | ES | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-torno.html:259` | ES | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/semanal-torno.html:260` | ES | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `clases/semanal-torno.html:223` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-torno.html:225` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-torno.html:227` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-torno.html:258` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-torno.html:259` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/semanal-torno.html:260` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `clases/semanal-torno.html:311` | ES | ¿No estás seguro? Prueba primero una Clase Suelta → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-torno.html:321` | ES | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `clases/semanal-torno.html:378` | ES | clase suelta de torno | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-torno.html:378` | ES | clase semanal de modelado | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/semanal-torno.html:402` | ES | Contactar La Mesa por WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `clases/suelta.html:234` | ES | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/suelta.html:236` | ES | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/suelta.html:238` | ES | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/suelta.html:269` | ES | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/suelta.html:270` | ES | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `clases/suelta.html:271` | ES | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `clases/suelta.html:234` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/suelta.html:236` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/suelta.html:238` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/suelta.html:269` | ES | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/suelta.html:270` | ES | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `clases/suelta.html:271` | ES | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `clases/suelta.html:350` | ES | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `clases/suelta.html:399` | ES | Modelado | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `clases/suelta.html:399` | ES | torno | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
@@ -279,34 +286,34 @@ Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisp
 | `en/blog/index.html:299` | EN | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `en/blog/index.html:308` | EN | Message us → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `en/blog/index.html:321` | EN | Contact La Mesa on WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `en/clases/semanal-modelado.html:214` | EN | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-modelado.html:216` | EN | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-modelado.html:218` | EN | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-modelado.html:234` | EN | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-modelado.html:235` | EN | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-modelado.html:236` | EN | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `en/clases/semanal-modelado.html:214` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-modelado.html:216` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-modelado.html:218` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-modelado.html:234` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-modelado.html:235` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-modelado.html:236` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `en/clases/semanal-modelado.html:277` | EN | Not sure yet? Try a Drop-in Class first → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-modelado.html:284` | EN | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `en/clases/semanal-modelado.html:328` | EN | drop-in hand-building class | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-modelado.html:332` | EN | weekly wheel throwing class | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-modelado.html:350` | EN | Contact La Mesa on WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `en/clases/semanal-torno.html:214` | EN | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-torno.html:216` | EN | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-torno.html:218` | EN | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-torno.html:234` | EN | ES | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-torno.html:235` | EN | EN | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/semanal-torno.html:236` | EN | CA | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `en/clases/semanal-torno.html:214` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-torno.html:216` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-torno.html:218` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-torno.html:234` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-torno.html:235` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/semanal-torno.html:236` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `en/clases/semanal-torno.html:278` | EN | Not sure yet? Try a Drop-in Class first → | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-torno.html:285` | EN | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `en/clases/semanal-torno.html:334` | EN | drop-in wheel class | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-torno.html:334` | EN | weekly hand-building class | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/semanal-torno.html:352` | EN | Contact La Mesa on WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `en/clases/suelta.html:225` | EN | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/suelta.html:227` | EN | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/suelta.html:229` | EN | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/suelta.html:245` | EN | ES | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/suelta.html:246` | EN | EN | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
-| `en/clases/suelta.html:247` | EN | CA | Pagina classe singola → La Mesa v2 → app.lamesabcn.com/book.html?slot_id=… | alto | sostituire il percorso di prenotazione con il calendario Mesana |
+| `en/clases/suelta.html:225` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/suelta.html:227` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/suelta.html:229` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/suelta.html:245` | EN | ES | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/suelta.html:246` | EN | EN | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
+| `en/clases/suelta.html:247` | EN | CA | Selettore di lingua → stessa pagina in ES/EN/CA (nessuna prenotazione al clic) | basso — navigazione | lasciare; il calendario della pagina di arrivo va sostituito con Mesana |
 | `en/clases/suelta.html:312` | EN | WhatsApp | WhatsApp per prenotare una lezione fuori calendario | alto | sostituire con calendario Mesana; per richieste speciali registrare prima il posto in Mesana |
 | `en/clases/suelta.html:361` | EN | Hand-building | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
 | `en/clases/suelta.html:361` | EN | wheel throwing | Pagina corso settimanale → La Mesa v2 → checkout Stripe tramite backend v2 | alto | sostituire il percorso di prenotazione con il calendario Mesana |
@@ -336,10 +343,10 @@ Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisp
 | `en/index.html:698` | EN | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `en/index.html:717` | EN | Message us → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `en/index.html:775` | EN | Contact La Mesa on WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `en/team-building.html:188` | EN | Book on WhatsApp → | WhatsApp per informazioni su lezioni/workshop, convertibile in prenotazione manuale | medio | lasciare come contatto; inviare il link Mesana per la prenotazione |
-| `en/team-building.html:189` | EN | Write us an email | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
-| `en/team-building.html:302` | EN | WhatsApp → | WhatsApp per informazioni su lezioni/workshop, convertibile in prenotazione manuale | medio | lasciare come contatto; inviare il link Mesana per la prenotazione |
-| `en/team-building.html:305` | EN | lamesa.lc@gmail.com | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
+| `en/team-building.html:188` | EN | Book on WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `en/team-building.html:189` | EN | Write us an email | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `en/team-building.html:302` | EN | WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `en/team-building.html:305` | EN | lamesa.lc@gmail.com | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
 | `en/team-building.html:328` | EN | lamesa.lc@gmail.com | Email generica a lamesa.lc@gmail.com | basso | lasciare come contatto; prenotazioni di esperienze solo via Mesana |
 | `en/team-building.html:334` | EN | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `en/team-building.html:343` | EN | Message us → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
@@ -363,16 +370,16 @@ Inventario del codice del sito al 4 ottobre 2026. Una riga della tabella corrisp
 | `index.html:401` | ES | Escríbenos para más información → | WhatsApp per informazioni su lezioni/workshop, convertibile in prenotazione manuale | medio | lasciare come contatto; inviare il link Mesana per la prenotazione |
 | `index.html:481` | ES | Comprar vale-regalo → | WhatsApp per acquisto buono regalo | basso | lasciare se il buono non assegna una data; riscatto tramite Mesana |
 | `index.html:494` | ES | Ver tienda en Etsy → | Negozio Etsy; vendita di oggetti, fuori da Mesana | basso | lasciare: non vende posti per esperienze |
-| `index.html:560` | ES | Pedir presupuesto → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
+| `index.html:560` | ES | Pedir presupuesto → | WhatsApp per preventivo/prenotazione di sessione privata | medio | lasciare per preventivo; bloccare il posto in Mesana prima della conferma |
 | `index.html:639` | ES | Cuéntanos lo que haces → | Email per proporre un laboratorio | basso | lasciare: proposta di collaborazione, non prenotazione |
 | `index.html:679` | ES | lamesa.lc@gmail.com | Email generica a lamesa.lc@gmail.com | basso | lasciare come contatto; prenotazioni di esperienze solo via Mesana |
 | `index.html:698` | ES | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `index.html:717` | ES | Escríbenos → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `index.html:775` | ES | Contactar La Mesa por WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
-| `team-building.html:188` | ES | Reservar por WhatsApp → | WhatsApp per informazioni su lezioni/workshop, convertibile in prenotazione manuale | medio | lasciare come contatto; inviare il link Mesana per la prenotazione |
-| `team-building.html:189` | ES | Escribir por email | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
-| `team-building.html:302` | ES | WhatsApp → | WhatsApp per informazioni su lezioni/workshop, convertibile in prenotazione manuale | medio | lasciare come contatto; inviare il link Mesana per la prenotazione |
-| `team-building.html:305` | ES | lamesa.lc@gmail.com | Email precompilata per team building | medio | lasciare solo per preventivi; inserire la data confermata in Mesana |
+| `team-building.html:188` | ES | Reservar por WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `team-building.html:189` | ES | Escribir por email | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `team-building.html:302` | ES | WhatsApp → | WhatsApp per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
+| `team-building.html:305` | ES | lamesa.lc@gmail.com | Email precompilata per preventivo/prenotazione di team building | medio | lasciare per preventivo; bloccare la data in Mesana prima della conferma |
 | `team-building.html:328` | ES | lamesa.lc@gmail.com | Email generica a lamesa.lc@gmail.com | basso | lasciare come contatto; prenotazioni di esperienze solo via Mesana |
 | `team-building.html:334` | ES | WhatsApp | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
 | `team-building.html:343` | ES | Escríbenos → | WhatsApp generico, può ricevere richieste di prenotazione | basso | lasciare come contatto; inviare il link Mesana per fissare la data |
