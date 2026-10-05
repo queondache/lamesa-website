@@ -1,239 +1,62 @@
-/**
- * mini-booking.js — calendario compatto della clase suelta (stile del widget di Codex).
- *
- * Selettore modelado/torno → mese → giorno → orario → book.html del gestionale v2.
- * Le date e i prezzi arrivano da GET /bookings/public-slots: il prezzo mostrato è
- * quello che il checkout addebita.
- */
-(function () {
-  'use strict';
+/** Calendario compatto clase suelta: v2 per default, Mesana solo con config approvata. */
+import {BookingStorage,GuestApi,civilDate,paymentUrl,sessionsFor,validAttempt,validateConfig} from './experience-booking.js';
 
-  var API = 'https://la-mesa-v2-backend.onrender.com/bookings/public-slots?service=suelta&days=90';
-  var BOOK_URL = 'https://app.lamesabcn.com/book.html';
-  var WA = 'https://wa.me/34711552030';
+const V2_API='https://la-mesa-v2-backend.onrender.com/bookings/public-slots?service=suelta&days=90';
+const BOOK_URL='https://app.lamesabcn.com/book.html';
+const WA='https://wa.me/34711552030';
+const LANGS=['es','en','ca','pt'];
+const COPY={
+ es:{mesaNote:'2 horas · todos los niveles',tornoNote:'2 horas · clase particular, hasta 2 personas',per:'por persona',date:'Elige tu fecha',time:'Elige la hora',seats:'plazas',seat:'plaza',book:'Continuar a la reserva',loading:'Buscando fechas…',empty:'No hay fechas este mes.',next:'Ver el mes siguiente',none:'Ahora mismo no hay fechas online.',error:'No se pudieron cargar las fechas.',retry:'Volver a intentar',wa:'¿Dudas? Escríbenos por WhatsApp',prev:'Mes anterior',nextM:'Mes siguiente',available:'disponible',unavailable:'no disponible',pay:'Pago seguro con tarjeta · sin crear una cuenta',people:'Personas',total:'Total',less:'Una persona menos',more:'Una persona más',name:'Tu nombre',email:'Email de confirmación',checkout:'Continuar al pago',busy:'Preparando el pago…',invalid:'Revisa tu nombre y email.',capacity:'Esas plazas ya no están disponibles. Elige otro horario.',rate:'Demasiados intentos. Espera un momento y vuelve a probar.',provider:'No se pudo abrir el pago. Vuelve a intentar.'},
+ en:{mesaNote:'2 hours · all levels',tornoNote:'2 hours · private class, up to 2 people',per:'per person',date:'Choose your date',time:'Choose the time',seats:'places',seat:'place',book:'Continue to booking',loading:'Looking for dates…',empty:'No dates this month.',next:'See next month',none:'No online dates right now.',error:'Unable to load the dates.',retry:'Try again',wa:'Questions? Message us on WhatsApp',prev:'Previous month',nextM:'Next month',available:'available',unavailable:'unavailable',pay:'Secure card payment · no account needed',people:'People',total:'Total',less:'One person fewer',more:'One more person',name:'Your name',email:'Confirmation email',checkout:'Continue to payment',busy:'Preparing payment…',invalid:'Check your name and email.',capacity:'Those places are no longer available. Choose another time.',rate:'Too many attempts. Wait a moment and try again.',provider:'Unable to open payment. Please retry.'},
+ ca:{mesaNote:'2 hores · tots els nivells',tornoNote:'2 hores · classe particular, fins a 2 persones',per:'per persona',date:'Tria la data',time:'Tria l’hora',seats:'places',seat:'plaça',book:'Continua a la reserva',loading:'Buscant dates…',empty:'No hi ha dates aquest mes.',next:'Veure el mes següent',none:'Ara mateix no hi ha dates en línia.',error:'No s’han pogut carregar les dates.',retry:'Torna-ho a provar',wa:'Dubtes? Escriu-nos per WhatsApp',prev:'Mes anterior',nextM:'Mes següent',available:'disponible',unavailable:'no disponible',pay:'Pagament segur amb targeta · sense crear un compte',people:'Persones',total:'Total',less:'Una persona menys',more:'Una persona més',name:'El teu nom',email:'Email de confirmació',checkout:'Continua al pagament',busy:'Preparant el pagament…',invalid:'Revisa el nom i l’email.',capacity:'Aquestes places ja no estan disponibles. Tria un altre horari.',rate:'Massa intents. Espera un moment i torna-ho a provar.',provider:'No s’ha pogut obrir el pagament. Torna-ho a provar.'},
+ pt:{mesaNote:'2 horas · todos os níveis',tornoNote:'2 horas · aula particular, até 2 pessoas',per:'por pessoa',date:'Escolha a sua data',time:'Escolha o horário',seats:'vagas',seat:'vaga',book:'Continuar para a reserva',loading:'Procurando datas…',empty:'Não há datas este mês.',next:'Ver o mês seguinte',none:'No momento não há datas online.',error:'Não foi possível carregar as datas.',retry:'Tentar de novo',wa:'Dúvidas? Escreva para nós no WhatsApp',prev:'Mês anterior',nextM:'Mês seguinte',available:'disponível',unavailable:'indisponível',pay:'Pagamento seguro com cartão · sem criar conta',people:'Pessoas',total:'Total',less:'Uma pessoa a menos',more:'Mais uma pessoa',name:'O seu nome',email:'Email de confirmação',checkout:'Continuar para o pagamento',busy:'Preparando o pagamento…',invalid:'Verifique o nome e o email.',capacity:'Essas vagas já não estão disponíveis. Escolha outro horário.',rate:'Muitas tentativas. Aguarde um momento e tente novamente.',provider:'Não foi possível abrir o pagamento. Tente novamente.'}
+};
+const esc=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+const todayIso=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;};
+const addDays=(iso,n)=>{const d=new Date(`${iso}T12:00:00Z`);d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
+const addMonth=(month,n)=>{const[y,m]=month.split('-').map(Number);return new Date(Date.UTC(y,m-1+n,1)).toISOString().slice(0,7);};
+const kindOf=slot=>{const cat=(slot.serviceCategory||'').toLowerCase();if(cat==='torno')return'torno';if(cat==='ceramica')return'mesa';return(slot.serviceName||'').toLowerCase().includes('torno')?'torno':'mesa';};
+function approvedConfig(raw,location){const config=validateConfig(raw,location);if(config&&raw.releaseApproved===true)return config;if(raw?.enabled===true)console.error('[mini-booking] configurazione Mesana non valida; uso gestionale v2');return null;}
+export function bookingMode(raw,location){return approvedConfig(raw,location)?'mesana':'v2';}
 
-  var LANG = (document.documentElement.lang || 'es').slice(0, 2).toLowerCase();
-  if (['es', 'en', 'ca', 'pt'].indexOf(LANG) < 0) LANG = 'es';
-
-  var T = {
-    es: { mesa: 'Modelado', torno: 'Torno', mesaNote: '2 horas · todos los niveles', tornoNote: '2 horas · clase particular, hasta 2 personas',
-      per: 'por persona', date: 'Elige tu fecha', time: 'Elige la hora', seats: 'plazas', seat: 'plaza', book: 'Continuar a la reserva',
-      loading: 'Buscando fechas…', empty: 'No hay fechas este mes.', next: 'Ver el mes siguiente', none: 'Ahora mismo no hay fechas online.',
-      error: 'No se pudieron cargar las fechas.', retry: 'Volver a intentar', wa: '¿Dudas? Escríbenos por WhatsApp',
-      prev: 'Mes anterior', nextM: 'Mes siguiente', available: 'disponible', unavailable: 'no disponible', pay: 'Pago seguro con tarjeta · sin crear una cuenta' },
-    en: { mesa: 'Hand-building', torno: 'Pottery wheel', mesaNote: '2 hours · all levels', tornoNote: '2 hours · private class, up to 2 people',
-      per: 'per person', date: 'Choose your date', time: 'Choose the time', seats: 'places', seat: 'place', book: 'Continue to booking',
-      loading: 'Looking for dates…', empty: 'No dates this month.', next: 'See next month', none: 'No online dates right now.',
-      error: 'Unable to load the dates.', retry: 'Try again', wa: 'Questions? Message us on WhatsApp',
-      prev: 'Previous month', nextM: 'Next month', available: 'available', unavailable: 'unavailable', pay: 'Secure card payment · no account needed' },
-    ca: { mesa: 'Modelat', torno: 'Torn', mesaNote: '2 hores · tots els nivells', tornoNote: '2 hores · classe particular, fins a 2 persones',
-      per: 'per persona', date: 'Tria la data', time: 'Tria l’hora', seats: 'places', seat: 'plaça', book: 'Continua a la reserva',
-      loading: 'Buscant dates…', empty: 'No hi ha dates aquest mes.', next: 'Veure el mes següent', none: 'Ara mateix no hi ha dates en línia.',
-      error: 'No s’han pogut carregar les dates.', retry: 'Torna-ho a provar', wa: 'Dubtes? Escriu-nos per WhatsApp',
-      prev: 'Mes anterior', nextM: 'Mes següent', available: 'disponible', unavailable: 'no disponible', pay: 'Pagament segur amb targeta · sense crear un compte' },
-    pt: { mesa: 'Modelagem', torno: 'Torno', mesaNote: '2 horas · todos os níveis', tornoNote: '2 horas · aula particular, até 2 pessoas',
-      per: 'por pessoa', date: 'Escolha a sua data', time: 'Escolha o horário', seats: 'vagas', seat: 'vaga', book: 'Continuar para a reserva',
-      loading: 'Procurando datas…', empty: 'Não há datas este mês.', next: 'Ver o mês seguinte', none: 'No momento não há datas online.',
-      error: 'Não foi possível carregar as datas.', retry: 'Tentar de novo', wa: 'Dúvidas? Escreva para nós no WhatsApp',
-      prev: 'Mês anterior', nextM: 'Mês seguinte', available: 'disponível', unavailable: 'indisponível', pay: 'Pagamento seguro com cartão · sem criar conta' }
-  };
-  var t = T[LANG];
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-  function kindOf(slot) {
-    var cat = (slot.serviceCategory || '').toLowerCase();
-    if (cat === 'torno') return 'torno';
-    if (cat === 'ceramica') return 'mesa';
-    return (slot.serviceName || '').toLowerCase().indexOf('torno') >= 0 ? 'torno' : 'mesa';
-  }
-  function money(p) {
-    var n = Number(p);
-    return LANG === 'en' ? '€' + n.toFixed(0) : n.toFixed(0) + ' €';
-  }
-  function todayIso() {
-    var d = new Date();
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-  }
-  function addMonth(month, n) {
-    var p = month.split('-').map(Number);
-    var d = new Date(Date.UTC(p[0], p[1] - 1 + n, 1));
-    return d.toISOString().slice(0, 7);
-  }
-
-  function MiniBooking(root) {
-    this.root = root;
-    this.body = root.querySelector('.mini-booking__body');
-    this.tabs = Array.prototype.slice.call(root.querySelectorAll('[data-kind]'));
-    var hash = (location.hash || '').replace('#', '');
-    this.kind = hash === 'torno' ? 'torno' : (root.getAttribute('data-default') || 'mesa');
-    this.slots = { mesa: [], torno: [] };
-    this.month = todayIso().slice(0, 7);
-    this.date = '';
-    this.slotId = '';
-    var self = this;
-    this.tabs.forEach(function (b) {
-      b.addEventListener('click', function () { self.setKind(b.getAttribute('data-kind')); });
-    });
-    this.load();
-  }
-
-  MiniBooking.prototype.setKind = function (kind) {
-    this.kind = kind;
-    this.date = '';
-    this.slotId = '';
-    this.month = this.firstMonth();
-    this.render();
-  };
-
-  MiniBooking.prototype.list = function () { return this.slots[this.kind] || []; };
-
-  MiniBooking.prototype.firstMonth = function () {
-    var l = this.list();
-    return l.length ? l[0].date.slice(0, 7) : todayIso().slice(0, 7);
-  };
-
-  MiniBooking.prototype.load = function () {
-    var self = this;
-    this.body.innerHTML = '<p class="mini-booking__status" role="status">' + t.loading + '</p>';
-    fetch(API)
-      .then(function (r) { if (!r.ok) throw new Error('http_' + r.status); return r.json(); })
-      .then(function (json) {
-        var slots = (json && json.data && json.data.slots) || [];
-        var today = todayIso();
-        self.slots = { mesa: [], torno: [] };
-        slots.forEach(function (s) {
-          if (s.date >= today && Number(s.available) > 0) self.slots[kindOf(s)].push(s);
-        });
-        ['mesa', 'torno'].forEach(function (k) {
-          self.slots[k].sort(function (a, b) { return (a.date + a.startTime).localeCompare(b.date + b.startTime); });
-        });
-        self.month = self.firstMonth();
-        self.render();
-      })
-      .catch(function (e) {
-        console.error('[mini-booking] caricamento date fallito:', e);
-        self.body.innerHTML = '<p class="mini-booking__status" role="alert">' + t.error + '</p>' +
-          '<button type="button" class="mini-booking__cta" data-action="retry">' + t.retry + '</button>' + self.waLink();
-        self.body.querySelector('[data-action="retry"]').onclick = function () { self.load(); };
-      });
-  };
-
-  MiniBooking.prototype.waLink = function () {
-    return '<p class="mini-booking__note"><a href="' + WA + '" target="_blank" rel="noopener noreferrer">' + t.wa + '</a></p>';
-  };
-
-  MiniBooking.prototype.render = function () {
-    var self = this;
-    var kind = this.kind;
-    var list = this.list();
-    this.tabs.forEach(function (b) {
-      var on = b.getAttribute('data-kind') === kind;
-      b.setAttribute('aria-pressed', on ? 'true' : 'false');
-    });
-
-    var price = list.length ? list[0].price : this.root.getAttribute('data-price-' + kind);
-    var head = '<div class="mini-booking__price">' + (price ? money(price) : '—') + '<small>' + t.per + ' · ' + (kind === 'torno' ? t.tornoNote : t.mesaNote) + '</small></div>';
-
-    if (!list.length) {
-      this.body.innerHTML = head + '<p class="mini-booking__status" role="status">' + t.none + '</p>' + this.waLink();
-      return;
-    }
-
-    var month = this.month;
-    var p = month.split('-').map(Number);
-    var days = new Date(Date.UTC(p[0], p[1], 0)).getUTCDate();
-    var offset = (new Date(Date.UTC(p[0], p[1] - 1, 1)).getUTCDay() + 6) % 7;
-    var byDate = {};
-    list.forEach(function (s) { (byDate[s.date] = byDate[s.date] || []).push(s); });
-
-    var cells = '';
-    for (var i = 0; i < 7; i++) {
-      cells += '<span class="mini-booking__weekday">' + new Intl.DateTimeFormat(LANG, { weekday: 'narrow', timeZone: 'UTC' }).format(new Date(Date.UTC(2026, 0, 5 + i))) + '</span>';
-    }
-    for (var o = 0; o < offset; o++) cells += '<span></span>';
-    var monthHas = false;
-    for (var d = 1; d <= days; d++) {
-      var iso = month + '-' + String(d).padStart(2, '0');
-      var ok = !!byDate[iso];
-      if (ok) monthHas = true;
-      var label = new Intl.DateTimeFormat(LANG, { dateStyle: 'long', timeZone: 'UTC' }).format(new Date(iso + 'T12:00:00Z'));
-      cells += '<button type="button" class="mini-booking__day' + (iso === this.date ? ' is-selected' : '') + '" data-date="' + iso + '"' +
-        (ok ? '' : ' disabled') + ' aria-pressed="' + (iso === this.date) + '" aria-label="' + esc(label) + ' · ' + (ok ? t.available : t.unavailable) + '">' + d + '</button>';
-    }
-
-    var firstM = list[0].date.slice(0, 7);
-    var lastM = list[list.length - 1].date.slice(0, 7);
-    var monthLabel = new Intl.DateTimeFormat(LANG, { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(month + '-01T12:00:00Z'));
-    monthLabel = monthLabel.charAt(0).toUpperCase() + monthLabel.slice(1);
-
-    var html = head +
-      '<h2 class="mini-booking__title">' + t.date + '</h2>' +
-      '<div class="mini-booking__month"><strong>' + esc(monthLabel) + '</strong><div>' +
-      '<button type="button" data-month="-1" aria-label="' + t.prev + '"' + (month <= firstM ? ' disabled' : '') + '>‹</button>' +
-      '<button type="button" data-month="1" aria-label="' + t.nextM + '"' + (month >= lastM ? ' disabled' : '') + '>›</button></div></div>' +
-      '<div class="mini-booking__calendar" role="group" aria-label="' + t.date + '">' + cells + '</div>';
-
-    if (!monthHas) {
-      html += '<p class="mini-booking__status" role="status">' + t.empty + '</p>' +
-        (month < lastM ? '<button type="button" class="mini-booking__secondary" data-month="1">' + t.next + ' ›</button>' : '');
-    }
-
-    if (this.date && byDate[this.date]) {
-      html += '<div class="mini-booking__field">' + t.time + '</div><div class="mini-booking__times" role="group" aria-label="' + t.time + '">';
-      byDate[this.date].forEach(function (s) {
-        var n = Number(s.available);
-        html += '<button type="button" class="mini-booking__time' + (s.id === self.slotId ? ' is-selected' : '') + '" data-slot="' + esc(s.id) + '" aria-pressed="' + (s.id === self.slotId) + '">' +
-          esc((s.startTime || '').slice(0, 5)) + '<small>' + n + ' ' + (n === 1 ? t.seat : t.seats) + '</small></button>';
-      });
-      html += '</div>';
-    }
-
-    if (this.slotId) {
-      html += '<a class="mini-booking__cta" href="' + BOOK_URL + '?slot_id=' + encodeURIComponent(this.slotId) + '" data-action="book">' + t.book + ' →</a>' +
-        '<p class="mini-booking__note">' + t.pay + '</p>';
-    }
-    this.body.innerHTML = html;
-
-    Array.prototype.forEach.call(this.body.querySelectorAll('[data-month]'), function (b) {
-      b.onclick = function () {
-        self.month = addMonth(self.month, Number(b.getAttribute('data-month')));
-        self.date = '';
-        self.slotId = '';
-        self.render();
-      };
-    });
-    Array.prototype.forEach.call(this.body.querySelectorAll('[data-date]:not(:disabled)'), function (b) {
-      b.onclick = function () {
-        self.date = b.getAttribute('data-date');
-        var only = byDate[self.date];
-        self.slotId = only && only.length === 1 ? only[0].id : '';
-        self.render();
-        var next = self.body.querySelector(self.slotId ? '.mini-booking__cta' : '.mini-booking__time');
-        if (next) next.focus({ preventScroll: false });
-      };
-    });
-    Array.prototype.forEach.call(this.body.querySelectorAll('[data-slot]'), function (b) {
-      b.onclick = function () {
-        self.slotId = b.getAttribute('data-slot');
-        self.render();
-        var cta = self.body.querySelector('.mini-booking__cta');
-        if (cta) cta.focus();
-      };
-    });
-    var cta = this.body.querySelector('[data-action="book"]');
-    if (cta) {
-      cta.addEventListener('click', function () {
-        if (typeof gtag === 'function') gtag('event', 'click_cta', { event_category: 'conversion', event_label: 'clase_suelta_' + kind });
-        if (typeof fbq === 'function') fbq('track', 'Lead', { content_name: 'clase_suelta' });
-      });
-    }
-  };
-
-  function init() {
-    Array.prototype.forEach.call(document.querySelectorAll('.mini-booking'), function (el) { new MiniBooking(el); });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
-})();
+export class MiniBooking{
+ constructor(root,options={}){
+  this.root=root;this.body=root.querySelector('.mini-booking__body');this.tabs=Array.from(root.querySelectorAll('[data-kind]'));this.location=options.location||window.location;this.fetcher=options.fetcher||((...args)=>fetch(...args));this.storage=options.storage||(typeof sessionStorage==='undefined'?null:sessionStorage);
+  this.lang=(options.lang||(typeof document==='undefined'?'es':document.documentElement.lang)||'es').slice(0,2).toLowerCase();if(!LANGS.includes(this.lang))this.lang='es';this.t=COPY[this.lang];this.config=approvedConfig(options.config??globalThis.window?.LA_MESA_GUEST_BOOKING,this.location);this.mode=this.config?'mesana':'v2';this.api=this.config?new GuestApi(this.config,this.fetcher):null;this.store=this.storage?new BookingStorage(this.storage):null;
+  const hash=(this.location.hash||'').replace('#','');this.kind=hash==='torno'?'torno':(root.getAttribute('data-default')||'mesa');this.slots={mesa:[],torno:[]};this.month=todayIso().slice(0,7);this.date='';this.selectedId='';this.quantity=1;this.error='';Object.defineProperty(this,'slotId',{get:()=>this.selectedId,set:value=>{this.selectedId=value;}});this.tabs.forEach(button=>button.addEventListener('click',()=>this.setKind(button.getAttribute('data-kind'))));
+ }
+ setKind(kind){this.kind=kind;this.date='';this.selectedId='';this.quantity=1;this.month=this.firstMonth();this.render();}
+ list(){return this.slots[this.kind]||[];}
+ selected(){return this.list().find(slot=>slot.id===this.selectedId);}
+ firstMonth(){const list=this.list();return list.length?list[0].date.slice(0,7):todayIso().slice(0,7);}
+ money(value){const amount=this.mode==='mesana'?Number(value)/100:Number(value);return new Intl.NumberFormat(this.lang,{style:'currency',currency:'EUR',maximumFractionDigits:this.mode==='mesana'?2:0}).format(amount);}
+ time(slot){if(this.mode==='v2')return(slot.startTime||'').slice(0,5);return new Intl.DateTimeFormat(this.lang,{hour:'2-digit',minute:'2-digit',timeZone:slot.timezone}).format(new Date(slot.startAt));}
+ async load(){
+  this.body.innerHTML=`<p class="mini-booking__status" role="status">${this.t.loading}</p>`;
+  try{
+   if(this.mode==='mesana'){const from=todayIso(),to=addDays(from,89),data=await this.api.sessions(from,to);const normalize=s=>({...s,date:civilDate(s.startAt,s.timezone),available:s.remainingSeats,price:s.unitPriceCents,startTime:this.time(s)});this.slots={mesa:sessionsFor(data.sessions,this.config.experiences.modelado.classTypeIds).map(normalize),torno:sessionsFor(data.sessions,this.config.experiences.torno.classTypeIds).map(normalize)};}
+   else{const response=await this.fetcher(V2_API);if(!response.ok)throw new Error(`http_${response.status}`);const json=await response.json(),today=todayIso();this.slots={mesa:[],torno:[]};for(const slot of json?.data?.slots||[])if(slot.date>=today&&Number(slot.available)>0)this.slots[kindOf(slot)].push(slot);}
+   for(const kind of ['mesa','torno'])this.slots[kind].sort((a,b)=>(a.date+(a.startTime||'')).localeCompare(b.date+(b.startTime||'')));if(!this.selected()||Number(this.selected().available)<=0){this.selectedId='';this.quantity=1;}this.month=this.firstMonth();this.render();
+  }catch(error){console.error('[mini-booking] caricamento date fallito:',error);this.body.innerHTML=`<p class="mini-booking__status" role="alert">${this.t.error}</p><button type="button" class="mini-booking__cta" data-action="retry">${this.t.retry}</button>${this.waLink()}`;const retry=this.body.querySelector('[data-action="retry"]');if(retry)retry.onclick=()=>this.load();}
+ }
+ waLink(){return `<p class="mini-booking__note"><a href="${WA}" target="_blank" rel="noopener noreferrer">${this.t.wa}</a></p>`;}
+ message(code){return({insufficient_seats:this.t.capacity,session_unavailable:this.t.capacity,rate_limited:this.t.rate,provider_unavailable:this.t.provider,booking_page_unavailable:this.t.provider,guest_checkout_disabled:this.t.provider,invalid_request:this.t.invalid})[code]||this.t.error;}
+ async checkout(name,email){
+  const selected=this.selected();if(this.mode!=='mesana'||!selected)throw new Error('session_unavailable');name=String(name||'').trim();email=String(email||'').trim().toLowerCase();if(!name||!email)throw new Error('invalid_request');const locale=this.lang==='pt'?'en':this.lang;this.store.intent({experience:this.kind==='mesa'?'modelado':'torno',sessionId:selected.id,quantity:this.quantity,date:selected.date,locale});const input={sessionId:selected.id,quantity:this.quantity,name,email,locale};input.idempotencyKey=await this.store.key(input);
+  try{const attempt=validAttempt(await this.api.start(input));if(attempt.session.id!==input.sessionId||attempt.quantity!==input.quantity)throw new Error('invalid_response');this.store.attempt(attempt);this.location.assign(paymentUrl(attempt.checkoutUrl,this.config));return attempt;}catch(error){this.error=this.message(error.message);if(['insufficient_seats','session_unavailable'].includes(error.message)){this.store.clearAttempt();await this.load();this.error=this.message(error.message);}this.render();throw error;}
+ }
+ render(){
+  const list=this.list(),kind=this.kind,t=this.t;this.tabs.forEach(button=>button.setAttribute('aria-pressed',button.getAttribute('data-kind')===kind?'true':'false'));const price=this.selected()?.price||(list.length?list[0].price:this.root.getAttribute(`data-price-${kind}`));const head=`<div class="mini-booking__price">${price?this.money(price):'—'}<small>${t.per} · ${kind==='torno'?t.tornoNote:t.mesaNote}</small></div>`;if(!list.length){this.body.innerHTML=`${head}<p class="mini-booking__status" role="status">${t.none}</p>${this.waLink()}`;return;}
+  const month=this.month,[year,monthNumber]=month.split('-').map(Number),days=new Date(Date.UTC(year,monthNumber,0)).getUTCDate(),offset=(new Date(Date.UTC(year,monthNumber-1,1)).getUTCDay()+6)%7,byDate={};for(const slot of list)(byDate[slot.date]??=[]).push(slot);let cells='';for(let i=0;i<7;i++)cells+=`<span class="mini-booking__weekday">${new Intl.DateTimeFormat(this.lang,{weekday:'narrow',timeZone:'UTC'}).format(new Date(Date.UTC(2026,0,5+i)))}</span>`;cells+='<span></span>'.repeat(offset);let monthHas=false;
+  for(let day=1;day<=days;day++){const iso=`${month}-${String(day).padStart(2,'0')}`,available=!!byDate[iso];if(available)monthHas=true;const label=new Intl.DateTimeFormat(this.lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(`${iso}T12:00:00Z`));cells+=`<button type="button" class="mini-booking__day${iso===this.date?' is-selected':''}" data-date="${iso}"${available?'':' disabled'} aria-pressed="${iso===this.date}" aria-label="${esc(label)} · ${available?t.available:t.unavailable}">${day}</button>`;}
+  const firstMonth=list[0].date.slice(0,7),lastMonth=list.at(-1).date.slice(0,7);let monthLabel=new Intl.DateTimeFormat(this.lang,{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(`${month}-01T12:00:00Z`));monthLabel=monthLabel.charAt(0).toUpperCase()+monthLabel.slice(1);let html=`${head}<h2 class="mini-booking__title">${t.date}</h2><div class="mini-booking__month"><strong>${esc(monthLabel)}</strong><div><button type="button" data-month="-1" aria-label="${t.prev}"${month<=firstMonth?' disabled':''}>‹</button><button type="button" data-month="1" aria-label="${t.nextM}"${month>=lastMonth?' disabled':''}>›</button></div></div><div class="mini-booking__calendar" role="group" aria-label="${t.date}">${cells}</div>`;
+  if(!monthHas)html+=`<p class="mini-booking__status" role="status">${t.empty}</p>${month<lastMonth?`<button type="button" class="mini-booking__secondary" data-month="1">${t.next} ›</button>`:''}`;
+  if(this.date&&byDate[this.date]){html+=`<div class="mini-booking__field">${t.time}</div><div class="mini-booking__times" role="group" aria-label="${t.time}">`;for(const slot of byDate[this.date]){const seats=Number(slot.available);html+=`<button type="button" class="mini-booking__time${slot.id===this.selectedId?' is-selected':''}" data-slot="${esc(slot.id)}" aria-pressed="${slot.id===this.selectedId}" aria-label="${esc(slot.title||'')} ${esc(this.time(slot))}">${esc(this.time(slot))}<small>${seats} ${seats===1?t.seat:t.seats}</small></button>`;}html+='</div>';}
+  const selected=this.selected();if(selected&&this.mode==='v2')html+=`<a class="mini-booking__cta" href="${BOOK_URL}?slot_id=${encodeURIComponent(selected.id)}" data-action="book">${t.book} →</a><p class="mini-booking__note">${t.pay}</p>`;
+  if(selected&&this.mode==='mesana'){const max=Math.min(100,selected.remainingSeats);html+=`<div class="mini-booking__people"><span>${t.people}</span><div><button type="button" data-qty="-1" aria-label="${t.less}"${this.quantity<=1?' disabled':''}>−</button><output>${this.quantity}</output><button type="button" data-qty="1" aria-label="${t.more}"${this.quantity>=max?' disabled':''}>+</button></div></div><div class="mini-booking__total"><span>${t.total}<small>${this.quantity} × ${this.money(selected.unitPriceCents)}</small></span><strong>${this.money(selected.unitPriceCents*this.quantity)}</strong></div><form class="mini-booking__form"><label>${t.name}<input name="name" autocomplete="name" required maxlength="80"></label><label>${t.email}<input name="email" type="email" autocomplete="email" required maxlength="150"></label><button type="submit" class="mini-booking__cta">${t.checkout} →</button></form><p class="mini-booking__note">${t.pay}</p>`;}if(this.error)html+=`<p class="mini-booking__status" role="alert">${esc(this.error)}</p>`;this.body.innerHTML=html;
+  Array.from(this.body.querySelectorAll('[data-month]')).forEach(button=>button.onclick=()=>{this.month=addMonth(this.month,Number(button.getAttribute('data-month')));this.date='';this.selectedId='';this.render();});Array.from(this.body.querySelectorAll('[data-date]:not(:disabled)')).forEach(button=>button.onclick=()=>{this.date=button.getAttribute('data-date');const candidates=byDate[this.date];this.selectedId=candidates.length===1?candidates[0].id:'';this.quantity=1;this.error='';this.render();});Array.from(this.body.querySelectorAll('[data-slot]')).forEach(button=>button.onclick=()=>{this.selectedId=button.getAttribute('data-slot');this.quantity=1;this.error='';this.render();});Array.from(this.body.querySelectorAll('[data-qty]')).forEach(button=>button.onclick=()=>{this.quantity=Math.max(1,Math.min(selected.remainingSeats,this.quantity+Number(button.getAttribute('data-qty'))));this.render();});
+  const form=this.body.querySelector('.mini-booking__form');if(form)form.onsubmit=async event=>{event.preventDefault();if(!form.reportValidity())return;const button=form.querySelector('button[type="submit"]');button.disabled=true;button.textContent=t.busy;try{await this.checkout(form.elements.name.value,form.elements.email.value);}catch{button.disabled=false;button.textContent=t.checkout;}};const cta=this.body.querySelector('[data-action="book"]');if(cta)cta.addEventListener('click',()=>{if(typeof globalThis.gtag==='function')globalThis.gtag('event','click_cta',{event_category:'conversion',event_label:`clase_suelta_${kind}`});if(typeof globalThis.fbq==='function')globalThis.fbq('track','Lead',{content_name:'clase_suelta'});});
+ }
+}
+export function boot(){document.querySelectorAll('.mini-booking').forEach(element=>{const widget=new MiniBooking(element);widget.load();});}
+if(typeof document!=='undefined'){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();}

@@ -3386,4 +3386,15 @@ p {
 .mini-booking__status { color: var(--mb-muted); font-size: 14px; margin: 16px 0 0; }
 .mini-booking__note { text-align: center; font-size: 13px; color: var(--mb-muted); margin: 12px 0 0; }
 .mini-booking__note a { color: var(--blue); }
+.mini-booking__people, .mini-booking__total { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 18px; font-size: 14px; font-weight: 700; }
+.mini-booking__people > div { display: flex; align-items: center; gap: 12px; }
+.mini-booking__people button { width: 42px; height: 42px; border: 1px solid var(--mb-line); border-radius: 50%; background: var(--white); color: var(--blue); font-size: 22px; }
+.mini-booking__people output { min-width: 20px; text-align: center; }
+.mini-booking__total { padding: 16px 0; border-top: 1px solid var(--mb-line); border-bottom: 1px solid var(--mb-line); }
+.mini-booking__total span small { display: block; margin-top: 3px; color: var(--mb-muted); font-weight: 400; }
+.mini-booking__total strong { font-family: var(--font-heading); font-size: 22px; }
+.mini-booking__form { display: grid; gap: 12px; margin-top: 18px; }
+.mini-booking__form label { display: grid; gap: 6px; font-size: 13px; font-weight: 700; }
+.mini-booking__form input { width: 100%; min-height: 46px; border: 1px solid var(--mb-line); border-radius: 10px; padding: 10px 12px; font: inherit; }
+.mini-booking__form .mini-booking__cta { margin-top: 4px; }
 @media (max-width: 600px) { .mini-booking { padding: 20px 12px; border-radius: 20px; } .mini-booking__calendar { gap: 2px; } }
