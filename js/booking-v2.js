@@ -9,6 +9,8 @@
 (function () {
   'use strict';
 
+  if (window.LA_MESA_CLIENT_AREA_URL && window.LA_MESA_CLIENT_AREA_URL(window.LA_MESA_GUEST_BOOKING?.clientArea)) return;
+
   var API_BASE = 'https://la-mesa-v2-backend.onrender.com';
   var BOOK_URL = 'https://app.lamesabcn.com/book.html';
   var WA_FALLBACK = 'https://wa.me/34711552030?text=Hola!%20Quiero%20reservar%20una%20clase%20en%20La%20Mesa';

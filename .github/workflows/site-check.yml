@@ -19,4 +19,4 @@ jobs:
         with:
           node-version: '22'
       - name: Verify static experiences and disabled booking
-        run: node --test tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs
+        run: node --test tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs tests/client-area-links.test.mjs
