@@ -133,3 +133,27 @@ for(const [locale,loadMessage,paymentMessage] of [
   assert.deepEqual(calls.map(call=>call.method),['GET','POST']);assert.ok(calls[0].url.includes('/guest-sessions?'));assert.ok(calls[1].url.endsWith('/guest-checkouts'));
  }finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
 });
+
+test('Cancellation policy gives 24-hour free cancellation in every locale',()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};
+ const expected={
+  es:'Cancelación gratuita hasta 24 horas antes de la clase. Tu pieza estará lista para recoger unos 15 días después.',
+  en:'Free cancellation up to 24 hours before the class. Your piece will be ready to collect about 15 days later.',
+  ca:'Cancel·lació gratuïta fins a 24 hores abans de la classe. La teva peça estarà llesta per recollir uns 15 dies després.'
+ };
+ try{
+  globalThis.sessionStorage=memory();
+  for(const [locale,answer] of Object.entries(expected)){
+   globalThis.document={documentElement:{lang:locale},querySelectorAll:()=>[]};
+   const root={dataset:{experience:'modelado'},setAttribute(){},removeAttribute(){},querySelector(){return null;}};
+   const policy=new GuestWidget(root,validateConfig(raw,location)).c.policy;
+   assert.equal(policy,answer);
+   assert.match(policy,/24/);
+   assert.doesNotMatch(policy,/pendiente|must be confirmed|s’han de confirmar/i);
+   for(const name of ['modelado.html','torno.html']){
+    const page=readFileSync(resolve(dirname(fileURLToPath(import.meta.url)),`../${locale==='es'?'':locale+'/'}experiencias/${name}`),'utf8');
+    assert.ok(page.includes(`<p>${answer}</p></details>`),`${locale}/${name}`);
+   }
+  }
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});
