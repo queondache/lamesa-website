@@ -49,7 +49,8 @@ test('Home discovery and sitemap include nine localized canonical pages while re
   assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
- assert.match(read('llms.txt'),/online booking is disabled/);assert.doesNotMatch(read('llms.txt'),/Clase Suelta[^\n]+Book online via Stripe Checkout/);
+ assert.match(read('llms.txt'),/online booking is disabled/);// La pagina /clases/suelta.html continua a vendere online (decisione di Andrea 05/10): llms.txt deve dirlo.
+ assert.match(read('llms.txt'),/Clase Suelta is booked online at https:\/\/lamesabcn\.com\/clases\/suelta\.html/);
 });
 test('Pages publication excludes fixture and internal material; one stable cheap Node22 check',()=>{
  const config=read('_config.yml');for(const path of ['dev/','tests/','docs/','demo/','.orchestratore/','node_modules/','package.json','package-lock.json','.github/'])assert.ok(config.split('\n').some(line=>line.trim()===`- ${path}`));
