@@ -3,23 +3,24 @@
    Language Suggestion Bar — logica unica (niente più duplicazione)
    Caricato SENZA "defer" nello stesso punto dove prima stava lo
    script inline in testa al <body> di index.html / en/index.html /
-   ca/index.html: deve girare in modo sincrono PRIMA del primo paint
+   ca/index.html / pt/index.html: deve girare in modo sincrono PRIMA del primo paint
    per evitare layout shift (CLS), quindi non può dipendere da
    js/main.js (caricato con "defer", gira dopo il render iniziale).
    Un'unica copia, richiesta same-origin cacheata e condivisa dalle
-   tre home.
+   quattro home.
    ============================================================ */
 (function () {
   var STORAGE_KEY = 'lamesa_lang_suggest_dismissed';
-  var AVAILABLE_LANGS = ['es', 'en', 'ca'];
-  var FALLBACK_TO_EN = ['de', 'fr', 'it', 'pt'];
+  var AVAILABLE_LANGS = ['es', 'en', 'ca', 'pt'];
+  var FALLBACK_TO_EN = ['de', 'fr', 'it'];
 
   var LABELS = {
     es: { notice: 'Esta página también está disponible en español.', cta: 'Ver en español →', close: 'Cerrar aviso de idioma' },
     en: { notice: 'This page is also available in English.', cta: 'View in English →', close: 'Close language notice' },
-    ca: { notice: 'Aquesta pàgina també està disponible en català.', cta: 'Veure en català →', close: 'Tancar avís d’idioma' }
+    ca: { notice: 'Aquesta pàgina també està disponible en català.', cta: 'Veure en català →', close: 'Tancar avís d’idioma' },
+    pt: { notice: 'Esta página também está disponível em português.', cta: 'Ver em português →', close: 'Fechar aviso de idioma' }
   };
-  var URLS = { es: '/index.html', en: '/en/index.html', ca: '/ca/index.html' };
+  var URLS = { es: '/index.html', en: '/en/index.html', ca: '/ca/index.html', pt: '/pt/index.html' };
 
   function isDismissed() {
     try {
