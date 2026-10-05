@@ -3337,3 +3337,7 @@ p {
 .clases--cursos .clases__bloques { align-items: stretch; }
 .clases--cursos .clases__bloque { display: flex; }
 .clases--cursos .clase-card { flex: 1; }
+
+/* Giro UX 05/10 (4): in homepage una sola esperienza, card centrata e non a tutta larghezza. */
+#experiencias .clases__bloques { justify-content: center; }
+#experiencias .clases__bloque { max-width: 720px; width: 100%; }
