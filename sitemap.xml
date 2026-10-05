@@ -586,4 +586,37 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Blog: Team building cerámica (ES/EN/CA) -->
+  <url>
+    <loc>https://lamesabcn.com/blog/team-building-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/blog/pottery-team-building-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/blog/pottery-team-building-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/blog/pottery-team-building-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/blog/pottery-team-building-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/blog/team-building-ceramica-barcelona.html"/>
+    <lastmod>2026-10-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
