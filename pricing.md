@@ -14,7 +14,7 @@
 | Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
 | Intro al Torno (wheel intro course) | €90 | 2 sessions × 2h, max 2 people | WhatsApp |
 | Coworking Torno (open wheel access) | €20 / hour | minimum 2h, experienced potters | WhatsApp |
-| Taller Flex (flexible classes) | from €120 (8h) | students with prior experience | WhatsApp |
+| Bono de horas / Taller Flex (flexible hours) | 8h €120 · 16h €220 · 24h €300 | students with prior experience | WhatsApp |
 | Creative workshops (guest artists) | variable | see website | website / WhatsApp |
 | Private sessions (team building, birthdays, bachelorette) | custom quote | group | WhatsApp / email |
 
@@ -55,8 +55,8 @@
 - Availability: Tuesday, Wednesday, Friday, 14:00–18:00.
 - Booking: via WhatsApp.
 
-### Taller Flex
-- Price: from €120 (8h). For more hours, contact via WhatsApp.
+### Bono de horas (Taller Flex)
+- Price: 8h €120 (€15/h) · 16h €220 (€13.75/h) · 24h €300 (€12.50/h).
 - For: students with prior experience, flexible hand-building or wheel hours.
 - Booking: via WhatsApp (https://wa.me/34711552030).
 
