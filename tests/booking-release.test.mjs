@@ -44,10 +44,10 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
 test('Home discovery and sitemap include nine localized canonical pages while retaining legacy routes',()=>{
  const sitemap=read('sitemap.xml');const nodes=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m=>m[1]);
  for(const lang of languages){const home=read(`${prefix(lang)}index.html`);
-  for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;// La home porta alle esperienze singole; i workshop hanno il loro programma (agenda vuota finché non ci sono date).
-  if(type!=='workshops')assert.ok(home.includes(`href="/${path}"`));const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
-  // Giro UX 05/10: la lezione singola si prenota passando dalla pagina dell'esperienza, che porta a /clases/suelta.html.
-  assert.equal(home.split(`href="/${prefix(lang)}clases/suelta.html"`).length-1,0,'Single class is reached through the experience pages');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
+  for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;
+  // Giro UX 05/10 (4): la home ha una sola esperienza che porta al calendario; le pagine experiencias restano in sitemap.
+  const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
+  assert.equal(home.split(`href="/${prefix(lang)}clases/suelta.html"`).length-1,2,'Hero and the single experience card lead to the booking calendar');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
   assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
