@@ -235,7 +235,7 @@
       "name": "What if I want to come every week?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "There is the weekly class: 4 sessions of 2 hours, always the same day and time. Hand-building €120/month and wheel throwing €160/month."
+        "text": "There is the weekly class: 4 sessions of 2 hours, always the same day and time. Hand-building €120/month and wheel throwing €120/month."
       }
     }
   ]
@@ -333,34 +333,12 @@
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
 
-        <div class="suelta-cards" id="suelta-cards">
-          <div class="suelta-card suelta-card--mesa" data-risorsa="mesa">
-            <h2 class="suelta-card__title">Hand-building</h2>
-            <p class="suelta-card__price">€45</p>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">What's included? →</summary>
-              <p class="suelta-card__info-text">Hand-build with clay. You'll learn manual modeling techniques, finishes and glazing. Materials and firing included. 2-hour class.</p>
-            </details>
-            <button class="btn btn--dark suelta-card__cta">Book →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
+        <div class="mini-booking" id="reserva" data-price-mesa="45" data-price-torno="65">
+          <div class="mini-booking__nav" role="group" aria-label="Choose the experience">
+            <button type="button" data-kind="mesa" aria-pressed="true">Hand-building</button>
+            <button type="button" data-kind="torno" aria-pressed="false">Pottery wheel</button>
           </div>
-          <div class="suelta-card suelta-card--torno" data-risorsa="torno">
-            <h2 class="suelta-card__title">Wheel throwing</h2>
-            <p class="suelta-card__price">€65</p>
-            <span class="suelta-card__badge">Private class</span>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">What's included? →</summary>
-              <p class="suelta-card__info-text">Private wheel throwing class. Maximum 2 people. You'll learn to center, open and pull up the clay. Materials and firing included. 2-hour class.</p>
-            </details>
-            <button class="btn btn--white suelta-card__cta">Book →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
-          </div>
+          <div class="mini-booking__body"><noscript><a class="mini-booking__cta" href="https://wa.me/34711552030">Book on WhatsApp</a></noscript></div>
         </div>
 
       </div>
@@ -478,7 +456,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__question">What if I want to come every week?</summary>
-            <p class="faq__answer">There is the weekly class: 4 sessions of 2 hours, always the same day and time. <a href="/en/clases/semanal-modelado.html">Hand-building</a> €120/month and <a href="/en/clases/semanal-torno.html">wheel throwing</a> €160/month.</p>
+            <p class="faq__answer">There is the weekly class: 4 sessions of 2 hours, always the same day and time. <a href="/en/clases/semanal-modelado.html">Hand-building</a> €120/month and <a href="/en/clases/semanal-torno.html">wheel throwing</a> €120/month.</p>
           </details>
           </div>
         </div>
@@ -501,6 +479,6 @@
   </a>
 
   <script src="../../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../../js/booking-v2.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script src="../../js/mini-booking.js?v=1" data-cookieconsent="ignore" defer></script>
 </body>
 </html>
