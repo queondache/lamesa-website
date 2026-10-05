@@ -36,7 +36,7 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   if(type!=='workshops'){
    assert.match(source,/data-booking-state="standby"/);
    assert.ok(source.indexOf('src="/js/booking-config.js"')<source.indexOf('src="/js/experience-booking.js"'));
-   assert.match(source,lang==='es'?/reserva online directa está en preparación/:lang==='en'?/Direct online booking is in preparation/:/reserva en línia directa està en preparació/);
+   assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
  for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js"')<source.indexOf('src="/js/experience-booking.js"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
@@ -44,8 +44,10 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
 test('Home discovery and sitemap include nine localized canonical pages while retaining legacy routes',()=>{
  const sitemap=read('sitemap.xml');const nodes=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m=>m[1]);
  for(const lang of languages){const home=read(`${prefix(lang)}index.html`);
-  for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;assert.ok(home.includes(`href="/${path}${type==='workshops'?'#agenda':''}"`));const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
-  assert.equal(home.split(`href="/${prefix(lang)}clases/suelta.html"`).length-1,3,'All existing single-class purchase CTAs remain unchanged');
+  for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;// La home porta alle esperienze singole; i workshop hanno il loro programma (agenda vuota finché non ci sono date).
+  if(type!=='workshops')assert.ok(home.includes(`href="/${path}"`));const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
+  // Giro UX 05/10: la lezione singola si prenota passando dalla pagina dell'esperienza, che porta a /clases/suelta.html.
+  assert.equal(home.split(`href="/${prefix(lang)}clases/suelta.html"`).length-1,0,'Single class is reached through the experience pages');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
   assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);

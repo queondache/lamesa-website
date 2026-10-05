@@ -138,10 +138,10 @@
 
       <!-- Desktop navigation links -->
       <nav class="navbar__links" aria-label="Navegació principal">
-        <a class="navbar__link" href="#clases" data-section="clases">Classes</a>
-        <a class="navbar__link" href="#workshops" data-section="workshops">Tallers</a>
+        <a class="navbar__link" href="#experiencias" data-section="clases">Experiències</a>
+        <a class="navbar__link" href="#cursos" data-section="cursos">Cursos</a><a class="navbar__link" href="#workshops" data-section="workshops">Tallers</a>
         <a class="navbar__link" href="#tienda" data-section="tienda">Botiga</a>
-        <a class="navbar__link" href="#privadas" data-section="privadas">Privades</a>
+        <a class="navbar__link" href="#privadas" data-section="privadas">Grups i esdeveniments</a>
         <a class="navbar__link" href="#contacto" data-section="contacto">Contacte</a>
 
         <!-- Language switcher -->
@@ -173,10 +173,10 @@
       class="navbar__mobile"
       aria-label="Menú mòbil"
     >
-      <a class="navbar__mobile-link" href="#clases">Classes</a>
-      <a class="navbar__mobile-link" href="#workshops">Tallers</a>
+      <a class="navbar__mobile-link" href="#experiencias">Experiències</a>
+      <a class="navbar__mobile-link" href="#cursos">Cursos</a><a class="navbar__mobile-link" href="#workshops">Tallers</a>
       <a class="navbar__mobile-link" href="#tienda">Botiga</a>
-      <a class="navbar__mobile-link" href="#privadas">Privades</a>
+      <a class="navbar__mobile-link" href="#privadas">Grups i esdeveniments</a>
       <a class="navbar__mobile-link" href="#contacto">Contacte</a>
       <div class="navbar__mobile-lang">
         <a href="/index.html" lang="es">ES</a>
@@ -219,11 +219,11 @@
           <a
             class="btn btn--primary"
             id="cta-hero-reserva"
-            href="/ca/clases/suelta.html"
-            aria-label="Reserva la teva classe de ceràmica online, modelatge o torn, materials inclosos"
+            href="#experiencias"
+            aria-label="Reserva la teva experiència"
             onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});"
           >
-            Reserva la teva classe online →
+            Reserva la teva experiència →
           </a>
         </div>
         <!-- Prova sociale: 5,0 su 41 recensioni Google, rilevato il 22/09/2026 dalla scheda pubblica Google Business di La Mesa. Aggiornare il numero "41" e la media quando cambiano. Il cid punta alla scheda "La Mesa - Laboratorio Creativo" (NON confonderlo con il cid del solo indirizzo dell'edificio, che porta a una scheda diversa senza recensioni di La Mesa): verificato aprendo davvero l'URL in un browser reale il 22/09/2026 (titolo pagina "La Mesa - Laboratorio Creativo - Google Maps", 5,0 (41)), non ricalcolato a tavolino dal place id dell'embed Maps. Se lo si tocca in futuro, riverificare allo stesso modo aprendo l'URL in un browser, non ricalcolandolo dai numeri dell'embed. -->
@@ -257,7 +257,7 @@
               No som una escola, som un lloc que abraça la curiositat, els intents i la connexió.
               Vine a crear amb nosaltres a la Barceloneta, a dues passes del mar.
             </p>
-            <p class="nosotras__ca" lang="ca" style="font-size:0.85rem; color:#888; margin-top:12px; font-style:italic;">
+            <p class="nosotras__ca" lang="ca" style="font-size:0.85rem; color:#4A4A4A; margin-top:12px; font-style:italic;">
               La Mesa és un espai creatiu al cor de la Barceloneta. T'esperem.
             </p>
           </div>
@@ -280,72 +280,70 @@
     <!-- ============================================================
          SECTION 3 — CLASSES & WORKSHOPS (#clases)
          ============================================================ -->
-    <section id="clases" class="clases section--lg" aria-label="Classes de ceràmica">
+    <section id="experiencias" class="clases section--lg" aria-label="Experiències de ceràmica">
+      <span id="clases" aria-hidden="true"></span>
       <div class="container">
         <div class="clases__header fade-in">
-          <h2>Classes de ceràmica a Barcelona</h2>
+          <h2>Experiències de ceràmica</h2>
+          <p class="clases__lead">Una classe de 2 hores per provar-ho, sense experiència prèvia. Materials i cuita inclosos.</p>
         </div>
-
         <div class="clases__bloques">
-
-          <!-- MODELAT -->
           <div class="clases__bloque fade-in">
-            <article class="clase-card clase-card--primary" aria-label="Modelat manual">
-              <h3 class="clase-card__title">Modelat manual</h3>
-              <p class="clase-card__subtitle">Per a tots els nivells</p>
-              <p class="clase-card__body">
-                Treballem l'argila amb les mans. Pots venir a provar una tarda
-                o apuntar-te a un curs mensual amb el teu propi dia i hora fixos.
-              </p>
-              <span class="clase-card__badge">Abonament mensual · 4 classes · mateix dia i hora</span>
-              <div style="display:flex; flex-direction:column; gap:var(--space-xs); margin-top:var(--space-sm);">
-                <a class="clase-card__cta clase-card__cta--online"
-                   id="cta-clase-suelta"
-                   href="/ca/clases/suelta.html"
-                   style="margin-top:0;"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
-                  Classe solta · 45 € →
-                </a>
-                <a class="clase-card__cta clase-card__cta--online"
-                   id="cta-taller-semanal"
-                   href="/ca/clases/semanal-modelado.html"
-                   style="margin-top:0;"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
-                  Curs mensual · 120 € →
-                </a>
-              </div>
+            <article class="clase-card clase-card--primary" aria-label="Modelat">
+              <h3 class="clase-card__title">Modelat</h3>
+              <p class="clase-card__subtitle">2 hores · tots els nivells</p>
+              <p class="clase-card__body">Treballa el fang amb les mans i crea la teva pròpia peça.</p>
+              <a class="clase-card__cta clase-card__cta--online" href="/ca/experiencias/modelado.html"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
+                Reservar · 45 € →
+              </a>
             </article>
           </div>
-
-          <!-- TORN -->
           <div class="clases__bloque fade-in fade-in--delay-1">
             <article class="clase-card clase-card--torno-primary" aria-label="Torn">
               <h3 class="clase-card__title">Torn</h3>
-              <p class="clase-card__subtitle">Classes particulars des de zero</p>
-              <p class="clase-card__body">
-                Màxim 2 persones per torn. En pocs mesos t'ensenyem a ser autònom.
-                Pots començar amb una classe suelta o apuntar-te al curs setmanal.
-              </p>
-              <span class="clase-card__badge">Abonament mensual · 4 classes particulars · mateix dia i hora</span>
-              <div style="display:flex; flex-direction:column; gap:var(--space-xs); margin-top:var(--space-sm);">
-                <a class="clase-card__cta clase-card__cta--whatsapp"
-                   href="/ca/clases/suelta.html"
-                   style="margin-top:0;"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
-                  Classe solta · 65 € →
-                </a>
-                <a class="clase-card__cta clase-card__cta--whatsapp"
-                   href="/ca/clases/semanal-torno.html"
-                   style="margin-top:0;"
-                   onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
-                  Curs mensual · 160 € →
-                </a>
-              </div>
+              <p class="clase-card__subtitle">2 hores · màxim 2 persones</p>
+              <p class="clase-card__body">Seu al torn amb una professora només per a tu o per a dos.</p>
+              <a class="clase-card__cta clase-card__cta--whatsapp" href="/ca/experiencias/torno.html"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
+                Reservar · 65 € →
+              </a>
             </article>
           </div>
-
         </div>
+      </div>
+    </section>
 
+    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Cursos mensuals">
+      <div class="container">
+        <div class="clases__header fade-in">
+          <h2>Cursos mensuals</h2>
+          <p class="clases__lead">Per a qui vol continuar: 4 classes al mes, mateix dia i hora.</p>
+        </div>
+        <div class="clases__bloques">
+          <div class="clases__bloque fade-in">
+            <article class="clase-card clase-card--secondary" aria-label="Curs de modelat">
+              <h3 class="clase-card__title">Curs de modelat</h3>
+              <p class="clase-card__subtitle">4 classes de 2 h al mes · grup de fins a 8</p>
+              <p class="clase-card__body">Avança cada setmana amb el teu grup i la teva professora.</p>
+              <a class="clase-card__cta clase-card__cta--curso" href="/ca/clases/semanal-modelado.html"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
+                Inscriure'm · 120 €/mes →
+              </a>
+            </article>
+          </div>
+          <div class="clases__bloque fade-in fade-in--delay-1">
+            <article class="clase-card clase-card--secondary" aria-label="Curs de torn">
+              <h3 class="clase-card__title">Curs de torn</h3>
+              <p class="clase-card__subtitle">4 classes particulars de 2 h al mes</p>
+              <p class="clase-card__body">En pocs mesos et tornem autònom.</p>
+              <a class="clase-card__cta clase-card__cta--curso" href="/ca/clases/semanal-torno.html"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
+                Inscriure'm · 160 €/mes →
+              </a>
+            </article>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -665,13 +663,6 @@
           <a href="/ca/blog/" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Blog</a>
           <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
           <a href="mailto:lamesa.lc@gmail.com?subject=Vull%20fer%20un%20taller%20a%20La%20Mesa" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Ets artista? Proposa un taller</a>
-        </div>
-        <div style="text-align: center; margin-bottom: var(--space-sm);">
-          <a href="/ca/experiencias/modelado.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Modelat</a>
-          <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="/ca/experiencias/torno.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Torn</a>
-          <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="/ca/experiencias/workshops.html#agenda" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Workshops</a>
         </div>
 
         <!-- Footer bottom bar -->

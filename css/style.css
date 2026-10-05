@@ -1483,7 +1483,7 @@ p {
 
 .footer__bar p {
   color: var(--cream);
-  opacity: 0.4;
+  opacity: 0.7; /* 0,4 dava 3,7:1 sul nero */
   font-size: 0.8125rem;
   max-width: 100%;
 }
@@ -3313,3 +3313,21 @@ p {
 @media (max-width: 480px) {
   .enc-actions .btn { width: 100%; justify-content: center; }
 }
+
+/* Giro UX 05/10: Experiencias (lezione singola) e Cursos (mensili) sono due sezioni. */
+.clases__lead {
+  max-width: 560px;
+  margin: 0 auto;
+  color: var(--black);
+  line-height: 1.6;
+}
+#experiencias { padding-bottom: var(--space-xl) !important; }
+#cursos { padding-top: 0; }
+.clase-card--secondary .clase-card__title,
+.clase-card--secondary .clase-card__body { color: var(--black); }
+.clase-card--secondary .clase-card__subtitle { color: var(--blue); }
+.clase-card__cta--curso { color: var(--blue); } /* blu su bianco 10:1 */
+/* Sottotitoli delle card a contrasto pieno (con il 60% di opacità scendevano a 3,4-3,7:1). */
+.clase-card--primary .clase-card__subtitle { color: rgba(26, 26, 26, 0.85); }
+.clase-card--torno-primary .clase-card__subtitle { color: rgba(255, 250, 238, 0.85); }
+.clase-card--secondary .clase-card__subtitle { opacity: 1; }
