@@ -235,7 +235,7 @@
       "name": "E se eu quiser ir toda semana?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Existe o curso mensal: 4 aulas de 2 horas, sempre no mesmo dia e horário. Modelagem 120 €/mês e torno 160 €/mês (páginas em inglês)."
+        "text": "Existe o curso mensal: 4 aulas de 2 horas, sempre no mesmo dia e horário. Modelagem 120 €/mês e torno 120 €/mês (páginas em inglês)."
       }
     }
   ]
@@ -333,34 +333,12 @@
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
 
-        <div class="suelta-cards" id="suelta-cards">
-          <div class="suelta-card suelta-card--mesa" data-risorsa="mesa">
-            <h2 class="suelta-card__title">Modelagem</h2>
-            <p class="suelta-card__price">€45</p>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">O que está incluído? →</summary>
-              <p class="suelta-card__info-text">Modelagem manual com argila. Você aprende técnicas de modelagem, acabamentos e esmaltação. Materiais e queima incluídos. Aula de 2 horas.</p>
-            </details>
-            <button class="btn btn--dark suelta-card__cta">Reservar →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
+        <div class="mini-booking" id="reserva" data-price-mesa="45" data-price-torno="65">
+          <div class="mini-booking__nav" role="group" aria-label="Escolha a experiência">
+            <button type="button" data-kind="mesa" aria-pressed="true">Modelagem</button>
+            <button type="button" data-kind="torno" aria-pressed="false">Torno</button>
           </div>
-          <div class="suelta-card suelta-card--torno" data-risorsa="torno">
-            <h2 class="suelta-card__title">Torno</h2>
-            <p class="suelta-card__price">€65</p>
-            <span class="suelta-card__badge">Aula particular</span>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">O que está incluído? →</summary>
-              <p class="suelta-card__info-text">Aula particular de torno. Máximo 2 pessoas. Você aprende a centralizar, abrir e levantar a argila. Materiais e queima incluídos. Aula de 2 horas.</p>
-            </details>
-            <button class="btn btn--white suelta-card__cta">Reservar →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
-          </div>
+          <div class="mini-booking__body"><noscript><a class="mini-booking__cta" href="https://wa.me/34711552030">Reserve pelo WhatsApp</a></noscript></div>
         </div>
 
       </div>
@@ -478,7 +456,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__question">E se eu quiser ir toda semana?</summary>
-            <p class="faq__answer">Existe o curso mensal: 4 aulas de 2 horas, sempre no mesmo dia e horário. <a href="/en/clases/semanal-modelado.html">Modelagem</a> 120 €/mês e <a href="/en/clases/semanal-torno.html">torno</a> 160 €/mês (páginas em inglês).</p>
+            <p class="faq__answer">Existe o curso mensal: 4 aulas de 2 horas, sempre no mesmo dia e horário. <a href="/en/clases/semanal-modelado.html">Modelagem</a> 120 €/mês e <a href="/en/clases/semanal-torno.html">torno</a> 120 €/mês (páginas em inglês).</p>
           </details>
           </div>
         </div>
@@ -501,6 +479,6 @@
   </a>
 
   <script src="../../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../../js/booking-v2.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script src="../../js/mini-booking.js?v=1" data-cookieconsent="ignore" defer></script>
 </body>
 </html>

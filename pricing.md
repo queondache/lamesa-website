@@ -9,7 +9,7 @@
 | Service | Price | Format | Booking |
 |---|---|---|---|
 | Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
-| Taller Semanal Torno (weekly wheel throwing) | €160 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
+| Taller Semanal Torno (weekly wheel throwing) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
 | Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session of 2h | Online (Stripe Checkout) |
 | Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
 | Intro al Torno (wheel intro course) | €90 | 2 sessions × 2h, max 2 people | WhatsApp |
@@ -27,7 +27,7 @@
 - Booking: online via Stripe Checkout.
 
 ### Taller Semanal Torno
-- Price: €160 per month.
+- Price: €120 per month.
 - Includes: 4 weekly sessions of 2 hours, wheel throwing (torno), all materials and firings.
 - For: all levels, beginners and students with some experience; each class is adapted to the person.
 - Booking: online via Stripe Checkout.

@@ -3354,3 +3354,36 @@ p {
 /* Contrasti pagine di prenotazione: sottotitolo blu pieno (0,7 dava 4,4:1), nota grigia più scura (3,4:1). */
 .turno-hero__subtitle { opacity: 1; }
 .turno-nota p { color: #4A4A4A; }
+
+/* Calendario compatto della clase suelta: stessa grafica del widget di Codex (experiencias). */
+.mini-booking { --mb-line: #d8d6cf; --mb-muted: #555; --mb-soft: #eef1f8; max-width: 460px; margin: 0 auto; background: var(--white); border: 1px solid var(--mb-line); border-top: 4px solid var(--pink); border-radius: 24px; padding: 26px; box-shadow: 0 8px 30px #1b3c8b0c; color: var(--black); font-family: var(--font-body); }
+.mini-booking button { font: inherit; cursor: pointer; touch-action: manipulation; }
+.mini-booking button:disabled { cursor: not-allowed; }
+.mini-booking button:focus-visible, .mini-booking a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.mini-booking__nav { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; background: var(--mb-soft); padding: 4px; border-radius: 18px; margin: 0 0 22px; }
+.mini-booking__nav button { min-height: 44px; border: 0; border-radius: 14px; background: transparent; color: var(--blue); font-size: 14px; font-weight: 700; }
+.mini-booking__nav button[aria-pressed="true"] { background: var(--blue); color: var(--white); }
+.mini-booking__price { font-family: var(--font-heading); font-size: 30px; line-height: 1.2; }
+.mini-booking__price small { display: block; font-family: var(--font-body); font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--mb-muted); margin-top: 6px; }
+.mini-booking__title { font-family: var(--font-heading); font-size: 23px; letter-spacing: -1px; margin: 24px 0 0; }
+.mini-booking__month { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px; margin: 14px 0; }
+.mini-booking__month > div { display: flex; gap: 8px; }
+.mini-booking__month button { width: 44px; height: 44px; border: 1px solid var(--mb-line); background: var(--white); color: var(--blue); border-radius: 50%; font-size: 22px; display: inline-flex; align-items: center; justify-content: center; }
+.mini-booking__month button:disabled { opacity: .45; }
+.mini-booking__calendar { display: grid; grid-template-columns: repeat(7, minmax(36px, 1fr)); gap: 4px; }
+.mini-booking__weekday { text-align: center; font-size: 12px; color: var(--mb-muted); padding: 6px 0; }
+.mini-booking__day { min-height: 44px; padding: 6px 0; border: 0; border-radius: 10px; background: var(--mb-soft); color: var(--blue); font-size: 14px; font-weight: 600; }
+.mini-booking__day.is-selected { background: var(--blue); color: var(--white); font-weight: 700; }
+.mini-booking__day:disabled { background: transparent; color: #767676; font-weight: 400; }
+.mini-booking__field { font-size: 14px; font-weight: 700; margin: 22px 0 10px; }
+.mini-booking__times { display: flex; gap: 8px; flex-wrap: wrap; }
+.mini-booking__time { flex: 1; min-width: 80px; min-height: 60px; border: 1px solid var(--mb-line); background: var(--white); border-radius: 12px; padding: 10px 4px; color: var(--black); font-size: 14px; }
+.mini-booking__time small { display: block; font-size: 12px; color: var(--mb-muted); }
+.mini-booking__time.is-selected { border: 2px solid var(--blue); background: var(--mb-soft); color: var(--blue); font-weight: 700; }
+.mini-booking__cta { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 52px; margin-top: 22px; padding: 12px 20px; border: 0; border-radius: 100px; background: var(--yellow); color: var(--black); font-size: 15px; font-weight: 700; text-decoration: none; }
+.mini-booking__cta:hover { background: #e09e28; }
+.mini-booking__secondary { width: 100%; min-height: 48px; margin-top: 8px; border: 1px solid var(--mb-line); background: var(--white); color: var(--blue); border-radius: 100px; font-size: 14px; font-weight: 600; }
+.mini-booking__status { color: var(--mb-muted); font-size: 14px; margin: 16px 0 0; }
+.mini-booking__note { text-align: center; font-size: 13px; color: var(--mb-muted); margin: 12px 0 0; }
+.mini-booking__note a { color: var(--blue); }
+@media (max-width: 600px) { .mini-booking { padding: 20px 12px; border-radius: 20px; } .mini-booking__calendar { gap: 2px; } }

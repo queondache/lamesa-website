@@ -235,7 +235,7 @@
       "name": "¿Y si quiero venir cada semana?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Existe el curso mensual: 4 clases de 2 horas, siempre el mismo día y hora. Modelado 120 €/mes y torno 160 €/mes."
+        "text": "Existe el curso mensual: 4 clases de 2 horas, siempre el mismo día y hora. Modelado 120 €/mes y torno 120 €/mes."
       }
     }
   ]
@@ -366,36 +366,12 @@
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
 
-        <div class="suelta-cards" id="suelta-cards">
-          <!-- Card Modelado -->
-          <div class="suelta-card suelta-card--mesa" data-risorsa="mesa">
-            <h2 class="suelta-card__title">Modelado</h2>
-            <p class="suelta-card__price">45€</p>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">¿Qué incluye? →</summary>
-              <p class="suelta-card__info-text">Trabaja el barro con las manos. Aprenderás técnicas de modelado manual, acabados y esmaltes. Materiales y hornada incluidos. Clase de 2 horas.</p>
-            </details>
-            <button class="btn btn--dark suelta-card__cta">Reservar →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
+        <div class="mini-booking" id="reserva" data-price-mesa="45" data-price-torno="65">
+          <div class="mini-booking__nav" role="group" aria-label="Elige la experiencia">
+            <button type="button" data-kind="mesa" aria-pressed="true">Modelado</button>
+            <button type="button" data-kind="torno" aria-pressed="false">Torno</button>
           </div>
-          <!-- Card Torno -->
-          <div class="suelta-card suelta-card--torno" data-risorsa="torno">
-            <h2 class="suelta-card__title">Torno</h2>
-            <p class="suelta-card__price">65€</p>
-            <span class="suelta-card__badge">Clase particular</span>
-            <details class="suelta-card__info">
-              <summary class="suelta-card__info-trigger">¿Qué incluye? →</summary>
-              <p class="suelta-card__info-text">Clase particular en el torno. Máximo 2 personas. Aprenderás a centrar, abrir y levantar la pieza. Materiales y hornada incluidos. Clase de 2 horas.</p>
-            </details>
-            <button class="btn btn--white suelta-card__cta">Reservar →</button>
-            <div class="suelta-card__body">
-              <div class="suelta-card__cal"></div>
-              <div class="suelta-card__times"></div>
-            </div>
-          </div>
+          <div class="mini-booking__body"><noscript><a class="mini-booking__cta" href="https://wa.me/34711552030">Reserva por WhatsApp</a></noscript></div>
         </div>
 
       </div>
@@ -516,7 +492,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__question">¿Y si quiero venir cada semana?</summary>
-            <p class="faq__answer">Existe el curso mensual: 4 clases de 2 horas, siempre el mismo día y hora. <a href="/clases/semanal-modelado.html">Modelado</a> 120 €/mes y <a href="/clases/semanal-torno.html">torno</a> 160 €/mes.</p>
+            <p class="faq__answer">Existe el curso mensual: 4 clases de 2 horas, siempre el mismo día y hora. <a href="/clases/semanal-modelado.html">Modelado</a> 120 €/mes y <a href="/clases/semanal-torno.html">torno</a> 120 €/mes.</p>
           </details>
           </div>
         </div>
@@ -554,7 +530,7 @@
 
   <!-- Main script -->
   <script src="../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../js/booking-v2.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script src="../js/mini-booking.js?v=1" data-cookieconsent="ignore" defer></script>
 
 </body>
 </html>
