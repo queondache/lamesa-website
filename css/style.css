@@ -775,7 +775,6 @@ p {
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   background-color: rgba(0, 0, 0, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.35);
   color: var(--cream);
   font-family: var(--font-body);
   font-weight: 600;
@@ -1357,7 +1356,7 @@ p {
 }
 
 .privadas__tag {
-  background-color: var(--pink);
+  background-color: #C42A41; /* bianco 5,3:1 (var(--pink) dava 3,9:1) */
   color: var(--white);
   font-weight: 700;
   font-size: 0.8125rem;
@@ -1527,7 +1526,7 @@ p {
 .whatsapp-btn svg {
   width: 32px;
   height: 32px;
-  fill: var(--white);
+  fill: var(--black); /* nero su giallo 9:1; il bianco dava 1,9:1 */
 }
 
 @keyframes whatsapp-pulse {
@@ -1730,10 +1729,7 @@ p {
   margin-top: 2px;
 }
 
-.privadas__tag--ca {
-  font-style: italic;
-  opacity: 0.8;
-}
+/* L'ultima etichetta era in corsivo e trasparente all'80%: ora è uguale alle altre, a contrasto pieno. */
 
 /* ============================================================
    20. PRINT STYLES
@@ -2023,8 +2019,9 @@ p {
   }
 }
 
+/* Lo spazio sotto le card lo dava la nota «¿Tienes dudas?», tolta: ora lo dà la sezione. */
 #clases {
-  padding-bottom: 0 !important;
+  padding-bottom: var(--space-2xl) !important;
 }
 
 .clase-suelta {
