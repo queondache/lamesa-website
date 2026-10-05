@@ -18,6 +18,8 @@ All materials and firings included. High-temperature clay. Full machine-readable
 
 ## Booking
 - Online (Stripe Checkout): Taller Semanal (Modelado/Torno) and Clase Suelta (Modelado/Torno).
+- New direct single-class pages: online booking is disabled while the booking system is being prepared. Ask the studio via WhatsApp about dates and availability; no online availability is published on these pages.
+- Clase Suelta is booked online at https://lamesabcn.com/clases/suelta.html.
 - WhatsApp (https://wa.me/34711552030): Intro al Torno, Coworking Torno, Taller Flex, creative workshops and private sessions.
 
 ## Guides (blog, ES / EN / CA)
@@ -31,6 +33,9 @@ All materials and firings included. High-temperature clay. Full machine-readable
 - Date ideas in Barcelona: https://lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html
 
 ## Pages
+- Direct hand-building class (online booking in preparation): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
+- Direct pottery-wheel class (online booking in preparation): https://lamesabcn.com/experiencias/torno.html · EN https://lamesabcn.com/en/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html
+- Workshop agenda (no events published on this page): https://lamesabcn.com/experiencias/workshops.html · EN https://lamesabcn.com/en/experiencias/workshops.html · CA https://lamesabcn.com/ca/experiencias/workshops.html
 - Clase Suelta (drop-in): https://lamesabcn.com/clases/suelta.html · EN https://lamesabcn.com/en/clases/suelta.html
 - Taller Semanal Modelado: https://lamesabcn.com/clases/semanal-modelado.html
 - Taller Semanal Torno: https://lamesabcn.com/clases/semanal-torno.html

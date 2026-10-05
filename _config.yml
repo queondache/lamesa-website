@@ -13,3 +13,16 @@ exclude:
   # foto sorgente (12,9 MB), nessuna pagina le usa
   - "images/FOTO TIENDA 1.jpg"
   - "images/FOTO TIENDA 2.jpg"
+
+  # Development fixtures and internal booking preparation never reach the public site.
+  - dev/
+  - tests/
+  - docs/
+  - demo/
+  - .orchestratore/
+  - node_modules/
+  - package.json
+  - package-lock.json
+  - pnpm-lock.yaml
+  - yarn.lock
+  - .github/
