@@ -68,6 +68,7 @@
     this.selectedId = '';
     this.quantity = 1;
     this.error = '';
+    this.loading = false;
     Object.defineProperty(this, 'slotId', { get: function () { return this.selectedId; }, set: function (value) { this.selectedId = value; } });
     var self = this;
     this.tabs.forEach(function (button) { button.addEventListener('click', function () { self.setKind(button.getAttribute('data-kind')); }); });
@@ -105,6 +106,7 @@
   };
   MiniBooking.prototype.load = async function () {
     var self = this;
+    this.loading = true;
     this.body.innerHTML = '<p class="mini-booking__status" role="status">' + this.t.loading + '</p>';
     try {
       await this.ensureMode();
@@ -128,8 +130,10 @@
       ['mesa', 'torno'].forEach(function (kind) { self.slots[kind].sort(function (a, b) { return (a.date + (a.startTime || '')).localeCompare(b.date + (b.startTime || '')); }); });
       if (this.mode === 'mesana' && (!this.selected() || Number(this.selected().available) <= 0)) { this.selectedId = ''; this.quantity = 1; }
       this.month = this.firstMonth();
+      this.loading = false;
       this.render();
     } catch (error) {
+      this.loading = false;
       console.error('[mini-booking] caricamento date fallito:', error);
       this.body.innerHTML = '<p class="mini-booking__status" role="alert">' + this.t.error + '</p><button type="button" class="mini-booking__cta" data-action="retry">' + this.t.retry + '</button>' + this.waLink();
       var retry = this.body.querySelector('[data-action="retry"]');
@@ -167,9 +171,11 @@
     var kind = this.kind;
     var t = this.t;
     this.tabs.forEach(function (button) { button.setAttribute('aria-pressed', button.getAttribute('data-kind') === kind ? 'true' : 'false'); });
+    if (this.loading && this.mode !== 'v2') { this.body.innerHTML = '<p class="mini-booking__status" role="status">' + t.loading + '</p>'; return; }
     var selected = this.selected();
     var price = this.mode === 'v2' ? (list.length ? list[0].price : this.root.getAttribute('data-price-' + kind)) : (selected ? selected.price : (list.length ? list[0].price : this.root.getAttribute('data-price-' + kind)));
-    var head = '<div class="mini-booking__price">' + (price ? this.money(price) : '—') + '<small>' + t.per + ' · ' + (kind === 'torno' ? t.tornoNote : t.mesaNote) + '</small></div>';
+    var displayPrice = price ? (this.mode === 'mesana' && !list.length ? (this.lang === 'en' ? '€' + Number(price).toFixed(0) : Number(price).toFixed(0) + ' €') : this.money(price)) : '—';
+    var head = '<div class="mini-booking__price">' + displayPrice + '<small>' + t.per + ' · ' + (kind === 'torno' ? t.tornoNote : t.mesaNote) + '</small></div>';
     if (!list.length) { this.body.innerHTML = head + '<p class="mini-booking__status" role="status">' + t.none + '</p>' + this.waLink(); return; }
     var month = this.month;
     var parts = month.split('-').map(Number);

@@ -9,7 +9,7 @@ const page={href:'https://lamesabcn.com/pt/clases/suelta.html',hostname:'lamesab
 const session=(overrides={})=>({id:'session-1',classTypeId:'ct-modelado',title:'Modelado',startAt:'2099-05-10T16:00:00Z',endAt:'2099-05-10T18:00:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:3,...overrides});
 const response=(data,ok=true)=>({ok,json:async()=>data});
 const memory=()=>{const map=new Map();return{getItem:key=>map.get(key),setItem:(key,value)=>map.set(key,value)};};
-const tab=kind=>({kind,attrs:{'data-kind':kind},getAttribute(name){return this.attrs[name];},setAttribute(name,value){this.attrs[name]=value;},addEventListener(){}});
+const tab=kind=>({kind,attrs:{'data-kind':kind},getAttribute(name){return this.attrs[name];},setAttribute(name,value){this.attrs[name]=value;},addEventListener(_event,handler){this.click=handler;}});
 function root(){
  const body={html:'',set innerHTML(value){this.html=value;},get innerHTML(){return this.html;},querySelector(){return null;},querySelectorAll(){return[];}};
  return{body,tabs:[tab('mesa'),tab('torno')],getAttribute(name){return({'data-default':'mesa','data-price-mesa':'45','data-price-torno':'65'})[name]||null;},querySelector(selector){return selector==='.mini-booking__body'?body:null;},querySelectorAll(selector){return selector==='[data-kind]'?this.tabs:[];}};
@@ -17,6 +17,57 @@ function root(){
 function widget({config=prod,fetcher,lang='es',location=page,storage=memory()}={}){
  return new MiniBooking(root(),{config,fetcher,lang,location,storage});
 }
+
+function interactiveRoot(){
+ const element=(attributes,html)=>({disabled:/\bdisabled\b/.test(html),getAttribute(name){return attributes[name]||null;},focus(){this.focused=true;}});
+ const r=root();
+ let html='',cache={};Object.defineProperty(r.body,'innerHTML',{get(){return html;},set(value){html=value;cache={};}});
+ r.body.querySelectorAll=function(selector){
+  if(cache[selector])return cache[selector];
+  const attribute=selector.match(/^\[data-(month|date|slot|qty)\]/)?.[1];
+  if(!attribute)return[];
+  return cache[selector]=[...this.innerHTML.matchAll(/<button\b([^>]*)>/g)].filter(([,html])=>html.includes(`data-${attribute}=`)).map(([,html])=>{
+   const value=html.match(new RegExp(`data-${attribute}="([^"]*)"`))?.[1];
+   return element({[`data-${attribute}`]:value},html);
+  }).filter(button=>!selector.includes(':not(:disabled)')||!button.disabled);
+ };
+ r.body.querySelector=function(selector){return selector==='.mini-booking__time'?this.querySelectorAll('[data-slot]')[0]:null;};
+ return r;
+}
+
+test('contract feed supports Torno clicks, a bookable day, people and a 65 € total',async()=>{
+ const start=new Date();start.setDate(start.getDate()+3);start.setHours(12,0,0,0);
+ const startAt=start.toISOString();
+ const date=(await import('../js/experience-booking.js')).civilDate(startAt,'Europe/Madrid');
+ const r=interactiveRoot();
+ const config={...prod,experiences:{modelado:{classTypeIds:['ct_m']},torno:{classTypeIds:['ct_t']}}};
+ const w=new MiniBooking(r,{config,lang:'es',location:page,storage:memory(),fetcher:async()=>response({data:{sessions:[session({id:'sess_1',classTypeId:'ct_t',title:'Torno',startAt,endAt:new Date(start.getTime()+7200000).toISOString(),unitPriceCents:6500,remainingSeats:2})]},error:null})});
+ await w.load();assert.match(w.body.innerHTML,/<div class="mini-booking__price">45\s*€/);r.tabs[1].click();
+ assert.deepEqual(w.slots.torno.map(s=>s.id),['sess_1']);
+ assert.ok(w.body.innerHTML.includes(`data-date="${date}"`));
+ assert.ok(!w.body.innerHTML.includes(`data-date="${date}" disabled`));
+ assert.match(w.body.innerHTML,/<div class="mini-booking__price">65(?:[,.]00)?\s*€/);
+ const days=r.body.querySelectorAll('[data-date]:not(:disabled)');assert.ok(days.length>0,JSON.stringify(days));
+ const day=days.find(button=>button.getAttribute('data-date')===date);assert.ok(day,JSON.stringify(days));day.onclick();
+ assert.match(w.body.innerHTML,/mini-booking__time/);
+ r.body.querySelectorAll('[data-slot]').find(button=>button.getAttribute('data-slot')==='sess_1').onclick();
+ assert.match(w.body.innerHTML,/mini-booking__people/);
+ assert.match(w.body.innerHTML,/mini-booking__total[\s\S]*65(?:[,.]00)?\s*€/);
+ r.body.querySelectorAll('[data-qty]').find(button=>button.getAttribute('data-qty')==='1').onclick();
+ assert.equal(w.quantity,2);assert.match(w.body.innerHTML,/mini-booking__total[\s\S]*130(?:[,.]00)?\s*€/);
+});
+
+test('switching to Torno while Mesana is loading keeps the loading state and then renders the contract session',async()=>{
+ let answer;const pending=new Promise(resolve=>{answer=resolve;});
+ const start=new Date();start.setDate(start.getDate()+3);start.setHours(12,0,0,0);
+ const config={...prod,experiences:{modelado:{classTypeIds:['ct_m']},torno:{classTypeIds:['ct_t']}}};
+ const r=interactiveRoot();const w=new MiniBooking(r,{config,lang:'es',location:page,storage:memory(),fetcher:async()=>pending});
+ const loading=w.load();await new Promise(resolve=>setImmediate(resolve));r.tabs[1].click();
+ assert.match(w.body.innerHTML,/Buscando fechas/);assert.doesNotMatch(w.body.innerHTML,/0,65|no hay fechas online/i);
+ answer(response({data:{sessions:[session({id:'sess_1',classTypeId:'ct_t',title:'Torno',startAt:start.toISOString(),endAt:new Date(start.getTime()+7200000).toISOString(),unitPriceCents:6500,remainingSeats:1})]},error:null}));await loading;
+ assert.match(w.body.innerHTML,/<div class="mini-booking__price">65(?:[,.]00)?\s*€/);
+ assert.ok(r.body.querySelectorAll('[data-date]:not(:disabled)').length>0);
+});
 
 test('disabled configuration preserves the v2 feed and booking link',async()=>{
  const calls=[];const w=widget({config:{...prod,enabled:false},fetcher:async(url)=>{calls.push(url);return response({data:{slots:[{id:'legacy-1',date:'2099-05-10',startTime:'18:00',available:2,price:45,serviceCategory:'ceramica'}]}});}});
