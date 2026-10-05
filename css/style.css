@@ -3331,3 +3331,9 @@ p {
 .clase-card--primary .clase-card__subtitle { color: rgba(26, 26, 26, 0.85); }
 .clase-card--torno-primary .clase-card__subtitle { color: rgba(255, 250, 238, 0.85); }
 .clase-card--secondary .clase-card__subtitle { opacity: 1; }
+/* Card di Cursos y bonos tutte alte uguali, con il link in fondo. */
+.clases--cursos .clase-card { height: 100%; }
+.clases--cursos .clase-card__cta { margin-top: auto; }
+.clases--cursos .clases__bloques { align-items: stretch; }
+.clases--cursos .clases__bloque { display: flex; }
+.clases--cursos .clase-card { flex: 1; }

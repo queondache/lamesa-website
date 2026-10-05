@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /en/) -->
-  <link rel="stylesheet" href="../css/style.css?v=12">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -314,11 +314,11 @@
       </div>
     </section>
 
-    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Monthly courses">
+    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Courses & hour packs">
       <div class="container">
         <div class="clases__header fade-in">
-          <h2>Monthly courses</h2>
-          <p class="clases__lead">For those who want to keep going: 4 classes a month, same day and time.</p>
+          <h2>Courses & hour packs</h2>
+          <p class="clases__lead">For those who want to keep going: a course with a fixed day and time, or a pack of hours at a lower price.</p>
         </div>
         <div class="clases__bloques">
           <div class="clases__bloque fade-in">
@@ -340,6 +340,18 @@
               <a class="clase-card__cta clase-card__cta--curso" href="/en/clases/semanal-torno.html"
                  onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
                 Sign up · €160/month →
+              </a>
+            </article>
+          </div>
+          <div class="clases__bloque fade-in fade-in--delay-2" id="bono">
+            <article class="clase-card clase-card--secondary" aria-label="Pack of hours">
+              <h3 class="clase-card__title">Pack of hours</h3>
+              <p class="clase-card__subtitle">Flexible schedule · hand-building or wheel</p>
+              <p class="clase-card__body"><strong>8 h · €120<br>16 h · €220<br>24 h · €300</strong></p>
+              <p class="clase-card__body">Buy hours in advance and every hour costs you less.</p>
+              <a class="clase-card__cta clase-card__cta--curso" href="https://wa.me/34711552030?text=Hi%21%20I%27m%20interested%20in%20a%20pack%20of%20hours%20at%20La%20Mesa." target="_blank" rel="noopener noreferrer"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'bono_horas'}); fbq('track', 'Lead', {content_name: 'bono_horas'});">
+                Buy a pack →
               </a>
             </article>
           </div>

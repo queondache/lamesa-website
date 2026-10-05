@@ -50,7 +50,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <!-- Stylesheet (relative path from /ca/) -->
-  <link rel="stylesheet" href="../css/style.css?v=12">
+  <link rel="stylesheet" href="../css/style.css?v=13">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -314,11 +314,11 @@
       </div>
     </section>
 
-    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Cursos mensuals">
+    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Cursos i bons">
       <div class="container">
         <div class="clases__header fade-in">
-          <h2>Cursos mensuals</h2>
-          <p class="clases__lead">Per a qui vol continuar: 4 classes al mes, mateix dia i hora.</p>
+          <h2>Cursos i bons</h2>
+          <p class="clases__lead">Per a qui vol continuar: un curs amb dia i hora fixos, o un bo d'hores a preu reduït.</p>
         </div>
         <div class="clases__bloques">
           <div class="clases__bloque fade-in">
@@ -340,6 +340,18 @@
               <a class="clase-card__cta clase-card__cta--curso" href="/ca/clases/semanal-torno.html"
                  onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
                 Inscriure'm · 160 €/mes →
+              </a>
+            </article>
+          </div>
+          <div class="clases__bloque fade-in fade-in--delay-2" id="bono">
+            <article class="clase-card clase-card--secondary" aria-label="Bo d'hores">
+              <h3 class="clase-card__title">Bo d'hores</h3>
+              <p class="clase-card__subtitle">Horari flexible · modelat o torn</p>
+              <p class="clase-card__body"><strong>8 h · 120 €<br>16 h · 220 €<br>24 h · 300 €</strong></p>
+              <p class="clase-card__body">Compra hores per avançat i cada hora et surt més barata.</p>
+              <a class="clase-card__cta clase-card__cta--curso" href="https://wa.me/34711552030?text=Hola%21%20M%27interessa%20un%20bo%20d%27hores%20de%20La%20Mesa." target="_blank" rel="noopener noreferrer"
+                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'bono_horas'}); fbq('track', 'Lead', {content_name: 'bono_horas'});">
+                Comprar un bo →
               </a>
             </article>
           </div>
