@@ -15,7 +15,7 @@ test('Public production configuration remains disabled with unverified studio ma
  let calls=0;const window={location:{href:'https://lamesabcn.com/experiencias/modelado.html',hostname:'lamesabcn.com'}};
  runInNewContext(configSource,{window,fetch(){calls++;throw new Error('Standby cannot request');}});
  const c=window.LA_MESA_GUEST_BOOKING;
- assert.equal(c.enabled,false);assert.equal(c.releaseApproved,false);assert.equal(c.mode,'production');assert.equal(c.studioSlug,'');
+ assert.equal(c.enabled,false);assert.equal(c.releaseApproved,false);assert.equal(c.mode,'production');assert.equal(c.studioSlug,'');assert.equal(c.clientArea.enabled,false);
  assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.deepEqual(Array.from(c.allowedApiOrigins),['https://mesa-saas-backend.onrender.com']);
  for(const type of ['modelado','torno'])assert.deepEqual(Array.from(c.experiences[type].classTypeIds),[]);
  assert.equal(validateConfig(c,window.location),null);

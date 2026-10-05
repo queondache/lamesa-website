@@ -9,6 +9,7 @@
     apiBase: 'https://mesa-saas-backend.onrender.com/api',
     allowedApiOrigins: ['https://mesa-saas-backend.onrender.com'],
     studioSlug: '',
+    clientArea: { enabled: false, url: 'https://app.mesana.studio/client/la-mesa' },
     experiences: {
       modelado: { classTypeIds: [] },
       torno: { classTypeIds: [] }
