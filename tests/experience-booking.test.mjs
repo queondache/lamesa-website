@@ -109,3 +109,27 @@ test('API timeout and backend seat conflict stay retryable failures instead of c
  const timeout=new GuestApi({...validateConfig(raw,location),timeoutMs:5},async(_url,{signal})=>new Promise((resolve,reject)=>signal.addEventListener('abort',()=>reject(Object.assign(new Error(),{name:'AbortError'})))));
  await assert.rejects(()=>timeout.start({}),/timeout/);
 });
+
+for(const [locale,loadMessage,paymentMessage] of [
+ ['es','No hemos podido cargar las fechas. Vuelve a intentarlo o escríbenos por WhatsApp.','No se pudo abrir el pago. Vuelve a intentar.'],
+ ['en',"We couldn't load the dates. Try again or message us on WhatsApp.",'Unable to open payment. Please retry.'],
+ ['ca','No hem pogut carregar les dates. Torna-ho a provar o escriu-nos per WhatsApp.','No s’ha pogut obrir el pagament. Torna-ho a provar.']
+])test(`Date-loading 503 shows dates and WhatsApp; checkout 503 keeps payment copy (${locale})`,async()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const calls=[];
+ const retry={};const root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:selector=>selector==='button'?retry:null};
+ const formError={hidden:true,textContent:''},close={},pay={};
+ const form={elements:{name:{value:'Example Guest'},email:{value:'example@example.com'}},reportValidity:()=>true,querySelector:()=>pay};
+ const dialog={querySelector:selector=>selector==='form'?form:selector==='[data-close]'?close:formError};
+ globalThis.document={documentElement:{lang:locale},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
+ try{
+  const widget=new GuestWidget(root,validateConfig(raw,location));
+  widget.api=new GuestApi(widget.config,async(url,options)=>{calls.push({url,method:options.method||'GET'});return {ok:false,status:503,json:async()=>({data:null,error:{code:'provider_unavailable'}})};});
+  await widget.load();
+  const alert=root.innerHTML.match(/<p role="alert">([\s\S]*?)<\/p>/)?.[1];assert.ok(alert,'Load failure renders an alert');
+  assert.equal(alert.replace(/<[^>]+>/g,'').replace(/&#39;/g,"'"),loadMessage);
+  assert.match(alert,/<a href="https:\/\/wa.me\/34711552030"[^>]*>WhatsApp<\/a>/);assert.match(root.innerHTML,/data-action="load"/);assert.equal(typeof retry.onclick,'function');
+  widget.sessions=[session];widget.selectedId=session.id;widget.dialog=dialog;await widget.submit();
+  assert.equal(formError.textContent,paymentMessage);assert.equal(formError.hidden,false);assert.equal(widget.busy,false);assert.equal(pay.disabled,false);
+  assert.deepEqual(calls.map(call=>call.method),['GET','POST']);assert.ok(calls[0].url.includes('/guest-sessions?'));assert.ok(calls[1].url.endsWith('/guest-checkouts'));
+ }finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+});
