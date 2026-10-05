@@ -3341,3 +3341,16 @@ p {
 /* Giro UX 05/10 (4): in homepage una sola esperienza, card centrata e non a tutta larghezza. */
 #experiencias .clases__bloques { justify-content: center; }
 #experiencias .clases__bloque { max-width: 720px; width: 100%; }
+
+/* Pagina esperienza per turisti (05/10): blocchi «Visiting Barcelona?», passi, chi ti accoglie. */
+.exp-proof { margin-top: 12px; font-weight: 700; }
+.exp-proof a, .exp-hosts__reviews a, .exp-visit__cta a { color: var(--blue); }
+.exp-visit, .exp-steps, .exp-hosts { padding-top: 0; }
+.exp-visit__cta { margin-top: 16px; font-weight: 700; }
+.exp-steps__list { margin: 0; padding-left: 1.25em; line-height: 1.7; }
+.exp-steps__list li { margin-bottom: 6px; }
+.exp-hosts__reviews { margin-top: 12px; font-weight: 700; }
+.exp-steps__list { list-style: decimal; }
+/* Contrasti pagine di prenotazione: sottotitolo blu pieno (0,7 dava 4,4:1), nota grigia più scura (3,4:1). */
+.turno-hero__subtitle { opacity: 1; }
+.turno-nota p { color: #4A4A4A; }

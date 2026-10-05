@@ -14,7 +14,7 @@
   var WA_FALLBACK = 'https://wa.me/34711552030?text=Hola!%20Quiero%20reservar%20una%20clase%20en%20La%20Mesa';
 
   var LANG = (document.documentElement.lang || 'es').slice(0, 2).toLowerCase();
-  if (LANG !== 'en' && LANG !== 'ca') LANG = 'es';
+  if (LANG !== 'en' && LANG !== 'ca' && LANG !== 'pt') LANG = 'es';
 
   var L = {
     es: {
@@ -83,6 +83,28 @@
       semanalFourSessions: '4 sessions consecutives',
       waNoTime: 'Escriu-nos per WhatsApp si cap horari t\u2019encaixa.',
     },
+    pt: {
+      loading: 'Carregando datas disponíveis…',
+      choose: 'Escolha uma data',
+      spots: '{n} vagas',
+      spot1: '1 vaga',
+      book: 'Reservar →',
+      empty: 'Sem datas disponíveis no momento.',
+      whatsapp: 'Escreva para nós no WhatsApp →',
+      error: 'Erro ao carregar. <a href="' + WA_FALLBACK + '" target="_blank" rel="noopener">Escreva para nós no WhatsApp</a>.',
+      semanalAvailable: 'Disponível',
+      semanalFull: 'Esgotado no momento',
+      semanalStartLabel: 'Começa em',
+      semanalPick: 'Escolha a sua primeira data',
+      semanalBook: 'Pagar e reservar →',
+      formName: 'Nome e sobrenome',
+      formEmail: 'E-mail',
+      formPhone: 'Telefone (opcional)',
+      formLoading: 'Redirecionando para o pagamento…',
+      formError: 'Não foi possível continuar. Tente de novo ou escreva para nós no WhatsApp.',
+      semanalFourSessions: '4 aulas consecutivas',
+      waNoTime: 'Escreva para nós no WhatsApp se nenhum horário servir.',
+    },
   };
   var t = L[LANG];
 
@@ -90,16 +112,19 @@
     es: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
     en: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     ca: ['Dg', 'Dl', 'Dt', 'Dc', 'Dj', 'Dv', 'Ds'],
+    pt: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
   };
   var DAYS_LONG = {
     es: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
     en: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
     ca: ['diumenge', 'dilluns', 'dimarts', 'dimecres', 'dijous', 'divendres', 'dissabte'],
+    pt: ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'],
   };
   var MONTHS = {
     es: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
     en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     ca: ['gen', 'feb', 'març', 'abr', 'maig', 'juny', 'jul', 'ag', 'set', 'oct', 'nov', 'des'],
+    pt: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
   };
 
   function parseIso(iso) {
@@ -199,7 +224,7 @@
   function renderSueltaError(cards) {
     cards.forEach(function (c) {
       var body = c.querySelector('.suelta-card__body');
-      if (body) body.innerHTML = '<p style="color:#555; font-size:0.9rem; padding:8px 0;">' + t.error + '</p>';
+      if (body) body.innerHTML = '<p style="color:inherit; font-size:0.9rem; padding:8px 0;">' + t.error + '</p>';
     });
   }
 
@@ -410,7 +435,7 @@
   function renderSemanalError(gridEl) {
     gridEl.innerHTML =
       '<div style="grid-column:1/-1; text-align:center; padding:24px 16px;">' +
-      '<p style="color:#555;">' + t.error + '</p></div>';
+      '<p style="color:inherit;">' + t.error + '</p></div>';
   }
 
   function loadSemanal(gridEl) {

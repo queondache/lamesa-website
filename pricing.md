@@ -36,12 +36,14 @@
 - Price: €45.
 - Includes: one drop-in hand-building session of 2 hours, all materials and firing. No monthly commitment.
 - Availability: Tuesday to Saturday, at the time you prefer within opening hours. If your time is not shown online, ask via WhatsApp.
+- Visitors: taught in English, Spanish or Portuguese; glazes included; piece ready 15 days after the class or shipped home (price on request); free cancellation up to 24 h before; from 8 years old; wheelchair accessible.
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
 - Price: €65.
 - Includes: one private wheel-throwing session of 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
 - Availability: Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability. If your time is not shown online, ask via WhatsApp.
+- Visitors: taught in English, Spanish or Portuguese; glazes included; piece ready 15 days after the class or shipped home (price on request); free cancellation up to 24 h before; from 8 years old; wheelchair accessible.
 - Booking: online via Stripe Checkout.
 
 ### Intro al Torno
