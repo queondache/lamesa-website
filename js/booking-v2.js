@@ -9,6 +9,7 @@
 (function () {
   'use strict';
 
+  if (window.LA_MESA_GUEST_BOOKING?.bookingFlow === 'whatsapp') return;
   if (window.LA_MESA_CLIENT_AREA_URL && window.LA_MESA_CLIENT_AREA_URL(window.LA_MESA_GUEST_BOOKING?.clientArea)) return;
 
   var API_BASE = 'https://la-mesa-v2-backend.onrender.com';

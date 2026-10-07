@@ -28,10 +28,10 @@
 
     var language = (document.documentElement.lang || 'es').slice(0, 2).toLowerCase();
     var copy = {
-      es: 'Inscríbete y paga desde tu área de cliente',
-      en: 'Enrol and pay from your client area',
-      ca: 'Inscriu-te i paga des de la teva àrea de client',
-      pt: 'Inscreva-se e pague na sua área de cliente'
+      es: 'Accede a tus cursos desde tu área de cliente',
+      en: 'Access your courses in your client area',
+      ca: 'Accedeix als teus cursos des de la teva àrea de client',
+      pt: 'Acesse seus cursos na sua área de cliente'
     };
     var block = document.createElement('div');
     var message = document.createElement('p');

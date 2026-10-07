@@ -11,17 +11,13 @@ const configSource=read('js/booking-config.js');
 const languages=['es','en','ca'],types=['modelado','torno','workshops'];
 const prefix=lang=>lang==='es'?'':`${lang}/`;
 
-test('Public production configuration remains disabled with unverified studio mappings and zero requests',()=>{
- let calls=0;const window={location:{href:'https://lamesabcn.com/experiencias/modelado.html',hostname:'lamesabcn.com'}};
- runInNewContext(configSource,{window,fetch(){calls++;throw new Error('Standby cannot request');}});
- const c=window.LA_MESA_GUEST_BOOKING;
- assert.equal(c.enabled,false);assert.equal(c.releaseApproved,false);assert.equal(c.mode,'production');assert.equal(c.studioSlug,'');assert.equal(c.clientArea.enabled,false);
- assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.deepEqual(Array.from(c.allowedApiOrigins),['https://mesa-saas-backend.onrender.com']);
- for(const type of ['modelado','torno'])assert.deepEqual(Array.from(c.experiences[type].classTypeIds),[]);
- assert.equal(validateConfig(c,window.location),null);
- const old={window:globalThis.window,document:globalThis.document,fetch:globalThis.fetch};
- try{globalThis.window=window;globalThis.document={querySelector(){throw new Error('Standby cannot initialize');},querySelectorAll(){throw new Error('Standby cannot initialize');}};globalThis.fetch=()=>{calls++;throw new Error('Standby cannot request');};boot();assert.equal(calls,0);}
- finally{for(const [key,value] of Object.entries(old)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+test('Public production configuration activates read-only Mesana calendar and client area',()=>{
+ const window={location:{href:'https://lamesabcn.com/experiencias/modelado.html',hostname:'lamesabcn.com'}};
+ runInNewContext(configSource,{window});const c=window.LA_MESA_GUEST_BOOKING;
+ assert.equal(c.enabled,true);assert.equal(c.releaseApproved,true);assert.equal(c.bookingFlow,'whatsapp');assert.equal(c.studioSlug,'la-mesa');assert.equal(c.clientArea.enabled,true);
+ assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.ok(validateConfig(c,window.location));
+ assert.equal(c.experiences.modelado.expectedUnitPriceCents,4500);assert.equal(c.experiences.torno.expectedUnitPriceCents,6500);
+ assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
 });
 test('Static production configuration preserves explicitly injected loopback sandbox',()=>{
  const sandbox={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado']},torno:{classTypeIds:['ct_guest_torno']}}};
@@ -34,12 +30,12 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   assert.match(source,/href="https:\/\/wa.me\/34711552030"[^>]*rel="noopener noreferrer"/);
   assert.match(source,/<meta name="robots" content="index,follow">/);
   if(type!=='workshops'){
-   assert.match(source,/data-booking-state="standby"/);
-   assert.ok(source.indexOf('src="/js/booking-config.js"')<source.indexOf('src="/js/experience-booking.js"'));
+   assert.match(source,/data-booking-state="standby"/);assert.doesNotMatch(source,/pay online|paga online|paga en línia/);
+   assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));
    assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
- for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js"')<source.indexOf('src="/js/experience-booking.js"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+ for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
 });
 test('Home discovery and sitemap include nine localized canonical pages while retaining legacy routes',()=>{
  const sitemap=read('sitemap.xml');const nodes=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m=>m[1]);
@@ -51,8 +47,8 @@ test('Home discovery and sitemap include nine localized canonical pages while re
   assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
- assert.match(read('llms.txt'),/online booking is disabled/);// La pagina /clases/suelta.html continua a vendere online (decisione di Andrea 05/10): llms.txt deve dirlo.
- assert.match(read('llms.txt'),/Clase Suelta is booked online at https:\/\/lamesabcn\.com\/clases\/suelta\.html/);
+ assert.match(read('llms.txt'),/public calendars show actual Mesana dates/);
+ assert.match(read('llms.txt'),/Public Modelado is €45; the €15 manual class is excluded/);
 });
 test('Pages publication excludes fixture and internal material; one stable cheap Node22 check',()=>{
  const config=read('_config.yml');for(const path of ['dev/','tests/','docs/','demo/','.orchestratore/','node_modules/','package.json','package-lock.json','.github/'])assert.ok(config.split('\n').some(line=>line.trim()===`- ${path}`));
