@@ -42,11 +42,12 @@
     this.tabs = Array.prototype.slice.call(root.querySelectorAll('[data-kind]'));
     this.location = options.location || global.location;
     this.fetcher = options.fetcher || function () { return global.fetch.apply(global, arguments); };
-    this.storage = options.storage || (typeof global.sessionStorage === 'undefined' ? null : global.sessionStorage);
     this.lang = (options.lang || (typeof document === 'undefined' ? 'es' : document.documentElement.lang) || 'es').slice(0, 2).toLowerCase();
     if (LANGS.indexOf(this.lang) < 0) this.lang = 'es';
     this.t = COPY[this.lang];
     this.rawConfig = Object.prototype.hasOwnProperty.call(options, 'config') ? options.config : (global.LA_MESA_GUEST_BOOKING || null);
+    this.storage = null;
+    this.options = options;
     this.mode = 'pending';
     this.modules = options.modules || null;
     this.config = null;
@@ -75,7 +76,10 @@
       this.modules = modules;
       this.config = config;
       this.api = new modules.GuestApi(config, this.fetcher);
-      this.store = config.bookingFlow === 'whatsapp' ? null : (this.storage ? new modules.BookingStorage(this.storage) : null);
+      if (config.bookingFlow !== 'whatsapp') {
+        this.storage = this.options.storage || (typeof global.sessionStorage === 'undefined' ? null : global.sessionStorage);
+        this.store = this.storage ? new modules.BookingStorage(this.storage) : null;
+      }
       this.mode = 'mesana';
     } catch (error) {
       console.error('[mini-booking] configurazione Mesana non valida', error);

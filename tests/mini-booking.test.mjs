@@ -121,6 +121,20 @@ test('WhatsApp calendar filters exact public prices and never writes a checkout'
  }
 });
 
+test('WhatsApp mini calendar loads when browser storage access throws',async()=>{
+ const config={...prod,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
+ const original=Object.getOwnPropertyDescriptor(globalThis,'sessionStorage');let browserReads=0,optionReads=0;const calls=[];
+ Object.defineProperty(globalThis,'sessionStorage',{configurable:true,get(){browserReads++;throw new Error('SecurityError');}});
+ try{
+  const options={config,lang:'es',location:page,fetcher:async(url,request={})=>{calls.push({url,method:request.method||'GET'});return response({data:{sessions:[session()]},error:null});},get storage(){optionReads++;throw new Error('storage_unavailable');}};
+  const w=new MiniBooking(root(),options);await w.load();
+  assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.equal(w.store,null);
+  assert.deepEqual(calls.map(call=>call.method),['GET']);assert.match(calls[0].url,/calendar-sessions\?from=/);
+  w.selectedId='session-1';w.date='2099-05-10';w.render();assert.match(w.body.innerHTML,/wa.me\/34711552030\?text=/);
+  assert.equal(browserReads,0);assert.equal(optionReads,0);
+ }finally{if(original)Object.defineProperty(globalThis,'sessionStorage',original);else delete globalThis.sessionStorage;}
+});
+
 test('untrusted session title and id are escaped before innerHTML',async()=>{
  const attack='<img src=x onerror=alert(1)>';const badId='"><svg/onload=alert(1)>';const w=widget({fetcher:async()=>response({data:{sessions:[session({id:badId,title:attack})]},error:null})});await w.load();w.date='2099-05-10';w.selectedId=badId;w.render();
  assert.ok(!w.body.innerHTML.includes(attack));assert.ok(!w.body.innerHTML.includes('"><svg'));assert.match(w.body.innerHTML,/&lt;img|&quot;&gt;&lt;svg/);
