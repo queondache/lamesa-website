@@ -3,10 +3,10 @@
 > La Mesa is a ceramics studio and multidisciplinary creative lab located in La Barceloneta, Barcelona. We offer weekly classes, drop-in sessions, wheel throwing courses, creative workshops and private sessions. Tone: welcoming, informal, community-focused. We are hosts, not teachers.
 
 ## Services
-- Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
-- Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Book online via Stripe Checkout.
-- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. Book online via Stripe Checkout.
-- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. Book online via Stripe Checkout.
+- Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
+- Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
+- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
+- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
 - Intro al Torno (wheel intro course): €90 — 2 sessions of 2h, max 2 people. Book via WhatsApp.
 - Coworking Torno (open wheel access for experienced potters): €20/hour — minimum 2 hours. Book via WhatsApp.
 - Bono de horas / Taller Flex (flexible hours, hand-building or wheel): 8h €120, 16h €220, 24h €300. Buy via WhatsApp (https://wa.me/34711552030).
@@ -17,9 +17,9 @@
 All materials and firings included. High-temperature clay. Full machine-readable pricing: https://lamesabcn.com/pricing.md
 
 ## Booking
-- Online (Stripe Checkout): Taller Semanal (Modelado/Torno) and Clase Suelta (Modelado/Torno).
-- New direct single-class pages: online booking is disabled while the booking system is being prepared. Ask the studio via WhatsApp about dates and availability; no online availability is published on these pages.
-- Clase Suelta is booked online at https://lamesabcn.com/clases/suelta.html.
+- Weekly classes: enrollment and account access use the Mesana client area at https://app.mesana.studio/client/la-mesa.
+- Single classes: the public calendars show actual Mesana dates, prices and indicative available places. Choose a session and send a WhatsApp request; La Mesa confirms availability. No online checkout is offered.
+- Clase Suelta calendar: https://lamesabcn.com/clases/suelta.html. Public Modelado is €45; the €15 manual class is excluded.
 - WhatsApp (https://wa.me/34711552030): Intro al Torno, Coworking Torno, Taller Flex, creative workshops and private sessions.
 
 ## Guides (blog, ES / EN / CA)
@@ -34,8 +34,8 @@ All materials and firings included. High-temperature clay. Full machine-readable
 - Pottery team building guide (why it works, how to organise it): https://lamesabcn.com/blog/pottery-team-building-barcelona.html · ES https://lamesabcn.com/blog/team-building-ceramica-barcelona.html · CA https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html
 
 ## Pages
-- Direct hand-building class (online booking in preparation): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
-- Direct pottery-wheel class (online booking in preparation): https://lamesabcn.com/experiencias/torno.html · EN https://lamesabcn.com/en/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html
+- Direct hand-building class (Mesana dates and WhatsApp requests): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
+- Direct pottery-wheel class (Mesana dates and WhatsApp requests): https://lamesabcn.com/experiencias/torno.html · EN https://lamesabcn.com/en/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html
 - Workshop agenda (no events published on this page): https://lamesabcn.com/experiencias/workshops.html · EN https://lamesabcn.com/en/experiencias/workshops.html · CA https://lamesabcn.com/ca/experiencias/workshops.html
 - Clase Suelta (drop-in): https://lamesabcn.com/clases/suelta.html · EN https://lamesabcn.com/en/clases/suelta.html
 - Taller Semanal Modelado: https://lamesabcn.com/clases/semanal-modelado.html
@@ -64,7 +64,7 @@ Closed Monday and Sunday. Same hours as the Google Business Profile (Europe/Madr
 - Friday: 11:00–19:00
 - Saturday: 11:00–16:00
 
-Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Book online; if the preferred time is not shown, ask via WhatsApp.
+Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Request confirmation via WhatsApp for a published date; if the preferred time is not shown, ask the studio.
 
 ## Languages
 Website: Spanish (primary), English, Catalan, Portuguese. Classes are taught in English, Spanish and Portuguese.

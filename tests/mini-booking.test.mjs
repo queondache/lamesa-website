@@ -42,7 +42,7 @@ test('contract feed supports Torno clicks, a bookable day, people and a 65 € t
  const r=interactiveRoot();
  const config={...prod,experiences:{modelado:{classTypeIds:['ct_m']},torno:{classTypeIds:['ct_t']}}};
  const w=new MiniBooking(r,{config,lang:'es',location:page,storage:memory(),fetcher:async()=>response({data:{sessions:[session({id:'sess_1',classTypeId:'ct_t',title:'Torno',startAt,endAt:new Date(start.getTime()+7200000).toISOString(),unitPriceCents:6500,remainingSeats:2})]},error:null})});
- await w.load();assert.match(w.body.innerHTML,/<div class="mini-booking__price">45\s*€/);r.tabs[1].click();
+ await w.load();assert.match(w.body.innerHTML,/<div class="mini-booking__price">—/);r.tabs[1].click();
  assert.deepEqual(w.slots.torno.map(s=>s.id),['sess_1']);
  assert.ok(w.body.innerHTML.includes(`data-date="${date}"`));
  assert.ok(!w.body.innerHTML.includes(`data-date="${date}" disabled`));
@@ -69,11 +69,10 @@ test('switching to Torno while Mesana is loading keeps the loading state and the
  assert.ok(r.body.querySelectorAll('[data-date]:not(:disabled)').length>0);
 });
 
-test('disabled configuration preserves the v2 feed and booking link',async()=>{
- const calls=[];const w=widget({config:{...prod,enabled:false},fetcher:async(url)=>{calls.push(url);return response({data:{slots:[{id:'legacy-1',date:'2099-05-10',startTime:'18:00',available:2,price:45,serviceCategory:'ceramica'}]}});}});
- await w.load();w.date='2099-05-10';w.slotId='legacy-1';w.render();
- assert.equal(w.mode,'v2');assert.deepEqual(calls,['https://la-mesa-v2-backend.onrender.com/bookings/public-slots?service=suelta&days=90']);
- assert.match(w.body.innerHTML,/https:\/\/app\.lamesabcn\.com\/book\.html\?slot_id=legacy-1/);
+test('invalid configuration shows WhatsApp without contacting the old system',async()=>{
+ const calls=[];const w=widget({config:{...prod,bookingFlow:'whatsapp',enabled:false},fetcher:async(url)=>{calls.push(url);throw new Error('unexpected fetch');}});
+ const old=console.error;console.error=()=>{};
+ try{await w.load();assert.equal(w.mode,'unavailable');assert.deepEqual(calls,[]);assert.match(w.body.innerHTML,/wa.me\/34711552030/);assert.doesNotMatch(w.body.innerHTML,/book.html|checkout/);}finally{console.error=old;}
 });
 
 test('valid Mesana configuration loads no more than 90 days and never calls v2',async()=>{
@@ -109,21 +108,17 @@ test('full Mesana sessions never make a day bookable',async()=>{
  assert.deepEqual(w.slots.mesa,[]);assert.ok(!w.body.innerHTML.includes('data-date="2099-05-10"'));
 });
 
-function legacyMarkup(lang){
- const copy={
-  es:{note:'2 horas · todos los niveles',per:'por persona',date:'Elige tu fecha',time:'Elige la hora',seats:'plazas',book:'Continuar a la reserva',prev:'Mes anterior',next:'Mes siguiente',available:'disponible',unavailable:'no disponible',pay:'Pago seguro con tarjeta · sin crear una cuenta'},
-  en:{note:'2 hours · all levels',per:'per person',date:'Choose your date',time:'Choose the time',seats:'places',book:'Continue to booking',prev:'Previous month',next:'Next month',available:'available',unavailable:'unavailable',pay:'Secure card payment · no account needed'},
-  ca:{note:'2 hores · tots els nivells',per:'per persona',date:'Tria la data',time:'Tria l’hora',seats:'places',book:'Continua a la reserva',prev:'Mes anterior',next:'Mes següent',available:'disponible',unavailable:'no disponible',pay:'Pagament segur amb targeta · sense crear un compte'},
-  pt:{note:'2 horas · todos os níveis',per:'por pessoa',date:'Escolha a sua data',time:'Escolha o horário',seats:'vagas',book:'Continuar para a reserva',prev:'Mês anterior',next:'Mês seguinte',available:'disponível',unavailable:'indisponível',pay:'Pagamento seguro com cartão · sem criar conta'}
- }[lang];
- let cells='';for(let i=0;i<7;i++)cells+='<span class="mini-booking__weekday">'+new Intl.DateTimeFormat(lang,{weekday:'narrow',timeZone:'UTC'}).format(new Date(Date.UTC(2026,0,5+i)))+'</span>';cells+='<span></span>'.repeat((new Date(Date.UTC(2099,4,1)).getUTCDay()+6)%7);
- for(let day=1;day<=31;day++){const iso='2099-05-'+String(day).padStart(2,'0'),available=day===10,label=new Intl.DateTimeFormat(lang,{dateStyle:'long',timeZone:'UTC'}).format(new Date(iso+'T12:00:00Z'));cells+='<button type="button" class="mini-booking__day'+(available?' is-selected':'')+'" data-date="'+iso+'"'+(available?'':' disabled')+' aria-pressed="'+available+'" aria-label="'+label+' · '+(available?copy.available:copy.unavailable)+'">'+day+'</button>';}
- let monthLabel=new Intl.DateTimeFormat(lang,{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date('2099-05-01T12:00:00Z'));monthLabel=monthLabel.charAt(0).toUpperCase()+monthLabel.slice(1);
- return '<div class="mini-booking__price">'+(lang==='en'?'€45':'45 €')+'<small>'+copy.per+' · '+copy.note+'</small></div><h2 class="mini-booking__title">'+copy.date+'</h2><div class="mini-booking__month"><strong>'+monthLabel+'</strong><div><button type="button" data-month="-1" aria-label="'+copy.prev+'" disabled>‹</button><button type="button" data-month="1" aria-label="'+copy.next+'" disabled>›</button></div></div><div class="mini-booking__calendar" role="group" aria-label="'+copy.date+'">'+cells+'</div><div class="mini-booking__field">'+copy.time+'</div><div class="mini-booking__times" role="group" aria-label="'+copy.time+'"><button type="button" class="mini-booking__time is-selected" data-slot="legacy-1" aria-pressed="true">11:00<small>2 '+copy.seats+'</small></button></div><a class="mini-booking__cta" href="https://app.lamesabcn.com/book.html?slot_id=legacy-1" data-action="book">'+copy.book+' →</a><p class="mini-booking__note">'+copy.pay+'</p>';
-}
-
-test('v2 renders byte-for-byte legacy markup and booking link in every locale',async()=>{
- for(const lang of ['es','en','ca','pt']){const w=widget({config:{...prod,enabled:false},lang,fetcher:async()=>response({data:{slots:[{id:'legacy-1',date:'2099-05-10',startTime:'11:00:00',available:2,price:45,serviceCategory:'ceramica'}]}})});await w.load();w.date='2099-05-10';w.selectedId='legacy-1';w.render();assert.equal(w.body.innerHTML,legacyMarkup(lang),lang);}
+test('WhatsApp calendar filters exact public prices and never writes a checkout',async()=>{
+ const config={...prod,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
+ for(const lang of ['es','en','ca','pt']){
+  const calls=[];const w=widget({config,lang,fetcher:async(url,options={})=>{calls.push({url,method:options.method||'GET'});return response({data:{sessions:[session(),session({id:'manual',unitPriceCents:1500}),session({id:'full',remainingSeats:0})]},error:null});}});
+  await w.load();assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.equal(calls.length,1);assert.match(calls[0].url,/calendar-sessions\?from=/);assert.equal(calls[0].method,'GET');
+  w.selectedId='session-1';w.date='2099-05-10';w.quantity=2;w.render();
+  const url=w.body.innerHTML.match(/href="(https:\/\/wa.me\/34711552030\?text=[^"]+)/)?.[1];assert.ok(url,lang);
+  const message=new URL(url).searchParams.get('text');assert.match(message,/2099-05-10/);assert.match(message,/18:00/);assert.match(message,/2 /);
+  assert.doesNotMatch(w.body.innerHTML,/mini-booking__form|data-action="book"|checkout.stripe|15[,.]00/);
+  await assert.rejects(()=>w.checkout('Name','a@example.com'),/session_unavailable/);assert.equal(calls.length,1);
+ }
 });
 
 test('untrusted session title and id are escaped before innerHTML',async()=>{
@@ -131,15 +126,15 @@ test('untrusted session title and id are escaped before innerHTML',async()=>{
  assert.ok(!w.body.innerHTML.includes(attack));assert.ok(!w.body.innerHTML.includes('"><svg'));assert.match(w.body.innerHTML,/&lt;img|&quot;&gt;&lt;svg/);
 });
 
-test('invalid allowedApiOrigins falls back to v2 and logs an error',async()=>{
- const errors=[];const calls=[];const invalid={...prod,allowedApiOrigins:['https://other.example']};const old=console.error;console.error=(...args)=>errors.push(args);
- try{assert.equal(bookingMode(invalid,page),'v2');const w=widget({config:invalid,fetcher:async(url)=>{calls.push(url);return response({data:{slots:[]}});}});await w.load();assert.match(calls[0],/public-slots/);assert.ok(errors.length>=1);}finally{console.error=old;}
+test('invalid allowedApiOrigins does not fall back to the old system',async()=>{
+ const errors=[];const calls=[];const invalid={...prod,bookingFlow:'whatsapp',allowedApiOrigins:['https://other.example']};const old=console.error;console.error=(...args)=>errors.push(args);
+ try{assert.equal(bookingMode(invalid,page),'unavailable');const w=widget({config:invalid,fetcher:async(url)=>{calls.push(url);throw new Error('unexpected fetch');}});await w.load();assert.deepEqual(calls,[]);assert.match(w.body.innerHTML,/wa.me\/34711552030/);assert.ok(errors.length>=1);}finally{console.error=old;}
 });
 
 test('all localized pages load shared config before the classic widget',()=>{
- for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/booking-config\.js\?v=2[\s\S]*<script src="[^"]*mini-booking\.js\?v=2"[^>]*defer/);assert.doesNotMatch(html,/type="module" src="[^"]*mini-booking\.js/);}
+ for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/booking-config\.js\?v=3[\s\S]*<script src="[^"]*mini-booking\.js\?v=3"[^>]*defer/);assert.doesNotMatch(html,/type="module" src="[^"]*mini-booking\.js/);}
 });
 
-test('browser script keeps v2 classic and uses no ES2022 syntax',()=>{
+test('browser script remains classic and uses no ES2022 syntax',()=>{
  const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
 });

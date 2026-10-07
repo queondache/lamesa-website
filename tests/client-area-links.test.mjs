@@ -19,12 +19,12 @@ const baseline = {
   'en/index.html': 'fcedaf7320c09a8bc7bf84aec5e21d3720d6f0866ae25e8b45859cf4c554fe0a',
   'ca/index.html': 'a8fb0f3c2369f83c77e60c52b79d7cd2ff21cf3148e8ba3e8ee11fdf29a652f5',
   'pt/index.html': '3287833aef429ddf5df3753cd61897e777d858b158957f75c4207203479f6f1a',
-  'clases/semanal-modelado.html': '4ec979fe4cf339f3e6945cdf6b06eb9f020f45e0aba9819e412de3716c9e139b',
-  'clases/semanal-torno.html': '90bf345e146a7922e18a95caf0174c6a1846d9803af5f9dc0b83c0f873644995',
-  'en/clases/semanal-modelado.html': '9bc8b12509d08dd2b8e7a4d18a6369982ff94727613d3652eccfc6044099272a',
-  'en/clases/semanal-torno.html': 'c9df7f950938e56c7a69430c0e0ef980d8a2889d30ceb7cfa25eb619d1194c85',
-  'ca/clases/semanal-modelado.html': 'b6ff35339f5a06c1620e595f85937be358aa8e35850a1c54836896beb4454207',
-  'ca/clases/semanal-torno.html': '743e7147489d8fdf62ba133242ed9cef148526aa74d2323effd2e3be2caa374f'
+  'clases/semanal-modelado.html': 'fc32123da05c74ff55688f0f53f64194575f831899315d175ef513bd8cc7e5ea',
+  'clases/semanal-torno.html': 'fb74a04e18466cacf13cb89ae578cf3f1ccf302641ee2deaea11343b78290bf0',
+  'en/clases/semanal-modelado.html': 'e45acbbca1086a29567208aac2fb8ee83168d45c51e9f8eca742283beb669781',
+  'en/clases/semanal-torno.html': '952d50ce5de06e5a1655683e42ee48116926f48c2d5a5f1166802d3e5f7939e1',
+  'ca/clases/semanal-modelado.html': '61ab6b66dc32467dea1bd231949435431cea373e26146e9cfbc60c7ffbdb7b93',
+  'ca/clases/semanal-torno.html': 'b28eae2ca8724bb08d4e79adfdc1c4005ed5ac94bbad4dbec2e4fe149cd25ba8'
 };
 
 function page(config, lang = 'es') {
@@ -43,24 +43,18 @@ function page(config, lang = 'es') {
   return {button, grid, window, queries, requests};
 }
 
-test('Public configuration keeps the client area off with zero DOM access and requests', () => {
-  const window = {};
-  runInNewContext(configSource, {window});
-  assert.equal(window.LA_MESA_GUEST_BOOKING.clientArea.enabled, false);
-  assert.equal(window.LA_MESA_GUEST_BOOKING.clientArea.url, url);
-  const result = page(window.LA_MESA_GUEST_BOOKING);
-  assert.equal(result.queries, 0);
-  assert.equal(result.requests, 0);
-  assert.equal(result.button.href, 'https://wa.me/original');
-  assert.deepEqual(result.grid.children, ['original']);
+test('Public configuration enables the client area without network requests', () => {
+ const window={};runInNewContext(configSource,{window});assert.equal(window.LA_MESA_GUEST_BOOKING.clientArea.enabled,true);
+ const result=page(window.LA_MESA_GUEST_BOOKING);
+ assert.equal(result.requests,0);assert.equal(result.button.href,url);assert.equal(result.grid.children.length,1);
 });
 
 test('Enabled client area changes bono and course block in every supported language', () => {
   for (const [lang, copy] of Object.entries({
-    es: 'Inscríbete y paga desde tu área de cliente',
-    en: 'Enrol and pay from your client area',
-    ca: 'Inscriu-te i paga des de la teva àrea de client',
-    pt: 'Inscreva-se e pague na sua área de cliente'
+    es: 'Accede a tus cursos desde tu área de cliente',
+    en: 'Access your courses in your client area',
+    ca: 'Accedeix als teus cursos des de la teva àrea de client',
+    pt: 'Acesse seus cursos na sua área de cliente'
   })) {
     const {button, grid, requests} = page({clientArea: {enabled: true, url}}, lang);
     assert.equal(button.href, url);
@@ -90,13 +84,12 @@ test('HTTP and foreign hosts leave the page untouched and do not start booking',
 test('Touched HTML is byte-identical after removing only the new marker and script tags', () => {
   for (const path of [...homes, ...courses]) {
     const source = read(path);
-    const normalized = source.replace(' data-client-area="bono"', '').replace(/^  <script src="(?:\.\.\/){0,2}js\/booking-config\.js" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){0,2}js\/client-area-links\.js" data-cookieconsent="ignore" defer><\/script>\n/m, '');
+    const normalized = source.replace(' data-client-area="bono"', '').replace(/^  <script src="(?:\.\.\/){0,2}js\/booking-config\.js" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){0,2}js\/client-area-links\.js" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){1,2}js\/booking-v2\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '');
     assert.equal(createHash('sha256').update(normalized).digest('hex'), baseline[path], path);
     assert.match(source, /src="(?:\.\.\/){0,2}js\/client-area-links\.js"/);
     if (homes.includes(path)) assert.match(source, /data-client-area="bono"/);
     else {
-      assert.match(source, /src="(?:\.\.\/){1,2}js\/booking-v2\.js\?v=4"/);
-      assert.ok(source.indexOf('client-area-links.js') < source.indexOf('booking-v2.js'));
+      assert.doesNotMatch(source, /src="(?:\.\.\/){1,2}js\/booking-v2\.js/);
     }
   }
 });

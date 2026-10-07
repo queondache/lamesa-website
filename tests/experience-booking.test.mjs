@@ -157,3 +157,35 @@ test('Cancellation policy gives 24-hour free cancellation in every locale',()=>{
   }
  }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
+
+test('WhatsApp experiences read calendar only, filter 15 EUR, and render no payment action',async()=>{
+ const {publicSessions,whatsappRequestUrl}=await import('../js/experience-booking.js');
+ const config=validateConfig({...raw,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}},location);
+ assert.ok(config);
+ const wrong={...session,id:'manual',unitPriceCents:1500};
+ assert.deepEqual(publicSessions([session,wrong,{...session,id:'full',remainingSeats:0}],config.experiences.modelado).map(s=>s.id),['s1']);
+ for(const locale of ['es','en','ca','pt']){
+  const message=new URL(whatsappRequestUrl(session,2,locale,'modelado')).searchParams.get('text');
+  assert.match(message,/2026-10-25/);assert.match(message,/02:30/);assert.match(message,/2 /);
+ }
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const calls=[];
+ const root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:()=>null,querySelectorAll:()=>[]};
+ globalThis.document={documentElement:{lang:'es'},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
+ try{
+  const widget=new GuestWidget(root,config);widget.month='2026-10';
+  widget.api=new GuestApi(config,async(url,options)=>{calls.push({url,method:options.method||'GET'});return{ok:true,json:async()=>({data:{sessions:[session,wrong]},error:null})};});
+  await widget.init();assert.deepEqual(calls.map(c=>c.method),['GET']);assert.match(calls[0].url,/calendar-sessions\?from=/);
+  assert.equal(globalThis.sessionStorage.getItem('lamesa.guest.booking.v1'),undefined);
+  assert.match(root.innerHTML,/wa.me\/34711552030\?text=/);assert.doesNotMatch(root.innerHTML,/data-action="checkout"|guest-dialog|15,00|15\.00/);
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});
+
+test('WhatsApp experience failure still offers contact without legacy requests or storage writes',async()=>{
+ const config=validateConfig({...raw,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}},location);
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const calls=[];
+ const root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:selector=>selector==='button'?{}:null,querySelectorAll:()=>[]};
+ globalThis.document={documentElement:{lang:'en'},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
+ try{const widget=new GuestWidget(root,config);widget.api=new GuestApi(config,async(url,options)=>{calls.push({url,method:options.method||'GET'});throw new Error('network');});await widget.init();
+ assert.deepEqual(calls.map(c=>c.method),['GET']);assert.match(calls[0].url,/calendar-sessions\?from=/);assert.match(root.innerHTML,/href="https:\/\/wa.me\/34711552030"/);assert.equal(globalThis.sessionStorage.getItem('lamesa.guest.booking.v1'),undefined);
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});

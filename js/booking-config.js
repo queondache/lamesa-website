@@ -1,18 +1,18 @@
-/* Public standby: no requests or checkout until the real studio mapping is verified.
- * The explicit loopback preview injects its own configuration before this file. */
+/* Public Mesana calendar: read-only dates and WhatsApp requests. */
 (function () {
   if (window.LA_MESA_GUEST_BOOKING !== undefined) return;
   window.LA_MESA_GUEST_BOOKING = {
-    enabled: false,
+    enabled: true,
     mode: 'production',
-    releaseApproved: false,
+    releaseApproved: true,
+    bookingFlow: 'whatsapp',
     apiBase: 'https://mesa-saas-backend.onrender.com/api',
     allowedApiOrigins: ['https://mesa-saas-backend.onrender.com'],
-    studioSlug: '',
-    clientArea: { enabled: false, url: 'https://app.mesana.studio/client/la-mesa' },
+    studioSlug: 'la-mesa',
+    clientArea: { enabled: true, url: 'https://app.mesana.studio/client/la-mesa' },
     experiences: {
-      modelado: { classTypeIds: [] },
-      torno: { classTypeIds: [] }
+      modelado: { classTypeIds: ['ct_c4a053343d214b15a3adf18f018f6bc4'], expectedUnitPriceCents: 4500 },
+      torno: { classTypeIds: ['ct_0dbbb9eb8634405c82efe7d9a1b3c413'], expectedUnitPriceCents: 6500 }
     }
   };
 })();
