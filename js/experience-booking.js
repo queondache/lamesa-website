@@ -104,8 +104,8 @@ const range=month=>{const [y,m]=month.split('-').map(Number);return {from:`${mon
 const addMonth=(month,n)=>{const[y,m]=month.split('-').map(Number);return new Date(Date.UTC(y,m-1+n,1)).toISOString().slice(0,7);};
 const iconArrow='<span aria-hidden="true">→</span>';
 export class GuestWidget{
- constructor(root,config){this.root=root;this.config=config;this.api=new GuestApi(config);this.locale=document.documentElement.lang in COPY?document.documentElement.lang:'es';this.c=COPY[this.locale];this.store=new BookingStorage(sessionStorage);this.state=this.store.read();this.experience=root.dataset.experience;this.sessions=[];this.month=civilDate(Date.now()).slice(0,7);this.quantity=1;this.busy=false;this.timer=null;this.icsUrl=null;this.attempt=null;this.error='';this.loadSequence=0;this.selector=root.querySelector('.experience-nav');
-  const intent=this.state.intent;
+ constructor(root,config){this.root=root;this.config=config;this.api=new GuestApi(config);this.locale=document.documentElement.lang in COPY?document.documentElement.lang:'es';this.c=COPY[this.locale];this.store=config.bookingFlow==='whatsapp'?null:new BookingStorage(sessionStorage);this.state=this.store?this.store.read():{};this.experience=root.dataset.experience;this.sessions=[];this.month=civilDate(Date.now()).slice(0,7);this.quantity=1;this.busy=false;this.timer=null;this.icsUrl=null;this.attempt=null;this.error='';this.loadSequence=0;this.selector=root.querySelector('.experience-nav');
+  const intent=this.store?this.state.intent:null;
   if(intent?.experience===this.experience){this.store.intent({...intent,locale:this.locale});this.selectedId=intent.sessionId;this.quantity=intent.quantity||1;if(intent.date)this.month=intent.date.slice(0,7);}
   this.root.className='booking-preview guest-widget';this.root.removeAttribute('aria-labelledby');this.root.setAttribute('aria-label',this.c.date);
   document.querySelectorAll('.languages a').forEach(a=>a.addEventListener('click',()=>this.persist()));
@@ -199,8 +199,8 @@ export class GuestWidget{
 }
 export function boot(){
  const config=validateConfig(window.LA_MESA_GUEST_BOOKING,window.location);if(!config)return;
- const saved=new BookingStorage(sessionStorage).read();
  if(config.bookingFlow==='whatsapp'&&document.body.dataset.bookingReturn==='true')return;
+ const saved=config.bookingFlow==='whatsapp'?null:new BookingStorage(sessionStorage).read();
  if(document.body.dataset.bookingReturn==='true'){
   const locale=saved.intent?.locale||'es';const prefix=locale==='es'?'':`${locale}/`;const expected=`/${prefix}experiencias/reserva.html`;
   if(location.pathname!==expected){location.replace(expected+location.search);return;}

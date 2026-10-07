@@ -69,7 +69,7 @@
   MiniBooking.prototype.ensureMode = async function () {
     if (this.mode !== 'pending') return;
     try {
-      var modules = this.modules || await import('./experience-booking.js');
+      var modules = this.modules || await import('./experience-booking.js?v=4');
       var config = modules.validateConfig(this.rawConfig, this.location);
       if (!config || this.rawConfig.releaseApproved !== true) throw new Error('invalid_config');
       this.modules = modules;
