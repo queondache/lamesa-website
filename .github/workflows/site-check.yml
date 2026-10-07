@@ -18,5 +18,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Verify static experiences and disabled booking
-        run: node --test tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs tests/client-area-links.test.mjs
+      - name: Verify public calendars and booking flows
+        run: node --test tests/mini-booking.test.mjs tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs tests/client-area-links.test.mjs
