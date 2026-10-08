@@ -26,8 +26,11 @@ test('Default off; sandbox restricted to same-origin loopback /api; production e
 test('Checkout URL allowlist rejects misleading hosts, credentials and remote sandbox',()=>{
  const config=validateConfig(raw,location);
  assert.equal(paymentUrl('https://checkout.stripe.com/c/pay/test',config),'https://checkout.stripe.com/c/pay/test');
+ const stripe='https://checkout.stripe.com/c/pay/cs_live_fixture#opaqueStripeFragment';
+ assert.equal(paymentUrl(stripe,{mode:'production'}),stripe);
  assert.equal(paymentUrl('http://127.0.0.1:8800/pay/test',config),'http://127.0.0.1:8800/pay/test');
- for(const value of ['https://checkout.stripe.com.evil.test/pay','javascript:alert(1)','https://user:pass@checkout.stripe.com/pay','http://localhost:8800/pay','http://127.0.0.1:9999/pay'])assert.throws(()=>paymentUrl(value,config));
+ assert.throws(()=>paymentUrl('http://127.0.0.1:8800/pay/test#unexpected',config));
+ for(const value of ['https://checkout.stripe.com.evil.test/pay#opaqueStripeFragment','javascript:alert(1)','https://user:pass@checkout.stripe.com/pay#opaqueStripeFragment','http://checkout.stripe.com/c/pay/test#opaqueStripeFragment','http://localhost:8800/pay','http://127.0.0.1:9999/pay'])assert.throws(()=>paymentUrl(value,config));
  assert.throws(()=>paymentUrl('http://127.0.0.1:8800/pay/test',{mode:'production'}));
 });
 test('Stable class IDs, validated API prices/capacity and Madrid civil dates across DST',()=>{

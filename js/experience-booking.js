@@ -28,9 +28,9 @@ export function validateConfig(raw,location){
 }
 export function paymentUrl(value,config){
  const u=new URL(value);
- if(u.username||u.password||u.hash)throw new Error('untrusted_payment');
+ if(u.username||u.password)throw new Error('untrusted_payment');
  if(u.protocol==='https:'&&u.origin==='https://checkout.stripe.com')return u.href;
- if(config.mode==='sandbox'&&u.protocol==='http:'&&u.origin==='http://127.0.0.1:8800')return u.href;
+ if(config.mode==='sandbox'&&!u.hash&&u.protocol==='http:'&&u.origin==='http://127.0.0.1:8800')return u.href;
  throw new Error('untrusted_payment');
 }
 export function civilDate(value,timeZone='Europe/Madrid'){
