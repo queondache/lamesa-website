@@ -169,9 +169,9 @@ test('invalid allowedApiOrigins does not fall back to the old system',async()=>{
 });
 
 test('all localized pages load shared config before the classic widget',()=>{
- for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/booking-config\.js\?v=6[\s\S]*<script src="[^"]*mini-booking\.js\?v=5"[^>]*defer/);assert.doesNotMatch(html,/type="module" src="[^"]*mini-booking\.js/);}
+ for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/booking-config\.js\?v=6[\s\S]*<script src="[^"]*mini-booking\.js\?v=6"[^>]*defer/);assert.doesNotMatch(html,/type="module" src="[^"]*mini-booking\.js/);}
 });
 
 test('browser script remains classic and uses no ES2022 syntax',()=>{
- const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=5['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
+ const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=6['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
 });
