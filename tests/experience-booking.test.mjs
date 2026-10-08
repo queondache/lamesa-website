@@ -5,12 +5,15 @@ import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,verifiedAttempt,calendarIcs,BookingStorage,GuestApi,GuestWidget,boot} from '../js/experience-booking.js';
 const location={href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'};
-const raw={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}};
+const raw={enabled:true,mode:'sandbox',bookingFlow:'stripe',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}};
 const session={id:'s1',classTypeId:'modelado',title:'Class',startAt:'2026-10-25T00:30:00Z',endAt:'2026-10-25T02:30:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:2};
 const attempt={attemptId:'a1',status:'pending',quantity:2,totalCents:9000,currency:'EUR',session,accessToken:'x'.repeat(43)};
 const memory=()=>{const map=new Map();return{getItem:k=>map.get(k),setItem:(k,v)=>map.set(k,v)}};
 test('Default off; sandbox restricted to same-origin loopback /api; production explicit approval and origin',()=>{
  assert.equal(validateConfig(undefined,location),null);assert.equal(validateConfig({...raw,enabled:false},location),null);
+ assert.ok(validateConfig(raw,location));assert.ok(validateConfig({...raw,bookingFlow:'whatsapp'},location));
+ assert.equal(validateConfig({...raw,bookingFlow:undefined},location),null);
+ assert.equal(validateConfig({...raw,bookingFlow:'strpe'},location),null);
  assert.equal(validateConfig({...raw,apiBase:'https://real.example/api'},location),null);
  assert.equal(validateConfig(raw,{href:'https://lamesabcn.com/',hostname:'lamesabcn.com'}),null);
  assert.equal(validateConfig({...raw,apiBase:'/wrong'},location),null);
@@ -126,7 +129,7 @@ test('Portuguese payment sends supported backend locale and keeps Portuguese ret
   assert.equal(widget.c.pending,'Estamos verificando o seu pagamento.');
  }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
-test('Portuguese return route follows stored UI locale, while cancellation clears only current attempt',async()=>{
+test('Portuguese return route follows stored UI locale; cancel alone never erases a pending payment',async()=>{
  const original={window:globalThis.window,document:globalThis.document,sessionStorage:globalThis.sessionStorage,location:globalThis.location,history:globalThis.history};
  const storage=memory();storage.setItem('lamesa.guest.booking.v1',JSON.stringify({intent:{experience:'modelado',sessionId:'s1',quantity:2,date:'2026-10-25',locale:'pt'},attempt}));
  let redirected='';globalThis.sessionStorage=storage;globalThis.window={LA_MESA_GUEST_BOOKING:raw,location};
@@ -136,10 +139,29 @@ test('Portuguese return route follows stored UI locale, while cancellation clear
   globalThis.document={documentElement:{lang:'pt'},querySelectorAll:()=>[]};globalThis.location={href:'http://127.0.0.1:8801/pt/experiencias/reserva.html?checkout=cancel',pathname:'/pt/experiencias/reserva.html'};
   globalThis.history={replaceState(){}};
   const root={dataset:{experience:'modelado'},setAttribute(){},removeAttribute(){},querySelector:()=>null};
-  const widget=new GuestWidget(root,validateConfig(raw,location));let loaded=false;widget.load=async()=>{loaded=true;};await widget.init();
-  assert.equal(loaded,true);assert.equal(widget.error,widget.c.cancelled);assert.equal(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt,undefined);
+  const widget=new GuestWidget(root,validateConfig(raw,location));widget.renderAttempt=()=>{};widget.api.status=async()=>({...attempt,status:'pending'});await widget.init();clearTimeout(widget.timer);
+  assert.equal(widget.attempt.status,'pending');assert.deepEqual(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt,{...attempt,status:'pending'});
  }
  finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+});
+test('Cancel return checks canonical status; confirmed clears retry key, pending and network error preserve capability',async()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage,location:globalThis.location,history:globalThis.history};
+ try{
+  for(const result of ['confirmed','pending','paid_needs_staff','network']){
+   const storage=memory(),saved={intent:{experience:'modelado',sessionId:'s1',quantity:2,date:'2026-10-25',locale:'pt'},fingerprint:'same-request',idempotencyKey:'same-key',attempt:{...attempt,checkoutUrl:'http://127.0.0.1:8800/pay/test'}};
+   storage.setItem('lamesa.guest.booking.v1',JSON.stringify(saved));globalThis.sessionStorage=storage;
+   globalThis.document={documentElement:{lang:'pt'},activeElement:null,querySelectorAll:()=>[]};
+   let cleaned=0;globalThis.location={href:'http://127.0.0.1:8801/pt/experiencias/reserva.html?checkout=cancel',pathname:'/pt/experiencias/reserva.html'};globalThis.history={replaceState(){cleaned++;}};
+   const calendar={href:''},root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:selector=>selector==='[data-calendar]'?calendar:null};
+   const widget=new GuestWidget(root,validateConfig(raw,location));let checks=0;widget.api.status=async()=>{checks++;if(result==='network')throw new Error('network');return{...attempt,status:result};};
+   await widget.init();clearTimeout(widget.timer);
+   const state=JSON.parse(storage.getItem('lamesa.guest.booking.v1'));
+   assert.equal(cleaned,1);assert.equal(checks,1);assert.equal(widget.attempt.status,result==='network'?'pending':result);
+   if(result==='confirmed'){assert.equal(state.idempotencyKey,undefined);assert.equal(state.attempt.accessToken,undefined);assert.match(root.innerHTML,/data-calendar/);URL.revokeObjectURL(widget.icsUrl);}
+   else{assert.equal(state.idempotencyKey,'same-key');assert.equal(state.attempt.accessToken,attempt.accessToken);assert.doesNotMatch(root.innerHTML,/data-calendar/);}
+   if(result==='network')assert.match(root.innerHTML,/guest-error/);
+  }
+ }finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
 });
 test('Paid return distinguishes pending, confirmed and staff review in all four languages',()=>{
  const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};globalThis.sessionStorage=memory();

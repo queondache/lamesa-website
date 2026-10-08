@@ -20,7 +20,7 @@ test('Public production configuration activates read-only Mesana calendar and cl
  assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
 });
 test('Static production configuration preserves explicitly injected loopback sandbox',()=>{
- const sandbox={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_guest_torno'],expectedUnitPriceCents:6500}}};
+ const sandbox={enabled:true,mode:'sandbox',bookingFlow:'stripe',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_guest_torno'],expectedUnitPriceCents:6500}}};
  const window={LA_MESA_GUEST_BOOKING:sandbox};runInNewContext(configSource,{window});assert.equal(window.LA_MESA_GUEST_BOOKING,sandbox);
  assert.ok(validateConfig(window.LA_MESA_GUEST_BOOKING,{href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'}));
 });

@@ -13,6 +13,7 @@ COPY.pt={...COPY.en,
  calendar:'Adicionar ao calendário',secure:'Sem criar conta',payments:'Cartão; Apple Pay e Google Pay quando disponíveis no pagamento seguro',sandbox:'SANDBOX LOCAL · datas, vagas e pagamentos simulados. Sem cobranças ou e-mails reais.',prev:'Mês anterior',next:'Mês seguinte',less:'Uma pessoa a menos',more:'Mais uma pessoa',available:'disponível',unavailableDay:'indisponível',cancelled:'Você voltou sem concluir o pagamento. Pode escolher outra data.',resumeMissing:'Não há reserva pendente neste navegador.',choose:'Escolher outra data',resume:'Voltar ao pagamento',policy:'Cancelamento gratuito até 24 horas antes da aula. Sua peça estará pronta para retirada em cerca de 15 dias.',currency:'por pessoa',seats:'vagas',timeout:'A conexão demorou demais. Tente novamente com o mesmo pedido.',checkNote:'Mantenha esta página aberta enquanto verificamos o estado.'};
 export function validateConfig(raw,location){
  if(!raw||raw.enabled!==true||typeof raw.apiBase!=='string'||!raw.studioSlug||!raw.experiences)return null;
+ if(raw.bookingFlow!=='whatsapp'&&raw.bookingFlow!=='stripe')return null;
  const origin=new URL(location.href).origin;
  let api;try{api=new URL(raw.apiBase,origin);}catch{return null;}
  if(api.username||api.password||api.search||api.hash)return null;
@@ -134,8 +135,9 @@ export class GuestWidget{
   if(this.config.bookingFlow==='whatsapp'){await this.load();return;}
   const saved=this.store.read().attempt;
   const returned=new URL(location.href).searchParams.get('checkout');
-  if(returned==='cancel'){this.store.clearAttempt();this.error=this.c.cancelled;history.replaceState(null,'',location.pathname);}
-  else if(saved&&this.state.intent?.experience===this.experience){this.attempt=saved;this.renderAttempt();if(saved.status==='pending')await this.poll();return;}
+  if(returned==='cancel')history.replaceState(null,'',location.pathname);
+  if(saved&&this.state.intent?.experience===this.experience){this.attempt=saved;this.renderAttempt();if(saved.status==='pending'&&saved.accessToken)await this.poll();return;}
+  if(returned==='cancel')this.error=this.c.cancelled;
   await this.load();
  }
  showSelector(){if(this.selector)this.root.prepend(this.selector);}

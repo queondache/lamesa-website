@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 await import('../js/mini-booking.js');
 const {MiniBooking,bookingMode}=globalThis.MiniBookingTestHooks;
 
-const prod={enabled:true,mode:'production',releaseApproved:true,apiBase:'https://mesana.example/api',allowedApiOrigins:['https://mesana.example'],studioSlug:'la-mesa',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
+const prod={enabled:true,mode:'production',bookingFlow:'stripe',releaseApproved:true,apiBase:'https://mesana.example/api',allowedApiOrigins:['https://mesana.example'],studioSlug:'la-mesa',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
 const page={href:'https://lamesabcn.com/pt/clases/suelta.html',hostname:'lamesabcn.com',hash:'',assign(){}};
 const session=(overrides={})=>({id:'session-1',classTypeId:'ct-modelado',title:'Modelado',startAt:'2099-05-10T16:00:00Z',endAt:'2099-05-10T18:00:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:3,...overrides});
 const response=(data,ok=true)=>({ok,json:async()=>data});
@@ -73,6 +73,14 @@ test('invalid configuration shows WhatsApp without contacting the old system',as
  const calls=[];const w=widget({config:{...prod,bookingFlow:'whatsapp',enabled:false},fetcher:async(url)=>{calls.push(url);throw new Error('unexpected fetch');}});
  const old=console.error;console.error=()=>{};
  try{await w.load();assert.equal(w.mode,'unavailable');assert.deepEqual(calls,[]);assert.match(w.body.innerHTML,/wa.me\/34711552030/);assert.doesNotMatch(w.body.innerHTML,/book.html|checkout/);}finally{console.error=old;}
+});
+
+test('missing or misspelled paid flow cannot load dates or open checkout',async()=>{
+ for(const bookingFlow of [undefined,'strpe']){
+  const calls=[];const w=widget({config:{...prod,bookingFlow},fetcher:async(url)=>{calls.push(url);throw new Error('unexpected fetch');}});
+  const old=console.error;console.error=()=>{};
+  try{await w.load();assert.equal(w.mode,'unavailable');assert.deepEqual(calls,[]);assert.match(w.body.innerHTML,/wa.me\/34711552030/);}finally{console.error=old;}
+ }
 });
 
 test('valid Mesana configuration loads no more than 90 days and never calls v2',async()=>{
