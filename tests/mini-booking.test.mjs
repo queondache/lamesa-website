@@ -4,7 +4,7 @@ import {readFileSync} from 'node:fs';
 await import('../js/mini-booking.js');
 const {MiniBooking,bookingMode}=globalThis.MiniBookingTestHooks;
 
-const prod={enabled:true,mode:'production',releaseApproved:true,apiBase:'https://mesana.example/api',allowedApiOrigins:['https://mesana.example'],studioSlug:'la-mesa',experiences:{modelado:{classTypeIds:['ct-modelado']},torno:{classTypeIds:['ct-torno']}}};
+const prod={enabled:true,mode:'production',releaseApproved:true,apiBase:'https://mesana.example/api',allowedApiOrigins:['https://mesana.example'],studioSlug:'la-mesa',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
 const page={href:'https://lamesabcn.com/pt/clases/suelta.html',hostname:'lamesabcn.com',hash:'',assign(){}};
 const session=(overrides={})=>({id:'session-1',classTypeId:'ct-modelado',title:'Modelado',startAt:'2099-05-10T16:00:00Z',endAt:'2099-05-10T18:00:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:3,...overrides});
 const response=(data,ok=true)=>({ok,json:async()=>data});
@@ -40,7 +40,7 @@ test('contract feed supports Torno clicks, a bookable day, people and a 65 € t
  const startAt=start.toISOString();
  const date=(await import('../js/experience-booking.js')).civilDate(startAt,'Europe/Madrid');
  const r=interactiveRoot();
- const config={...prod,experiences:{modelado:{classTypeIds:['ct_m']},torno:{classTypeIds:['ct_t']}}};
+ const config={...prod,experiences:{modelado:{classTypeIds:['ct_m'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_t'],expectedUnitPriceCents:6500}}};
  const w=new MiniBooking(r,{config,lang:'es',location:page,storage:memory(),fetcher:async()=>response({data:{sessions:[session({id:'sess_1',classTypeId:'ct_t',title:'Torno',startAt,endAt:new Date(start.getTime()+7200000).toISOString(),unitPriceCents:6500,remainingSeats:2})]},error:null})});
  await w.load();assert.match(w.body.innerHTML,/<div class="mini-booking__price">—/);r.tabs[1].click();
  assert.deepEqual(w.slots.torno.map(s=>s.id),['sess_1']);
@@ -60,7 +60,7 @@ test('contract feed supports Torno clicks, a bookable day, people and a 65 € t
 test('switching to Torno while Mesana is loading keeps the loading state and then renders the contract session',async()=>{
  let answer;const pending=new Promise(resolve=>{answer=resolve;});
  const start=new Date();start.setDate(start.getDate()+3);start.setHours(12,0,0,0);
- const config={...prod,experiences:{modelado:{classTypeIds:['ct_m']},torno:{classTypeIds:['ct_t']}}};
+ const config={...prod,experiences:{modelado:{classTypeIds:['ct_m'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_t'],expectedUnitPriceCents:6500}}};
  const r=interactiveRoot();const w=new MiniBooking(r,{config,lang:'es',location:page,storage:memory(),fetcher:async()=>pending});
  const loading=w.load();await new Promise(resolve=>setImmediate(resolve));r.tabs[1].click();
  assert.match(w.body.innerHTML,/Buscando fechas/);assert.doesNotMatch(w.body.innerHTML,/0,65|no hay fechas online/i);
@@ -82,20 +82,35 @@ test('valid Mesana configuration loads no more than 90 days and never calls v2',
 });
 
 test('Mesana sessions split by configured class IDs and show server unit price',async()=>{
- const sessions=[session(),session({id:'session-2',classTypeId:'ct-torno',title:'Torno',unitPriceCents:6500})];
+ const sessions=[session(),session({id:'manual',unitPriceCents:1500}),session({id:'session-2',classTypeId:'ct-torno',title:'Torno',unitPriceCents:6500})];
  const w=widget({fetcher:async()=>response({data:{sessions},error:null})});await w.load();
- assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.deepEqual(w.slots.torno.map(s=>s.id),['session-2']);assert.match(w.body.innerHTML,/45[,.]00\s*€/);
+ assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.deepEqual(w.slots.torno.map(s=>s.id),['session-2']);assert.match(w.body.innerHTML,/45[,.]00\s*€/);assert.doesNotMatch(w.body.innerHTML,/15[,.]00/);
  w.setKind('torno');assert.match(w.body.innerHTML,/65[,.]00\s*€/);
 });
 
 test('checkout sends the strict payload, maps pt to en, keeps the same intent key and redirects',async()=>{
  const posts=[];let redirected='';const location={...page,assign:value=>{redirected=value;}};
- const fetcher=async(url,options={})=>{if(options.method==='POST'){posts.push(JSON.parse(options.body));return response({data:{attemptId:'attempt-1',status:'pending',quantity:posts.at(-1).quantity,totalCents:4500*posts.at(-1).quantity,currency:'EUR',session:{id:posts.at(-1).sessionId,title:'Modelado',startAt:'2099-05-10T16:00:00Z',endAt:'2099-05-10T18:00:00Z',timezone:'Europe/Madrid'},checkoutUrl:'https://checkout.stripe.com/c/pay/test',accessToken:'x'.repeat(43)},error:null},true);}return response({data:{sessions:[session()]},error:null});};
+ const fetcher=async(url,options={})=>{if(options.method==='POST'){posts.push(JSON.parse(options.body));return response({data:{attemptId:'attempt-1',status:'pending',quantity:posts.at(-1).quantity,totalCents:4500*posts.at(-1).quantity,currency:'EUR',session:{id:posts.at(-1).sessionId,title:'Modelado',startAt:posts.at(-1).sessionId==='session-2'?'2099-05-11T16:00:00Z':'2099-05-10T16:00:00Z',endAt:posts.at(-1).sessionId==='session-2'?'2099-05-11T18:00:00Z':'2099-05-10T18:00:00Z',timezone:'Europe/Madrid'},checkoutUrl:'https://checkout.stripe.com/c/pay/test',accessToken:'x'.repeat(43)},error:null},true);}return response({data:{sessions:[session()]},error:null});};
  const storage=memory();const w=widget({fetcher,lang:'pt',location,storage});await w.load();w.selectedId='session-1';w.date='2099-05-10';w.render();await w.checkout('Andrea','A@Example.com');await w.checkout('Andrea','A@Example.com');
  assert.deepEqual({...posts[0],idempotencyKey:'key'},{sessionId:'session-1',quantity:1,name:'Andrea',email:'a@example.com',locale:'en',idempotencyKey:'key'});assert.equal(posts[0].idempotencyKey,posts[1].idempotencyKey);assert.equal(redirected,'https://checkout.stripe.com/c/pay/test');
- assert.deepEqual(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).intent,{experience:'modelado',sessionId:'session-1',quantity:1,date:'2099-05-10',locale:'en'});
+ assert.deepEqual(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).intent,{experience:'modelado',sessionId:'session-1',quantity:1,date:'2099-05-10',locale:'pt'});
  w.quantity=2;await w.checkout('Andrea','A@Example.com');assert.notEqual(posts[2].idempotencyKey,posts[1].idempotencyKey);
  w.slots.mesa.push({...session({id:'session-2',startAt:'2099-05-11T16:00:00Z',endAt:'2099-05-11T18:00:00Z'}),date:'2099-05-11',available:3,price:4500,startTime:'18:00'});w.selectedId='session-2';await w.checkout('Andrea','A@Example.com');assert.notEqual(posts[3].idempotencyKey,posts[2].idempotencyKey);
+});
+
+test('Paid mini checkout rejects mismatched attempt before Stripe redirect',async()=>{
+ for(const mismatch of [{totalCents:1500},{quantity:2},{session:{...session(),id:'manual'}},{checkoutUrl:'https://checkout.stripe.com.evil.test/pay'},{accessToken:'short'}]){
+  let redirects=0;const storage=memory(),location={...page,assign(){redirects++;}};
+  const w=widget({location,storage,fetcher:async(_url,options={})=>response({data:options.method==='POST'?{attemptId:'a1',status:'pending',quantity:1,totalCents:4500,currency:'EUR',session:session(),checkoutUrl:'https://checkout.stripe.com/c/pay/test',accessToken:'x'.repeat(43),...mismatch}:{sessions:[session()]},error:null})});
+  await w.load();w.selectedId='session-1';w.date='2099-05-10';
+  await assert.rejects(()=>w.checkout('Andrea','a@example.com'));assert.equal(redirects,0);assert.equal(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt,null);
+ }
+});
+test('Already confirmed mini attempt opens Portuguese status locally without another Stripe payment',async()=>{
+ let redirected='';const storage=memory(),location={...page,assign:value=>{redirected=value;}};
+ const w=widget({lang:'pt',location,storage,fetcher:async(_url,options={})=>response({data:options.method==='POST'?{attemptId:'a1',status:'confirmed',quantity:1,totalCents:4500,currency:'EUR',session:session()}:{sessions:[session()]},error:null})});
+ await w.load();w.selectedId='session-1';w.date='2099-05-10';await w.checkout('Andrea','a@example.com');
+ assert.equal(redirected,'/pt/experiencias/reserva.html');assert.equal(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt.status,'confirmed');
 });
 
 test('insufficient seats displays capacity message and reloads sessions',async()=>{

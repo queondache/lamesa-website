@@ -20,7 +20,7 @@ test('Public production configuration activates read-only Mesana calendar and cl
  assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
 });
 test('Static production configuration preserves explicitly injected loopback sandbox',()=>{
- const sandbox={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado']},torno:{classTypeIds:['ct_guest_torno']}}};
+ const sandbox={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_guest_torno'],expectedUnitPriceCents:6500}}};
  const window={LA_MESA_GUEST_BOOKING:sandbox};runInNewContext(configSource,{window});assert.equal(window.LA_MESA_GUEST_BOOKING,sandbox);
  assert.ok(validateConfig(window.LA_MESA_GUEST_BOOKING,{href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'}));
 });
@@ -36,6 +36,15 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
  for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+});
+test('Return status has a safe localized fallback in ES, EN, CA and PT',()=>{
+ for(const lang of ['es','en','ca','pt']){
+  const source=read(`${prefix(lang)}experiencias/reserva.html`);
+  assert.match(source,new RegExp(`<html lang="${lang}">`));assert.match(source,/data-booking-return="true"/);
+  assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);
+  assert.match(source,/href="https:\/\/wa.me\/34711552030"/);
+  assert.doesNotMatch(source,/booking is in preparation|reserva online directa está en preparación|reserva en línia directa està en preparació/i);
+ }
 });
 test('Home discovery and sitemap include nine localized canonical pages while retaining legacy routes',()=>{
  const sitemap=read('sitemap.xml');const nodes=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m=>m[1]);
