@@ -84,7 +84,7 @@ test('HTTP and foreign hosts leave the page untouched and do not start booking',
 test('Touched HTML is byte-identical after removing only the new marker and script tags', () => {
   for (const path of [...homes, ...courses]) {
     const source = read(path);
-    const normalized = source.replace(' data-client-area="bono"', '').replace(/^  <script src="(?:\.\.\/){0,2}js\/booking-config\.js\?v=5" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){0,2}js\/client-area-links\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){1,2}js\/booking-v2\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '');
+    const normalized = source.replace(' data-client-area="bono"', '').replace(/^  <script src="(?:\.\.\/){0,2}js\/booking-config\.js\?v=6" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){0,2}js\/client-area-links\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){1,2}js\/booking-v2\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '');
     assert.equal(createHash('sha256').update(normalized).digest('hex'), baseline[path], path);
     assert.match(source, /src="(?:\.\.\/){0,2}js\/client-area-links\.js\?v=4"/);
     if (homes.includes(path)) assert.match(source, /data-client-area="bono"/);

@@ -1,11 +1,11 @@
-/* Public Mesana calendar: read-only dates and WhatsApp requests. */
+/* Public Mesana calendar and Stripe guest checkout. */
 (function () {
   if (window.LA_MESA_GUEST_BOOKING !== undefined) return;
   window.LA_MESA_GUEST_BOOKING = {
     enabled: true,
     mode: 'production',
     releaseApproved: true,
-    bookingFlow: 'whatsapp',
+    bookingFlow: 'stripe',
     apiBase: 'https://mesa-saas-backend.onrender.com/api',
     allowedApiOrigins: ['https://mesa-saas-backend.onrender.com'],
     studioSlug: 'la-mesa',
