@@ -3,18 +3,22 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
-import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,calendarIcs,BookingStorage,GuestApi,GuestWidget,boot} from '../js/experience-booking.js';
+import {validateConfig,paymentUrl,civilDate,sessionsFor,sessionDetails,validAttempt,verifiedAttempt,calendarIcs,BookingStorage,GuestApi,GuestWidget,boot} from '../js/experience-booking.js';
 const location={href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'};
-const raw={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado']}}};
+const raw={enabled:true,mode:'sandbox',bookingFlow:'stripe',apiBase:'/api',studioSlug:'test',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}};
 const session={id:'s1',classTypeId:'modelado',title:'Class',startAt:'2026-10-25T00:30:00Z',endAt:'2026-10-25T02:30:00Z',timezone:'Europe/Madrid',unitPriceCents:4500,currency:'EUR',remainingSeats:2};
 const attempt={attemptId:'a1',status:'pending',quantity:2,totalCents:9000,currency:'EUR',session,accessToken:'x'.repeat(43)};
 const memory=()=>{const map=new Map();return{getItem:k=>map.get(k),setItem:(k,v)=>map.set(k,v)}};
 test('Default off; sandbox restricted to same-origin loopback /api; production explicit approval and origin',()=>{
  assert.equal(validateConfig(undefined,location),null);assert.equal(validateConfig({...raw,enabled:false},location),null);
+ assert.ok(validateConfig(raw,location));assert.ok(validateConfig({...raw,bookingFlow:'whatsapp'},location));
+ assert.equal(validateConfig({...raw,bookingFlow:undefined},location),null);
+ assert.equal(validateConfig({...raw,bookingFlow:'strpe'},location),null);
  assert.equal(validateConfig({...raw,apiBase:'https://real.example/api'},location),null);
  assert.equal(validateConfig(raw,{href:'https://lamesabcn.com/',hostname:'lamesabcn.com'}),null);
  assert.equal(validateConfig({...raw,apiBase:'/wrong'},location),null);
  assert.equal(validateConfig({...raw,experiences:{modelado:{classTypeIds:[]}}},location),null);
+ assert.equal(validateConfig({...raw,experiences:{modelado:{classTypeIds:['modelado']}}},location),null);
  assert.equal(validateConfig({...raw,mode:'production'},location),null);
  const prod={...raw,mode:'production',releaseApproved:true,apiBase:'https://approved.example/api',allowedApiOrigins:['https://approved.example']};
  assert.ok(validateConfig(prod,location));assert.equal(validateConfig({...prod,apiBase:'http://approved.example/api'},location),null);
@@ -63,9 +67,10 @@ test('Widget limits plus clicks to server seats and POSTs the selected quantity 
   const widget=new GuestWidget(root,validateConfig(raw,location));
   widget.api=new GuestApi(widget.config,async(url,options)=>{
    calls.push({url,options});
-   return {ok:true,json:async()=>({data:options.method==='POST'?{...attempt,status:'pending',quantity:2,checkoutUrl:'http://127.0.0.1:8800/pay/test'}:{sessions:[{...session,remainingSeats:3}]},error:null})};
+   return {ok:true,json:async()=>({data:options.method==='POST'?{...attempt,status:'pending',quantity:2,checkoutUrl:'http://127.0.0.1:8800/pay/test'}:{sessions:[{...session,remainingSeats:3},{...session,id:'manual',unitPriceCents:1500}]},error:null})};
   });
   await widget.init();
+  assert.deepEqual(widget.sessions.map(s=>s.id),['s1']);assert.doesNotMatch(root.html,/15,00|15\.00/);
   const plus=root.querySelectorAll('[data-qty]').find(el=>el.dataset.qty==='1');
   for(let i=0;i<4;i++)plus.onclick();
   assert.equal(widget.quantity,3);
@@ -95,6 +100,81 @@ test('ICS is confirmed-only and uses unambiguous UTC instants across Madrid DST 
  assert.throws(()=>calendarIcs(attempt));const confirmed={...attempt,status:'confirmed'};const ics=calendarIcs(confirmed);
  assert.match(ics,/DTSTART:20261025T003000Z/);assert.match(ics,/DTEND:20261025T023000Z/);assert.match(ics,/X-WR-TIMEZONE:Europe\/Madrid/);
  assert.equal(validAttempt({...attempt,status:'paid_needs_staff'}).status,'paid_needs_staff');assert.throws(()=>validAttempt({...attempt,status:'paid'}));
+});
+test('Paid attempt must match public class, session, quantity and 45 EUR total before Stripe',()=>{
+ const config=validateConfig(raw,location),experience=config.experiences.modelado;
+ const pending={...attempt,checkoutUrl:'http://127.0.0.1:8800/pay/test'};
+ assert.equal(verifiedAttempt(pending,session,2,experience,config).checkoutUrl,pending.checkoutUrl);
+ for(const changed of [
+  {session:{...session,id:'manual'}},{session:{...session,classTypeId:'other'}},{session:{...session,unitPriceCents:1500}},{session:{...session,startAt:'2026-10-25T03:30:00Z'}},{quantity:1},{totalCents:3000},{totalCents:13000},{currency:'USD'},
+  {accessToken:'short'},{checkoutUrl:'https://checkout.stripe.com.evil.test/pay'}, {checkoutUrl:undefined}
+ ])assert.throws(()=>verifiedAttempt({...pending,...changed},session,2,experience,config));
+ assert.throws(()=>verifiedAttempt(pending,{...session,unitPriceCents:1500},2,experience,config));
+ assert.throws(()=>verifiedAttempt(pending,session,3,experience,config));
+ assert.equal(verifiedAttempt({...pending,status:'confirmed',checkoutUrl:undefined,accessToken:undefined},session,2,experience,config).status,'confirmed');
+});
+test('Portuguese payment sends supported backend locale and keeps Portuguese return intent',async()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const storage=memory();let posted,redirected;
+ const root={dataset:{experience:'modelado'},setAttribute(){},removeAttribute(){},querySelector:()=>null};
+ const button={type:'submit',disabled:false},close={disabled:false},error={hidden:true,textContent:''};
+ const form={elements:{name:{value:'Andrea'},email:{value:'a@example.com'}},reportValidity:()=>true,querySelector:()=>button};
+ globalThis.document={documentElement:{lang:'pt'},querySelectorAll:()=>[]};globalThis.sessionStorage=storage;
+ try{
+  const widget=new GuestWidget(root,validateConfig(raw,location));widget.sessions=[session];widget.selectedId=session.id;
+  widget.dialog={querySelector:selector=>selector==='form'?form:selector==='[data-close]'?close:error};
+  widget.api={start:async input=>{posted=input;return{...attempt,quantity:1,totalCents:4500,checkoutUrl:'http://127.0.0.1:8800/pay/test'};}};
+  widget.redirect=value=>{redirected=value;};await widget.submit();
+  assert.equal(posted.locale,'en');assert.equal(storage.getItem('lamesa.guest.booking.v1')!==undefined,true);
+  assert.equal(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).intent.locale,'pt');assert.equal(redirected.status,'pending');
+  assert.equal(widget.c.pending,'Estamos verificando o seu pagamento.');
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});
+test('Portuguese return route follows stored UI locale; cancel alone never erases a pending payment',async()=>{
+ const original={window:globalThis.window,document:globalThis.document,sessionStorage:globalThis.sessionStorage,location:globalThis.location,history:globalThis.history};
+ const storage=memory();storage.setItem('lamesa.guest.booking.v1',JSON.stringify({intent:{experience:'modelado',sessionId:'s1',quantity:2,date:'2026-10-25',locale:'pt'},attempt}));
+ let redirected='';globalThis.sessionStorage=storage;globalThis.window={LA_MESA_GUEST_BOOKING:raw,location};
+ globalThis.document={body:{dataset:{bookingReturn:'true'}},querySelector:()=>null};globalThis.location={pathname:'/en/experiencias/reserva.html',search:'?checkout=success',replace:path=>{redirected=path;}};
+ try{
+  boot();assert.equal(redirected,'/pt/experiencias/reserva.html?checkout=success');assert.deepEqual(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt,attempt);
+  globalThis.document={documentElement:{lang:'pt'},querySelectorAll:()=>[]};globalThis.location={href:'http://127.0.0.1:8801/pt/experiencias/reserva.html?checkout=cancel',pathname:'/pt/experiencias/reserva.html'};
+  globalThis.history={replaceState(){}};
+  const root={dataset:{experience:'modelado'},setAttribute(){},removeAttribute(){},querySelector:()=>null};
+  const widget=new GuestWidget(root,validateConfig(raw,location));widget.renderAttempt=()=>{};widget.api.status=async()=>({...attempt,status:'pending'});await widget.init();clearTimeout(widget.timer);
+  assert.equal(widget.attempt.status,'pending');assert.deepEqual(JSON.parse(storage.getItem('lamesa.guest.booking.v1')).attempt,{...attempt,status:'pending'});
+ }
+ finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+});
+test('Cancel return checks canonical status; confirmed clears retry key, pending and network error preserve capability',async()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage,location:globalThis.location,history:globalThis.history};
+ try{
+  for(const result of ['confirmed','pending','paid_needs_staff','network']){
+   const storage=memory(),saved={intent:{experience:'modelado',sessionId:'s1',quantity:2,date:'2026-10-25',locale:'pt'},fingerprint:'same-request',idempotencyKey:'same-key',attempt:{...attempt,checkoutUrl:'http://127.0.0.1:8800/pay/test'}};
+   storage.setItem('lamesa.guest.booking.v1',JSON.stringify(saved));globalThis.sessionStorage=storage;
+   globalThis.document={documentElement:{lang:'pt'},activeElement:null,querySelectorAll:()=>[]};
+   let cleaned=0;globalThis.location={href:'http://127.0.0.1:8801/pt/experiencias/reserva.html?checkout=cancel',pathname:'/pt/experiencias/reserva.html'};globalThis.history={replaceState(){cleaned++;}};
+   const calendar={href:''},root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:selector=>selector==='[data-calendar]'?calendar:null};
+   const widget=new GuestWidget(root,validateConfig(raw,location));let checks=0;widget.api.status=async()=>{checks++;if(result==='network')throw new Error('network');return{...attempt,status:result};};
+   await widget.init();clearTimeout(widget.timer);
+   const state=JSON.parse(storage.getItem('lamesa.guest.booking.v1'));
+   assert.equal(cleaned,1);assert.equal(checks,1);assert.equal(widget.attempt.status,result==='network'?'pending':result);
+   if(result==='confirmed'){assert.equal(state.idempotencyKey,undefined);assert.equal(state.attempt.accessToken,undefined);assert.match(root.innerHTML,/data-calendar/);URL.revokeObjectURL(widget.icsUrl);}
+   else{assert.equal(state.idempotencyKey,'same-key');assert.equal(state.attempt.accessToken,attempt.accessToken);assert.doesNotMatch(root.innerHTML,/data-calendar/);}
+   if(result==='network')assert.match(root.innerHTML,/guest-error/);
+  }
+ }finally{for(const [key,value] of Object.entries(original)){if(value===undefined)delete globalThis[key];else globalThis[key]=value;}}
+});
+test('Paid return distinguishes pending, confirmed and staff review in all four languages',()=>{
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};globalThis.sessionStorage=memory();
+ try{
+  for(const lang of ['es','en','ca','pt']){
+   globalThis.document={documentElement:{lang},activeElement:null,querySelectorAll:()=>[]};
+   const calendar={href:''},root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:selector=>selector==='[data-calendar]'?calendar:null};
+   const widget=new GuestWidget(root,validateConfig(raw,location));widget.attempt={...attempt,checkoutUrl:'http://127.0.0.1:8800/pay/test'};
+   widget.renderAttempt();assert.match(root.innerHTML,/data-action="status"/);assert.doesNotMatch(root.innerHTML,/data-calendar/);
+   widget.attempt={...attempt,status:'paid_needs_staff'};widget.renderAttempt();assert.match(root.innerHTML,new RegExp(widget.c.staff));assert.doesNotMatch(root.innerHTML,/data-calendar|data-action="resume"/);
+   widget.attempt={...attempt,status:'confirmed'};widget.renderAttempt();assert.match(root.innerHTML,/data-calendar/);assert.ok(calendar.href.startsWith('blob:'));URL.revokeObjectURL(widget.icsUrl);
+  }
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
 test('API strict browser payload; status token bearer header only; no credentials, cached responses or referrer',async()=>{
  const calls=[];const api=new GuestApi(validateConfig(raw,location),async(url,options)=>{calls.push({url,options});return{ok:true,json:async()=>({data:attempt,error:null})};});

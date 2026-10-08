@@ -11,16 +11,17 @@ const configSource=read('js/booking-config.js');
 const languages=['es','en','ca'],types=['modelado','torno','workshops'];
 const prefix=lang=>lang==='es'?'':`${lang}/`;
 
-test('Public production configuration activates read-only Mesana calendar and client area',()=>{
+test('Public production configuration activates Stripe checkout with exact La Mesa prices and client area',()=>{
  const window={location:{href:'https://lamesabcn.com/experiencias/modelado.html',hostname:'lamesabcn.com'}};
  runInNewContext(configSource,{window});const c=window.LA_MESA_GUEST_BOOKING;
- assert.equal(c.enabled,true);assert.equal(c.releaseApproved,true);assert.equal(c.bookingFlow,'whatsapp');assert.equal(c.studioSlug,'la-mesa');assert.equal(c.clientArea.enabled,true);
- assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.ok(validateConfig(c,window.location));
+ assert.equal(c.enabled,true);assert.equal(c.releaseApproved,true);assert.equal(c.bookingFlow,'stripe');assert.equal(c.studioSlug,'la-mesa');assert.equal(c.clientArea.enabled,true);
+ assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.deepEqual(Array.from(c.allowedApiOrigins),['https://mesa-saas-backend.onrender.com']);assert.ok(validateConfig(c,window.location));
  assert.equal(c.experiences.modelado.expectedUnitPriceCents,4500);assert.equal(c.experiences.torno.expectedUnitPriceCents,6500);
  assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
+ assert.deepEqual(Array.from(c.experiences.torno.classTypeIds),['ct_0dbbb9eb8634405c82efe7d9a1b3c413']);
 });
 test('Static production configuration preserves explicitly injected loopback sandbox',()=>{
- const sandbox={enabled:true,mode:'sandbox',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado']},torno:{classTypeIds:['ct_guest_torno']}}};
+ const sandbox={enabled:true,mode:'sandbox',bookingFlow:'stripe',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_guest_torno'],expectedUnitPriceCents:6500}}};
  const window={LA_MESA_GUEST_BOOKING:sandbox};runInNewContext(configSource,{window});assert.equal(window.LA_MESA_GUEST_BOOKING,sandbox);
  assert.ok(validateConfig(window.LA_MESA_GUEST_BOOKING,{href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'}));
 });
@@ -31,11 +32,20 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   assert.match(source,/<meta name="robots" content="index,follow">/);
   if(type!=='workshops'){
    assert.match(source,/data-booking-state="standby"/);assert.doesNotMatch(source,/pay online|paga online|paga en línia/);
-   assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));
+   assert.ok(source.indexOf('src="/js/booking-config.js?v=6"')<source.indexOf('src="/js/experience-booking.js?v=5"'));
    assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
- for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+ for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=6"')<source.indexOf('src="/js/experience-booking.js?v=5"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+});
+test('Return status has a safe localized fallback in ES, EN, CA and PT',()=>{
+ for(const lang of ['es','en','ca','pt']){
+  const source=read(`${prefix(lang)}experiencias/reserva.html`);
+  assert.match(source,new RegExp(`<html lang="${lang}">`));assert.match(source,/data-booking-return="true"/);
+  assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);
+  assert.match(source,/href="https:\/\/wa.me\/34711552030"/);
+  assert.doesNotMatch(source,/booking is in preparation|reserva online directa está en preparación|reserva en línia directa està en preparació/i);
+ }
 });
 test('Home discovery and sitemap include nine localized canonical pages while retaining legacy routes',()=>{
  const sitemap=read('sitemap.xml');const nodes=[...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)].map(m=>m[1]);

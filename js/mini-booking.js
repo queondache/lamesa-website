@@ -70,7 +70,7 @@
   MiniBooking.prototype.ensureMode = async function () {
     if (this.mode !== 'pending') return;
     try {
-      var modules = this.modules || await import('./experience-booking.js?v=4');
+      var modules = this.modules || await import('./experience-booking.js?v=5');
       var config = modules.validateConfig(this.rawConfig, this.location);
       if (!config || this.rawConfig.releaseApproved !== true) throw new Error('invalid_config');
       this.modules = modules;
@@ -109,8 +109,8 @@
         var data = await this.api.sessions(from, addDays(from, 89));
         function normalize(session) { return Object.assign({}, session, { date: self.modules.civilDate(session.startAt, session.timezone), available: session.remainingSeats, price: session.unitPriceCents, startTime: self.time(session) }); }
         this.slots = {
-          mesa: (this.config.bookingFlow === 'whatsapp' ? this.modules.publicSessions(data.sessions, this.config.experiences.modelado) : this.modules.sessionsFor(data.sessions, this.config.experiences.modelado.classTypeIds).filter(function (session) { return session.remainingSeats > 0; })).map(normalize),
-          torno: (this.config.bookingFlow === 'whatsapp' ? this.modules.publicSessions(data.sessions, this.config.experiences.torno) : this.modules.sessionsFor(data.sessions, this.config.experiences.torno.classTypeIds).filter(function (session) { return session.remainingSeats > 0; })).map(normalize)
+          mesa: this.modules.publicSessions(data.sessions, this.config.experiences.modelado).map(normalize),
+          torno: this.modules.publicSessions(data.sessions, this.config.experiences.torno).map(normalize)
         };
       } else {
         throw new Error('calendar_unavailable');
@@ -137,14 +137,15 @@
     name = String(name || '').trim(); email = String(email || '').trim().toLowerCase();
     if (!name || !email) throw new Error('invalid_request');
     var locale = this.lang === 'pt' ? 'en' : this.lang;
-    this.store.intent({ experience: this.kind === 'mesa' ? 'modelado' : 'torno', sessionId: selected.id, quantity: this.quantity, date: selected.date, locale: locale });
+    var experience = this.config.experiences[this.kind === 'mesa' ? 'modelado' : 'torno'];
+    if (!this.modules.publicSessions([selected], experience).length || this.quantity > selected.remainingSeats) throw new Error('session_unavailable');
+    this.store.intent({ experience: this.kind === 'mesa' ? 'modelado' : 'torno', sessionId: selected.id, quantity: this.quantity, date: selected.date, locale: this.lang });
     var input = { sessionId: selected.id, quantity: this.quantity, name: name, email: email, locale: locale };
     input.idempotencyKey = await this.store.key(input);
     try {
-      var attempt = this.modules.validAttempt(await this.api.start(input));
-      if (attempt.session.id !== input.sessionId || attempt.quantity !== input.quantity) throw new Error('invalid_response');
+      var attempt = this.modules.verifiedAttempt(await this.api.start(input), selected, this.quantity, experience, this.config);
       this.store.attempt(attempt);
-      this.location.assign(this.modules.paymentUrl(attempt.checkoutUrl, this.config));
+      this.location.assign(attempt.status === 'pending' ? attempt.checkoutUrl : '/' + (this.lang === 'es' ? '' : this.lang + '/') + 'experiencias/reserva.html');
       return attempt;
     } catch (error) {
       this.error = this.message(error.message);
