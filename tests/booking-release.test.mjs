@@ -31,11 +31,11 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   assert.match(source,/<meta name="robots" content="index,follow">/);
   if(type!=='workshops'){
    assert.match(source,/data-booking-state="standby"/);assert.doesNotMatch(source,/pay online|paga online|paga en línia/);
-   assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));
+   assert.ok(source.indexOf('src="/js/booking-config.js?v=5"')<source.indexOf('src="/js/experience-booking.js?v=5"'));
    assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
- for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=4"')<source.indexOf('src="/js/experience-booking.js?v=4"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+ for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=5"')<source.indexOf('src="/js/experience-booking.js?v=5"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
 });
 test('Return status has a safe localized fallback in ES, EN, CA and PT',()=>{
  for(const lang of ['es','en','ca','pt']){

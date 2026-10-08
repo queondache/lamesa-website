@@ -30,7 +30,7 @@ for(const lang of languages)for(const kind of experiences){
   assert.equal(blocks[1].itemListElement.at(-1).item,pageUrl(lang,kind));
   assert.doesNotMatch(source,/aggregateRating|reviewCount|priceValidUntil|startDate|endDate|"@type":\s*"Event"/);
   assert.equal((source.match(/<script/g)||[]).length,kind==='workshops'?2:4,'JSON-LD, disabled configuration and gated booking module');
-  if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js\?v=4"><\/script>/);
+  if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js\?v=5"><\/script>/);
   assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking\.js|<iframe/i);
   assert.doesNotMatch(source,/class="preview-banner"|href="\/demo\/|vista previa|vista prèvia|this preview|Local preview/i);
   assert.equal((source.match(/<nav class="experience-nav"/g)||[]).length,1);
