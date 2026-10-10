@@ -27,7 +27,7 @@ test('extension templates resolve only supplied sections; host layout is preserv
 test('all supported languages contain every UI key and the same interpolation placeholders', () => {
   const used = new Set(Array.from(liquid.join('\n').matchAll(/'mesa_shop\.([^']+)' \| t/g), match => match[1]));
   const files = readdirSync(resolve(root, 'locale-fragments')).sort();
-  assert.deepEqual(files, ['ca.json', 'en.json', 'es.json', 'pt.json']);
+  assert.deepEqual(files, ['ca.json', 'en.json', 'es.json', 'it.json', 'pt.json']);
   const baseline = JSON.parse(read('locale-fragments/es.json')).mesa_shop;
   for (const file of files) {
     const copy = JSON.parse(read(`locale-fragments/${file}`)).mesa_shop;
@@ -50,15 +50,14 @@ test('catalog uses native filtered server collection, pagination and safe filter
   assert.doesNotMatch(source, /name="page"|fetch\(|localStorage|products\.json/);
 });
 
-test('untrusted descriptive content and cart property values are escaped', () => {
+test('plain-text characteristics and cart property values are escaped', () => {
   const source = liquid.join('\n');
   for (const [, expression] of source.matchAll(/{{\s*([^}]+)\s*}}/g)) {
-    if (/^(details\.|color\b|property\.|product\.title|item\.product\.title|item\.title|variant\.title|filter\.label|value\.label)/.test(expression.trim())) {
+    if (/^(colors\b|color\b|materials\b|dimensions\b|care\b|property\.|product\.type|product\.title|item\.product\.title|item\.title|variant\.title|filter\.label|value\.label)/.test(expression.trim())) {
       assert.match(expression, /\| escape\b/, expression);
     }
   }
-  assert.match(liquid[1], /details\.description \| escape \| newline_to_br/);
-  assert.match(liquid[1], /product\.description \| strip_html \| escape/);
+  assert.match(liquid[1], /care \| escape \| newline_to_br/);
 });
 
 test('commerce posts authoritative variant IDs and uses native cart totals and checkout', () => {
@@ -80,14 +79,29 @@ test('commerce posts authoritative variant IDs and uses native cart totals and c
 });
 
 
-test('explicitly cleared Mesana descriptions never fall back to stale Shopify copy', () => {
+test('Shopify alone owns rich description and typed merchant characteristics', () => {
   const source = liquid[1];
-  const fallback = source.match(/{%\s*elsif\s+([^%]+)\s*%}\s*<p>{{ product\.description \| strip_html \| escape }}<\/p>/);
-  assert.ok(fallback, 'native description fallback must have an explicit guard');
-  assert.match(fallback[1], /product\.metafields\.mesana_catalog\.details == nil/,
-    'fallback requires absence of the managed metafield, not an empty managed description');
-  assert.match(fallback[1], /and product\.description != blank/);
-  assert.doesNotMatch(fallback[1], /details\.description == blank|details == blank/);
+  assert.match(source, /if product\.description != blank %}<div class="mesa-shop__description">{{ product\.description }}<\/div>{% endif %}/);
+  assert.doesNotMatch(source, /product\.description \||details\.|descriptionHtml/,
+    'Shopify rich text must not be stripped, escaped or replaced by managed fallback');
+  assert.match(source, /product\.type \| escape/);
+  assert.match(liquid[0], /item\.type \| escape/);
+  for (const key of ['colors', 'materials', 'dimensions', 'care']) {
+    assert.match(source, new RegExp(`assign ${key} = product\\.metafields\\.custom\\.${key}\\.value`));
+    assert.match(source, new RegExp(`if ${key}(?: != blank|\\.size > 0)`));
+    assert.ok(read('README.md').includes(`custom.${key}`), `merchant setup must document ${key}`);
+  }
+  assert.match(source, /for color in colors/);
+  assert.doesNotMatch(liquid.join('\n') + read('README.md'), /mesana_catalog/,
+    'obsolete app-owned editorial namespace must not be consumed or configured');
+});
+
+test('Shopify rich text is contained on mobile without suppressing content', () => {
+  const css = read('assets/mesa-shop.css');
+  assert.match(css, /\.mesa-shop__product>div{min-width:0}/);
+  assert.match(css, /\.mesa-shop__description{[^}]*overflow-x:auto;overflow-wrap:anywhere/);
+  assert.match(css, /\.mesa-shop__description img,\.mesa-shop__description video{max-width:100%;height:auto}/);
+  assert.match(css, /\.mesa-shop__description a{display:inline;min-height:0;text-decoration:underline}/);
 });
 
 test('cart image slot is present even when a line has no image', () => {

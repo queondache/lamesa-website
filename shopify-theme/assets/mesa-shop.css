@@ -25,3 +25,10 @@
 @media(max-width:600px){.mesa-shop__grid,.mesa-shop__product{grid-template-columns:1fr}.mesa-shop__line{grid-template-columns:72px minmax(0,1fr);gap:16px}.mesa-shop__line>div:last-child{grid-column:2}.mesa-shop__filters{gap:12px}.mesa-shop__filters>div,.mesa-shop__filters details{width:100%}.mesa-shop__filters select{width:100%}}
 
 .mesa-shop__line-image{align-self:start;min-width:0}.mesa-shop__line-image>span{display:grid;place-items:center;aspect-ratio:1;padding:6px;background:#f0eadc;text-align:center;font-size:12px;overflow-wrap:anywhere}
+
+/* Shopify rich text keeps formatting without widening the mobile product column. */
+.mesa-shop__product>div{min-width:0}
+.mesa-shop__description{max-width:100%;overflow-x:auto;overflow-wrap:anywhere}
+.mesa-shop__description img,.mesa-shop__description video{max-width:100%;height:auto}
+.mesa-shop__description iframe{max-width:100%}
+.mesa-shop__description a{display:inline;min-height:0;text-decoration:underline}

@@ -1,6 +1,9 @@
 {{ 'mesa-shop.css' | asset_url | stylesheet_tag }}
 {% assign chosen = product.selected_or_first_available_variant %}
-{% assign details = product.metafields.mesana_catalog.details.value %}
+{% assign colors = product.metafields.custom.colors.value %}
+{% assign materials = product.metafields.custom.materials.value %}
+{% assign dimensions = product.metafields.custom.dimensions.value %}
+{% assign care = product.metafields.custom.care.value %}
 <section class="mesa-shop" aria-labelledby="mesa-product-title">
   {% render 'mesa-navigation' %}
   <div class="mesa-shop__product">
@@ -11,11 +14,12 @@
       {% else %}<div class="mesa-shop__placeholder">{{ 'mesa_shop.no_photo' | t | escape }}</div>{% endfor %}
     </div>
     <div>
-      {% if details.category != blank %}<p class="mesa-shop__eyebrow">{{ details.category | escape }}</p>{% endif %}
+      {% if product.type != blank %}<p class="mesa-shop__eyebrow">{{ product.type | escape }}</p>{% endif %}
       <h1 id="mesa-product-title">{{ product.title | escape }}</h1>
       <p class="mesa-shop__price">{{ chosen.price | money_with_currency }}</p>
       {% if chosen.compare_at_price > chosen.price %}<s>{{ chosen.compare_at_price | money_with_currency }}</s>{% endif %}
-      {% if details.description != blank %}<p class="mesa-shop__description">{{ details.description | escape | newline_to_br }}</p>{% elsif product.metafields.mesana_catalog.details == nil and product.description != blank %}<p>{{ product.description | strip_html | escape }}</p>{% endif %}
+      {% comment %}Shopify merchant-authored HTML is the sole editorial description source.{% endcomment %}
+      {% if product.description != blank %}<div class="mesa-shop__description">{{ product.description }}</div>{% endif %}
       {% unless product.has_only_default_variant %}
         <form method="get" action="{{ product.url }}" class="mesa-shop__variant">
           <label for="mesa-variant">{{ 'mesa_shop.variant' | t | escape }}</label>
@@ -34,10 +38,10 @@
       {% endform %}
       <p class="mesa-shop__note">{{ 'mesa_shop.checkout_note' | t | escape }}</p>
       <dl class="mesa-shop__details">
-        {% if details.colors.size > 0 %}<dt>{{ 'mesa_shop.colors' | t | escape }}</dt><dd>{% for color in details.colors %}{{ color | escape }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd>{% endif %}
-        {% if details.materials != blank %}<dt>{{ 'mesa_shop.materials' | t | escape }}</dt><dd>{{ details.materials | escape }}</dd>{% endif %}
-        {% if details.dimensions != blank %}<dt>{{ 'mesa_shop.dimensions' | t | escape }}</dt><dd>{{ details.dimensions | escape }}</dd>{% endif %}
-        {% if details.care != blank %}<dt>{{ 'mesa_shop.care' | t | escape }}</dt><dd>{{ details.care | escape | newline_to_br }}</dd>{% endif %}
+        {% if colors.size > 0 %}<dt>{{ 'mesa_shop.colors' | t | escape }}</dt><dd>{% for color in colors %}{{ color | escape }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd>{% endif %}
+        {% if materials != blank %}<dt>{{ 'mesa_shop.materials' | t | escape }}</dt><dd>{{ materials | escape }}</dd>{% endif %}
+        {% if dimensions != blank %}<dt>{{ 'mesa_shop.dimensions' | t | escape }}</dt><dd>{{ dimensions | escape }}</dd>{% endif %}
+        {% if care != blank %}<dt>{{ 'mesa_shop.care' | t | escape }}</dt><dd>{{ care | escape | newline_to_br }}</dd>{% endif %}
       </dl>
     </div>
   </div>
