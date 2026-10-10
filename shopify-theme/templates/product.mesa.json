@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "mesa-product",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
