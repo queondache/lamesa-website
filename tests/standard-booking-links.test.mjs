@@ -21,7 +21,7 @@ for (const [locale, prefix] of Object.entries(locales)) {
       assert.ok(anchor.replace(/<[^>]*>/g, '').trim().length > 0);
     }
   });
-  for (const name of locale === 'pt' ? ['suelta'] : ['suelta', 'semanal-modelado', 'semanal-torno']) {
+  for (const name of locale === 'pt' ? ['suelta'] : ['semanal-modelado', 'semanal-torno'] /* suelta es/en/ca e un rimando */) {
     test(`${locale}/${name}: class booking uses the standard page and no legacy calendar activation`, () => {
       const source = read(`${prefix}clases/${name}.html`);
       const booking = [...source.matchAll(/<a\b[^>]*data-standard-booking[^>]*>[\s\S]*?<\/a>/g)];

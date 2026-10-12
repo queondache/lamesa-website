@@ -67,3 +67,19 @@ test('Pages publication excludes fixture and internal material; one stable cheap
  const workflow=read('.github/workflows/site-check.yml');assert.match(workflow,/pull_request:/);assert.match(workflow,/branches: \[main\]/);assert.match(workflow,/cancel-in-progress: true/);assert.match(workflow,/name: site-check/);assert.match(workflow,/node-version: '22'/);assert.match(workflow,/tests\/booking-release.test.mjs/);assert.doesNotMatch(workflow,/paths:|npm install|npm ci|postgres|stripe|experience-booking\.browser/i);
  assert.doesNotMatch(configSource,/ct_guest_|sandbox|localhost|127\.0\.0\.1|secret|sk_live|pk_live|token/i);
 });
+test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
+ const sitemap=read('sitemap.xml');
+ for(const lang of languages){
+  const src=read(`${prefix(lang)}clases/suelta.html`);
+  const target=`https://lamesabcn.com/${prefix(lang)}experiencias/torno.html`;
+  assert.ok(src.includes(`<link rel="canonical" href="${target}">`));
+  assert.match(src,new RegExp(`<meta http-equiv="refresh" content="0; url=/${prefix(lang)}experiencias/torno.html">`));
+  assert.match(src,/<meta name="robots" content="noindex,follow">/);
+  assert.ok(src.includes(`href="/${prefix(lang)}experiencias/modelado.html"`));
+  // Il prefisso vuoto (es) combacerebbe anche con pt/: l'ancora sul dominio evita il falso positivo.
+  assert.ok(!sitemap.includes(`https://lamesabcn.com/${prefix(lang)}clases/suelta.html`),`sitemap senza ${lang}/clases/suelta`);
+ }
+ // pt resta fuori perimetro: pagina e voce sitemap invariate nella sostanza (solo se stessa).
+ assert.ok(sitemap.includes('<loc>https://lamesabcn.com/pt/clases/suelta.html</loc>'));
+ assert.doesNotMatch(read('llms.txt'),/clases\/suelta\.html\b(?<!pt\/clases\/suelta\.html)/);
+});

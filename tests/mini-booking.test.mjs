@@ -169,7 +169,7 @@ test('invalid allowedApiOrigins does not fall back to the old system',async()=>{
 });
 
 test('all localized class pages use standard booking without mounting the classic widget',()=>{
- for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/data-standard-booking href="https:\/\/app\.mesana\.studio\/book\/la-mesa"/);assert.doesNotMatch(html,/<script[^>]*src="[^"]*mini-booking\.js|class="mini-booking"|data-price-mesa=/);}
+ for(const file of ['pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/data-standard-booking href="https:\/\/app\.mesana\.studio\/book\/la-mesa"/);assert.doesNotMatch(html,/<script[^>]*src="[^"]*mini-booking\.js|class="mini-booking"|data-price-mesa=/);}
 });
 
 test('browser script remains classic and uses no ES2022 syntax',()=>{
