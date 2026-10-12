@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,readdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {runInNewContext} from 'node:vm';
@@ -16,7 +16,7 @@ test('Public production configuration activates Stripe checkout with exact La Me
  runInNewContext(configSource,{window});const c=window.LA_MESA_GUEST_BOOKING;
  assert.equal(c.enabled,true);assert.equal(c.releaseApproved,true);assert.equal(c.bookingFlow,'stripe');assert.equal(c.studioSlug,'la-mesa');assert.equal(c.clientArea.enabled,true);
  assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.deepEqual(Array.from(c.allowedApiOrigins),['https://mesa-saas-backend.onrender.com']);assert.ok(validateConfig(c,window.location));
- assert.equal(c.experiences.modelado.expectedUnitPriceCents,4500);assert.equal(c.experiences.torno.expectedUnitPriceCents,6500);
+ assert.equal(c.experiences.modelado.expectedUnitPriceCents,undefined);assert.equal(c.experiences.torno.expectedUnitPriceCents,undefined);
  assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
  assert.deepEqual(Array.from(c.experiences.torno.classTypeIds),['ct_0dbbb9eb8634405c82efe7d9a1b3c413']);
 });
@@ -32,11 +32,11 @@ test('Public localized standby keeps contact, truthful empty workshops, SEO and 
   assert.match(source,/<meta name="robots" content="index,follow">/);
   if(type!=='workshops'){
    assert.match(source,/data-booking-state="standby"/);assert.doesNotMatch(source,/pay online|paga online|paga en línia/);
-   assert.ok(source.indexOf('src="/js/booking-config.js?v=6"')<source.indexOf('src="/js/experience-booking.js?v=6"'));
+   assert.ok(source.indexOf('src="/js/booking-config.js?v=7"')<source.indexOf('src="/js/experience-booking.js?v=7"'));
    assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
- for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=6"')<source.indexOf('src="/js/experience-booking.js?v=6"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
+ for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=7"')<source.indexOf('src="/js/experience-booking.js?v=7"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
 });
 test('Return status has a safe localized fallback in ES, EN, CA and PT',()=>{
  for(const lang of ['es','en','ca','pt']){
@@ -53,15 +53,45 @@ test('Home discovery and sitemap include nine localized canonical pages while re
   for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;
   // Giro UX 05/10 (4): la home ha una sola esperienza che porta al calendario; le pagine experiencias restano in sitemap.
   const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
-  assert.equal(home.split('href="https://app.mesana.studio/book/la-mesa"').length-1,5,'Hero and four class purchase CTAs lead directly to standard Mesana booking');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
-  assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
+  assert.equal(home.split('href="https://app.mesana.studio/book/la-mesa"').length-1,1,'Solo il bono resta su Mesana');
+  assert.ok(home.includes(`href="/${prefix(lang)}experiencias/torno.html"`),'Hero e card 2h portano al box suelta');
+  for(const t of ['semanal-modelado','semanal-torno'])assert.ok(home.includes(`href="/${prefix(lang)}clases/${t}.html"`),t);assert.match(read(`${prefix(lang)}experiencias/torno.html`),/href="https:\/\/wa.me\/34711552030/);
+  assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.match(read(`${prefix(lang)}experiencias/modelado.html`),/href="https:\/\/wa.me\/34711552030/);
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
  assert.match(read('llms.txt'),/public calendars show actual Mesana dates/);
- assert.match(read('llms.txt'),/Public Modelado is €45; the €15 manual class is excluded/);
+ assert.match(read('llms.txt'),/Public Modelado is €45\./);assert.doesNotMatch(read('llms.txt'),/€15 manual class/);assert.match(read('llms.txt'),/pay online \(Stripe\) on the experiencias pages/);
 });
 test('Pages publication excludes fixture and internal material; one stable cheap Node22 check',()=>{
  const config=read('_config.yml');for(const path of ['dev/','tests/','docs/','demo/','.orchestratore/','node_modules/','package.json','package-lock.json','.github/'])assert.ok(config.split('\n').some(line=>line.trim()===`- ${path}`));
  const workflow=read('.github/workflows/site-check.yml');assert.match(workflow,/pull_request:/);assert.match(workflow,/branches: \[main\]/);assert.match(workflow,/cancel-in-progress: true/);assert.match(workflow,/name: site-check/);assert.match(workflow,/node-version: '22'/);assert.match(workflow,/tests\/booking-release.test.mjs/);assert.doesNotMatch(workflow,/paths:|npm install|npm ci|postgres|stripe|experience-booking\.browser/i);
  assert.doesNotMatch(configSource,/ct_guest_|sandbox|localhost|127\.0\.0\.1|secret|sk_live|pk_live|token/i);
+});
+test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
+ const sitemap=read('sitemap.xml');
+ for(const lang of languages){
+  const src=read(`${prefix(lang)}clases/suelta.html`);
+  const target=`https://lamesabcn.com/${prefix(lang)}experiencias/torno.html`;
+  assert.ok(src.includes(`<link rel="canonical" href="${target}">`));
+  assert.match(src,new RegExp(`<meta http-equiv="refresh" content="0; url=/${prefix(lang)}experiencias/torno.html">`));
+  assert.match(src,/<meta name="robots" content="noindex,follow">/);
+  assert.ok(src.includes(`href="/${prefix(lang)}experiencias/modelado.html"`));
+  assert.ok(src.includes('<main class="container">'));assert.equal(src.split('class="related-link"').length-1,2);
+  // Il prefisso vuoto (es) combacerebbe anche con pt/: l'ancora sul dominio evita il falso positivo.
+  assert.ok(!sitemap.includes(`https://lamesabcn.com/${prefix(lang)}clases/suelta.html`),`sitemap senza ${lang}/clases/suelta`);
+ }
+ // pt resta fuori perimetro: pagina e voce sitemap invariate nella sostanza (solo se stessa).
+ assert.ok(sitemap.includes('<loc>https://lamesabcn.com/pt/clases/suelta.html</loc>'));
+ assert.doesNotMatch(read('llms.txt'),/clases\/suelta\.html\b(?<!pt\/clases\/suelta\.html)/);
+});
+test('Nessuna pagina es/en/ca linka più le pagine di rimando clases/suelta',()=>{
+ // Le tre pagine di rimando e pt/, demo/, node_modules sono escluse dalla scansione.
+ const skip=new Set(['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html']);
+ const walk=dir=>readdirSync(resolve(root,dir),{withFileTypes:true}).flatMap(e=>{
+  const rel=dir?`${dir}/${e.name}`:e.name;
+  if(e.isDirectory())return ['pt','demo','node_modules','.git','.superpowers','.orchestratore','dev','docs'].includes(e.name)&&!dir?[]:(e.name==='node_modules'||e.name==='.git'?[]:walk(rel));
+  return e.name.endsWith('.html')?[rel]:[];
+ });
+ const offenders=walk('').filter(f=>!skip.has(f)&&read(f).includes('/clases/suelta.html'));
+ assert.deepEqual(offenders,[]);
 });

@@ -92,7 +92,7 @@ test('valid Mesana configuration loads no more than 90 days and never calls v2',
 test('Mesana sessions split by configured class IDs and show server unit price',async()=>{
  const sessions=[session(),session({id:'manual',unitPriceCents:1500}),session({id:'session-2',classTypeId:'ct-torno',title:'Torno',unitPriceCents:6500})];
  const w=widget({fetcher:async()=>response({data:{sessions},error:null})});await w.load();
- assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.deepEqual(w.slots.torno.map(s=>s.id),['session-2']);assert.match(w.body.innerHTML,/45[,.]00\s*€/);assert.doesNotMatch(w.body.innerHTML,/15[,.]00/);
+ assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1','manual']);assert.deepEqual(w.slots.torno.map(s=>s.id),['session-2']);assert.match(w.body.innerHTML,/45[,.]00\s*€/);
  w.setKind('torno');assert.match(w.body.innerHTML,/65[,.]00\s*€/);
 });
 
@@ -131,15 +131,15 @@ test('full Mesana sessions never make a day bookable',async()=>{
  assert.deepEqual(w.slots.mesa,[]);assert.ok(!w.body.innerHTML.includes('data-date="2099-05-10"'));
 });
 
-test('WhatsApp calendar filters exact public prices and never writes a checkout',async()=>{
+test('WhatsApp calendar keeps Mesana-priced sessions and never writes a checkout',async()=>{
  const config={...prod,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['ct-modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct-torno'],expectedUnitPriceCents:6500}}};
  for(const lang of ['es','en','ca','pt']){
   const calls=[];const w=widget({config,lang,fetcher:async(url,options={})=>{calls.push({url,method:options.method||'GET'});return response({data:{sessions:[session(),session({id:'manual',unitPriceCents:1500}),session({id:'full',remainingSeats:0})]},error:null});}});
-  await w.load();assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1']);assert.equal(calls.length,1);assert.match(calls[0].url,/calendar-sessions\?from=/);assert.equal(calls[0].method,'GET');
+  await w.load();assert.deepEqual(w.slots.mesa.map(s=>s.id),['session-1','manual']);assert.equal(calls.length,1);assert.match(calls[0].url,/calendar-sessions\?from=/);assert.equal(calls[0].method,'GET');
   w.selectedId='session-1';w.date='2099-05-10';w.quantity=2;w.render();
   const url=w.body.innerHTML.match(/href="(https:\/\/wa.me\/34711552030\?text=[^"]+)/)?.[1];assert.ok(url,lang);
   const message=new URL(url).searchParams.get('text');assert.match(message,/2099-05-10/);assert.match(message,/18:00/);assert.match(message,/2 /);
-  assert.doesNotMatch(w.body.innerHTML,/mini-booking__form|data-action="book"|checkout.stripe|15[,.]00/);
+  assert.doesNotMatch(w.body.innerHTML,/mini-booking__form|data-action="book"|checkout.stripe/);
   await assert.rejects(()=>w.checkout('Name','a@example.com'),/session_unavailable/);assert.equal(calls.length,1);
  }
 });
@@ -169,9 +169,9 @@ test('invalid allowedApiOrigins does not fall back to the old system',async()=>{
 });
 
 test('all localized class pages use standard booking without mounting the classic widget',()=>{
- for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/data-standard-booking href="https:\/\/app\.mesana\.studio\/book\/la-mesa"/);assert.doesNotMatch(html,/<script[^>]*src="[^"]*mini-booking\.js|class="mini-booking"|data-price-mesa=/);}
+ for(const file of ['pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/data-standard-booking href="https:\/\/app\.mesana\.studio\/book\/la-mesa"/);assert.doesNotMatch(html,/<script[^>]*src="[^"]*mini-booking\.js|class="mini-booking"|data-price-mesa=/);}
 });
 
 test('browser script remains classic and uses no ES2022 syntax',()=>{
- const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=6['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
+ const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=7['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
 });

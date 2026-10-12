@@ -11,14 +11,17 @@ for (const [locale, prefix] of Object.entries(locales)) {
     const anchors = [...read(`${prefix}index.html`).matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map(match => match[0]);
     const booking = anchors.filter(anchor => /id="cta-hero-reserva"|class="clase-card__cta/.test(anchor));
     assert.equal(booking.length, 5);
-    for (const anchor of booking) {
-      assert.ok(anchor.includes(`href="${url}"`));
+    // Fuori da pt, in home solo il bono resta su Mesana: le altre CTA portano a pagine interne.
+    const onMesana = booking.filter(anchor => anchor.includes(`href="${url}"`));
+    assert.equal(onMesana.length, locale === 'pt' ? 5 : 1);
+    if (locale !== 'pt') assert.ok(onMesana[0].includes('bono_horas'));
+    for (const anchor of onMesana) {
       assert.ok(anchor.includes('data-standard-booking'));
       assert.doesNotMatch(anchor, /target="_blank"|data-client-area=/);
       assert.ok(anchor.replace(/<[^>]*>/g, '').trim().length > 0);
     }
   });
-  for (const name of locale === 'pt' ? ['suelta'] : ['suelta', 'semanal-modelado', 'semanal-torno']) {
+  for (const name of locale === 'pt' ? ['suelta'] : ['semanal-modelado', 'semanal-torno'] /* suelta es/en/ca e un rimando */) {
     test(`${locale}/${name}: class booking uses the standard page and no legacy calendar activation`, () => {
       const source = read(`${prefix}clases/${name}.html`);
       const booking = [...source.matchAll(/<a\b[^>]*data-standard-booking[^>]*>[\s\S]*?<\/a>/g)];

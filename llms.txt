@@ -5,8 +5,8 @@
 ## Services
 - Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
 - Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
-- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
-- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
+- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. Book and pay online (Stripe) on the hand-building page; WhatsApp is the fallback.
+- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. Book and pay online (Stripe) on the wheel page; WhatsApp is the fallback.
 - Intro al Torno (wheel intro course): €90 — 2 sessions of 2h, max 2 people. Book via WhatsApp.
 - Coworking Torno (open wheel access for experienced potters): €20/hour — minimum 2 hours. Book via WhatsApp.
 - Bono de horas / Taller Flex (flexible hours, hand-building or wheel): 8h €120, 16h €220, 24h €300. Buy via WhatsApp (https://wa.me/34711552030).
@@ -18,8 +18,8 @@ All materials and firings included. High-temperature clay. Full machine-readable
 
 ## Booking
 - Weekly classes: enrollment and account access use the Mesana client area at https://app.mesana.studio/client/la-mesa.
-- Single classes: the public calendars show actual Mesana dates, prices and indicative available places. Choose a session and send a WhatsApp request; La Mesa confirms availability. No online checkout is offered.
-- Clase Suelta calendar: https://lamesabcn.com/clases/suelta.html. Public Modelado is €45; the €15 manual class is excluded.
+- Single classes: the public calendars show actual Mesana dates, prices and live available places. Choose a session and pay online (Stripe) to book; the price comes from Mesana. If the calendar cannot load, the page falls back to a WhatsApp request.
+- Single-class calendars: pottery wheel https://lamesabcn.com/experiencias/torno.html · hand-building https://lamesabcn.com/experiencias/modelado.html (the former Clase Suelta page redirects to the wheel page). Public Modelado is €45.
 - WhatsApp (https://wa.me/34711552030): Intro al Torno, Coworking Torno, Taller Flex, creative workshops and private sessions.
 
 ## Guides (blog, ES / EN / CA)
@@ -34,10 +34,9 @@ All materials and firings included. High-temperature clay. Full machine-readable
 - Pottery team building guide (why it works, how to organise it): https://lamesabcn.com/blog/pottery-team-building-barcelona.html · ES https://lamesabcn.com/blog/team-building-ceramica-barcelona.html · CA https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html
 
 ## Pages
-- Direct hand-building class (Mesana dates and WhatsApp requests): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
-- Direct pottery-wheel class (Mesana dates and WhatsApp requests): https://lamesabcn.com/experiencias/torno.html · EN https://lamesabcn.com/en/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html
+- Direct hand-building class (live Mesana dates and online payment via Stripe, WhatsApp as fallback): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
+- Direct pottery-wheel class (live Mesana dates and online payment via Stripe, WhatsApp as fallback): https://lamesabcn.com/experiencias/torno.html · EN https://lamesabcn.com/en/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html
 - Workshop agenda (no events published on this page): https://lamesabcn.com/experiencias/workshops.html · EN https://lamesabcn.com/en/experiencias/workshops.html · CA https://lamesabcn.com/ca/experiencias/workshops.html
-- Clase Suelta (drop-in): https://lamesabcn.com/clases/suelta.html · EN https://lamesabcn.com/en/clases/suelta.html
 - Taller Semanal Modelado: https://lamesabcn.com/clases/semanal-modelado.html
 - Taller Semanal Torno: https://lamesabcn.com/clases/semanal-torno.html
 - Team building and private groups (up to 10 people at the studio, up to 40 at your office or any other venue): https://lamesabcn.com/team-building.html · EN https://lamesabcn.com/en/team-building.html · CA https://lamesabcn.com/ca/team-building.html
@@ -64,14 +63,14 @@ Closed Monday and Sunday. Same hours as the Google Business Profile (Europe/Madr
 - Friday: 11:00–19:00
 - Saturday: 11:00–16:00
 
-Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Request confirmation via WhatsApp for a published date; if the preferred time is not shown, ask the studio.
+Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Book and pay online (Stripe) on the experiencias pages for a published date; if the preferred time is not shown or the calendar cannot load, ask the studio via WhatsApp.
 
 ## Languages
 Website: Spanish (primary), English, Catalan, Portuguese. Classes are taught in English, Spanish and Portuguese.
 
 ## Pottery class for visitors to Barcelona
-Main page: https://lamesabcn.com/en/clases/suelta.html (ES https://lamesabcn.com/clases/suelta.html · CA https://lamesabcn.com/ca/clases/suelta.html · PT https://lamesabcn.com/pt/clases/suelta.html)
-- 2-hour pottery class in La Barceloneta, no experience needed: hand-building €45 or private wheel throwing for up to 2 people €65. Book online with a live calendar.
+Main pages: pottery wheel https://lamesabcn.com/en/experiencias/torno.html · hand-building https://lamesabcn.com/en/experiencias/modelado.html (ES https://lamesabcn.com/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html · PT https://lamesabcn.com/pt/clases/suelta.html)
+- 2-hour pottery class in La Barceloneta, no experience needed: hand-building €45 or private wheel throwing for up to 2 people €65. Book online with a live calendar and secure payment (Stripe).
 - Taught in English, Spanish or Portuguese.
 - Clay, tools, glazes and firing included. The piece is ready 15 days after the class; if the visitor leaves Barcelona sooner, La Mesa can ship it to their home (shipping price on request via WhatsApp).
 - Free cancellation up to 24 hours before the class.

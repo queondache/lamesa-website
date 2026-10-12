@@ -18,7 +18,7 @@ test('Default off; sandbox restricted to same-origin loopback /api; production e
  assert.equal(validateConfig(raw,{href:'https://lamesabcn.com/',hostname:'lamesabcn.com'}),null);
  assert.equal(validateConfig({...raw,apiBase:'/wrong'},location),null);
  assert.equal(validateConfig({...raw,experiences:{modelado:{classTypeIds:[]}}},location),null);
- assert.equal(validateConfig({...raw,experiences:{modelado:{classTypeIds:['modelado']}}},location),null);
+ assert.ok(validateConfig({...raw,experiences:{modelado:{classTypeIds:['modelado']}}},location),'il prezzo arriva da Mesana, non dalla config');
  assert.equal(validateConfig({...raw,mode:'production'},location),null);
  const prod={...raw,mode:'production',releaseApproved:true,apiBase:'https://approved.example/api',allowedApiOrigins:['https://approved.example']};
  assert.ok(validateConfig(prod,location));assert.equal(validateConfig({...prod,apiBase:'http://approved.example/api'},location),null);
@@ -73,7 +73,7 @@ test('Widget limits plus clicks to server seats and POSTs the selected quantity 
    return {ok:true,json:async()=>({data:options.method==='POST'?{...attempt,status:'pending',quantity:2,checkoutUrl:'http://127.0.0.1:8800/pay/test'}:{sessions:[{...session,remainingSeats:3},{...session,id:'manual',unitPriceCents:1500}]},error:null})};
   });
   await widget.init();
-  assert.deepEqual(widget.sessions.map(s=>s.id),['s1']);assert.doesNotMatch(root.html,/15,00|15\.00/);
+  assert.deepEqual(widget.sessions.map(s=>s.id),['s1','manual']);
   const plus=root.querySelectorAll('[data-qty]').find(el=>el.dataset.qty==='1');
   for(let i=0;i<4;i++)plus.onclick();
   assert.equal(widget.quantity,3);
@@ -115,6 +115,14 @@ test('Paid attempt must match public class, session, quantity and 45 EUR total b
  assert.throws(()=>verifiedAttempt(pending,{...session,unitPriceCents:1500},2,experience,config));
  assert.throws(()=>verifiedAttempt(pending,session,3,experience,config));
  assert.equal(verifiedAttempt({...pending,status:'confirmed',checkoutUrl:undefined,accessToken:undefined},session,2,experience,config).status,'confirmed');
+});
+test('Sessione riprezzata a 50 EUR: il tentativo da 100 EUR per 2 posti viene accettato',()=>{
+ // Il prezzo viene dalla sessione scelta (Mesana), non da una costante: 5000 cent x 2 = 10000.
+ const config=validateConfig(raw,location),experience=config.experiences.modelado;
+ const repriced={...session,unitPriceCents:5000};
+ const pending={...attempt,quantity:2,totalCents:10000,session:{...attempt.session,unitPriceCents:5000},checkoutUrl:'http://127.0.0.1:8800/pay/test'};
+ const result=verifiedAttempt(pending,repriced,2,experience,config);
+ assert.equal(result.checkoutUrl,pending.checkoutUrl);assert.equal(result.totalCents,10000);
 });
 test('Portuguese payment sends supported backend locale and keeps Portuguese return intent',async()=>{
  const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const storage=memory();let posted,redirected;
@@ -241,12 +249,12 @@ test('Cancellation policy gives 24-hour free cancellation in every locale',()=>{
  }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
 
-test('WhatsApp experiences read calendar only, filter 15 EUR, and render no payment action',async()=>{
+test('WhatsApp experiences read calendar only, keep repriced sessions, and render no payment action',async()=>{
  const {publicSessions,whatsappRequestUrl}=await import('../js/experience-booking.js');
  const config=validateConfig({...raw,bookingFlow:'whatsapp',experiences:{modelado:{classTypeIds:['modelado'],expectedUnitPriceCents:4500}}},location);
  assert.ok(config);
  const wrong={...session,id:'manual',unitPriceCents:1500};
- assert.deepEqual(publicSessions([session,wrong,{...session,id:'full',remainingSeats:0}],config.experiences.modelado).map(s=>s.id),['s1']);
+ assert.deepEqual(publicSessions([session,wrong,{...session,id:'full',remainingSeats:0}],config.experiences.modelado).map(s=>s.id),['s1','manual']);
  for(const locale of ['es','en','ca','pt']){
   const message=new URL(whatsappRequestUrl(session,2,locale,'modelado')).searchParams.get('text');
   assert.match(message,/2026-10-25/);assert.match(message,/02:30/);assert.match(message,/2 /);
@@ -305,5 +313,35 @@ test('WhatsApp experience failure still offers contact without legacy requests o
  globalThis.document={documentElement:{lang:'en'},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
  try{const widget=new GuestWidget(root,config);widget.api=new GuestApi(config,async(url,options)=>{calls.push({url,method:options.method||'GET'});throw new Error('network');});await widget.init();
  assert.deepEqual(calls.map(c=>c.method),['GET']);assert.match(calls[0].url,/calendar-sessions\?from=/);assert.match(root.innerHTML,/href="https:\/\/wa.me\/34711552030"/);assert.equal(globalThis.sessionStorage.getItem('lamesa.guest.booking.v1'),undefined);
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});
+test('Prezzo da Mesana: sessione con prezzo diverso resta prenotabile e mostra il prezzo di Mesana',async()=>{
+ const {publicSessions,validateConfig}=await import('../js/experience-booking.js');
+ const config=validateConfig({...raw,experiences:{modelado:{classTypeIds:['modelado']}}},location);
+ assert.ok(config,'config senza expectedUnitPriceCents è valida');
+ const repriced={...session,id:'s2',unitPriceCents:5000};
+ assert.deepEqual(publicSessions([session,repriced,{...session,id:'full',remainingSeats:0}],config.experiences.modelado).map(s=>s.id),['s1','s2']);
+});
+test('Etichetta mese: solo la prima lettera maiuscola',async()=>{
+ const {monthLabel}=await import('../js/experience-booking.js');
+ assert.equal(monthLabel(new Date('2026-10-14T10:00:00Z'),'es','Europe/Madrid'),'Octubre de 2026');
+ const ca=monthLabel(new Date('2026-10-14T10:00:00Z'),'ca','Europe/Madrid');
+ const rawCa=new Intl.DateTimeFormat('ca',{month:'long',year:'numeric',timeZone:'Europe/Madrid'}).format(new Date('2026-10-14T10:00:00Z'));
+ assert.equal(ca,rawCa.charAt(0).toUpperCase()+rawCa.slice(1));
+});
+
+// R1.5: qualsiasi errore nel caricamento date mostra loadFailed con WhatsApp cliccabile + riprova.
+test('load failure on network error shows the WhatsApp link and retry button',async()=>{
+ const config=validateConfig(raw,location);
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};
+ const root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:q=>q==='button'?{}:null,querySelectorAll:()=>[]};
+ globalThis.document={documentElement:{lang:'es'},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
+ try{
+  const widget=new GuestWidget(root,config);
+  widget.api=new GuestApi(config,async()=>{throw new TypeError('fetch failed');});
+  await widget.load();
+  assert.match(root.innerHTML,/<a href="https:\/\/wa\.me\/34711552030"[^>]*>WhatsApp<\/a>/);
+  assert.match(root.innerHTML,/<a class="button" href="https:\/\/wa\.me\/34711552030"/);
+  assert.match(root.innerHTML,/data-action="load"/);
  }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
