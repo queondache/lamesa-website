@@ -19,4 +19,4 @@ jobs:
         with:
           node-version: '22'
       - name: Verify public calendars and booking flows
-        run: node --test tests/mini-booking.test.mjs tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs tests/client-area-links.test.mjs tests/course-turns.test.mjs tests/guest-cancel.test.mjs
+        run: node --test tests/mini-booking.test.mjs tests/experience-booking.test.mjs tests/experiences.test.mjs tests/booking-release.test.mjs tests/client-area-links.test.mjs tests/course-turns.test.mjs tests/guest-cancel.test.mjs tests/standard-booking-links.test.mjs

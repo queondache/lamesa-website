@@ -206,3 +206,12 @@ test('fix4: CSS dimmed :disabled e :focus-visible per back e submit',()=>{
  }
  assert.match(css,/\.course-turns__back:focus-visible/);
 });
+
+test('fix2: dopo needs_confirmation, "No, volver" non mostra piu "Reembolso completo"',async()=>{
+ for(const [lang,full,none] of [['es',/Reembolso completo/,/Sin reembolso/],['en',/Full refund/,/No refund/]]){
+  const {r,v}=viewWith(recorder({'cancel-preview':ok(preview),'/cancel':ok({status:'needs_confirmation'})}),lang);
+  await v.run('t');await v.requestCancel();v.back();
+  assert.doesNotMatch(r.html,full);assert.match(r.html,none);
+ }
+});
+test('pagine annullo senza aria-live duplicato',()=>{for(const p of ['experiencias','en/experiencias','ca/experiencias'])assert.doesNotMatch(read(`${p}/cancelar.html`),/aria-live/);});

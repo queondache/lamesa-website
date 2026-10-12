@@ -179,7 +179,7 @@ export class GuestCancelView{
   try{
    const res=await this.api.cancel(this.token,confirmNoRefund);
    this.busy=false;
-   if(res?.status==='needs_confirmation'){this.enterConfirm();return;}
+   if(res?.status==='needs_confirmation'){this.data={...this.data,refundable:false};this.enterConfirm();return;}
    this.finalStatus(res?.status);
   }catch(e){
    this.busy=false;

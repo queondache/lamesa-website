@@ -11,6 +11,7 @@ const COPY={
  es:{intl:'es-ES',title:'Elige tu turno',loading:'Buscando turnos…',
   empty:'Ahora mismo no hay turnos disponibles. Escríbenos por WhatsApp y lo resolvemos.',
   loadFailed:'No hemos podido cargar los turnos. Escríbenos por WhatsApp.',
+  neutral:'Reserva tu turno por WhatsApp: te contamos los días y horarios disponibles.',
   wa:'Escríbenos por WhatsApp',notice:'El primer día pagas en el estudio el mes o la clase suelta.',
   name:'Tu nombre',email:'Email',phone:'Teléfono (opcional)',submit:'Pedir mi primera clase',busy:'Enviando…',back:'Cambiar de turno',
   chosen:'Tu primera clase será en este turno',sent:'Revisa tu email',
@@ -24,12 +25,14 @@ const COPY={
   confirmedNote:'El primer día pagas en el estudio el mes o la clase suelta. Te hemos enviado un email con los detalles.',
   confirmFull:'El turno se ha llenado',confirmFullNote:'Mientras confirmabas, el turno se ha completado. No se ha reservado nada. Escríbenos y buscamos otra opción.',
   confirmInvalid:'El enlace no es válido o ha caducado',confirmInvalidNote:'Pide tu primera clase de nuevo desde la página del curso o escríbenos por WhatsApp.',
+  confirmRateTitle:'Demasiados intentos, prueba en unos minutos',confirmErrorTitle:'No hemos podido confirmar tu clase ahora',
   confirmContact:'Escríbenos para terminar tu reserva',confirmContactNote:'No podemos confirmar tu primera clase automáticamente. Escríbenos por WhatsApp y lo resolvemos.',
   confirmRate:'Demasiados intentos. Espera unos minutos y vuelve a abrir el enlace, o escríbenos por WhatsApp.',
   confirmError:'No hemos podido confirmar tu clase ahora. Vuelve a abrir el enlace del email o escríbenos por WhatsApp.'},
  en:{intl:'en-GB',title:'Choose your slot',loading:'Looking for slots…',
   empty:'There are no slots available right now. Message us on WhatsApp and we will sort it out.',
   loadFailed:'We could not load the slots. Message us on WhatsApp.',
+  neutral:'Book your slot on WhatsApp: we will tell you the available days and times.',
   wa:'Message us on WhatsApp',notice:'On the first day you pay at the studio for the full month or the single class.',
   name:'Your name',email:'Email',phone:'Phone (optional)',submit:'Request my first class',busy:'Sending…',back:'Change slot',
   chosen:'Your first class will be in this slot',sent:'Check your email',
@@ -43,12 +46,14 @@ const COPY={
   confirmedNote:'On the first day you pay at the studio for the full month or the single class. We have emailed you the details.',
   confirmFull:'The slot has filled up',confirmFullNote:'While you were confirming, the slot became full. Nothing has been booked. Message us and we will find another option.',
   confirmInvalid:'This link is invalid or has expired',confirmInvalidNote:'Request your first class again from the course page or message us on WhatsApp.',
+  confirmRateTitle:'Too many attempts, try again in a few minutes',confirmErrorTitle:'We could not confirm your class right now',
   confirmContact:'Message us to finish your booking',confirmContactNote:'We cannot confirm your first class automatically. Message us on WhatsApp and we will sort it out.',
   confirmRate:'Too many attempts. Wait a few minutes and open the link again, or message us on WhatsApp.',
   confirmError:'We could not confirm your class right now. Open the email link again or message us on WhatsApp.'},
  ca:{intl:'ca-ES',title:'Tria el teu torn',loading:'Buscant torns…',
   empty:'Ara mateix no hi ha torns disponibles. Escriu-nos per WhatsApp i ho resolem.',
   loadFailed:'No hem pogut carregar els torns. Escriu-nos per WhatsApp.',
+  neutral:'Reserva el teu torn per WhatsApp: t’expliquem els dies i horaris disponibles.',
   wa:'Escriu-nos per WhatsApp',notice:'El primer dia pagues a l’estudi el mes o la classe solta.',
   name:'El teu nom',email:'Email',phone:'Telèfon (opcional)',submit:'Demanar la meva primera classe',busy:'Enviant…',back:'Canviar de torn',
   chosen:'La teva primera classe serà en aquest torn',sent:'Revisa el teu email',
@@ -62,6 +67,7 @@ const COPY={
   confirmedNote:'El primer dia pagues a l’estudi el mes o la classe solta. T’hem enviat un email amb els detalls.',
   confirmFull:'El torn s’ha omplert',confirmFullNote:'Mentre confirmaves, el torn s’ha completat. No s’ha reservat res. Escriu-nos i busquem una altra opció.',
   confirmInvalid:'L’enllaç no és vàlid o ha caducat',confirmInvalidNote:'Demana la primera classe de nou des de la pàgina del curs o escriu-nos per WhatsApp.',
+  confirmRateTitle:'Massa intents, prova-ho en uns minuts',confirmErrorTitle:'No hem pogut confirmar la classe ara',
   confirmContact:'Escriu-nos per acabar la reserva',confirmContactNote:'No podem confirmar la primera classe automàticament. Escriu-nos per WhatsApp i ho resolem.',
   confirmRate:'Massa intents. Espera uns minuts i torna a obrir l’enllaç, o escriu-nos per WhatsApp.',
   confirmError:'No hem pogut confirmar la classe ara. Torna a obrir l’enllaç de l’email o escriu-nos per WhatsApp.'}
@@ -113,6 +119,7 @@ export class CourseTurnsWidget{
    if(target.dataset.turn)this.selectTurn(target.dataset.turn);
    else if(target.dataset.action==='back')this.selectTurn(null);
   });
+  this.root.addEventListener?.('input',e=>{const t=e.target;if(t&&Object.hasOwn(this.values,t.name))this.values[t.name]=t.value;});
   this.root.addEventListener?.('submit',e=>{
    e.preventDefault();const f=e.target.elements;
    this.submit({name:f.name.value,email:f.email.value,phone:f.phone.value});
@@ -123,10 +130,10 @@ export class CourseTurnsWidget{
   this.root.innerHTML=`<h2 id="turnos-title" tabindex="-1">${this.c.title}</h2>${inner}`;
   if(focus)this.root.querySelector?.('#turnos-title')?.focus?.({preventScroll:true});
  }
- fallback(message){this.shell(`<p role="alert" class="course-turns__msg">${escape(message)}</p>${waButton(this.c,this.course)}`);}
+ fallback(message,{alert=true}={}){this.shell(`<p${alert?' role="alert"':''} class="course-turns__msg">${escape(message)}</p>${waButton(this.c,this.course)}`);}
  async init(){
   // ID segnaposto: il corso mensile non e' ancora configurato, si va dritti a WhatsApp.
-  if(hasPlaceholder(this.ids)){this.fallback(this.c.loadFailed);return;}
+  if(hasPlaceholder(this.ids)){this.fallback(this.c.neutral,{alert:false});return;}
   this.shell(`<p role="status">${this.c.loading}</p>`);
   try{
    const data=await this.api.turns();
@@ -145,7 +152,7 @@ export class CourseTurnsWidget{
   const selected=this.turns.find(t=>t.templateId===this.selectedId);
   const error=this.error?`<p role="alert" class="guest-error">${escape(this.error)}</p>`:'';
   if(!selected){
-   const list=this.turns.map(t=>`<li><button type="button" class="course-turn" data-turn="${escape(t.templateId)}" aria-pressed="false">${escape(turnLabel(t,this.locale))}</button></li>`).join('');
+   const list=this.turns.map(t=>`<li><button type="button" class="course-turn" data-turn="${escape(t.templateId)}">${escape(turnLabel(t,this.locale))}</button></li>`).join('');
    this.shell(`<ul class="course-turns__list" role="list">${list}</ul>${error}${notice}${waButton(this.c,this.course)}`,{focus});
    return;
   }
@@ -154,7 +161,7 @@ export class CourseTurnsWidget{
 <form novalidate>
 <label for="ct-name">${this.c.name}</label><input id="ct-name" name="name" type="text" autocomplete="name" maxlength="${NAME_MAX}" required value="${escape(v.name)}">
 <label for="ct-email">${this.c.email}</label><input id="ct-email" name="email" type="email" autocomplete="email" inputmode="email" maxlength="254" required value="${escape(v.email)}">
-<label for="ct-phone">${this.c.phone}</label><input id="ct-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" pattern="\\+?[0-9 ().\\-]{6,20}" value="${escape(v.phone)}">
+<label for="ct-phone">${this.c.phone}</label><input id="ct-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" value="${escape(v.phone)}">
 ${error}${notice}
 <button type="submit" class="course-turns__submit"${this.busy?' disabled':''}>${this.busy?this.c.busy:this.c.submit}</button>
 </form>
@@ -216,8 +223,8 @@ export class ConfirmView{
   try{result=await this.api.verify(token);}
   catch(e){
    if(e.message==='invalid_or_expired_token')this.show(this.c.confirmInvalid,this.c.confirmInvalidNote);
-   else if(e.message==='rate_limited')this.show(this.c.confirmInvalid,this.c.confirmRate);
-   else this.show(this.c.confirmInvalid,this.c.confirmError);
+   else if(e.message==='rate_limited')this.show(this.c.confirmRateTitle,this.c.confirmRate);
+   else this.show(this.c.confirmErrorTitle,this.c.confirmError);
    return;
   }
   if(result?.status==='confirmed')this.confirmed(result);
@@ -251,7 +258,7 @@ export async function boot(env={}){
  const lang=doc.documentElement.lang;
  if(confirmRoot){
   const view=new ConfirmView(confirmRoot,config||{apiBase:'',studioSlug:''},lang);
-  if(!config){view.show(view.c.confirmInvalid,view.c.confirmError);return;}
+  if(!config){view.show(view.c.confirmErrorTitle,view.c.confirmError);return;}
   if(env.fetcher)view.api=new CourseApi(config,env.fetcher);
   await view.run(token);return;
  }

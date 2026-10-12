@@ -32,7 +32,7 @@ for (const [locale, prefix] of Object.entries(locales)) {
       } else {
         // S5: i mensili es/en/ca non rimandano piu a Mesana; il box turni (#turnos) prenota la prima lezione.
         assert.equal(booking.length, 0);
-        assert.match(source, /<aside id="turnos"[^>]*data-course="(?:torno|modelado)"/);
+        assert.match(source, /<section id="turnos"[^>]*data-course="(?:torno|modelado)"/);
         assert.ok(!source.includes(url));
       }
       assert.doesNotMatch(source, /id="booking-grid"|class="mini-booking"|turno-skeleton|<script[^>]*src="[^"]*\/(?:mini-booking|booking|booking-v2)\.js/);

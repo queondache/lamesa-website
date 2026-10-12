@@ -180,11 +180,11 @@ test('booking-config: corsi mensili con segnaposto TODO dichiarati solo li',()=>
 for(const [lang,prefix] of [['es',''],['en','en/'],['ca','ca/']])for(const course of ['torno','modelado']){
  test(`${prefix}clases/semanal-${course}: aside #turnos, nessun CTA Mesana, testo pagamento in studio`,()=>{
   const s=read(`${prefix}clases/semanal-${course}.html`);
-  assert.match(s,new RegExp(`<aside id="turnos"[^>]*data-course="${course}"`));
+  assert.match(s,new RegExp(`<section id="turnos"[^>]*aria-labelledby="turnos-title"[^>]*data-course="${course}"`));
   assert.doesNotMatch(s,/turno-grid|data-standard-booking|app\.mesana\.studio\/book/);
   assert.doesNotMatch(s,/Tras el pago|After payment|Després del pagament/);
   assert.match(s,/booking-config\.js\?v=8/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=1"/);assert.match(s,/experience-booking\.css\?v=3/);
-  assert.match(s,{es:/pagas en el estudio el primer día/i,en:/pay at the studio on the first day/i,ca:/pagues a l’estudi el primer dia/i}[lang]);
+  assert.match(s,{es:/el primer día pagas en el estudio el mes o la clase suelta/i,en:/on the first day you pay at the studio for the full month or the single class/i,ca:/el primer dia pagues a l’estudi el mes o la classe solta/i}[lang]);
  });
 }
 for(const prefix of ['','en/','ca/'])test(`${prefix}clases/confirmar.html: noindex, no-referrer, senza analytics, ancora WhatsApp`,()=>{
@@ -192,4 +192,41 @@ for(const prefix of ['','en/','ca/'])test(`${prefix}clases/confirmar.html: noind
  assert.match(s,/name="robots" content="noindex,nofollow"/);assert.match(s,/name="referrer" content="no-referrer"/);
  assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=1/);assert.match(s,/booking-config\.js\?v=8/);
  assert.doesNotMatch(s,/googletagmanager|Cookiebot/);assert.match(s,/wa\.me\/34711552030/);
+});
+
+test('S5 fix1: ID segnaposto -> stato neutro (non loadFailed, non alert) con WhatsApp; errore API reale resta loadFailed',async()=>{
+ const {r,w}=widgetWith(async()=>{throw new Error('no');},'es','modelado');await w.init();
+ assert.match(r.html,/Reserva tu turno por WhatsApp: te contamos los días y horarios disponibles\./);
+ assert.doesNotMatch(r.html,/No hemos podido cargar|role="alert"/);assert.match(r.html,/wa\.me\/34711552030/);
+ const en=widgetWith(async()=>{throw new Error('no');},'en','modelado');await en.w.init();assert.match(en.r.html,/Book your slot on WhatsApp/);
+ const ca=widgetWith(async()=>{throw new Error('no');},'ca','modelado');await ca.w.init();assert.match(ca.r.html,/Reserva el teu torn per WhatsApp/);
+ const real=widgetWith(async()=>{throw new Error('network');});await real.w.init();assert.match(real.r.html,/No hemos podido cargar los turnos/);
+});
+test('S5 fix3: telefono senza attributo pattern; fix5: turni senza aria-pressed',async()=>{
+ const {r,w}=widgetWith(respond(200,{data:{turns:[turn]},error:null}));await w.init();
+ assert.doesNotMatch(r.html,/aria-pressed/);
+ w.selectTurn('tpl_1');assert.match(r.html,/name="phone"/);assert.doesNotMatch(r.html,/pattern=/);
+});
+test('S5 fix4: ConfirmView 429 ha titolo proprio; errore generico non dice "link non valido"',async()=>{
+ for(const [lang,re] of [['es',/<h1[^>]*>Demasiados intentos, prueba en unos minutos/],['en',/<h1[^>]*>Too many attempts, try again in a few minutes/],['ca',/<h1[^>]*>Massa intents, prova-ho en uns minuts/]]){
+  const {r,v}=confirmView(lang,recorder({'verify':[429,{data:null,error:{code:'rate_limited'}}]}));await v.run('t');assert.match(r.html,re);assert.doesNotMatch(r.html,/<h1[^>]*>(El enlace no es|This link is invalid|L’enllaç no és)/);
+ }
+ const g=confirmView('es',async()=>{throw new Error('network');});await g.v.run('t');assert.doesNotMatch(g.r.html,/<h1[^>]*>El enlace no es válido/);
+ const r2=fakeRoot();const doc={documentElement:{lang:'es'},querySelector:s=>s==='[data-course-confirm]'?r2:null,querySelectorAll:()=>[]};
+ await boot({document:doc,window:{},location:{...location,hash:'#t=abc',pathname:'/p',search:''},history:{replaceState(){}}});
+ assert.doesNotMatch(r2.html,/<h1[^>]*>El enlace no es válido/);assert.match(r2.html,/wa\.me/);
+});
+test('S5 fix6: nome/email/telefono digitati sopravvivono a "Cambiar de turno"',async()=>{
+ const {r,w}=widgetWith(respond(200,{data:{turns:[turn]},error:null}));await w.init();w.selectTurn('tpl_1');
+ for(const [name,value] of [['name','Ana'],['email','ana@x.es'],['phone','+34 600 000 000']])r.listeners.input({target:{name,value}});
+ w.selectTurn(null);w.selectTurn('tpl_1');
+ assert.match(r.html,/value="Ana"/);assert.match(r.html,/value="ana@x\.es"/);assert.match(r.html,/value="\+34 600 000 000"/);
+});
+for(const [lang,prefix,re] of [['es','',/Reserva tu primera clase en el turno que prefieras; el primer día pagas en el estudio el mes o la clase suelta\./],['en','en/',/Book your first class in the slot you prefer; on the first day you pay at the studio for the full month or the single class\./],['ca','ca/',/Reserva la primera classe al torn que prefereixis; el primer dia pagues a l’estudi el mes o la classe solta\./]])for(const course of ['torno','modelado'])
+ test(`S5 fix7: ${prefix}clases/semanal-${course}: banner allineato al flusso prima lezione`,()=>{
+  const s=read(`${prefix}clases/semanal-${course}.html`);assert.match(s,re);assert.doesNotMatch(s,/plaza fija en este turno|fixed spot in this class|plaça fixa en aquest torn/);
+ });
+test('S5 fix5: pagina conferma senza aria-live duplicato; workflow include standard-booking-links',()=>{
+ for(const p of ['clases/confirmar.html','en/clases/confirmar.html','ca/clases/confirmar.html'])assert.doesNotMatch(read(p),/aria-live/);
+ assert.match(read('.github/workflows/site-check.yml'),/tests\/standard-booking-links\.test\.mjs/);
 });
