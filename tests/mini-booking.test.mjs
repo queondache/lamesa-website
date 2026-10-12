@@ -173,5 +173,5 @@ test('all localized class pages use standard booking without mounting the classi
 });
 
 test('browser script remains classic and uses no ES2022 syntax',()=>{
- const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=6['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
+ const source=readFileSync(new URL('../js/mini-booking.js',import.meta.url),'utf8');assert.doesNotMatch(source,/^\s*import\s/m);assert.match(source,/import\(['"]\.\/experience-booking\.js\?v=7['"]\)/);assert.doesNotMatch(source,/\.at\s*\(|\?\?=/);
 });

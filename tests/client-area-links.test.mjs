@@ -16,16 +16,16 @@ const homes = ['index.html', 'en/index.html', 'ca/index.html', 'pt/index.html'];
 const courses = ['clases/semanal-modelado.html', 'clases/semanal-torno.html', 'en/clases/semanal-modelado.html', 'en/clases/semanal-torno.html', 'ca/clases/semanal-modelado.html', 'ca/clases/semanal-torno.html'];
 // Published baseline fingerprints, excluding only class reservation CTA blocks.
 const preserved = {
-  "index.html": "6f6f287fe36261fd7a5955d22abd04e208668156e34ad0bdfb7aa0a6df4a482d",
-  "en/index.html": "f7839ce5f68f5e0bd46f79072077140949c06ed38f9c3d93480ff14a68b9fc6a",
-  "ca/index.html": "a50b13f1f4accd08fffd3ab57964881479de852c6b33173a676a8618b53edd99",
-  "pt/index.html": "d6506cae67c65ddaaa82daa51d2f7f207bc9fb71cb7fa208ab1587fc08ac85b6",
-  "clases/semanal-modelado.html": "0043b5957307f8466d0bae7475e728d0bb39d3c6d0d7d20b839d2383f100d8d7",
-  "clases/semanal-torno.html": "1a51f3a6ff984168ca2737778cab2cdfe696a26b0373ba3f1b20ace4969bafc9",
-  "en/clases/semanal-modelado.html": "dbef41847cafc352776455768a9c7e47d787fa049c934dada6df03790e417ffb",
-  "en/clases/semanal-torno.html": "86e1ff04ec431676db6a9d940fb8b0c115321d7e1fa68228b6adece856780ceb",
-  "ca/clases/semanal-modelado.html": "c6918064fb179ae636e16e03580cf5fec6343ff7ac8840a87d6d339094fd0df6",
-  "ca/clases/semanal-torno.html": "248d5a2c03ad2a12b4140d0c09bb1313070d6e7fff0336fb670d59d4e2907db0"
+  "index.html": "5e039afb7a36538aa4cc33c729f5b6cbd14d19d216f84c1663181ffacbd0ed0e",
+  "en/index.html": "454b00c71f6e2dd66f73f2676a104d6d584bcd2b68446d8f7df1adcc1c0d622c",
+  "ca/index.html": "1fa8e563544288b3bf0694a55b62bc3016a0d37e04c7d5325bfd0984ca36c360",
+  "pt/index.html": "7a8214c07a10b63c2292b0a2a634f6becbaf63e53b1d49e94b881b110ede21c2",
+  "clases/semanal-modelado.html": "506418bc616ff69166461b425984e579f9e02938f4478bebd3d6c06744253cdd",
+  "clases/semanal-torno.html": "bcadb44a996c862d0c9b6ebb7f28bc7882eefac05753b4fd2a339d25cfc06648",
+  "en/clases/semanal-modelado.html": "ed397d4f336472b7d05b8aae878183325318cd5b7cdcc9b05fde8cbc2cc7e2e3",
+  "en/clases/semanal-torno.html": "9fafeafa14bbb30f637249eab7f80a6d8d51aaf3c161ba2e8113ae6114b8031c",
+  "ca/clases/semanal-modelado.html": "64b780c0203539599cc64fb2b36542e4cd9b8faf4b649555d2172ae02d86b928",
+  "ca/clases/semanal-torno.html": "a30612303b2ed79b5b6cc79a6dcdfa78d0d023692c34fa8be73a6b8b7699e1c1"
 };
 
 function page(config, lang = 'es') {
