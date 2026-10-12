@@ -60,7 +60,7 @@ test('Home discovery and sitemap include nine localized canonical pages while re
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
  assert.match(read('llms.txt'),/public calendars show actual Mesana dates/);
- assert.match(read('llms.txt'),/Public Modelado is €45; the €15 manual class is excluded/);
+ assert.match(read('llms.txt'),/Public Modelado is €45\./);assert.doesNotMatch(read('llms.txt'),/€15 manual class/);assert.match(read('llms.txt'),/pay online \(Stripe\) on the experiencias pages/);
 });
 test('Pages publication excludes fixture and internal material; one stable cheap Node22 check',()=>{
  const config=read('_config.yml');for(const path of ['dev/','tests/','docs/','demo/','.orchestratore/','node_modules/','package.json','package-lock.json','.github/'])assert.ok(config.split('\n').some(line=>line.trim()===`- ${path}`));

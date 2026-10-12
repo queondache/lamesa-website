@@ -5,8 +5,8 @@
 ## Services
 - Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
 - Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
-- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
-- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. View Mesana dates and request confirmation via WhatsApp.
+- Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. Book and pay online (Stripe) on the hand-building page; WhatsApp is the fallback.
+- Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. Book and pay online (Stripe) on the wheel page; WhatsApp is the fallback.
 - Intro al Torno (wheel intro course): €90 — 2 sessions of 2h, max 2 people. Book via WhatsApp.
 - Coworking Torno (open wheel access for experienced potters): €20/hour — minimum 2 hours. Book via WhatsApp.
 - Bono de horas / Taller Flex (flexible hours, hand-building or wheel): 8h €120, 16h €220, 24h €300. Buy via WhatsApp (https://wa.me/34711552030).
@@ -19,7 +19,7 @@ All materials and firings included. High-temperature clay. Full machine-readable
 ## Booking
 - Weekly classes: enrollment and account access use the Mesana client area at https://app.mesana.studio/client/la-mesa.
 - Single classes: the public calendars show actual Mesana dates, prices and live available places. Choose a session and pay online (Stripe) to book; the price comes from Mesana. If the calendar cannot load, the page falls back to a WhatsApp request.
-- Single-class calendars: pottery wheel https://lamesabcn.com/experiencias/torno.html · hand-building https://lamesabcn.com/experiencias/modelado.html (the former Clase Suelta page redirects to the wheel page). Public Modelado is €45; the €15 manual class is excluded.
+- Single-class calendars: pottery wheel https://lamesabcn.com/experiencias/torno.html · hand-building https://lamesabcn.com/experiencias/modelado.html (the former Clase Suelta page redirects to the wheel page). Public Modelado is €45.
 - WhatsApp (https://wa.me/34711552030): Intro al Torno, Coworking Torno, Taller Flex, creative workshops and private sessions.
 
 ## Guides (blog, ES / EN / CA)
@@ -63,7 +63,7 @@ Closed Monday and Sunday. Same hours as the Google Business Profile (Europe/Madr
 - Friday: 11:00–19:00
 - Saturday: 11:00–16:00
 
-Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Request confirmation via WhatsApp for a published date; if the preferred time is not shown, ask the studio.
+Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer prefers within opening hours, subject to availability (wheels are limited to 2). Book and pay online (Stripe) on the experiencias pages for a published date; if the preferred time is not shown or the calendar cannot load, ask the studio via WhatsApp.
 
 ## Languages
 Website: Spanish (primary), English, Catalan, Portuguese. Classes are taught in English, Spanish and Portuguese.
