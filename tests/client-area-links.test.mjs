@@ -20,11 +20,11 @@ const preserved = {
   "en/index.html": "f7839ce5f68f5e0bd46f79072077140949c06ed38f9c3d93480ff14a68b9fc6a",
   "ca/index.html": "a50b13f1f4accd08fffd3ab57964881479de852c6b33173a676a8618b53edd99",
   "pt/index.html": "d6506cae67c65ddaaa82daa51d2f7f207bc9fb71cb7fa208ab1587fc08ac85b6",
-  "clases/semanal-modelado.html": "7064567825e6d48397f406d7c053b1f4381e3f99cb815767cda55193b3ad40fd",
+  "clases/semanal-modelado.html": "0043b5957307f8466d0bae7475e728d0bb39d3c6d0d7d20b839d2383f100d8d7",
   "clases/semanal-torno.html": "1a51f3a6ff984168ca2737778cab2cdfe696a26b0373ba3f1b20ace4969bafc9",
-  "en/clases/semanal-modelado.html": "edeba0f1d41543849db586e8cb3b72405b3fe2d5d810c11d42d6282656d0c626",
+  "en/clases/semanal-modelado.html": "dbef41847cafc352776455768a9c7e47d787fa049c934dada6df03790e417ffb",
   "en/clases/semanal-torno.html": "86e1ff04ec431676db6a9d940fb8b0c115321d7e1fa68228b6adece856780ceb",
-  "ca/clases/semanal-modelado.html": "113ebf466804a5b6f1b7fa818ddd8c56307e0cb6fcab112751c9bf0d61d46d11",
+  "ca/clases/semanal-modelado.html": "c6918064fb179ae636e16e03580cf5fec6343ff7ac8840a87d6d339094fd0df6",
   "ca/clases/semanal-torno.html": "248d5a2c03ad2a12b4140d0c09bb1313070d6e7fff0336fb670d59d4e2907db0"
 };
 

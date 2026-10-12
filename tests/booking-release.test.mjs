@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readFileSync,readdirSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 import {runInNewContext} from 'node:vm';
@@ -82,4 +82,15 @@ test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
  // pt resta fuori perimetro: pagina e voce sitemap invariate nella sostanza (solo se stessa).
  assert.ok(sitemap.includes('<loc>https://lamesabcn.com/pt/clases/suelta.html</loc>'));
  assert.doesNotMatch(read('llms.txt'),/clases\/suelta\.html\b(?<!pt\/clases\/suelta\.html)/);
+});
+test('Nessuna pagina es/en/ca linka più le pagine di rimando clases/suelta',()=>{
+ // Le tre pagine di rimando e pt/, demo/, node_modules sono escluse dalla scansione.
+ const skip=new Set(['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html']);
+ const walk=dir=>readdirSync(resolve(root,dir),{withFileTypes:true}).flatMap(e=>{
+  const rel=dir?`${dir}/${e.name}`:e.name;
+  if(e.isDirectory())return ['pt','demo','node_modules','.git','.superpowers','.orchestratore','dev','docs'].includes(e.name)&&!dir?[]:(e.name==='node_modules'||e.name==='.git'?[]:walk(rel));
+  return e.name.endsWith('.html')?[rel]:[];
+ });
+ const offenders=walk('').filter(f=>!skip.has(f)&&read(f).includes('/clases/suelta.html'));
+ assert.deepEqual(offenders,[]);
 });
