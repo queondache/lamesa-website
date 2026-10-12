@@ -341,6 +341,7 @@ test('load failure on network error shows the WhatsApp link and retry button',as
   widget.api=new GuestApi(config,async()=>{throw new TypeError('fetch failed');});
   await widget.load();
   assert.match(root.innerHTML,/<a href="https:\/\/wa\.me\/34711552030"[^>]*>WhatsApp<\/a>/);
+  assert.match(root.innerHTML,/<a class="button" href="https:\/\/wa\.me\/34711552030"/);
   assert.match(root.innerHTML,/data-action="load"/);
  }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
 });
