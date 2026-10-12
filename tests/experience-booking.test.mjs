@@ -116,6 +116,14 @@ test('Paid attempt must match public class, session, quantity and 45 EUR total b
  assert.throws(()=>verifiedAttempt(pending,session,3,experience,config));
  assert.equal(verifiedAttempt({...pending,status:'confirmed',checkoutUrl:undefined,accessToken:undefined},session,2,experience,config).status,'confirmed');
 });
+test('Sessione riprezzata a 50 EUR: il tentativo da 100 EUR per 2 posti viene accettato',()=>{
+ // Il prezzo viene dalla sessione scelta (Mesana), non da una costante: 5000 cent x 2 = 10000.
+ const config=validateConfig(raw,location),experience=config.experiences.modelado;
+ const repriced={...session,unitPriceCents:5000};
+ const pending={...attempt,quantity:2,totalCents:10000,session:{...attempt.session,unitPriceCents:5000},checkoutUrl:'http://127.0.0.1:8800/pay/test'};
+ const result=verifiedAttempt(pending,repriced,2,experience,config);
+ assert.equal(result.checkoutUrl,pending.checkoutUrl);assert.equal(result.totalCents,10000);
+});
 test('Portuguese payment sends supported backend locale and keeps Portuguese return intent',async()=>{
  const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};const storage=memory();let posted,redirected;
  const root={dataset:{experience:'modelado'},setAttribute(){},removeAttribute(){},querySelector:()=>null};
