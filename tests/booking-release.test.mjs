@@ -53,7 +53,7 @@ test('Home discovery and sitemap include nine localized canonical pages while re
   for(const type of types){const path=`${prefix(lang)}experiencias/${type}.html`;
   // Giro UX 05/10 (4): la home ha una sola esperienza che porta al calendario; le pagine experiencias restano in sitemap.
   const matching=nodes.filter(n=>n.includes(`<loc>https://lamesabcn.com/${path}</loc>`));assert.equal(matching.length,1);for(const alternate of languages)assert.ok(matching[0].includes(`hreflang="${alternate}" href="https://lamesabcn.com/${prefix(alternate)}experiencias/${type}.html"`));assert.ok(matching[0].includes(`hreflang="x-default" href="https://lamesabcn.com/experiencias/${type}.html"`));}
-  assert.equal(home.split(`href="/${prefix(lang)}clases/suelta.html"`).length-1,2,'Hero and the single experience card lead to the booking calendar');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
+  assert.equal(home.split('href="https://app.mesana.studio/book/la-mesa"').length-1,5,'Hero and four class purchase CTAs lead directly to standard Mesana booking');assert.ok(read(`${prefix(lang)}experiencias/torno.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
   assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.ok(read(`${prefix(lang)}experiencias/modelado.html`).includes(`href="/${prefix(lang)}clases/suelta.html"`));
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
