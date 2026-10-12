@@ -76,6 +76,7 @@ test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
   assert.match(src,new RegExp(`<meta http-equiv="refresh" content="0; url=/${prefix(lang)}experiencias/torno.html">`));
   assert.match(src,/<meta name="robots" content="noindex,follow">/);
   assert.ok(src.includes(`href="/${prefix(lang)}experiencias/modelado.html"`));
+  assert.ok(src.includes('<main class="container">'));assert.equal(src.split('class="related-link"').length-1,2);
   // Il prefisso vuoto (es) combacerebbe anche con pt/: l'ancora sul dominio evita il falso positivo.
   assert.ok(!sitemap.includes(`https://lamesabcn.com/${prefix(lang)}clases/suelta.html`),`sitemap senza ${lang}/clases/suelta`);
  }
