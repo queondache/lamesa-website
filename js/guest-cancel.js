@@ -13,14 +13,14 @@ const COPY={
   confirmTitle:'¿Cancelar sin reembolso?',confirmNote:h=>`Faltan menos de ${h} h para la clase, por eso no se devolverá el importe. Esta acción no se puede deshacer.`,
   confirmYes:'Sí, cancelar sin reembolso',confirmBack:'No, volver',
   refundedTitle:'Reserva cancelada',refundedNote:'Tu reserva ha sido cancelada y te hemos reembolsado el importe completo. En unos días lo verás en tu tarjeta.',
-  noRefundTitle:'Reserva cancelada',noRefundNote:'Tu reserva ha sido cancelada sin reembolso, porque faltaban menos de 24 h para la clase.',
+  noRefundTitle:'Reserva cancelada',noRefundNote:h=>`Tu reserva ha sido cancelada sin reembolso, porque faltaban menos de ${h} h para la clase.`,
   pendingTitle:'Reserva cancelada',pendingNote:'Tu reserva ha sido cancelada. No hemos podido completar el reembolso ahora mismo: te devolveremos el importe manualmente.',
   studioTitle:'Reserva cancelada por el estudio',studioNote:'El estudio ha cancelado esta clase. Escríbenos por WhatsApp si necesitas ayuda con el reembolso o con otra fecha.',
   notCancellableTitle:'Esta reserva ya no se puede cancelar',notCancellableNote:'La reserva ya no admite cancelación online. Escríbenos por WhatsApp y lo resolvemos.',
   invalidTitle:'El enlace no es válido o ha caducado',invalidNote:'Usa el enlace de tu email de confirmación o escríbenos por WhatsApp.',
   rate:'Demasiados intentos. Espera unos minutos y vuelve a abrir el enlace, o escríbenos por WhatsApp.',
   errorTitle:'No hemos podido cargar tu reserva',errorNote:'Vuelve a abrir el enlace del email o escríbenos por WhatsApp.',
-  actionError:'No hemos podido cancelar ahora. Inténtalo de nuevo o escríbenos por WhatsApp.',
+  actionError:'No hemos podido confirmar la cancelación. Puede que ya esté cancelada: vuelve a intentarlo sin riesgo, el reembolso no se repetirá.',
   generic:'Hemos recibido tu solicitud. Escríbenos por WhatsApp para confirmar el estado de tu reserva.'},
  en:{intl:'en-GB',loading:'Loading your booking…',title:'Cancel booking',
   lesson:'Class',when:'Date and time',persons:'People',amount:'Amount paid',
@@ -29,14 +29,14 @@ const COPY={
   confirmTitle:'Cancel without a refund?',confirmNote:h=>`The class is less than ${h} h away, so the amount will not be refunded. This cannot be undone.`,
   confirmYes:'Yes, cancel without refund',confirmBack:'No, go back',
   refundedTitle:'Booking cancelled',refundedNote:'Your booking has been cancelled and the full amount has been refunded. It will show on your card in a few days.',
-  noRefundTitle:'Booking cancelled',noRefundNote:'Your booking has been cancelled without a refund, because the class was less than 24 h away.',
+  noRefundTitle:'Booking cancelled',noRefundNote:h=>`Your booking has been cancelled without a refund, because the class was less than ${h} h away.`,
   pendingTitle:'Booking cancelled',pendingNote:'Your booking has been cancelled. We could not complete the refund right now: we will refund the amount manually.',
   studioTitle:'Booking cancelled by the studio',studioNote:'The studio has cancelled this class. Message us on WhatsApp if you need help with the refund or another date.',
   notCancellableTitle:'This booking can no longer be cancelled',notCancellableNote:'This booking no longer accepts online cancellation. Message us on WhatsApp and we will sort it out.',
   invalidTitle:'This link is invalid or has expired',invalidNote:'Use the link in your confirmation email or message us on WhatsApp.',
   rate:'Too many attempts. Wait a few minutes and open the link again, or message us on WhatsApp.',
   errorTitle:'We could not load your booking',errorNote:'Open the email link again or message us on WhatsApp.',
-  actionError:'We could not cancel right now. Try again or message us on WhatsApp.',
+  actionError:'We could not confirm the cancellation. It may already be cancelled: trying again is safe, the refund will not be repeated.',
   generic:'We have received your request. Message us on WhatsApp to confirm the status of your booking.'},
  ca:{intl:'ca-ES',loading:'Carregant la teva reserva…',title:'Cancel·lar reserva',
   lesson:'Classe',when:'Data i hora',persons:'Persones',amount:'Import pagat',
@@ -45,14 +45,14 @@ const COPY={
   confirmTitle:'Cancel·lar sense reemborsament?',confirmNote:h=>`Falten menys de ${h} h per a la classe, per això no es retornarà l’import. Aquesta acció no es pot desfer.`,
   confirmYes:'Sí, cancel·lar sense reemborsament',confirmBack:'No, tornar',
   refundedTitle:'Reserva cancel·lada',refundedNote:'La teva reserva ha estat cancel·lada i t’hem reemborsat l’import complet. En uns dies el veuràs a la targeta.',
-  noRefundTitle:'Reserva cancel·lada',noRefundNote:'La teva reserva ha estat cancel·lada sense reemborsament, perquè faltaven menys de 24 h per a la classe.',
+  noRefundTitle:'Reserva cancel·lada',noRefundNote:h=>`La teva reserva ha estat cancel·lada sense reemborsament, perquè faltaven menys de ${h} h per a la classe.`,
   pendingTitle:'Reserva cancel·lada',pendingNote:'La teva reserva ha estat cancel·lada. No hem pogut completar el reemborsament ara mateix: et retornarem l’import manualment.',
   studioTitle:'Reserva cancel·lada per l’estudi',studioNote:'L’estudi ha cancel·lat aquesta classe. Escriu-nos per WhatsApp si necessites ajuda amb el reemborsament o amb una altra data.',
   notCancellableTitle:'Aquesta reserva ja no es pot cancel·lar',notCancellableNote:'La reserva ja no admet cancel·lació en línia. Escriu-nos per WhatsApp i ho resolem.',
   invalidTitle:'L’enllaç no és vàlid o ha caducat',invalidNote:'Fes servir l’enllaç del teu email de confirmació o escriu-nos per WhatsApp.',
   rate:'Massa intents. Espera uns minuts i torna a obrir l’enllaç, o escriu-nos per WhatsApp.',
   errorTitle:'No hem pogut carregar la teva reserva',errorNote:'Torna a obrir l’enllaç de l’email o escriu-nos per WhatsApp.',
-  actionError:'No hem pogut cancel·lar ara. Torna-ho a provar o escriu-nos per WhatsApp.',
+  actionError:'No hem pogut confirmar la cancel·lació. Pot ser que ja estigui cancel·lada: torna-ho a provar sense risc, el reemborsament no es repetirà.',
   generic:'Hem rebut la teva sol·licitud. Escriu-nos per WhatsApp per confirmar l’estat de la teva reserva.'}
 };
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -102,7 +102,7 @@ export class GuestCancelApi extends GuestApi{
 export class GuestCancelView{
  constructor(root,config,lang='es'){
   this.root=root;this.config=config;this.locale=pickLocale(lang);this.c=COPY[this.locale];
-  this.api=new GuestCancelApi(config);this.token=null;this.data=null;this.stage='preview';this.busy=false;this.error='';
+  this.api=new GuestCancelApi(config);this.now=()=>Date.now();this.confirmReadyAt=0;this.token=null;this.data=null;this.stage='preview';this.busy=false;this.error='';
   this.root.addEventListener?.('click',e=>{
    const action=e.target?.closest?.('[data-action]')?.dataset?.action;
    if(action==='cancel')return this.requestCancel();
@@ -118,7 +118,10 @@ export class GuestCancelView{
  final(titleKey,noteKey,extra=''){this.shell(this.c[titleKey],`${extra}<p>${escape(this.c[noteKey])}</p>`);}
  finalStatus(status){
   const keys=FINAL[status];
-  if(keys)this.final(keys[0],keys[1]);
+  if(keys){
+   const note=this.c[keys[1]];
+   this.shell(this.c[keys[0]],`<p>${escape(typeof note==='function'?note(this.hours()):note)}</p>`);
+  }
   else this.shell(this.c.title,`<p>${escape(this.c.generic)}</p>`);
  }
  summary(){
@@ -165,16 +168,18 @@ export class GuestCancelView{
  async requestCancel(){
   if(this.busy||!this.data)return;
   this.error='';
-  if(!this.data.refundable){this.stage='confirm';this.render();return;}
+  if(!this.data.refundable){this.enterConfirm();return;}
   await this.send(false);
  }
- async confirmNoRefund(){if(this.busy||!this.data)return;this.error='';await this.send(true);}
+ // Anti doppio clic: subito dopo il cambio di schermata il bottone di conferma ignora i tocchi (400 ms).
+ enterConfirm(){this.stage='confirm';this.confirmReadyAt=this.now()+400;this.render();}
+ async confirmNoRefund(){if(this.busy||!this.data||this.now()<this.confirmReadyAt)return;this.error='';await this.send(true);}
  async send(confirmNoRefund){
   this.busy=true;this.render();
   try{
    const res=await this.api.cancel(this.token,confirmNoRefund);
    this.busy=false;
-   if(res?.status==='needs_confirmation'){this.stage='confirm';this.render();return;}
+   if(res?.status==='needs_confirmation'){this.enterConfirm();return;}
    this.finalStatus(res?.status);
   }catch(e){
    this.busy=false;

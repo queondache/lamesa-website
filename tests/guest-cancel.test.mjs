@@ -24,7 +24,8 @@ const recorder=map=>async(url,options={})=>{
 };
 const ok=data=>[200,{data,error:null}];
 const fail=(status,code)=>[status,{data:null,error:{code}}];
-const viewWith=(fetcher,lang='es')=>{const r=fakeRoot();const v=new GuestCancelView(r,config,lang);v.api=new GuestCancelApi(config,fetcher);return {r,v};};
+const clock={t:1000};
+const viewWith=(fetcher,lang='es')=>{const r=fakeRoot();const v=new GuestCancelView(r,config,lang);v.api=new GuestCancelApi(config,fetcher);v.now=()=>clock.t;return {r,v};};
 
 test('readToken: legge #t=, toglie subito il frammento dall URL, token assente -> null',()=>{
  const seen=[];const history={replaceState:(...a)=>seen.push(a)};
@@ -67,7 +68,7 @@ test('non rimborsabile: seconda conferma esplicita, poi confirmNoRefund=true; Vo
  assert.equal(calls.filter(c=>c.url.endsWith('/cancel')).length,0);
  assert.match(r.html,/data-action="confirm-no-refund"/);assert.match(r.html,/sin reembolso/i);assert.match(r.html,WA);
  v.back();assert.match(r.html,/data-action="cancel"/);assert.equal(calls.filter(c=>c.url.endsWith('/cancel')).length,0);
- await v.requestCancel();await v.confirmNoRefund();
+ await v.requestCancel();clock.t+=500;await v.confirmNoRefund();
  const post=calls.find(c=>c.url.endsWith('/public/guest-bookings/cancel'));
  assert.deepEqual(post.body,{token:'TK',confirmNoRefund:true});
  assert.match(r.html,/cancelada/i);assert.match(r.html,/sin reembolso/i);
@@ -127,7 +128,7 @@ test('click delegato: data-action cancel / confirm-no-refund / back',async()=>{
  const {r,v}=viewWith(recorder({'cancel-preview':ok({...preview,refundable:false}),'/cancel':ok({status:'cancelled_no_refund'})}));
  await v.run('t');const click=a=>r.listeners.click({target:{closest:()=>({dataset:{action:a}})}});
  await click('cancel');assert.match(r.html,/confirm-no-refund/);await click('back');assert.match(r.html,/data-action="cancel"/);
- await click('cancel');await click('confirm-no-refund');assert.match(r.html,/cancelada/i);
+ await click('cancel');clock.t+=500;await click('confirm-no-refund');assert.match(r.html,/cancelada/i);
 });
 test('boot: il frammento sparisce dall URL PRIMA di qualsiasi fetch; token solo in memoria, mai in DOM/log',async()=>{
  const events=[];const logged=[];const orig={log:console.log,error:console.error,warn:console.warn,info:console.info};
@@ -172,3 +173,36 @@ test('CSS: bottoni dell annullo con area di tocco >= 44px (riuso classi course-t
  const s=read('js/guest-cancel.js');assert.match(s,/course-turns__submit/);
 });
 test('workflow site-check include guest-cancel.test.mjs',()=>{assert.match(read('.github/workflows/site-check.yml'),/tests\/guest-cancel\.test\.mjs/);});
+
+test('fix1: errore di rete/timeout in annullo -> "puede que ya este cancelada", riprovare e sicuro; azione ripetibile',async()=>{
+ for(const [lang,re] of [['es',/Puede que ya esté cancelada.*el reembolso no se repetirá/],['en',/may already be cancelled.*refund will not be repeated/i],['ca',/Pot ser que ja estigui cancel·lada.*reemborsament no es repetirà/]]){
+  for(const failing of [async()=>{throw new Error('network');},async()=>{throw Object.assign(new Error('x'),{name:'AbortError'});},recorder({'/cancel':fail(503,'provider_unavailable')})]){
+   const map=recorder({'cancel-preview':ok(preview)});
+   const {r,v}=viewWith(async(url,o)=>url.endsWith('cancel-preview')?map(url,o):failing(url,o),lang);
+   await v.run('t');await v.requestCancel();
+   assert.match(r.html,re);assert.match(r.html,/role="alert"/);assert.match(r.html,/data-action="cancel"/);assert.match(r.html,WA);
+  }
+ }
+});
+test('fix2: nota "sin reembolso" finale usa cutoffHours dinamico (es/en/ca)',async()=>{
+ for(const [lang,re] of [['es',/menos de 48 h/],['en',/less than 48 h/],['ca',/menys de 48 h/]]){
+  const {r,v}=viewWith(recorder({'cancel-preview':ok({...preview,refundable:false,cutoffHours:48}),'/cancel':ok({status:'cancelled_no_refund'})}),lang);
+  await v.run('t');await v.requestCancel();clock.t+=500;await v.confirmNoRefund();
+  assert.match(r.html,re);assert.doesNotMatch(r.html,/24 h/);
+ }
+});
+test('fix3: dopo il passaggio alla conferma senza rimborso i clic sul bottone sono ignorati per 400 ms',async()=>{
+ calls.length=0;const {r,v}=viewWith(recorder({'cancel-preview':ok({...preview,refundable:false}),'/cancel':ok({status:'cancelled_no_refund'})}));
+ await v.run('t');await v.requestCancel();
+ await v.confirmNoRefund();clock.t+=399;await v.confirmNoRefund();
+ assert.equal(calls.filter(c=>c.url.endsWith('/cancel')).length,0);assert.match(r.html,/data-action="confirm-no-refund"/);
+ clock.t+=2;await v.confirmNoRefund();
+ assert.equal(calls.filter(c=>c.url.endsWith('/cancel')).length,1);
+});
+test('fix4: CSS dimmed :disabled e :focus-visible per back e submit',()=>{
+ const css=read('css/experience-booking.css');
+ for(const sel of ['.course-turns__back:disabled','.course-turns__submit:disabled']){
+  const rule=css.split('}').find(b=>b.split('{')[0].split(',').map(x=>x.trim()).includes(sel));assert.match(rule||'',/opacity/,sel);
+ }
+ assert.match(css,/\.course-turns__back:focus-visible/);
+});
