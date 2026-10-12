@@ -321,3 +321,18 @@ test('Etichetta mese: solo la prima lettera maiuscola',async()=>{
  const rawCa=new Intl.DateTimeFormat('ca',{month:'long',year:'numeric',timeZone:'Europe/Madrid'}).format(new Date('2026-10-14T10:00:00Z'));
  assert.equal(ca,rawCa.charAt(0).toUpperCase()+rawCa.slice(1));
 });
+
+// R1.5: qualsiasi errore nel caricamento date mostra loadFailed con WhatsApp cliccabile + riprova.
+test('load failure on network error shows the WhatsApp link and retry button',async()=>{
+ const config=validateConfig(raw,location);
+ const original={document:globalThis.document,sessionStorage:globalThis.sessionStorage};
+ const root={dataset:{experience:'modelado'},contains:()=>false,setAttribute(){},removeAttribute(){},querySelector:q=>q==='button'?{}:null,querySelectorAll:()=>[]};
+ globalThis.document={documentElement:{lang:'es'},activeElement:null,querySelectorAll:()=>[]};globalThis.sessionStorage=memory();
+ try{
+  const widget=new GuestWidget(root,config);
+  widget.api=new GuestApi(config,async()=>{throw new TypeError('fetch failed');});
+  await widget.load();
+  assert.match(root.innerHTML,/<a href="https:\/\/wa\.me\/34711552030"[^>]*>WhatsApp<\/a>/);
+  assert.match(root.innerHTML,/data-action="load"/);
+ }finally{globalThis.document=original.document;globalThis.sessionStorage=original.sessionStorage;}
+});
