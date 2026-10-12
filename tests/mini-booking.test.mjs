@@ -168,8 +168,8 @@ test('invalid allowedApiOrigins does not fall back to the old system',async()=>{
  try{assert.equal(bookingMode(invalid,page),'unavailable');const w=widget({config:invalid,fetcher:async(url)=>{calls.push(url);throw new Error('unexpected fetch');}});await w.load();assert.deepEqual(calls,[]);assert.match(w.body.innerHTML,/wa.me\/34711552030/);assert.ok(errors.length>=1);}finally{console.error=old;}
 });
 
-test('all localized pages load shared config before the classic widget',()=>{
- for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/booking-config\.js\?v=6[\s\S]*<script src="[^"]*mini-booking\.js\?v=6"[^>]*defer/);assert.doesNotMatch(html,/type="module" src="[^"]*mini-booking\.js/);}
+test('all localized class pages use standard booking without mounting the classic widget',()=>{
+ for(const file of ['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']){const html=readFileSync(new URL(`../${file}`,import.meta.url),'utf8');assert.match(html,/data-standard-booking href="https:\/\/app\.mesana\.studio\/book\/la-mesa"/);assert.doesNotMatch(html,/<script[^>]*src="[^"]*mini-booking\.js|class="mini-booking"|data-price-mesa=/);}
 });
 
 test('browser script remains classic and uses no ES2022 syntax',()=>{
