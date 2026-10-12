@@ -67,3 +67,11 @@ test('Styles preserve branded fonts, contrast colors, target sizes and reduced m
  assert.match(css,/min-width:44px/);assert.match(css,/min-height:44px/);assert.match(css,/prefers-reduced-motion:reduce/);
  for(const match of css.matchAll(/url\('([^']+)'\)/g))assert.ok(existsSync(resolve(root,'css',match[1])));
 });
+test('Skip link: visibile solo con focus da tastiera',()=>{
+ for(const file of ['css/experiences.css','css/style.css']){
+  const css=read(file);
+  assert.match(css,/\.skip-link:focus-visible/,file);
+  assert.doesNotMatch(css,/\.skip-link:focus\s*\{/,file);
+  assert.match(css,/\.skip-link\{[^}]*clip-path:inset\(50%\)|\.skip-link\s*\{[^}]*clip-path:\s*inset\(50%\)/,file);
+ }
+});
