@@ -72,6 +72,7 @@ test('Skip link: visibile solo con focus da tastiera',()=>{
   const css=read(file);
   assert.match(css,/\.skip-link:focus-visible/,file);
   assert.doesNotMatch(css,/\.skip-link:focus\s*\{/,file);
+  assert.match(css,/\.skip-link:focus-visible\s*\{[^}]*min-height:\s*44px/,file);
   assert.match(css,/\.skip-link\{[^}]*clip-path:inset\(50%\)|\.skip-link\s*\{[^}]*clip-path:\s*inset\(50%\)/,file);
  }
 });

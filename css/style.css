@@ -26,6 +26,9 @@
 }
 
 .skip-link:focus-visible {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
   clip-path: none;
   width: auto;
   height: auto;
