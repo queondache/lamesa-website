@@ -126,6 +126,19 @@ test('conferma: confirmed mostra titolo (escapato), data, orario e avviso pagame
  assert.match(r.html,/Torno &lt;mensual&gt;/);assert.match(r.html,/miércoles/i);assert.match(r.html,/16:00–18:00/);assert.match(r.html,/pagas en el estudio/);
  assert.doesNotMatch(r.html,/TOKEN-SECRET/);assert.equal(post.options.referrerPolicy,'no-referrer');
 });
+test('conferma: startAt/timezone malformati -> testo generico confermato, mai bloccata su Confirmando',async()=>{
+ for(const bad of [{startAt:'non-una-data'},{timezone:'Mars/Olympus'},{startAt:null,endAt:undefined}]){
+  const {r,v}=confirmView('es',recorder({'verify':[200,{data:{...confirmed,...bad},error:null}]}));
+  await v.run('t');
+  assert.match(r.html,/Primera clase confirmada/);assert.match(r.html,/pagas en el estudio/);
+  assert.doesNotMatch(r.html,/Confirmando|Invalid|NaN/);assert.match(r.html,/wa\.me\/34711552030/);
+ }
+});
+test('conferma: titolo malevolo dall API resta escapato nella vista confermata',async()=>{
+ const evil='<img src=x onerror=alert(1)>';
+ const {r,v}=confirmView('es',recorder({'verify':[200,{data:{...confirmed,title:evil},error:null}]}));await v.run('t');
+ assert.doesNotMatch(r.html,/<img/);assert.match(r.html,/&lt;img src=x onerror=alert\(1\)&gt;/);
+});
 test('conferma: turn_full e contact_studio mostrano WhatsApp',async()=>{
  for(const [status,pattern] of [['turn_full',/se ha llenado/],['contact_studio',/Escríbenos/]]){
   const {r,v}=confirmView('es',recorder({'verify':[200,{data:{status},error:null}]}));await v.run('t');

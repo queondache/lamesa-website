@@ -225,10 +225,14 @@ export class ConfirmView{
   else this.show(this.c.confirmContact,this.c.confirmContactNote);
  }
  confirmed(r){
-  const tz=r.timezone||'Europe/Madrid';
-  const day=new Intl.DateTimeFormat(this.c.intl,{dateStyle:'full',timeZone:tz}).format(new Date(r.startAt));
-  const time=d=>new Intl.DateTimeFormat(this.c.intl,{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).format(new Date(d));
-  const summary=`<p class="course-turns__summary"><strong>${escape(r.title)}</strong><br>${escape(upperFirst(day))} · ${time(r.startAt)}–${time(r.endAt)}</p>`;
+  // Date o fuso malformati non devono mai lasciare la pagina su "Confirmando…": testo generico.
+  let summary='';
+  try{
+   const tz=r.timezone||'Europe/Madrid';
+   const day=new Intl.DateTimeFormat(this.c.intl,{dateStyle:'full',timeZone:tz}).format(new Date(r.startAt));
+   const time=d=>new Intl.DateTimeFormat(this.c.intl,{hour:'2-digit',minute:'2-digit',hourCycle:'h23',timeZone:tz}).format(new Date(d));
+   summary=`<p class="course-turns__summary"><strong>${escape(r.title)}</strong><br>${escape(upperFirst(day))} · ${time(r.startAt)}–${time(r.endAt)}</p>`;
+  }catch{summary='';}
   this.show(this.c.confirmed,this.c.confirmedNote,{extra:summary});
  }
 }
