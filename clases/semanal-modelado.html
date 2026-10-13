@@ -33,6 +33,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="../css/style.css?v=16">
+  <link rel="stylesheet" href="../css/experience-booking.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
@@ -283,7 +284,7 @@
       <div class="container">
         <div class="turno-explainer__banner">
           <span class="turno-explainer__label">Importante</span>
-          <p>Estás reservando una plaza fija en este turno: 4 clases de 2 horas por 120&nbsp;€ al mes, siempre el mismo día y a la misma hora. Tras el pago, nos pondremos en contacto contigo si necesitamos algo. Si tienes dudas, encuéntranos en WhatsApp.</p>
+          <p>Reserva tu primera clase en el turno que prefieras; el primer día pagas en el estudio el mes o la clase suelta. Si tienes dudas, encuéntranos en WhatsApp.</p>
         </div>
       </div>
     </section>
@@ -293,9 +294,9 @@
          ============================================================ -->
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid">
-          <a class="mini-booking__cta" data-standard-booking href="https://app.mesana.studio/book/la-mesa">Reservar clases en Mesana →</a>
-        </div>
+        <section id="turnos" class="course-turns" aria-labelledby="turnos-title" data-course="modelado">
+          <a class="course-turns__wa" href="https://wa.me/34711552030" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a>
+        </section>
       </div>
     </section>
 
@@ -405,8 +406,9 @@
 
   <!-- Main script -->
   <script src="../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../js/booking-config.js?v=7" data-cookieconsent="ignore" defer></script>
+  <script src="../js/booking-config.js?v=9" data-cookieconsent="ignore" defer></script>
   <script src="../js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script type="module" src="../js/course-turns.js?v=1" data-cookieconsent="ignore"></script>
 
 </body>
 </html>

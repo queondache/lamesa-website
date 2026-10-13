@@ -33,6 +33,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="../../css/style.css?v=16">
+  <link rel="stylesheet" href="../../css/experience-booking.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
@@ -256,7 +257,7 @@
       <div class="container">
         <div class="turno-explainer__banner">
           <span class="turno-explainer__label">Important</span>
-          <p>You're reserving a fixed spot in this class: 4 sessions of 2 hours for €120 a month, always the same day and time. After payment, we'll reach out if we need anything. If you have questions, find us on WhatsApp.</p>
+          <p>Book your first class in the slot you prefer; on the first day you pay at the studio for the full month or the single class. If you have questions, find us on WhatsApp.</p>
           <p style="font-size:0.875rem; color:rgba(255,255,255,0.7); margin-top:var(--space-xs);">Maximum 2 people per slot.</p>
         </div>
       </div>
@@ -264,9 +265,9 @@
 
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid">
-          <a class="mini-booking__cta" data-standard-booking href="https://app.mesana.studio/book/la-mesa">Book classes on Mesana →</a>
-        </div>
+        <section id="turnos" class="course-turns" aria-labelledby="turnos-title" data-course="torno">
+          <a class="course-turns__wa" href="https://wa.me/34711552030" target="_blank" rel="noopener noreferrer">Message us on WhatsApp</a>
+        </section>
       </div>
     </section>
 
@@ -351,7 +352,8 @@
   </a>
 
   <script src="../../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../../js/booking-config.js?v=7" data-cookieconsent="ignore" defer></script>
+  <script src="../../js/booking-config.js?v=9" data-cookieconsent="ignore" defer></script>
   <script src="../../js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script type="module" src="../../js/course-turns.js?v=1" data-cookieconsent="ignore"></script>
 </body>
 </html>
