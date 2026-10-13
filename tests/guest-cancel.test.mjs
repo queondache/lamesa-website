@@ -157,7 +157,7 @@ for(const [lang,prefix] of [['es',''],['en','en/'],['ca','ca/']]){
   assert.match(s,new RegExp(`<html lang="${lang}"`));
   assert.match(s,/<meta name="robots" content="noindex,nofollow">/);assert.match(s,/<meta name="referrer" content="no-referrer">/);
   assert.match(s,/data-guest-cancel/);assert.match(s,WA);assert.match(s,/class="container"/);
-  assert.match(s,/type="module" src="[^"]*guest-cancel\.js\?v=1"/);assert.match(s,/booking-config\.js\?v=8/);
+  assert.match(s,/type="module" src="[^"]*guest-cancel\.js\?v=1"/);assert.match(s,/booking-config\.js\?v=9/);
   assert.doesNotMatch(s,/googletagmanager|gtag\(|google-analytics|fbq|clarity|hotjar|cookiebot|connect\.facebook/i);
   const scripts=[...s.matchAll(/<script[^>]*src="([^"]+)"/g)].map(m=>m[1]);
   for(const src of scripts)assert.doesNotMatch(src,/^https?:/);

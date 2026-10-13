@@ -172,9 +172,11 @@ test('aree di tocco >= 44px nel CSS del box turni',()=>{
   assert.ok(rule,selector);const m=/min-height:\s*(\d+)px/.exec(rule);assert.ok(m&&Number(m[1])>=44,selector);
  }
 });
-test('booking-config: corsi mensili con segnaposto TODO dichiarati solo li',()=>{
+test('booking-config: corsi mensili con classTypeId reali, nessun segnaposto',()=>{
  const config=read('js/booking-config.js');assert.match(config,/courses:\s*\{/);
- assert.match(config,/ct_TODO_mensile_torno/);assert.match(config,/ct_TODO_mensile_modelado/);assert.match(config,/TODO/);
+ assert.match(config,/torno:\s*\{\s*classTypeIds:\s*\['ct_afb572015b6e457b8fd070ab697e7269'\]/);
+ assert.match(config,/modelado:\s*\{\s*classTypeIds:\s*\['ct_9366d72e18b545c2b6e5741ea334bbfb'\]/);
+ assert.doesNotMatch(config,/TODO/);
  for(const f of ['js/course-turns.js','js/experience-booking.js'])assert.doesNotMatch(read(f),/ct_TODO_mensile/);
 });
 for(const [lang,prefix] of [['es',''],['en','en/'],['ca','ca/']])for(const course of ['torno','modelado']){
@@ -183,14 +185,14 @@ for(const [lang,prefix] of [['es',''],['en','en/'],['ca','ca/']])for(const cours
   assert.match(s,new RegExp(`<section id="turnos"[^>]*aria-labelledby="turnos-title"[^>]*data-course="${course}"`));
   assert.doesNotMatch(s,/turno-grid|data-standard-booking|app\.mesana\.studio\/book/);
   assert.doesNotMatch(s,/Tras el pago|After payment|Després del pagament/);
-  assert.match(s,/booking-config\.js\?v=8/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=1"/);assert.match(s,/experience-booking\.css\?v=3/);
+  assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=1"/);assert.match(s,/experience-booking\.css\?v=3/);
   assert.match(s,{es:/el primer día pagas en el estudio el mes o la clase suelta/i,en:/on the first day you pay at the studio for the full month or the single class/i,ca:/el primer dia pagues a l’estudi el mes o la classe solta/i}[lang]);
  });
 }
 for(const prefix of ['','en/','ca/'])test(`${prefix}clases/confirmar.html: noindex, no-referrer, senza analytics, ancora WhatsApp`,()=>{
  const s=read(`${prefix}clases/confirmar.html`);
  assert.match(s,/name="robots" content="noindex,nofollow"/);assert.match(s,/name="referrer" content="no-referrer"/);
- assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=1/);assert.match(s,/booking-config\.js\?v=8/);
+ assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=1/);assert.match(s,/booking-config\.js\?v=9/);
  assert.doesNotMatch(s,/googletagmanager|Cookiebot/);assert.match(s,/wa\.me\/34711552030/);
 });
 
