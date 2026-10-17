@@ -74,5 +74,4 @@
 ## Contact & booking
 - Web: https://lamesabcn.com
 - WhatsApp: https://wa.me/34711552030
-- Email: lamesa.lc@gmail.com
 - Location: Carrer de l'Atlàntida 47, La Barceloneta, 08003 Barcelona, Spain

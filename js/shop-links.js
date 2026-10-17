@@ -7,7 +7,7 @@
   try {
     destination = new URL(config.url);
   } catch (_) { return; }
-  if (destination.origin !== 'https://qqiza2-n3.myshopify.com' ||
+  if (destination.origin !== 'https://tienda.lamesabcn.com' ||
       destination.pathname !== '/collections/all' || destination.username ||
       destination.password || destination.search || destination.hash) return;
   document.querySelectorAll('[data-shop-link]').forEach(function (link) {

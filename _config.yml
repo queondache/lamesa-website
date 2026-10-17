@@ -4,6 +4,7 @@
 # pricing.md e llms.txt restano pubblici: li leggono gli assistenti AI.
 exclude:
   - seo-audit/
+  - shopify-theme/
   - audit-screenshots/
   - scripts/
   - README.md

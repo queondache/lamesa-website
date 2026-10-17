@@ -603,11 +603,8 @@
           <!-- Column 2 — Email & Social -->
           <div class="contacto__col fade-in fade-in--delay-2">
             <h3>Contáctanos</h3>
-            <a
-              href="mailto:lamesa.lc@gmail.com"
-              aria-label="Enviar correo a La Mesa"
-            >
-              lamesa.lc@gmail.com
+            <a aria-label="Enviar correo a La Mesa" data-email-user="lamesa.lc" data-email-domain="gmail.com">
+              lamesa.lc [arroba] gmail.com
             </a>
             <div class="contacto__social">
               <a
@@ -652,7 +649,7 @@
           <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
           <a href="#faq" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Preguntas frecuentes</a>
           <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="mailto:lamesa.lc@gmail.com?subject=Quiero%20dar%20un%20taller%20en%20La%20Mesa&body=Hola!%20Me%20llamo%20[nombre]%20y%20me%20gustar%C3%ADa%20proponer%20un%20taller." style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">¿Eres artista? Propón un taller</a>
+          <a style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;" data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=Quiero%20dar%20un%20taller%20en%20La%20Mesa&body=Hola!%20Me%20llamo%20[nombre]%20y%20me%20gustar%C3%ADa%20proponer%20un%20taller." data-email-label="true">¿Eres artista? Propón un taller</a>
         </div>
 
         <!-- Bottone blog -->
@@ -708,7 +705,6 @@
         "description": "Espacio creativo multidisciplinar en La Barceloneta, Barcelona. Talleres de cerámica, workshops con artistas invitados, tienda de piezas artesanales y sesiones privadas.",
         "url": "https://lamesabcn.com",
         "telephone": "+34711552030",
-        "email": "lamesa.lc@gmail.com",
         "image": "https://lamesabcn.com/images/og-lamesa.jpg",
         "address": {
           "@type": "PostalAddress",
@@ -972,5 +968,6 @@
   <script src="js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
   <script src="js/main.js?v=7" data-cookieconsent="ignore" defer></script>
 
+<script src="/js/contact-email.js?v=1" data-cookieconsent="ignore" defer></script>
 </body>
 </html>

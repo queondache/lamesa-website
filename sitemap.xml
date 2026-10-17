@@ -582,4 +582,48 @@
     <priority>0.8</priority>
   </url>
 
+  <url>
+    <loc>https://lamesabcn.com/tienda/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/tienda/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/tienda/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/tienda/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/ca/tienda/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/tienda/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/pt/tienda/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/tienda/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/tienda/"/>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
