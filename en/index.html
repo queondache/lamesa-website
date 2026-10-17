@@ -407,10 +407,7 @@
           <p class="tienda__subheadline">
             Everything is made with our hands. Every piece is handcrafted and unique — no two are the same.
           </p>
-          <p class="tienda__text">
-            You can buy online from our Etsy shop or visit the studio —
-            we have exclusive pieces here that we don't publish online.
-          </p>
+          <p class="tienda__text">Discover our handmade ceramics and options for shipping or studio pickup.</p>
         </div>
 
         <!-- Product grid (3 placeholder images) -->
@@ -454,16 +451,7 @@
 
         <!-- CTAs -->
         <div class="tienda__ctas fade-in">
-          <a
-            class="btn btn--dark"
-            href="https://www.etsy.com/es/shop/LaMesaLC"
-            id="etsy-link"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Visit La Mesa Etsy shop"
-          >
-            Visit Etsy shop →
-          </a>
+          <a class="btn btn--dark" href="/en/tienda/" id="shop-link">Explore the pieces →</a>
         </div>
 
       </div>
@@ -615,11 +603,8 @@
           <!-- Column 2 — Email & Social -->
           <div class="contacto__col fade-in fade-in--delay-2">
             <h3>Get in touch</h3>
-            <a
-              href="mailto:lamesa.lc@gmail.com"
-              aria-label="Send an email to La Mesa"
-            >
-              lamesa.lc@gmail.com
+            <a aria-label="Send an email to La Mesa" data-email-user="lamesa.lc" data-email-domain="gmail.com">
+              lamesa.lc [at] gmail.com
             </a>
             <div class="contacto__social">
               <a
@@ -664,7 +649,7 @@
           <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
           <a href="#faq" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">FAQ</a>
           <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="mailto:lamesa.lc@gmail.com?subject=I'd%20like%20to%20run%20a%20workshop%20at%20La%20Mesa" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Are you an artist? Propose a workshop</a>
+          <a style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;" data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=I'd%20like%20to%20run%20a%20workshop%20at%20La%20Mesa" data-email-label="true">Are you an artist? Propose a workshop</a>
         </div>
 
         <!-- Bottone blog -->
@@ -720,7 +705,6 @@
         "description": "Multidisciplinary creative space in La Barceloneta, Barcelona. Ceramics workshops, sessions with guest artists, handmade ceramics shop and private sessions.",
         "url": "https://lamesabcn.com",
         "telephone": "+34711552030",
-        "email": "lamesa.lc@gmail.com",
         "image": "https://lamesabcn.com/images/og-lamesa.jpg",
         "address": {
           "@type": "PostalAddress",
@@ -984,5 +968,6 @@
   <script src="../js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
   <script src="../js/main.js?v=7" data-cookieconsent="ignore" defer></script>
 
+<script src="/js/contact-email.js?v=1" data-cookieconsent="ignore" defer></script>
 </body>
 </html>

@@ -1,0 +1,40 @@
+{{ 'mesa-shop.css' | asset_url | stylesheet_tag }}
+<section class="mesa-shop" aria-labelledby="mesa-cart-title">
+  {% render 'mesa-navigation' %}
+  <h1 id="mesa-cart-title">{{ 'mesa_shop.cart' | t | escape }}</h1>
+  {% if cart.empty? %}
+    <p>{{ 'mesa_shop.empty_cart' | t | escape }}</p><a href="{{ routes.all_products_collection_url }}">{{ 'mesa_shop.catalog' | t | escape }}</a>
+  {% else %}
+    {% form 'cart', cart, class: 'mesa-shop__cart' %}
+      {% if form.errors %}<div role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+      {% for item in cart.items %}
+        <article class="mesa-shop__line">
+          <div class="mesa-shop__line-image">
+            {% if item.image %}{{ item.image | image_url: width: 240 | image_tag: loading: 'lazy', alt: item.product.title }}{% else %}<span>{{ 'mesa_shop.no_photo' | t | escape }}</span>{% endif %}
+          </div>
+          <div>
+            <h2><a href="{{ item.url }}">{{ item.product.title | escape }}</a></h2>
+            {% unless item.product.has_only_default_variant %}<p>{{ item.variant.title | escape }}</p>{% endunless %}
+            {% for property in item.properties %}{% assign first_character = property.first | slice: 0 %}{% if property.last != blank and first_character != '_' %}<p>{{ property.first | escape }}: {{ property.last | escape }}</p>{% endif %}{% endfor %}
+            {% if item.selling_plan_allocation %}<p>{{ item.selling_plan_allocation.selling_plan.name | escape }}</p>{% endif %}
+            <p>{% if item.original_line_price != item.final_line_price %}<s>{{ item.original_line_price | money_with_currency }}</s> {% endif %}{{ item.final_line_price | money_with_currency }}</p>
+            {% for discount in item.line_level_discount_allocations %}<p>{{ discount.discount_application.title | escape }} (−{{ discount.amount | money_with_currency }})</p>{% endfor %}
+          </div>
+          <div>
+            <label for="mesa-line-{{ forloop.index }}">{{ 'mesa_shop.quantity' | t | escape }} — {{ item.product.title | escape }}</label>
+            <input id="mesa-line-{{ forloop.index }}" type="number" name="updates[]" min="0" step="1" value="{{ item.quantity }}" required>
+            <a href="{{ item.url_to_remove }}">{{ 'mesa_shop.remove' | t | escape }}</a>
+          </div>
+        </article>
+      {% endfor %}
+      <div class="mesa-shop__summary">
+        {% for discount in cart.cart_level_discount_applications %}<p>{{ discount.title | escape }} (−{{ discount.total_allocated_amount | money_with_currency }})</p>{% endfor %}
+        <p class="mesa-shop__price">{{ 'mesa_shop.subtotal' | t | escape }}: {{ cart.total_price | money_with_currency }}</p>
+        <p>{{ 'mesa_shop.checkout_note' | t | escape }}</p>
+        <button type="submit" name="update">{{ 'mesa_shop.update' | t | escape }}</button>
+        <button type="submit" name="checkout">{{ 'mesa_shop.checkout' | t | escape }}</button>
+      </div>
+    {% endform %}
+  {% endif %}
+</section>
+{% schema %}{"name":"La Mesa cart","settings":[]}{% endschema %}
