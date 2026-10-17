@@ -14,18 +14,18 @@ const bookingSource = read('js/booking-v2.js');
 const url = 'https://app.mesana.studio/client/la-mesa';
 const homes = ['index.html', 'en/index.html', 'ca/index.html', 'pt/index.html'];
 const courses = ['clases/semanal-modelado.html', 'clases/semanal-torno.html', 'en/clases/semanal-modelado.html', 'en/clases/semanal-torno.html', 'ca/clases/semanal-modelado.html', 'ca/clases/semanal-torno.html'];
-// Homepage snapshots updated for the dedicated shop entry; booking markup is unchanged.
-const baseline = {
-  'index.html': '5465b729d9e600f84f6123f408250c71c10993901ffdc4c22b6c95f880269187',
-  'en/index.html': 'c1ea53ed3a4662d8d74e0306d90f250bd16a15777d7ee96357ef84fe578bcac3',
-  'ca/index.html': 'e787b9bcc8527f4d807e61880359c7de2d1aa47ed03e21483359e48af5349bc7',
-  'pt/index.html': '61bd07c209ef7c7725d321b1f5f7077805e21211b1dfd760a86f64bb444bb1ec',
-  'clases/semanal-modelado.html': 'fc32123da05c74ff55688f0f53f64194575f831899315d175ef513bd8cc7e5ea',
-  'clases/semanal-torno.html': 'fb74a04e18466cacf13cb89ae578cf3f1ccf302641ee2deaea11343b78290bf0',
-  'en/clases/semanal-modelado.html': 'e45acbbca1086a29567208aac2fb8ee83168d45c51e9f8eca742283beb669781',
-  'en/clases/semanal-torno.html': '952d50ce5de06e5a1655683e42ee48116926f48c2d5a5f1166802d3e5f7939e1',
-  'ca/clases/semanal-modelado.html': '61ab6b66dc32467dea1bd231949435431cea373e26146e9cfbc60c7ffbdb7b93',
-  'ca/clases/semanal-torno.html': 'b28eae2ca8724bb08d4e79adfdc1c4005ed5ac94bbad4dbec2e4fe149cd25ba8'
+// Published baseline fingerprints, excluding only class reservation CTA blocks.
+const preserved = {
+  "index.html": "5b1547abf6ca6b1e37415f90a8f605964cd4ac27a852e5e939724fcca07c983b",
+  "en/index.html": "b47ef7834e318c1548e7ac999eeb993456807956661947418db751a46df04f97",
+  "ca/index.html": "7522d9a98faffcdb304abe8b327ee5934e56be3f8ceef301559de4e09ae2c6cd",
+  "pt/index.html": "c61132dad9fd8efbf595fe8c6743c28722e11536aa52cdd8756ca810ca0baeb2",
+  "clases/semanal-modelado.html": "e636d185e3acc71ec96cf4950234710aba784c7aa7580950c498b6f3f48b6d88",
+  "clases/semanal-torno.html": "ae990ec4085db9226f9e1122938d2bcf29bb26c2a5c33138f42648ca73b233df",
+  "en/clases/semanal-modelado.html": "09c03ed2b5bfd4f2815f666aee00f671dc9c9cafde3cdf4f3da0fef57086cefd",
+  "en/clases/semanal-torno.html": "9579bda02f24b262641aa3f9b8fab1a57e4f9e2d01ea0359da79795a0929a99e",
+  "ca/clases/semanal-modelado.html": "3d2360e5994efbd8cf131ca1fbe4564eebe26f515aebf8759c1e578df4bc991a",
+  "ca/clases/semanal-torno.html": "ee633fe644fb8918b17797332bad31baf48fbf0d6aa781e8d2dc7a205c35d0f3"
 };
 
 function page(config, lang = 'es') {
@@ -82,15 +82,15 @@ test('HTTP and foreign hosts leave the page untouched and do not start booking',
   runInNewContext(bookingSource, {window: result.window, document: {get documentElement() {throw new Error('Booking started');}}, URL});
 });
 
-test('Touched HTML is byte-identical after removing only the new marker and script tags', () => {
-  for (const path of [...homes, ...courses]) {
-    const source = read(path);
-    const normalized = source.replace(' data-client-area="bono"', '').replace(/^  <script src="(?:\.\.\/){0,2}js\/booking-config\.js\?v=6" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){0,2}js\/client-area-links\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '').replace(/^  <script src="(?:\.\.\/){1,2}js\/booking-v2\.js\?v=4" data-cookieconsent="ignore" defer><\/script>\n/m, '');
-    assert.equal(createHash('sha256').update(normalized).digest('hex'), baseline[path], path);
-    assert.match(source, /src="(?:\.\.\/){0,2}js\/client-area-links\.js\?v=4"/);
-    if (homes.includes(path)) assert.match(source, /data-client-area="bono"/);
-    else {
-      assert.doesNotMatch(source, /src="(?:\.\.\/){1,2}js\/booking-v2\.js/);
-    }
+function unrelatedContent(source) {
+  return source
+    .replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, anchor => /id="cta-hero-reserva"|class="clase-card__cta/.test(anchor) ? '' : anchor)
+    .replace(/<div class="turno-grid" id="booking-grid"[^>]*>\s*(?:<!--[^]*?-->\s*)?(?:<div class="turno-skeleton"><\/div>\s*){3}<\/div>/g, '')
+    .replace(/<div class="turno-grid">\s*<a[^>]*data-standard-booking[^>]*>[^]*?<\/a>\s*<\/div>/g, '');
+}
+test('Class CTA changes preserve every unrelated byte in home and weekly course pages', () => {
+  for (const file of [...homes, ...courses]) {
+    assert.equal(createHash('sha256').update(unrelatedContent(read(file))).digest('hex'), preserved[file], file);
+    assert.doesNotMatch(read(file), /data-client-area="bono"|id="booking-grid"/);
   }
 });

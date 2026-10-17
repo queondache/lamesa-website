@@ -33,6 +33,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="../../css/style.css?v=16">
+  <link rel="stylesheet" href="../../css/experience-booking.css?v=3">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="../../images/favicon-32.png">
@@ -253,24 +254,22 @@
       <div class="container">
         <div class="turno-explainer__banner">
           <span class="turno-explainer__label">Important</span>
-          <p>Estàs reservant una plaça fixa en aquest torn: 4 classes de 2 hores per 120&nbsp;€ al mes, sempre el mateix dia i hora. Després del pagament, ens posarem en contacte si cal. Si tens dubtes, troba'ns a WhatsApp.</p>
+          <p>Reserva la primera classe al torn que prefereixis; el primer dia pagues a l’estudi el mes o la classe solta. Si tens dubtes, troba'ns a WhatsApp.</p>
         </div>
       </div>
     </section>
 
     <section class="turno-section" style="background: var(--cream);">
       <div class="container">
-        <div class="turno-grid" id="booking-grid" data-tipo="semanal" data-risorsa="mesa">
-          <div class="turno-skeleton"></div>
-          <div class="turno-skeleton"></div>
-          <div class="turno-skeleton"></div>
-        </div>
+        <section id="turnos" class="course-turns" aria-labelledby="turnos-title" data-course="modelado">
+          <a class="course-turns__wa" href="https://wa.me/34711552030" target="_blank" rel="noopener noreferrer">Escriu-nos per WhatsApp</a>
+        </section>
       </div>
     </section>
 
     <div class="turno-suelta-banner">
       <div class="container">
-        <a href="/ca/clases/suelta.html" style="color:var(--blue);">No estàs segur? Prova primer una Classe Suelta →</a>
+        <a href="/ca/experiencias/modelado.html" style="color:var(--blue);">No estàs segur? Prova primer una Classe Suelta →</a>
       </div>
     </div>
 
@@ -321,7 +320,7 @@
           </details>
           <details class="faq__item">
             <summary class="faq__question">Puc provar-ho abans d'apuntar-me?</summary>
-            <p class="faq__answer">Sí, amb una <a href="/ca/clases/suelta.html">classe solta de modelat</a>: 2 hores per 45&nbsp;€.</p>
+            <p class="faq__answer">Sí, amb una <a href="/ca/experiencias/modelado.html">classe solta de modelat</a>: 2 hores per 45&nbsp;€.</p>
           </details>
           <details class="faq__item">
             <summary class="faq__question">També feu classes de torn?</summary>
@@ -348,7 +347,8 @@
   </a>
 
   <script src="../../js/main.js?v=6" data-cookieconsent="ignore" defer></script>
-  <script src="../../js/booking-config.js?v=6" data-cookieconsent="ignore" defer></script>
+  <script src="../../js/booking-config.js?v=9" data-cookieconsent="ignore" defer></script>
   <script src="../../js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
+  <script type="module" src="../../js/course-turns.js?v=1" data-cookieconsent="ignore"></script>
 </body>
 </html>

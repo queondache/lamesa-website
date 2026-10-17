@@ -30,7 +30,7 @@ for(const lang of languages)for(const kind of experiences){
   assert.equal(blocks[1].itemListElement.at(-1).item,pageUrl(lang,kind));
   assert.doesNotMatch(source,/aggregateRating|reviewCount|priceValidUntil|startDate|endDate|"@type":\s*"Event"/);
   assert.equal((source.match(/<script/g)||[]).length,kind==='workshops'?2:4,'JSON-LD, disabled configuration and gated booking module');
-  if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js\?v=6"><\/script>/);
+  if(kind!=='workshops')assert.match(source,/<script type="module" src="\/js\/experience-booking.js\?v=7"><\/script>/);
   assert.doesNotMatch(source,/Cookiebot|googletagmanager|google-analytics|onrender|\/js\/booking\.js|<iframe/i);
   assert.doesNotMatch(source,/class="preview-banner"|href="\/demo\/|vista previa|vista prèvia|this preview|Local preview/i);
   assert.equal((source.match(/<nav class="experience-nav"/g)||[]).length,1);
@@ -66,4 +66,13 @@ test('Styles preserve branded fonts, contrast colors, target sizes and reduced m
  for(const value of ['#FFFAEE','#1B3C8B','#E84159','#F7B137','#1A1A1A','HighCruiser','Garet','Montserrat'])assert.ok(css.includes(value));
  assert.match(css,/min-width:44px/);assert.match(css,/min-height:44px/);assert.match(css,/prefers-reduced-motion:reduce/);
  for(const match of css.matchAll(/url\('([^']+)'\)/g))assert.ok(existsSync(resolve(root,'css',match[1])));
+});
+test('Skip link: visibile solo con focus da tastiera',()=>{
+ for(const file of ['css/experiences.css','css/style.css']){
+  const css=read(file);
+  assert.match(css,/\.skip-link:focus-visible/,file);
+  assert.doesNotMatch(css,/\.skip-link:focus\s*\{/,file);
+  assert.match(css,/\.skip-link:focus-visible\s*\{[^}]*min-height:\s*44px/,file);
+  assert.match(css,/\.skip-link\{[^}]*clip-path:inset\(50%\)|\.skip-link\s*\{[^}]*clip-path:\s*inset\(50%\)/,file);
+ }
 });
