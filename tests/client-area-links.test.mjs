@@ -84,6 +84,12 @@ function unrelatedContent(source) {
     // si riportano alla forma della baseline, cosi' le impronte restano quelle di prima.
     .replace(/ *<link rel="alternate" hreflang="pt" href="https:\/\/lamesabcn\.com\/pt\/clases\/semanal-(?:modelado|torno)\.html">\n/, '')
     .replace(/<a href="\/pt\/clases\/semanal-(?:modelado|torno)\.html" lang="pt">PT<\/a>/g, '<a href="/pt/" lang="pt">PT</a>')
+    // Menu allineato alla home D3 (19/10/2026): senza Workshops, ancore #grupos/#cursos esistenti;
+    // si ripristina la forma della baseline per confrontare il resto della pagina byte per byte.
+    .replace(/(<a class="navbar__(link|mobile-link)" href="(\/(?:en\/|ca\/)?)#cursos"( data-section="cursos")?>[^<]+<\/a>)/g,
+      (m, link, kind, base, section) => link + `<a class="navbar__${kind}" href="${base}#workshops"${section ? ' data-section="workshops"' : ''}>${base === '/ca/' ? 'Tallers' : 'Workshops'}</a>`)
+    .replace(/href="(\/(?:en\/|ca\/)?)#grupos"/g, 'href="$1#privadas"')
+    .replace(/href="(\/(?:en\/|ca\/)?)#cursos">←/g, 'href="$1#clases">←')
     .replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, anchor => /id="cta-hero-reserva"|class="clase-card__cta/.test(anchor) ? '' : anchor)
     .replace(/<div class="turno-grid" id="booking-grid"[^>]*>\s*(?:<!--[^]*?-->\s*)?(?:<div class="turno-skeleton"><\/div>\s*){3}<\/div>/g, '')
     .replace(/<div class="turno-grid">\s*<a[^>]*data-standard-booking[^>]*>[^]*?<\/a>\s*<\/div>/g, '');
