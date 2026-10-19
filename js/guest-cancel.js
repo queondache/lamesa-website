@@ -4,7 +4,7 @@
 import {validateConfig,GuestApi} from './experience-booking.js?v=7';
 
 const WA='https://wa.me/34711552030';
-const LOCALES=['es','en','ca'];
+const LOCALES=['es','en','ca','pt'];
 const COPY={
  es:{intl:'es-ES',loading:'Cargando tu reserva…',title:'Cancelar reserva',
   lesson:'Clase',when:'Fecha y hora',persons:'Personas',amount:'Importe pagado',
@@ -53,7 +53,23 @@ const COPY={
   rate:'Massa intents. Espera uns minuts i torna a obrir l’enllaç, o escriu-nos per WhatsApp.',
   errorTitle:'No hem pogut carregar la teva reserva',errorNote:'Torna a obrir l’enllaç de l’email o escriu-nos per WhatsApp.',
   actionError:'No hem pogut confirmar la cancel·lació. Pot ser que ja estigui cancel·lada: torna-ho a provar sense risc, el reemborsament no es repetirà.',
-  generic:'Hem rebut la teva sol·licitud. Escriu-nos per WhatsApp per confirmar l’estat de la teva reserva.'}
+  generic:'Hem rebut la teva sol·licitud. Escriu-nos per WhatsApp per confirmar l’estat de la teva reserva.'},
+ pt:{intl:'pt-BR',loading:'Carregando a sua reserva…',title:'Cancelar reserva',
+  lesson:'Aula',when:'Data e horário',persons:'Pessoas',amount:'Valor pago',
+  refundFull:'Reembolso total',refundNone:h=>`Sem reembolso (menos de ${h} h)`,
+  cancel:'Cancelar reserva',busy:'Cancelando…',wa:'Fale com a gente pelo WhatsApp',
+  confirmTitle:'Cancelar sem reembolso?',confirmNote:h=>`Faltam menos de ${h} h para a aula, por isso o valor não será devolvido. Esta ação não pode ser desfeita.`,
+  confirmYes:'Sim, cancelar sem reembolso',confirmBack:'Não, voltar',
+  refundedTitle:'Reserva cancelada',refundedNote:'A sua reserva foi cancelada e reembolsamos o valor total. Em alguns dias ele aparecerá no seu cartão.',
+  noRefundTitle:'Reserva cancelada',noRefundNote:h=>`A sua reserva foi cancelada sem reembolso, porque faltavam menos de ${h} h para a aula.`,
+  pendingTitle:'Reserva cancelada',pendingNote:'A sua reserva foi cancelada. Não conseguimos concluir o reembolso agora: vamos devolver o valor manualmente.',
+  studioTitle:'Reserva cancelada pelo estúdio',studioNote:'O estúdio cancelou esta aula. Fale com a gente pelo WhatsApp se precisar de ajuda com o reembolso ou com outra data.',
+  notCancellableTitle:'Esta reserva não pode mais ser cancelada',notCancellableNote:'Esta reserva não aceita mais cancelamento online. Fale com a gente pelo WhatsApp e a gente resolve.',
+  invalidTitle:'O link não é válido ou expirou',invalidNote:'Use o link do seu email de confirmação ou fale com a gente pelo WhatsApp.',
+  rate:'Muitas tentativas. Aguarde alguns minutos e abra o link de novo, ou fale com a gente pelo WhatsApp.',
+  errorTitle:'Não conseguimos carregar a sua reserva',errorNote:'Abra de novo o link do email ou fale com a gente pelo WhatsApp.',
+  actionError:'Não conseguimos confirmar o cancelamento. Talvez ela já esteja cancelada: tentar de novo é seguro, o reembolso não será repetido.',
+  generic:'Recebemos o seu pedido. Fale com a gente pelo WhatsApp para confirmar o estado da sua reserva.'}
 };
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pickLocale=lang=>LOCALES.includes(lang)?lang:'es';

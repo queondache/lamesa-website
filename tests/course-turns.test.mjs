@@ -232,3 +232,36 @@ test('S5 fix5: pagina conferma senza aria-live duplicato; workflow include stand
  for(const p of ['clases/confirmar.html','en/clases/confirmar.html','ca/clases/confirmar.html'])assert.doesNotMatch(read(p),/aria-live/);
  assert.match(read('.github/workflows/site-check.yml'),/tests\/standard-booking-links\.test\.mjs/);
 });
+// Pagine PT (19/10/2026): stesso flusso prima lezione di es/en/ca, testi in portoghese; course-turns.js?v=2 perche' il pt e' nuovo nel modulo.
+for(const course of ['torno','modelado'])test(`pt/clases/semanal-${course}: aside #turnos, nessun CTA Mesana, testo pagamento in studio`,()=>{
+ const s=read(`pt/clases/semanal-${course}.html`);
+ assert.match(s,/<html lang="pt">/);
+ assert.match(s,new RegExp(`<section id="turnos"[^>]*aria-labelledby="turnos-title"[^>]*data-course="${course}"`));
+ assert.doesNotMatch(s,/turno-grid|data-standard-booking|app\.mesana\.studio\/book/);
+ assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=2"/);assert.match(s,/experience-booking\.css\?v=3/);
+ assert.match(s,/Reserve a sua primeira aula no horário que preferir; no primeiro dia você paga no estúdio o mês ou a aula avulsa\./);
+ assert.ok(s.includes(`<link rel="canonical" href="https://lamesabcn.com/pt/clases/semanal-${course}.html">`));
+ for(const [code,prefix] of [['es',''],['en','en/'],['ca','ca/'],['pt','pt/']]){
+  assert.ok(s.includes(`<link rel="alternate" hreflang="${code}" href="https://lamesabcn.com/${prefix}clases/semanal-${course}.html">`),code);
+  if(code!=='pt')assert.ok(read(`${prefix}clases/semanal-${course}.html`).includes(`<link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/clases/semanal-${course}.html">`),`${code} -> pt`);
+ }
+ assert.doesNotMatch(s,/workshops/i);
+});
+test('pt/clases/confirmar.html: noindex, no-referrer, senza analytics, ancora WhatsApp, senza aria-live',()=>{
+ const s=read('pt/clases/confirmar.html');
+ assert.match(s,/<html lang="pt">/);assert.match(s,/name="robots" content="noindex,nofollow"/);assert.match(s,/name="referrer" content="no-referrer"/);
+ assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=2/);assert.match(s,/booking-config\.js\?v=9/);
+ assert.doesNotMatch(s,/googletagmanager|Cookiebot|aria-live/);assert.match(s,/wa\.me\/34711552030/);
+});
+test('pt: widget turni e conferma in portoghese; a Mesana arriva locale en (nessuna email pt)',async()=>{
+ const n=widgetWith(async()=>{throw new Error('no');},'pt','modelado');await n.w.init();assert.match(n.r.html,/Reserve o seu horário pelo WhatsApp/);
+ assert.match(turnLabel({weekday:3,startTime:'16:00',durationMin:120},'pt'),/^Quarta-feira · 16:00–18:00$/);
+ calls.length=0;
+ const {r,w}=widgetWith(recorder({'course-turns':[200,{data:{turns:[turn]},error:null}],'course-first-lesson-requests':[202,{data:{status:'email_sent'},error:null}]}),'pt');
+ await w.init();w.selectTurn('tpl_1');assert.match(r.html,/No primeiro dia você paga no estúdio/);
+ await w.submit({name:'Ana',email:'ana@example.com',phone:''});
+ const post=calls.find(c=>c.options.method==='POST');assert.equal(JSON.parse(post.options.body).locale,'en');
+ assert.match(r.html,/Confira o seu email/);
+ const c=confirmView('pt',recorder({'verify':[429,{data:null,error:{code:'rate_limited'}}]}));await c.v.run('t');
+ assert.match(c.r.html,/<h1[^>]*>Muitas tentativas, tente de novo em alguns minutos/);
+});

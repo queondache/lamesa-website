@@ -10,7 +10,8 @@
   var WA = {
     es: 'https://wa.me/34711552030?text=Hola!%20Me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20La%20Mesa',
     en: 'https://wa.me/34711552030?text=Hi!%20I\'d%20like%20to%20know%20more%20about%20La%20Mesa',
-    ca: 'https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa'
+    ca: 'https://wa.me/34711552030?text=Hola!%20M%27agradaria%20saber%20m%C3%A9s%20sobre%20La%20Mesa',
+    pt: 'https://wa.me/34711552030?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20a%20La%20Mesa'
   };
 
   /* ── i18n ── */
@@ -60,25 +61,43 @@
       calSpots: '{n} places', calSpot1: '1 plaça',
       formProcessing: 'Processant...',
       loadTimeout: 'No s\'han pogut carregar els torns. <a href="{wa}">Escriu-nos</a>.'
+    },
+    pt: {
+      spots: '{n} vagas disponíveis', spot1: '1 vaga disponível',
+      urgent: 'Últimas vagas!', book: 'Reservar →', completo: 'Lotado',
+      noSlots: 'Não há vagas disponíveis. <a href="{wa}">Fale com a gente</a>.',
+      waitlist: 'Sem vagas? Fale com a gente →',
+      error: 'Erro ao carregar. <a href="{wa}">Fale com a gente pelo WhatsApp</a>.',
+      formName: 'Seu nome', formEmail: 'Seu email', formPhone: 'Seu telefone',
+      formSubmit: 'Continuar para o pagamento →', formCancel: 'Cancelar',
+      semanal4: '4 aulas · 2h · {price}€/mês',
+      calSelect: 'Escolha uma data', calTime: 'Escolha o horário',
+      calNoSlots: 'Sem disponibilidade este mês',
+      calSpots: '{n} vagas', calSpot1: '1 vaga',
+      formProcessing: 'Processando...',
+      loadTimeout: 'Não foi possível carregar os horários. <a href="{wa}">Fale com a gente</a>.'
     }
   };
 
   var MONTHS = {
     es: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
     en: ['January','February','March','April','May','June','July','August','September','October','November','December'],
-    ca: ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre']
+    ca: ['Gener','Febrer','Març','Abril','Maig','Juny','Juliol','Agost','Setembre','Octubre','Novembre','Desembre'],
+    pt: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']
   };
 
   var DAY_HDR = {
     es: ['L','M','X','J','V','S','D'],
     en: ['Mo','Tu','We','Th','Fr','Sa','Su'],
-    ca: ['Dl','Dt','Dc','Dj','Dv','Ds','Dg']
+    ca: ['Dl','Dt','Dc','Dj','Dv','Ds','Dg'],
+    pt: ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom']
   };
 
   var DAYS = {
     es: { Domingo:'Domingo', Lunes:'Lunes', Martes:'Martes', 'Miércoles':'Miércoles', Jueves:'Jueves', Viernes:'Viernes', 'Sábado':'Sábado' },
     en: { Domingo:'Sunday', Lunes:'Monday', Martes:'Tuesday', 'Miércoles':'Wednesday', Jueves:'Thursday', Viernes:'Friday', 'Sábado':'Saturday' },
-    ca: { Domingo:'Diumenge', Lunes:'Dilluns', Martes:'Dimarts', 'Miércoles':'Dimecres', Jueves:'Dijous', Viernes:'Divendres', 'Sábado':'Dissabte' }
+    ca: { Domingo:'Diumenge', Lunes:'Dilluns', Martes:'Dimarts', 'Miércoles':'Dimecres', Jueves:'Dijous', Viernes:'Divendres', 'Sábado':'Dissabte' },
+    pt: { Domingo:'Domingo', Lunes:'Segunda-feira', Martes:'Terça-feira', 'Miércoles':'Quarta-feira', Jueves:'Quinta-feira', Viernes:'Sexta-feira', 'Sábado':'Sábado' }
   };
 
   /* ── Context ── */

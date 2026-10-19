@@ -23,8 +23,8 @@ const links = {
     team: '/ca/team-building.html', resto: '/ca/encarrecs.html', blog: '/ca/blog/', privacy: '/ca/privacy.html',
   },
   pt: {
-    exp: '/pt/clases/suelta.html', modelado: '/en/clases/semanal-modelado.html', torno: '/en/clases/semanal-torno.html',
-    team: '/en/team-building.html', resto: '/en/custom-tableware.html', blog: '/en/blog/', privacy: '/en/privacy.html',
+    exp: '/pt/experiencias/torno.html', modelado: '/pt/clases/semanal-modelado.html', torno: '/pt/clases/semanal-torno.html',
+    team: '/pt/team-building.html', resto: '/pt/encomendas.html', blog: '/pt/blog/', privacy: '/pt/privacy.html',
   },
 };
 

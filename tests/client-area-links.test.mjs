@@ -80,6 +80,10 @@ test('HTTP and foreign hosts leave the page untouched and do not start booking',
 
 function unrelatedContent(source) {
   return source
+    // Pagine PT dei corsi (19/10/2026): hreflang pt e selettore PT verso la pagina PT sono l'unica differenza ammessa;
+    // si riportano alla forma della baseline, cosi' le impronte restano quelle di prima.
+    .replace(/ *<link rel="alternate" hreflang="pt" href="https:\/\/lamesabcn\.com\/pt\/clases\/semanal-(?:modelado|torno)\.html">\n/, '')
+    .replace(/<a href="\/pt\/clases\/semanal-(?:modelado|torno)\.html" lang="pt">PT<\/a>/g, '<a href="/pt/" lang="pt">PT</a>')
     .replace(/<a\b[^>]*>[\s\S]*?<\/a>/g, anchor => /id="cta-hero-reserva"|class="clase-card__cta/.test(anchor) ? '' : anchor)
     .replace(/<div class="turno-grid" id="booking-grid"[^>]*>\s*(?:<!--[^]*?-->\s*)?(?:<div class="turno-skeleton"><\/div>\s*){3}<\/div>/g, '')
     .replace(/<div class="turno-grid">\s*<a[^>]*data-standard-booking[^>]*>[^]*?<\/a>\s*<\/div>/g, '');
