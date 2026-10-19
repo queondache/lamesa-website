@@ -317,9 +317,9 @@ function indexSection(ctx) {
 }
 
 function about(ctx) {
-  const { L, code } = ctx;
+  const { L } = ctx;
   const A = L.about;
-  const facts = [[RATING[code], `${REVIEWS_TOTAL} ${A.facts[0][0]}`], A.facts[1], A.facts[2]];
+  const facts = A.facts;
   return `<section class="section about-sec" id="nosotras" aria-labelledby="about-h">
   <div class="wrap about">
     <figure>
