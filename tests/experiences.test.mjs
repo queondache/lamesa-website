@@ -4,14 +4,17 @@ import {readFileSync, existsSync} from 'node:fs';
 import {fileURLToPath} from 'node:url';
 import {resolve,dirname} from 'node:path';
 const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
-const languages=['es','en','ca'];
+const languages=['es','en','ca','pt'];
 const experiences=['modelado','torno','workshops'];
+// pt (19/10/2026) ha solo modelado e torno: i workshop sono stati tolti dal sito e non hanno versione portoghese.
+const kindsFor=lang=>lang==='pt'?['modelado','torno']:experiences;
+const languagesFor=kind=>languages.filter(lang=>kindsFor(lang).includes(kind));
 const prefix=lang=>lang==='es'?'':`${lang}/`;
 const pagePath=(lang,kind)=>`${prefix(lang)}experiencias/${kind}.html`;
 const pageUrl=(lang,kind)=>`https://lamesabcn.com/${pagePath(lang,kind)}`;
 const read=path=>readFileSync(resolve(root,path),'utf8');
 const docs=[];
-for(const lang of languages)for(const kind of experiences){
+for(const lang of languages)for(const kind of kindsFor(lang)){
  const path=pagePath(lang,kind);const source=read(path);docs.push(source);
  test(`${path}: discoverable localized static content and truthful schema`,()=>{
   assert.match(source,new RegExp(`<html lang="${lang}">`));
@@ -20,7 +23,8 @@ for(const lang of languages)for(const kind of experiences){
   assert.match(source,/<title>[^<]+<\/title>/);
   assert.match(source,/<meta name="description" content="[^\"]{70,200}">/);
   assert.ok(source.includes(`<link rel="canonical" href="${pageUrl(lang,kind)}">`));
-  for(const code of languages)assert.ok(source.includes(`<link rel="alternate" hreflang="${code}" href="${pageUrl(code,kind)}">`));
+  for(const code of languagesFor(kind))assert.ok(source.includes(`<link rel="alternate" hreflang="${code}" href="${pageUrl(code,kind)}">`));
+  if(kind==='workshops')assert.doesNotMatch(source,/hreflang="pt"/);
   assert.ok(source.includes(`<link rel="alternate" hreflang="x-default" href="${pageUrl('es',kind)}">`));
   const blocks=[...source.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
   assert.equal(blocks.length,2);const entity=blocks[0];
@@ -38,7 +42,9 @@ for(const lang of languages)for(const kind of experiences){
   const selector=source.match(/<nav class="experience-nav"[^>]*>[\s\S]*?<\/nav>/)[0];
   const owner=kind==='workshops'?source.match(/<section class="empty-state" id="agenda">([\s\S]*?)<\/section>/)[1]:source.match(/<aside class="booking-preview"[^>]*>([\s\S]*?)<\/aside>/)[1];
   assert.ok(owner.startsWith(selector),'Selector belongs inside booking or agenda, before price/date');
-  for(const type of experiences)assert.ok(selector.includes(`href="/${pagePath(lang,type)}#${type==='workshops'?'agenda':'reserva'}"`));
+  for(const type of kindsFor(lang))assert.ok(selector.includes(`href="/${pagePath(lang,type)}#${type==='workshops'?'agenda':'reserva'}"`));
+  assert.equal((selector.match(/<a /g)||[]).length,kindsFor(lang).length);
+  if(lang==='pt')assert.doesNotMatch(source,/workshops/i,'Niente workshop nelle pagine PT');
   assert.match(selector,new RegExp(`href="/${pagePath(lang,kind)}#${kind==='workshops'?'agenda':'reserva'}" aria-current="page"`));
   assert.ok((source.match(/<details>/g)||[]).length>=3);
   assert.match(source,/Carrer de l’Atlàntida, 47/);
@@ -58,8 +64,8 @@ for(const lang of languages)for(const kind of experiences){
  });
 }
 test('Each experience has a distinct title and description in each language',()=>{
- assert.equal(new Set(docs.map(s=>s.match(/<title>(.*?)<\/title>/)[1])).size,9);
- assert.equal(new Set(docs.map(s=>s.match(/name="description" content="([^\"]+)"/)[1])).size,9);
+ assert.equal(new Set(docs.map(s=>s.match(/<title>(.*?)<\/title>/)[1])).size,11);
+ assert.equal(new Set(docs.map(s=>s.match(/name="description" content="([^\"]+)"/)[1])).size,11);
 });
 test('Styles preserve branded fonts, contrast colors, target sizes and reduced motion',()=>{
  const css=read('css/experiences.css');

@@ -215,3 +215,18 @@ test('fix2: dopo needs_confirmation, "No, volver" non mostra piu "Reembolso comp
  }
 });
 test('pagine annullo senza aria-live duplicato',()=>{for(const p of ['experiencias','en/experiencias','ca/experiencias'])assert.doesNotMatch(read(`${p}/cancelar.html`),/aria-live/);});
+// Pagina PT (19/10/2026): stessi vincoli di es/en/ca; guest-cancel.js?v=2 perche' il pt e' nuovo nel modulo.
+test('pt/experiencias/cancelar.html: noindex, no-referrer, lang, no analytics/terze parti, modulo e config',()=>{
+ const s=read('pt/experiencias/cancelar.html');
+ assert.match(s,/<html lang="pt"/);
+ assert.match(s,/<meta name="robots" content="noindex,nofollow">/);assert.match(s,/<meta name="referrer" content="no-referrer">/);
+ assert.match(s,/data-guest-cancel/);assert.match(s,WA);assert.match(s,/class="container"/);
+ assert.match(s,/type="module" src="[^"]*guest-cancel\.js\?v=2"/);assert.match(s,/booking-config\.js\?v=9/);
+ assert.doesNotMatch(s,/googletagmanager|gtag\(|google-analytics|fbq|clarity|hotjar|cookiebot|connect\.facebook|aria-live/i);
+ for(const src of [...s.matchAll(/<script[^>]*src="([^"]+)"/g)].map(m=>m[1]))assert.doesNotMatch(src,/^https?:/);
+});
+test('pt: annullo in portoghese con data pt-BR e conferma senza rimborso',async()=>{
+ const {r,v}=viewWith(recorder({'cancel-preview':ok({...preview,refundable:false,cutoffHours:48}),'/cancel':ok({status:'cancelled_no_refund'})}),'pt');
+ await v.run('t');assert.match(r.html,/Cancelar reserva/);assert.match(r.html,/Sem reembolso \(menos de 48 h\)/);assert.match(r.html,/quarta-feira/i);
+ await v.requestCancel();assert.match(r.html,/Cancelar sem reembolso\?/);
+});

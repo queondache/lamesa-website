@@ -3,7 +3,7 @@
 import {validateConfig,GuestApi} from './experience-booking.js?v=7';
 
 const WA='https://wa.me/34711552030';
-const LOCALES=['es','en','ca'];
+const LOCALES=['es','en','ca','pt'];
 const PHONE=/^\+?[0-9 ().-]{6,20}$/;
 const EMAIL=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const NAME_MAX=80;
@@ -70,7 +70,28 @@ const COPY={
   confirmRateTitle:'Massa intents, prova-ho en uns minuts',confirmErrorTitle:'No hem pogut confirmar la classe ara',
   confirmContact:'Escriu-nos per acabar la reserva',confirmContactNote:'No podem confirmar la primera classe automàticament. Escriu-nos per WhatsApp i ho resolem.',
   confirmRate:'Massa intents. Espera uns minuts i torna a obrir l’enllaç, o escriu-nos per WhatsApp.',
-  confirmError:'No hem pogut confirmar la classe ara. Torna a obrir l’enllaç de l’email o escriu-nos per WhatsApp.'}
+  confirmError:'No hem pogut confirmar la classe ara. Torna a obrir l’enllaç de l’email o escriu-nos per WhatsApp.'},
+ pt:{intl:'pt-BR',title:'Escolha o seu horário',loading:'Procurando horários…',
+  empty:'No momento não há horários disponíveis. Fale com a gente pelo WhatsApp e a gente resolve.',
+  loadFailed:'Não conseguimos carregar os horários. Fale com a gente pelo WhatsApp.',
+  neutral:'Reserve o seu horário pelo WhatsApp: a gente te conta os dias e horários disponíveis.',
+  wa:'Fale com a gente pelo WhatsApp',notice:'No primeiro dia você paga no estúdio o mês ou a aula avulsa.',
+  name:'Seu nome',email:'Email',phone:'Telefone (opcional)',submit:'Pedir a minha primeira aula',busy:'Enviando…',back:'Trocar de horário',
+  chosen:'A sua primeira aula será neste horário',sent:'Confira o seu email',
+  sentNote:'Enviamos um link para confirmar a sua primeira aula. Até você clicar nele, nada fica reservado. O link expira em 30 minutos.',
+  invalid:'Confira o seu nome, email e telefone.',full:'Este horário acabou de lotar. Escolha outro ou fale com a gente pelo WhatsApp.',
+  rate:'Muitas tentativas. Aguarde alguns minutos ou fale com a gente pelo WhatsApp.',
+  unavailable:'A reserva online não está disponível agora. Fale com a gente pelo WhatsApp.',
+  network:'Não conseguimos enviar o pedido. Tente de novo ou fale com a gente pelo WhatsApp.',
+  waMessage:{torno:'Olá, gostaria de me inscrever na aula semanal de torno.',modelado:'Olá, gostaria de me inscrever na aula semanal de modelagem.'},
+  confirming:'Confirmando a sua primeira aula…',confirmed:'Primeira aula confirmada',
+  confirmedNote:'No primeiro dia você paga no estúdio o mês ou a aula avulsa. Enviamos um email com os detalhes.',
+  confirmFull:'O horário lotou',confirmFullNote:'Enquanto você confirmava, o horário ficou completo. Nada foi reservado. Fale com a gente e procuramos outra opção.',
+  confirmInvalid:'O link não é válido ou expirou',confirmInvalidNote:'Peça a sua primeira aula de novo na página do curso ou fale com a gente pelo WhatsApp.',
+  confirmRateTitle:'Muitas tentativas, tente de novo em alguns minutos',confirmErrorTitle:'Não conseguimos confirmar a sua aula agora',
+  confirmContact:'Fale com a gente para concluir a sua reserva',confirmContactNote:'Não conseguimos confirmar a sua primeira aula automaticamente. Fale com a gente pelo WhatsApp e a gente resolve.',
+  confirmRate:'Muitas tentativas. Aguarde alguns minutos e abra o link de novo, ou fale com a gente pelo WhatsApp.',
+  confirmError:'Não conseguimos confirmar a sua aula agora. Abra de novo o link do email ou fale com a gente pelo WhatsApp.'}
 };
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pickLocale=lang=>LOCALES.includes(lang)?lang:'es';
@@ -186,7 +207,8 @@ ${error}${notice}
   this.values={name,email,phone};
   if(!name||name.length>NAME_MAX||email.length>254||!EMAIL.test(email)||(phone&&!PHONE.test(phone))){this.error=this.c.invalid;this.render();return;}
   this.busy=true;this.error='';this.render();
-  const body={templateId:this.selectedId,name,email,locale:this.locale,idempotencyKey:this.idempotencyKey([this.selectedId,name,email,phone].join('\u0000'))};
+  // Mesana non ha ancora email in portoghese: per pt chiede la versione inglese, come experience-booking.js.
+  const body={templateId:this.selectedId,name,email,locale:this.locale==='pt'?'en':this.locale,idempotencyKey:this.idempotencyKey([this.selectedId,name,email,phone].join('\u0000'))};
   if(phone)body.phone=phone;
   try{
    await this.api.requestFirstLesson(body);

@@ -26,14 +26,15 @@ test('Static production configuration preserves explicitly injected loopback san
  assert.ok(validateConfig(window.LA_MESA_GUEST_BOOKING,{href:'http://127.0.0.1:8801/experiencias/modelado.html',hostname:'127.0.0.1'}));
 });
 test('Public localized standby keeps contact, truthful empty workshops, SEO and no demo calls to action',()=>{
- for(const lang of languages)for(const type of types){const source=read(`${prefix(lang)}experiencias/${type}.html`);
+ // pt (19/10/2026): solo modelado e torno, i workshop non esistono in portoghese.
+ for(const lang of [...languages,'pt'])for(const type of lang==='pt'?['modelado','torno']:types){const source=read(`${prefix(lang)}experiencias/${type}.html`);
   assert.doesNotMatch(source,/href="\/demo\/|vista previa|vista prèvia|this preview|local preview|date di prova|SANDBOX/i);
   assert.match(source,/href="https:\/\/wa.me\/34711552030"[^>]*rel="noopener noreferrer"/);
   assert.match(source,/<meta name="robots" content="index,follow">/);
   if(type!=='workshops'){
    assert.match(source,/data-booking-state="standby"/);assert.doesNotMatch(source,/pay online|paga online|paga en línia/);
    assert.ok(source.indexOf('src="/js/booking-config.js?v=9"')<source.indexOf('src="/js/experience-booking.js?v=7"'));
-   assert.match(source,lang==='es'?/Elige día y hora en nuestro calendario/:lang==='en'?/Pick a day and time in our calendar/:/Tria dia i hora al nostre calendari/);
+   assert.match(source,{es:/Elige día y hora en nuestro calendario/,en:/Pick a day and time in our calendar/,ca:/Tria dia i hora al nostre calendari/,pt:/Escolha dia e horário no nosso calendário/}[lang]);
   }else{assert.doesNotMatch(source,/data-experience=|guest-calendar|data-event-id/);assert.match(source,/"numberOfItems": 0/);}
  }
  for(const lang of languages){const source=read(`${prefix(lang)}experiencias/reserva.html`);assert.match(source,/noindex,nofollow/);assert.match(source,/name="referrer" content="no-referrer"/);assert.match(source,/href="https:\/\/wa.me\/34711552030"/);assert.ok(source.indexOf('src="/js/booking-config.js?v=9"')<source.indexOf('src="/js/experience-booking.js?v=7"'));assert.doesNotMatch(source,/preview|vista previa|vista prèvia|local configurad/i);}
