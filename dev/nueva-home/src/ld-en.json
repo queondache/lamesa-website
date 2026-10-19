@@ -125,20 +125,10 @@
       "@type": "Offer",
       "itemOffered": {
        "@type": "Service",
-       "name": "Flex Studio",
-       "description": "Hand-building or wheel classes for students with prior experience. Booking via WhatsApp only."
+       "name": "Hour pack",
+       "description": "8, 16 or 24 hours of hand-building or wheel to use at your own pace (€120, €220 or €300). Book online."
       },
       "price": "120",
-      "priceCurrency": "EUR"
-     },
-     {
-      "@type": "Offer",
-      "itemOffered": {
-       "@type": "Service",
-       "name": "Wheel Intro Course",
-       "description": "Intensive 2-session course to learn wheel throwing and trimming. Maximum 2 people."
-      },
-      "price": "90",
       "priceCurrency": "EUR"
      }
     ]

@@ -125,20 +125,10 @@
       "@type": "Offer",
       "itemOffered": {
        "@type": "Service",
-       "name": "Estúdio Flex",
-       "description": "Aulas de modelagem manual ou torno para alunos com experiência prévia. Reservas somente pelo WhatsApp."
+       "name": "Pacote de horas",
+       "description": "8, 16 ou 24 horas de modelagem ou torno para usar no seu ritmo (120 €, 220 € ou 300 €). Reserva online."
       },
       "price": "120",
-      "priceCurrency": "EUR"
-     },
-     {
-      "@type": "Offer",
-      "itemOffered": {
-       "@type": "Service",
-       "name": "Curso de Introdução ao Torno",
-       "description": "Curso intensivo de 2 sessões para aprender a tornear e a retornear as peças. Máximo de 2 pessoas."
-      },
-      "price": "90",
       "priceCurrency": "EUR"
      }
     ]

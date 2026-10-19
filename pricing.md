@@ -2,7 +2,7 @@
 
 > Ceramics studio and creative lab in La Barceloneta, Barcelona.
 > All prices in EUR (€). All materials, tools and firings included. High-temperature clay.
-> Last updated: 2026-09-23. Closed Monday and Sunday.
+> Last updated: 2026-10-19. Closed Monday and Sunday.
 
 ## Price table
 
@@ -12,9 +12,7 @@
 | Taller Semanal Torno (weekly wheel throwing) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
 | Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session of 2h | Online (Stripe Checkout) |
 | Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
-| Intro al Torno (wheel intro course) | €90 | 2 sessions × 2h, max 2 people | WhatsApp |
-| Coworking Torno (open wheel access) | €20 / hour | minimum 2h, experienced potters | WhatsApp |
-| Bono de horas / Taller Flex (flexible hours) | 8h €120 · 16h €220 · 24h €300 | students with prior experience | WhatsApp |
+| Bono de horas (hour pack) | 8h €120 · 16h €220 · 24h €300 | hand-building or wheel, at your own pace | Online (Mesana) |
 | Creative workshops (guest artists) | variable | see website | website / WhatsApp |
 | Private sessions (team building, birthdays, bachelorette) | custom quote | group | WhatsApp / email |
 
@@ -46,21 +44,10 @@
 - Visitors: taught in English, Spanish or Portuguese; glazes included; piece ready 15 days after the class or shipped home (price on request); free cancellation up to 24 h before; from 8 years old; wheelchair accessible.
 - Booking: online via Stripe Checkout.
 
-### Intro al Torno
-- Price: €90.
-- Includes: intensive 2-session course (2h each) on throwing and trimming, maximum 2 people.
-- Booking: via WhatsApp.
-
-### Coworking Torno
-- Price: €20 per hour (minimum 2 hours).
-- Includes: open wheel access for experienced potters who work autonomously.
-- Availability: Tuesday, Wednesday, Friday, 14:00–18:00.
-- Booking: via WhatsApp.
-
-### Bono de horas (Taller Flex)
+### Bono de horas (hour pack)
 - Price: 8h €120 (€15/h) · 16h €220 (€13.75/h) · 24h €300 (€12.50/h).
-- For: students with prior experience, flexible hand-building or wheel hours.
-- Booking: via WhatsApp (https://wa.me/34711552030).
+- For: flexible hand-building or wheel hours, booked when it suits you.
+- Booking: online via Mesana (https://app.mesana.studio/book/la-mesa).
 
 ### Creative workshops
 - Price: variable per workshop, see website.
