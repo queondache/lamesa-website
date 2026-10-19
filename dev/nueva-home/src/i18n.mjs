@@ -28,7 +28,6 @@ const links = {
   },
 };
 
-export const SHOP = 'https://tienda.lamesabcn.com';
 export const BONO = 'https://app.mesana.studio/book/la-mesa';
 export const MAPS = 'https://www.google.com/maps?cid=8399713182337560112';
 export const RATING = { es: '5,0', en: '5.0', ca: '5,0', pt: '5,0' };

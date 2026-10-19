@@ -1,0 +1,13 @@
+<nav class="mesa-shop__nav" aria-label="{{ 'mesa_shop.navigation' | t | escape }}">
+  <a href="{{ routes.all_products_collection_url }}">{{ 'mesa_shop.catalog' | t | escape }}</a>
+  <a href="{{ routes.cart_url }}">{{ 'mesa_shop.cart' | t | escape }} ({{ cart.item_count }})</a>
+</nav>
+{% if localization.available_languages.size > 1 %}
+  {% form 'localization', class: 'mesa-shop__languages' %}
+    <label for="mesa-language-{{ section.id }}">{{ 'mesa_shop.language' | t | escape }}</label>
+    <select id="mesa-language-{{ section.id }}" name="language_code">
+      {% for language in localization.available_languages %}<option value="{{ language.iso_code | escape }}" {% if language.iso_code == localization.language.iso_code %}selected{% endif %}>{{ language.endonym_name | escape }}</option>{% endfor %}
+    </select>
+    <button type="submit">{{ 'mesa_shop.apply' | t | escape }}</button>
+  {% endform %}
+{% endif %}

@@ -1,0 +1,34 @@
+/* Scoped extension: preserve the host theme's header, footer and typography. */
+.mesa-shop{--mesa-cream:#fffaee;--mesa-blue:#1b3c8b;--mesa-yellow:#f7b137;background:var(--mesa-cream);color:var(--mesa-blue);padding:32px max(20px,calc((100% - 1200px)/2));font:inherit;line-height:1.6}
+.mesa-shop *,.mesa-shop *::before,.mesa-shop *::after{box-sizing:border-box}
+.mesa-shop h1,.mesa-shop h2{color:inherit;line-height:1.15;overflow-wrap:anywhere}
+.mesa-shop h1{font-size:clamp(32px,5vw,60px);letter-spacing:-.035em}.mesa-shop h2{font-size:22px}
+.mesa-shop a{color:inherit;text-underline-offset:4px}.mesa-shop a,.mesa-shop button,.mesa-shop select,.mesa-shop summary{min-height:44px}
+.mesa-shop a{display:inline-flex;align-items:center}.mesa-shop :focus-visible{outline:3px solid var(--mesa-blue);outline-offset:4px}
+.mesa-shop button{padding:12px 20px;border:2px solid var(--mesa-blue);border-radius:4px;background:var(--mesa-blue);color:var(--mesa-cream);font:inherit;font-weight:700;cursor:pointer}
+.mesa-shop button:disabled{opacity:.6;cursor:not-allowed}.mesa-shop input,.mesa-shop select{font:inherit;border:1px solid var(--mesa-blue);border-radius:4px;padding:10px;background:white;color:var(--mesa-blue);max-width:100%;min-height:44px}
+.mesa-shop label{display:block}.mesa-shop fieldset{border:0;padding:0;min-width:0}.mesa-shop summary{cursor:pointer;padding:10px 0}
+.mesa-shop__nav,.mesa-shop__languages,.mesa-shop__filters,.mesa-shop__pagination{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.mesa-shop__nav{justify-content:space-between;border-bottom:1px solid var(--mesa-blue);padding-bottom:12px}.mesa-shop__languages{margin-top:12px}
+.mesa-shop__intro{max-width:700px;padding:40px 0}.mesa-shop__eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:13px}
+.mesa-shop__filters{align-items:start;border-block:1px solid var(--mesa-blue);padding-block:20px}.mesa-shop__filters details{min-width:160px;max-width:100%}
+.mesa-shop .mesa-shop__check{display:flex;align-items:center;gap:10px;min-height:44px}.mesa-shop__check input{width:20px;min-height:20px;height:20px;flex-shrink:0}
+.mesa-shop__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:32px 24px;margin:32px 0}
+.mesa-shop__card>a{display:block;text-decoration:none}.mesa-shop__card img,.mesa-shop__placeholder{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:42% 42% 4px 4px;background:#f0eadc}
+.mesa-shop__placeholder{display:grid;place-items:center;padding:24px;text-align:center}.mesa-shop__badge{display:inline-block;padding:4px 12px;background:var(--mesa-yellow);border-radius:4px}
+.mesa-shop__product{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;padding-block:40px}.mesa-shop__images{display:grid;gap:20px;align-content:start}
+.mesa-shop__images img{width:100%;height:auto;border-radius:4px}.mesa-shop__images img:first-child{border-radius:42% 42% 4px 4px}
+.mesa-shop__price{font-size:24px;font-weight:700}.mesa-shop__buy,.mesa-shop__variant{display:grid;gap:12px;margin-block:24px}.mesa-shop__buy input{max-width:120px}.mesa-shop__details dt{font-weight:700;margin-top:16px}.mesa-shop__details dd{margin:0;overflow-wrap:anywhere}.mesa-shop__note{font-size:14px}
+.mesa-shop__line{display:grid;grid-template-columns:100px minmax(0,1fr) minmax(140px,220px);gap:24px;padding:24px 0;border-bottom:1px solid var(--mesa-blue)}.mesa-shop__line img{width:100%;height:auto}.mesa-shop__line input{display:block;width:100px}.mesa-shop__summary{margin-block:32px;max-width:600px;margin-left:auto}.mesa-shop__summary button{margin:8px 8px 0 0}
+.mesa-shop__pagination a,.mesa-shop__pagination span{min-width:44px;min-height:44px;display:grid;place-items:center}.mesa-shop__sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+@media(max-width:900px){.mesa-shop__grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mesa-shop__product{gap:24px}}
+@media(max-width:600px){.mesa-shop__grid,.mesa-shop__product{grid-template-columns:1fr}.mesa-shop__line{grid-template-columns:72px minmax(0,1fr);gap:16px}.mesa-shop__line>div:last-child{grid-column:2}.mesa-shop__filters{gap:12px}.mesa-shop__filters>div,.mesa-shop__filters details{width:100%}.mesa-shop__filters select{width:100%}}
+
+.mesa-shop__line-image{align-self:start;min-width:0}.mesa-shop__line-image>span{display:grid;place-items:center;aspect-ratio:1;padding:6px;background:#f0eadc;text-align:center;font-size:12px;overflow-wrap:anywhere}
+
+/* Shopify rich text keeps formatting without widening the mobile product column. */
+.mesa-shop__product>div{min-width:0}
+.mesa-shop__description{max-width:100%;overflow-x:auto;overflow-wrap:anywhere}
+.mesa-shop__description img,.mesa-shop__description video{max-width:100%;height:auto}
+.mesa-shop__description iframe{max-width:100%}
+.mesa-shop__description a{display:inline;min-height:0;text-decoration:underline}

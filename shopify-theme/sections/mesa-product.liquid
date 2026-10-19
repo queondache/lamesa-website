@@ -1,0 +1,49 @@
+{{ 'mesa-shop.css' | asset_url | stylesheet_tag }}
+{% assign chosen = product.selected_or_first_available_variant %}
+{% assign colors = product.metafields.custom.colors.value %}
+{% assign materials = product.metafields.custom.materials.value %}
+{% assign dimensions = product.metafields.custom.dimensions.value %}
+{% assign care = product.metafields.custom.care.value %}
+<section class="mesa-shop" aria-labelledby="mesa-product-title">
+  {% render 'mesa-navigation' %}
+  <div class="mesa-shop__product">
+    <div class="mesa-shop__images">
+      {% if chosen.featured_image %}{{ chosen.featured_image | image_url: width: 1200 | image_tag: widths: '480,800,1200', sizes: '(min-width: 800px) 50vw, 90vw', alt: product.title }}{% endif %}
+      {% for image in product.images %}
+        {% unless image.id == chosen.featured_image.id %}{{ image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '480,800,1200', sizes: '(min-width: 800px) 50vw, 90vw', alt: image.alt }}{% endunless %}
+      {% else %}<div class="mesa-shop__placeholder">{{ 'mesa_shop.no_photo' | t | escape }}</div>{% endfor %}
+    </div>
+    <div>
+      {% if product.type != blank %}<p class="mesa-shop__eyebrow">{{ product.type | escape }}</p>{% endif %}
+      <h1 id="mesa-product-title">{{ product.title | escape }}</h1>
+      <p class="mesa-shop__price">{{ chosen.price | money_with_currency }}</p>
+      {% if chosen.compare_at_price > chosen.price %}<s>{{ chosen.compare_at_price | money_with_currency }}</s>{% endif %}
+      {% comment %}Shopify merchant-authored HTML is the sole editorial description source.{% endcomment %}
+      {% if product.description != blank %}<div class="mesa-shop__description">{{ product.description }}</div>{% endif %}
+      {% unless product.has_only_default_variant %}
+        <form method="get" action="{{ product.url }}" class="mesa-shop__variant">
+          <label for="mesa-variant">{{ 'mesa_shop.variant' | t | escape }}</label>
+          <select id="mesa-variant" name="variant">
+            {% for variant in product.variants %}<option value="{{ variant.id }}" {% if variant.id == chosen.id %}selected{% endif %}>{{ variant.title | escape }} — {{ variant.price | money_with_currency | escape }}{% unless variant.available %} · {{ 'mesa_shop.sold_out' | t | escape }}{% endunless %}</option>{% endfor %}
+          </select>
+          <button type="submit">{{ 'mesa_shop.choose' | t | escape }}</button>
+        </form>
+      {% endunless %}
+      {% form 'product', product, class: 'mesa-shop__buy' %}
+        {% if form.errors %}<div role="alert">{{ form.errors | default_errors }}</div>{% endif %}
+        <input type="hidden" name="id" value="{{ chosen.id }}">
+        <label for="mesa-quantity">{{ 'mesa_shop.quantity' | t | escape }}</label>
+        <input id="mesa-quantity" name="quantity" type="number" min="{{ chosen.quantity_rule.min | default: 1 }}" step="{{ chosen.quantity_rule.increment | default: 1 }}" value="{{ chosen.quantity_rule.min | default: 1 }}" {% if chosen.quantity_rule.max %}max="{{ chosen.quantity_rule.max }}"{% endif %} required>
+        <button type="submit" name="add" {% unless chosen.available %}disabled{% endunless %}>{% if chosen.available %}{{ 'mesa_shop.add' | t | escape }}{% else %}{{ 'mesa_shop.sold_out' | t | escape }}{% endif %}</button>
+      {% endform %}
+      <p class="mesa-shop__note">{{ 'mesa_shop.checkout_note' | t | escape }}</p>
+      <dl class="mesa-shop__details">
+        {% if colors.size > 0 %}<dt>{{ 'mesa_shop.colors' | t | escape }}</dt><dd>{% for color in colors %}{{ color | escape }}{% unless forloop.last %}, {% endunless %}{% endfor %}</dd>{% endif %}
+        {% if materials != blank %}<dt>{{ 'mesa_shop.materials' | t | escape }}</dt><dd>{{ materials | escape }}</dd>{% endif %}
+        {% if dimensions != blank %}<dt>{{ 'mesa_shop.dimensions' | t | escape }}</dt><dd>{{ dimensions | escape }}</dd>{% endif %}
+        {% if care != blank %}<dt>{{ 'mesa_shop.care' | t | escape }}</dt><dd>{{ care | escape | newline_to_br }}</dd>{% endif %}
+      </dl>
+    </div>
+  </div>
+</section>
+{% schema %}{"name":"La Mesa product","settings":[]}{% endschema %}

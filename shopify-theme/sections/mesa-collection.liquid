@@ -1,0 +1,58 @@
+{{ 'mesa-shop.css' | asset_url | stylesheet_tag }}
+<section class="mesa-shop" aria-labelledby="mesa-collection-title">
+  {% render 'mesa-navigation' %}
+  <header class="mesa-shop__intro">
+    <p class="mesa-shop__eyebrow">La Mesa · Barcelona</p>
+    <h1 id="mesa-collection-title">{{ collection.title | escape }}</h1>
+    <p>{{ 'mesa_shop.intro' | t | escape }}</p>
+  </header>
+  <form class="mesa-shop__filters" method="get" action="{{ collection.url }}">
+    {% for filter in collection.filters %}
+      {% if filter.type == 'list' or filter.type == 'boolean' %}
+        <details {% if filter.active_values.size > 0 %}open{% endif %}>
+          <summary>{{ filter.label | escape }}{% if filter.active_values.size > 0 %} ({{ filter.active_values.size }}){% endif %}</summary>
+          <fieldset><legend class="mesa-shop__sr">{{ filter.label | escape }}</legend>
+            {% for value in filter.values %}
+              <label class="mesa-shop__check">
+                <input type="checkbox" name="{{ value.param_name | escape }}" value="{{ value.value | escape }}" {% if value.active %}checked{% endif %} {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                <span>{{ value.label | escape }} ({{ value.count }})</span>
+              </label>
+            {% endfor %}
+          </fieldset>
+        </details>
+      {% endif %}
+    {% endfor %}
+    <div><label for="mesa-sort">{{ 'mesa_shop.sort' | t | escape }}</label>
+      {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+      <select name="sort_by" id="mesa-sort">{% for option in collection.sort_options %}<option value="{{ option.value | escape }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name | escape }}</option>{% endfor %}</select>
+    </div>
+    <button type="submit">{{ 'mesa_shop.apply' | t | escape }}</button>
+    <a href="{{ collection.url }}">{{ 'mesa_shop.clear' | t | escape }}</a>
+  </form>
+  <p>{{ 'mesa_shop.results' | t: count: collection.products_count | escape }}</p>
+  {% paginate collection.products by 24 %}
+    <div class="mesa-shop__grid">
+      {% for item in collection.products %}
+        <article class="mesa-shop__card">
+          <a href="{{ item.url }}">
+            {% if item.featured_image %}
+              {{ item.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', widths: '320,480,640,800', sizes: '(min-width: 1000px) 30vw, (min-width: 600px) 45vw, 90vw', alt: item.title }}
+            {% else %}<div class="mesa-shop__placeholder">{{ 'mesa_shop.no_photo' | t | escape }}</div>{% endif %}
+            <h2>{{ item.title | escape }}</h2>
+          </a>
+          {% if item.type != blank %}<p>{{ item.type | escape }}</p>{% endif %}
+          <p>{% if item.price_varies %}{{ 'mesa_shop.from' | t | escape }} {% endif %}{{ item.price | money_with_currency }}</p>
+          {% unless item.available %}<span class="mesa-shop__badge">{{ 'mesa_shop.sold_out' | t | escape }}</span>{% endunless %}
+        </article>
+      {% else %}<p>{{ 'mesa_shop.empty_results' | t | escape }}</p>{% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <nav class="mesa-shop__pagination" aria-label="{{ 'mesa_shop.pages' | t | escape }}">
+        {% if paginate.previous %}<a href="{{ paginate.previous.url }}">{{ 'mesa_shop.previous' | t | escape }}</a>{% endif %}
+        {% for part in paginate.parts %}{% if part.is_link %}<a href="{{ part.url }}">{{ part.title }}</a>{% else %}<span {% if part.title == paginate.current_page %}aria-current="page"{% endif %}>{{ part.title }}</span>{% endif %}{% endfor %}
+        {% if paginate.next %}<a href="{{ paginate.next.url }}">{{ 'mesa_shop.next' | t | escape }}</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+</section>
+{% schema %}{"name":"La Mesa collection","settings":[]}{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "mesa-collection",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

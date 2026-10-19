@@ -6,7 +6,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { LANGS, QUOTES, FAQ_KEYS, HOME_FAQ, SHOP, BONO, MAPS, RATING, REVIEWS_TOTAL, wa } from './src/i18n.mjs';
+import { LANGS, QUOTES, FAQ_KEYS, HOME_FAQ, BONO, MAPS, RATING, REVIEWS_TOTAL, wa } from './src/i18n.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(here, '..', '..');
@@ -66,19 +66,25 @@ const img = (ctx, key, alt, extra = 'loading="lazy" decoding="async"') => {
   return `<img src="${ctx.asset(file)}" alt="${esc(alt)}" width="${w}" height="${h}" ${extra}>`;
 };
 
+// Negozio: pagina /tienda/ della lingua, che porta a Shopify (js/shop-links.js)
+const shopHref = (L) => '/' + (L.htmlLang === 'es' ? '' : L.htmlLang + '/') + 'tienda/';
+// Email: mai in chiaro nell'HTML; js/contact-email.js costruisce il mailto al caricamento
+const AT = { es: 'arroba', en: 'at', ca: 'arrova', pt: 'arroba' };
+const emailLink = (L, subject, attrs = '') => `<a${attrs} data-email-user="lamesa.lc" data-email-domain="gmail.com"${subject ? ` data-email-query="subject=${encodeURIComponent(subject)}"` : ''}>lamesa.lc [${AT[L.htmlLang]}] gmail.com</a>`;
+
 // «Cursos» non ha una pagina riassuntiva: porta alla riga dell'indice con modelado e torno
 function doorHref(ctx, nav) {
   const l = ctx.L.l;
-  const href = { exp: l.exp, courses: '#cursos', shop: SHOP, groups: l.team, resto: l.resto }[nav];
+  const href = { exp: l.exp, courses: '#cursos', shop: shopHref(ctx.L), groups: l.team, resto: l.resto }[nav];
   return ctx.kind === 'faq' && href.startsWith('#') ? ctx.pageHref(ctx.code, 'home') + href : href;
 }
-const doorAttrs = (nav) => (nav === 'shop' ? ' rel="noopener"' : '');
+const doorAttrs = () => '';
 
 // Pulsanti di una proposta: `where` = panel (domanda) | index (righe 01–05)
 function offerActions(L, key, where) {
   const o = L.offer[key];
   const l = L.l;
-  const mail = (subject) => `<p class="${where === 'panel' ? 'extra' : 'mail'}">${esc(L.ui.orMail)} <a href="mailto:lamesa.lc@gmail.com?subject=${encodeURIComponent(subject)}">lamesa.lc@gmail.com</a></p>`;
+  const mail = (subject) => `<p class="${where === 'panel' ? 'extra' : 'mail'}">${esc(L.ui.orMail)} ${emailLink(L, subject)}</p>`;
   // il bono è l'unico link della home verso Mesana (prenotazione standard, stessa scheda)
   const bono = (label, cls) => `<a${cls ? ` class="${cls}"` : ''} href="${BONO}" rel="noopener" data-standard-booking data-track="bono_horas">${esc(label)}</a>`;
   switch (key) {
@@ -90,7 +96,7 @@ function offerActions(L, key, where) {
         extra: where === 'panel' ? `<p class="extra">${bono(o.bono)}</p>` : '',
       };
     case 'regalo':
-      return { btns: `<a class="btn btn-y" href="${SHOP}" rel="noopener" data-track="tienda">${arrow(o.cta)}</a><a class="btn btn-wa" href="${wa(o.wa)}" ${ext} data-track="vale_regalo">${waIcon}${esc(o.voucher)}</a>`, extra: '' };
+      return { btns: `<a class="btn btn-y" href="${shopHref(L)}"${where === 'panel' ? ' id="shop-link"' : ''} data-track="tienda">${arrow(o.cta)}</a><a class="btn btn-wa" href="${wa(o.wa)}" ${ext} data-track="vale_regalo">${waIcon}${esc(o.voucher)}</a>`, extra: '' };
     case 'grupo':
       return { btns: `<a class="btn btn-b" href="${l.team}" data-track="team_building">${arrow(o.cta)}</a><a class="btn btn-wa" href="${wa(o.wa)}" ${ext} data-track="privada_wa">${waIcon}WhatsApp</a>`, extra: mail(o.subject) };
     case 'resto':
@@ -413,7 +419,7 @@ function footer(ctx) {
       <div>
         <h3>${esc(F.contact)}</h3>
         <a class="fl" href="tel:+34711552030">+34 711 55 20 30</a>
-        <a class="fl" href="mailto:lamesa.lc@gmail.com">lamesa.lc@gmail.com</a>
+        ${emailLink(L, '', ' class="fl"')}
       </div>
       <div>
         <h3>${esc(F.follow)}</h3>
@@ -436,6 +442,8 @@ ${DOORS.map((d) => `      <a href="${doorHref(ctx, d.nav)}"${doorAttrs(d.nav)}>$
 </footer>
 <a class="wa-float" href="${wa(F.wa)}" ${ext} aria-label="${esc(L.ui.waFloat)}">${waIcon}</a>`;
 }
+
+const EMAIL_JS = '<script src="/js/contact-email.js?v=1" data-cookieconsent="ignore" defer></script>';
 
 const SCRIPT = `<script>
 (function () {
@@ -534,6 +542,7 @@ ${footer(ctx)}
 ${SPRITE}
 ${jsonLd(ctx, ctx.faqKeys(HOME_FAQ))}
 ${SCRIPT}
+${EMAIL_JS}
 </body>
 </html>
 `;
@@ -564,6 +573,7 @@ ${footer(ctx)}
 ${SPRITE}
 ${jsonLd(ctx, keys)}
 ${SCRIPT}
+${EMAIL_JS}
 </body>
 </html>
 `;
