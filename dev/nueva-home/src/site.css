@@ -260,6 +260,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .drawer .langs a{color:var(--blue);box-shadow:inset 0 0 0 1px var(--line-2)}
 .drawer .langs{margin:0}
 @media(min-width:900px){.foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.foot-map{margin-top:28px;border-radius:var(--r);overflow:hidden;background:rgba(255,255,255,.08);aspect-ratio:4/3}
+.foot-map iframe{display:block;width:100%;height:100%}
+@media(min-width:900px){.foot-map{aspect-ratio:auto;height:360px}}
 
 /* ---------- WhatsApp fisso ---------- */
 .wa-float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:45;width:56px;height:56px;border-radius:50%;background:#1FA855;color:var(--paper);display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(21,48,111,.5)}

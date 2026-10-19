@@ -69,6 +69,15 @@ for (const target of ['dev', 'prod']) {
       }
     });
 
+    test(`${name}: mappa Google nel footer, con titolo e nella lingua della pagina`, () => {
+      for (const src of [html, faq]) {
+        const map = src.match(/<div class="foot-map">\s*<iframe src="([^"]+)"[^>]*title="([^"]+)"/);
+        assert.ok(map, 'manca la mappa');
+        assert.match(map[1], new RegExp(`^https://www\\.google\\.com/maps/embed\\?pb=.*!1s${code}!2ses`));
+        assert.match(map[2], /Atlàntida 47/);
+      }
+    });
+
     test(`${name}: X accessibile, voto Google`, () => {
       assert.match(html, new RegExp(`<button class="who-close"[^>]*aria-label="${L.ui.close}"`));
       assert.doesNotMatch(html, /data-variant-switch/);
