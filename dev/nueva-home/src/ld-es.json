@@ -125,20 +125,10 @@
       "@type": "Offer",
       "itemOffered": {
        "@type": "Service",
-       "name": "Taller Flex",
-       "description": "Clases de modelado o torno para alumnos con experiencia previa. Reserva solo por WhatsApp."
+       "name": "Bono de horas",
+       "description": "8, 16 o 24 horas de modelado o torno para usar a tu ritmo (120 €, 220 € o 300 €). Reserva online."
       },
       "price": "120",
-      "priceCurrency": "EUR"
-     },
-     {
-      "@type": "Offer",
-      "itemOffered": {
-       "@type": "Service",
-       "name": "Intro al Torno",
-       "description": "Curso intensivo de 2 sesiones para aprender torneado y retorneado. Máximo 2 personas."
-      },
-      "price": "90",
       "priceCurrency": "EUR"
      }
     ]

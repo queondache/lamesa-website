@@ -125,20 +125,10 @@
       "@type": "Offer",
       "itemOffered": {
        "@type": "Service",
-       "name": "Taller Flex",
-       "description": "Classes de modelat o torn per a alumnes amb experiència prèvia. Reserva només per WhatsApp."
+       "name": "Bo d'hores",
+       "description": "8, 16 o 24 hores de modelat o torn per fer servir al teu ritme (120 €, 220 € o 300 €). Reserva en línia."
       },
       "price": "120",
-      "priceCurrency": "EUR"
-     },
-     {
-      "@type": "Offer",
-      "itemOffered": {
-       "@type": "Service",
-       "name": "Intro al Torn",
-       "description": "Curs intensiu de 2 sessions per aprendre tornejat i retornejat. Màxim 2 persones."
-      },
-      "price": "90",
       "priceCurrency": "EUR"
      }
     ]
