@@ -14,12 +14,8 @@ const bookingSource = read('js/booking-v2.js');
 const url = 'https://app.mesana.studio/client/la-mesa';
 const homes = ['index.html', 'en/index.html', 'ca/index.html', 'pt/index.html'];
 const courses = ['clases/semanal-modelado.html', 'clases/semanal-torno.html', 'en/clases/semanal-modelado.html', 'en/clases/semanal-torno.html', 'ca/clases/semanal-modelado.html', 'ca/clases/semanal-torno.html'];
-// Baseline fingerprints, excluding only class reservation CTA blocks. Refreshed 17/10 for the shop entry and the obfuscated contact email.
+// Baseline fingerprints of the weekly course pages, excluding only class reservation CTA blocks (homes redesigned 19/10: D3).
 const preserved = {
-  "index.html": "ba0d4dba01ee7657beadedc8e508c302c3c959f189739168d812acebfa3dc92a",
-  "en/index.html": "7a20217aac4e207acfadc8d0cb535aeaa7a401f0306f1ab20225f76ed0b72c32",
-  "ca/index.html": "0873543707b6c10dd866e4732dd4c02703c2d702788b1eafef87166c28280a1f",
-  "pt/index.html": "2154501f79852b3fa22d2b267f0474f48bee291081b089579ac3e545b357fe1f",
   "clases/semanal-modelado.html": "e636d185e3acc71ec96cf4950234710aba784c7aa7580950c498b6f3f48b6d88",
   "clases/semanal-torno.html": "ae990ec4085db9226f9e1122938d2bcf29bb26c2a5c33138f42648ca73b233df",
   "en/clases/semanal-modelado.html": "09c03ed2b5bfd4f2815f666aee00f671dc9c9cafde3cdf4f3da0fef57086cefd",
@@ -88,9 +84,8 @@ function unrelatedContent(source) {
     .replace(/<div class="turno-grid" id="booking-grid"[^>]*>\s*(?:<!--[^]*?-->\s*)?(?:<div class="turno-skeleton"><\/div>\s*){3}<\/div>/g, '')
     .replace(/<div class="turno-grid">\s*<a[^>]*data-standard-booking[^>]*>[^]*?<\/a>\s*<\/div>/g, '');
 }
-test('Class CTA changes preserve every unrelated byte in home and weekly course pages', () => {
-  for (const file of [...homes, ...courses]) {
-    assert.equal(createHash('sha256').update(unrelatedContent(read(file))).digest('hex'), preserved[file], file);
-    assert.doesNotMatch(read(file), /data-client-area="bono"|id="booking-grid"/);
-  }
+test('Class CTA changes preserve every unrelated byte in weekly course pages; homes stay without client area', () => {
+  // Le home sono state ridisegnate (D3, 19/10/2026): non hanno impronta, ma restano senza area cliente.
+  for (const file of courses) assert.equal(createHash('sha256').update(unrelatedContent(read(file))).digest('hex'), preserved[file], file);
+  for (const file of [...homes, ...courses]) assert.doesNotMatch(read(file), /data-client-area="bono"|id="booking-grid"/);
 });

@@ -1,973 +1,706 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0c496daf-df8d-4640-8875-84e193803d9a" data-blockingmode="auto" type="text/javascript" async></script>
-  <!-- ============================================================
-       Meta & SEO — English version
-       ============================================================ -->
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pottery Classes in Barcelona (Barceloneta) – Ceramics Studio | La Mesa</title>
-  <meta name="description" content="Pottery classes in La Barceloneta, Barcelona: a 2-hour ceramics experience from €45, no experience needed, in English, Spanish or Portuguese. Monthly courses and creative workshops. Book online.">
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="0c496daf-df8d-4640-8875-84e193803d9a" data-blockingmode="auto" type="text/javascript" async></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Mesa · Pottery studio in La Barceloneta, Barcelona</title>
+<meta name="description" content="Ceramics studio and creative lab in La Barceloneta, Barcelona. 2-hour classes, courses, shop, team building and tableware for restaurants.">
+<link rel="canonical" href="https://lamesabcn.com/en/">
+<link rel="alternate" hreflang="es" href="https://lamesabcn.com/">
+<link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/">
+<link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/">
+<link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/">
+<link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="La Mesa · Pottery studio in La Barceloneta, Barcelona">
+<meta property="og:description" content="Ceramics studio and creative lab in La Barceloneta, Barcelona. 2-hour classes, courses, shop, team building and tableware for restaurants.">
+<meta property="og:url" content="https://lamesabcn.com/en/">
+<meta property="og:image" content="https://lamesabcn.com/images/og-lamesa.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_GB">
+<meta property="og:site_name" content="La Mesa Barcelona">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="La Mesa · Pottery studio in La Barceloneta, Barcelona">
+<meta name="twitter:description" content="Ceramics studio and creative lab in La Barceloneta, Barcelona. 2-hour classes, courses, shop, team building and tableware for restaurants.">
+<meta name="twitter:image" content="https://lamesabcn.com/images/og-lamesa.jpg">
+<meta name="geo.region" content="ES-CT">
+<meta name="geo.placename" content="Barcelona">
+<meta name="geo.position" content="41.3783;2.1894">
+<meta name="ICBM" content="41.3783, 2.1894">
+<meta name="theme-color" content="#FFFAEE">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180.png">
+<link rel="preload" href="/fonts/Garet-Black.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Homepage D3 — copertina (titolo | foto), domanda «¿Qué te trae?» a tutta larghezza,
+   indice 01–05 solo testo, chi siamo, recensioni, FAQ, footer.
+   Colore guida: blu La Mesa per titoli e testo forte; niente nero pieno.
+   Il giallo è un accento (azione principale, evidenziatore), mai uno sfondo di sezione. */
+@font-face{font-family:Garet;src:url(/fonts/Garet-Black.woff2) format('woff2');font-weight:900;font-display:swap}
+@font-face{font-family:HighCruiser;src:url(/fonts/HighCruiser.woff2) format('woff2');font-display:swap}
+:root{
+  color-scheme:light;
+  --cream:#FFFAEE;--cream-2:#FBF2DE;--paper:#FFFFFF;
+  --blue:#1B3C8B;--blue-deep:#15306F;--blue-soft:#E8ECF6;
+  --yellow:#F7B137;--yellow-soft:#FCE2AE;--pink-ink:#C0243F;
+  --ink:#2E2A24;--ink-2:#5A5346;--line:rgba(27,60,139,.14);--line-2:rgba(27,60,139,.24);
+  --f-display:Garet,'Montserrat',system-ui,sans-serif;
+  --f-accent:HighCruiser,'Montserrat',system-ui,sans-serif;
+  --f-body:'Montserrat',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --gutter:max(20px,env(safe-area-inset-left,0px));
+  --gutter-r:max(20px,env(safe-area-inset-right,0px));
+  --nav-h:64px;--wrap:1160px;--tap:48px;--r:20px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --shadow:0 1px 0 var(--line),0 24px 48px -36px rgba(27,60,139,.45);
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--nav-h) + 12px);-webkit-text-size-adjust:100%}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--cream);color:var(--ink);font:16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+h1,h2,h3{text-wrap:balance;margin:0;color:var(--blue)}
+p{margin:0;text-wrap:pretty}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:var(--gutter);padding-right:var(--gutter-r)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:12px;top:-60px;z-index:100;padding:12px 16px;border-radius:12px;background:var(--blue);color:var(--paper);font-weight:700}
+.skip:focus{top:12px}
+/* evidenziatore giallo sotto la parola chiave dei titoli: accento senza testo giallo su crema */
+.mark{background:linear-gradient(transparent 62%,var(--yellow) 62%,var(--yellow) 92%,transparent 92%);padding:0 .06em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 
-  <!-- Canonical & Hreflang -->
-  <link rel="canonical" href="https://lamesabcn.com/en/">
-  <link rel="alternate" hreflang="es" href="https://lamesabcn.com/">
-  <link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/">
-  <link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/">
-  <link rel="alternate" hreflang="pt" href="https://lamesabcn.com/pt/">
-  <link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/">
+/* ---------- menu ---------- */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--cream)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(255,250,238,.92);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.nav-bar{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-height:var(--tap);color:var(--blue)}
+.brand img{width:30px;height:30px}
+.brand span{font:900 17px/1 var(--f-display);letter-spacing:.04em;white-space:nowrap}
+.nav-links{display:none;gap:2px;list-style:none;margin:0;padding:0}
+.nav-links a{display:flex;align-items:center;min-height:var(--tap);padding:0 13px;border-radius:99px;text-decoration:none;font-weight:600;font-size:14px;color:var(--ink)}
+.nav-links a:hover{color:var(--blue);background:var(--blue-soft)}
+.nav-end{display:flex;align-items:center;gap:8px}
+.nav-end .nav-cta{display:none}
+.lang-mini{display:none;gap:0;font-size:12px;font-weight:700;letter-spacing:.04em}
+.lang-mini a{display:grid;place-items:center;min-width:var(--tap);min-height:var(--tap);text-decoration:none;color:var(--ink-2)}
+.lang-mini a:hover{color:var(--blue)}
+.lang-mini a[aria-current]{color:var(--blue);text-decoration:underline;text-decoration-color:var(--yellow);text-decoration-thickness:3px;text-underline-offset:6px}
+.burger{display:grid;place-items:center;width:var(--tap);height:var(--tap);border-radius:14px;border:1px solid var(--line-2);background:transparent;color:var(--blue);cursor:pointer}
+.burger svg{width:22px;height:22px}
+.drawer{border-top:1px solid var(--line);background:var(--cream);max-height:calc(100dvh - var(--nav-h));overflow:auto}
+.drawer ul{list-style:none;margin:0;padding:6px 0 8px}
+.drawer li a{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:4px 10px;min-height:64px;padding-block:10px;text-decoration:none;border-bottom:1px solid var(--line)}
+.drawer .n{font:700 12px/1 var(--f-body);color:var(--pink-ink);font-variant-numeric:tabular-nums}
+.drawer b{font:900 21px/1.1 var(--f-display);color:var(--blue)}
+.drawer small{grid-column:2;font:500 13px/1.3 var(--f-body);color:var(--ink-2)}
+.drawer .arr{grid-row:1 / span 2;grid-column:3;color:var(--blue)}
+.drawer-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 20px}
+.drawer-foot .btn{flex:1 1 220px}
+@media(min-width:1000px){
+  .nav-links{display:flex}.burger{display:none}.drawer{display:none!important}
+  .nav-end .nav-cta{display:inline-flex}
+}
+@media(min-width:1180px){.lang-mini{display:flex}}
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Pottery Classes in Barcelona (Barceloneta) – Ceramics Studio | La Mesa">
-  <meta property="og:description" content="Ceramics studio, creative workshops and community in La Barceloneta, Barcelona.">
-  <meta property="og:url" content="https://lamesabcn.com/en/">
-  <meta property="og:image" content="https://lamesabcn.com/images/og-lamesa.jpg">
-  <meta property="og:image:alt" content="La Mesa – Laboratorio Creativo en La Barceloneta, Barcelona">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:locale" content="en_GB">
-  <meta property="og:site_name" content="La Mesa Barcelona">
+/* ---------- pulsanti ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:var(--tap);padding:0 22px;border-radius:99px;border:0;font:700 15px/1.1 var(--f-body);text-align:center;text-decoration:none;cursor:pointer;transition:transform .15s var(--ease),background-color .2s,box-shadow .2s}
+.btn:active{transform:scale(.97)}
+.btn .ar{transition:transform .2s var(--ease)}
+.btn:hover .ar{transform:translateX(3px)}
+.btn-y{background:var(--yellow);color:var(--blue-deep)}
+.btn-y:hover{background:#F2A21A}
+.btn-b{background:var(--blue);color:var(--paper)}
+.btn-b:hover{background:var(--blue-deep)}
+.btn-line{background:transparent;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--line-2)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--blue)}
+.btn-wa{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line-2);font-weight:600}
+.btn-wa svg{width:18px;height:18px;color:#1FA855}
+.btns{display:flex;flex-wrap:wrap;gap:10px}
+.link{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:600;font-size:14px;color:var(--blue);text-underline-offset:4px;text-decoration-color:var(--line-2)}
+.link:hover{text-decoration-color:var(--blue)}
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="La Mesa – Ceramics Studio in Barcelona">
-  <meta name="twitter:description" content="Ceramics studio, creative workshops and community in La Barceloneta.">
-  <meta name="twitter:image" content="https://lamesabcn.com/images/og-lamesa.jpg">
+/* ---------- copertina (D3) ---------- */
+.top{padding-block:22px 8px}
+.top-grid{display:grid;gap:14px;grid-template-areas:"text" "photo" "who"}
+.t-text{grid-area:text}
+.t-text h1{font:900 clamp(32px,8.4vw,64px)/1.04 var(--f-display);letter-spacing:-.015em;max-width:14ch}
+.t-text h1.long{font-size:clamp(29px,7.4vw,56px)}
+.t-text .sub{margin-top:10px;font-size:clamp(15px,1.6vw,18px);color:var(--ink-2);max-width:38ch}
+.proof{display:inline-flex;align-items:center;gap:8px;min-height:var(--tap);padding:0 14px;border-radius:99px;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line);text-decoration:none;font-weight:600;font-size:13px;color:var(--ink)}
+.proof b{color:#B87800;letter-spacing:1px;font-size:14px}
+.t-text .proof{margin-top:16px;display:none}
+.t-photo{grid-area:photo;position:relative;margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:16/10;background:var(--cream-2)}
+.t-photo img{width:100%;height:100%;object-fit:cover}
+.t-photo .proof{position:absolute;left:10px;bottom:10px;background:rgba(255,250,238,.95);box-shadow:none}
 
-  <!-- Geo -->
-  <meta name="geo.region" content="ES-CT">
-  <meta name="geo.placename" content="Barcelona">
-  <meta name="geo.position" content="41.3783;2.1894">
-  <meta name="ICBM" content="41.3783, 2.1894">
+/* ---------- domanda «¿Qué te trae?» ---------- */
+.t-who{grid-area:who}
+.who-card{position:relative;background:var(--paper);border-radius:var(--r);padding:18px 14px 14px;box-shadow:var(--shadow)}
+.who-close{position:absolute;top:10px;right:10px;width:var(--tap);height:var(--tap);border-radius:50%;border:0;background:transparent;color:var(--ink-2);display:grid;place-items:center;cursor:pointer}
+.who-close:hover{background:var(--blue-soft);color:var(--blue)}
+.who-close svg{width:18px;height:18px}
+.who-q{font:400 clamp(25px,6.4vw,34px)/1.1 var(--f-accent);color:var(--blue);padding:4px 52px 0 4px}
+.chips{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:14px}
+.chip{min-height:var(--tap);padding:6px 10px;border-radius:14px;border:0;background:var(--cream);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);font:600 13px/1.2 var(--f-body);text-align:center;cursor:pointer;transition:background-color .2s,color .2s,box-shadow .2s}
+.chip:hover{box-shadow:inset 0 0 0 1.5px var(--blue);color:var(--blue)}
+.chip[aria-selected="true"]{background:var(--blue);color:var(--paper);box-shadow:none}
+.chip:last-child{grid-column:1 / -1}
+.panel{margin-top:12px;display:grid;grid-template-columns:96px minmax(0,1fr);background:var(--cream);border-radius:16px;overflow:hidden}
+.panel[hidden]{display:none}
+.panel img{width:100%;height:100%;min-height:104px;object-fit:cover}
+.panel .in{padding:12px 14px 14px;display:grid;gap:8px;align-content:start}
+.panel h3{font:900 17px/1.15 var(--f-display)}
+.panel .desc{display:none;color:var(--ink-2);font-size:15px}
+.facts{display:flex;flex-wrap:wrap;gap:4px 14px;list-style:none;margin:0;padding:0;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+.facts li{display:flex;align-items:center;gap:6px}
+.facts li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--yellow)}
+.panel .btns{grid-column:1 / -1;padding:0 14px 14px;align-items:center}
+.panel .btns .btn{flex:1 1 auto;padding:0 16px}
+.panel .extra{flex:1 1 100%;margin:2px 0 0;font-size:13px;line-height:1.4;color:var(--ink-2);text-align:center}
+.panel .extra a{color:var(--blue);display:inline-flex;align-items:center;min-height:var(--tap)}
+@media(prefers-reduced-motion:no-preference){.panel:not([hidden]){animation:rise .28s var(--ease)}}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.who-more{display:flex;justify-content:center;padding-top:8px}
+.link-btn{background:none;border:0;padding:0 8px;cursor:pointer;font-family:inherit}
 
-  <!-- Theme color -->
-  <meta name="theme-color" content="#F7B137">
+@media(min-width:760px){
+  .chips{display:flex;flex-wrap:wrap}
+  .chip{padding:0 16px;border-radius:99px;font-size:14px}
+  .panel{grid-template-columns:200px minmax(0,1fr)}
+  .panel .in{padding:18px 20px}
+  .panel h3{font-size:20px}
+  .panel .desc{display:block}
+  .panel .btns{grid-column:2;padding:0 20px 18px}
+  .panel .extra{text-align:left}
+}
 
-  <!-- Google Fonts — Montserrat 400, 600, 700, 900 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+/* computer: titolo e foto affiancati, sotto la domanda a tutta larghezza */
+@media(min-width:1024px){
+  .top{padding-block:28px 8px}
+  .top-grid{grid-template-columns:minmax(0,5fr) minmax(0,6fr);grid-template-areas:"text photo" "who who";column-gap:56px;row-gap:28px;align-items:center}
+  .t-text h1{font-size:clamp(42px,4vw,58px);max-width:15ch}
+  /* titoli lunghi (CA, PT): più piccoli, così la domanda resta nella prima schermata */
+  .t-text h1.long{font-size:clamp(36px,3.3vw,48px);max-width:17ch}
+  .t-text .proof{display:inline-flex}
+  .t-photo{aspect-ratio:auto;height:clamp(300px,40vh,420px)}
+  .t-photo .proof{display:none}
+  .who-card{padding:26px 28px 22px}
+  .who-close{top:16px;right:16px}
+  .who-q{padding:0 56px 0 0;font-size:34px}
+  .chips{margin-top:16px;gap:8px}
+  .chip{white-space:nowrap}
+  .panel{margin-top:20px;grid-template-columns:230px minmax(0,1fr) auto;align-items:stretch}
+  .panel img{min-height:0;max-height:200px}
+  .panel .in{padding:20px 24px;align-content:center}
+  .panel .btns{grid-column:3;grid-row:1;flex-direction:column;flex-wrap:nowrap;align-items:stretch;justify-content:center;gap:10px;padding:20px 24px;margin:0;width:280px}
+  .panel .btns .btn{flex:0 0 auto}
+  .panel .extra{text-align:center;margin:0}
+  .who-more{padding-top:14px}
+}
 
-  <!-- Stylesheet (relative path from /en/) -->
-  <link rel="stylesheet" href="../css/style.css?v=16">
+/* ---------- sezioni ---------- */
+.section{padding-block:72px}
+.eyebrow{font:400 22px/1 var(--f-accent);color:var(--pink-ink)}
+.h2{font:900 clamp(28px,5.2vw,44px)/1.06 var(--f-display);letter-spacing:-.01em;margin-top:8px}
+.lead{margin-top:14px;color:var(--ink-2);max-width:58ch}
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="../images/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../images/favicon-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="../images/favicon-180.png">
+/* ---------- indice 01–05: solo testo, apribile ---------- */
+.index{margin-top:32px;border-top:1px solid var(--line-2)}
+.row{border-bottom:1px solid var(--line-2)}
+.row summary{list-style:none;display:grid;grid-template-columns:36px 1fr 36px;align-items:center;gap:12px;padding:20px 2px;min-height:84px;cursor:pointer}
+.row summary::-webkit-details-marker{display:none}
+.row .n{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;font:700 12px/1 var(--f-body);color:var(--pink-ink);font-variant-numeric:tabular-nums}
+.row.first .n{background:var(--yellow);color:var(--blue-deep)}
+.row .t{font:900 clamp(26px,5.6vw,46px)/1.02 var(--f-display);letter-spacing:-.015em;color:var(--blue)}
+.row .t small{display:block;margin-top:8px;font:500 13.5px/1.35 var(--f-body);letter-spacing:0;color:var(--ink-2)}
+.row .pl{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;color:var(--blue);box-shadow:inset 0 0 0 1.5px var(--line-2);transition:transform .25s var(--ease),background-color .2s}
+.row .pl svg{width:16px;height:16px}
+.row summary:hover .pl{background:var(--blue-soft)}
+.row[open] .pl{transform:rotate(45deg)}
+.row .body{display:grid;gap:16px;padding:0 2px 28px 48px;max-width:720px}
+.row .body .link{margin-top:-6px}
+.row .body .mail{font-size:14px;color:var(--ink-2)}
+@media(max-width:899px){.row .body .btns .btn{flex:1 1 200px}}
+.row .body .mail a{color:var(--blue)}
+.about-sec{padding-top:24px}
+.row .body p{color:var(--ink-2)}
+@media(prefers-reduced-motion:no-preference){.row[open] .body{animation:rise .28s var(--ease)}}
+@media(min-width:900px){
+  .row summary{grid-template-columns:64px 1fr 44px;padding:26px 6px}
+  .row .pl{width:44px;height:44px}
+  .row .body{padding:0 6px 34px 70px;max-width:790px}
+}
 
-  <!-- Google Analytics 4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ90MD674K"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-SQ90MD674K');
-  </script>
-  <!-- Meta Pixel -->
-  <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '928743266641763');
-  fbq('track', 'PageView');
-  </script>
-  <noscript>
-  <img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=928743266641763&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- Fine Meta Pixel -->
+/* ---------- chi siamo ---------- */
+.about{display:grid;gap:28px;align-items:center}
+.about figure{margin:0;position:relative}
+.about figure img{border-radius:var(--r);aspect-ratio:4/5;object-fit:cover;width:100%}
+.about figcaption{position:absolute;left:12px;bottom:12px;background:rgba(255,250,238,.95);padding:6px 12px;border-radius:99px;font-size:12px;font-weight:600}
+.about-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:28px;border-top:1px solid var(--line-2)}
+.about-facts div{padding:16px 12px 0 0}
+.about-facts div + div{padding-left:14px;border-left:1px solid var(--line)}
+.about-facts b{display:block;font:900 clamp(17px,4.6vw,22px)/1 var(--f-display);color:var(--blue)}
+.about-facts span{display:block;margin-top:6px;font-size:12.5px;color:var(--ink-2);line-height:1.35}
+@media(min-width:900px){.about{grid-template-columns:5fr 6fr;gap:64px}.about figure img{aspect-ratio:1/1}}
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('a[href*="wa.me/34711552030"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'click_whatsapp', {'event_category': 'conversion', 'event_label': 'whatsapp_contact'});
-          fbq('track', 'Contact');
-        });
+/* ---------- recensioni ---------- */
+.reviews{background:var(--blue);color:var(--paper);padding-block:36px}
+.reviews h2{color:var(--paper)}
+.rev-wrap{display:grid;gap:18px}
+.rev-score{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.rev-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font:600 14px/1.2 var(--f-body)}
+.rev-h b{font:900 40px/1 var(--f-display)}
+.rev-h i{font-style:normal;color:var(--yellow);letter-spacing:2px;font-size:16px}
+.rev-score .link{color:var(--paper);text-decoration-color:rgba(255,255,255,.4)}
+.rev-note{font-size:12px;opacity:.75}
+.quotes{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin-inline:calc(-1 * var(--gutter)) calc(-1 * var(--gutter-r));padding-inline:var(--gutter) var(--gutter-r);scroll-padding-inline:var(--gutter)}
+.quotes::-webkit-scrollbar{display:none}
+.quote{flex:0 0 min(82%,340px);scroll-snap-align:start;margin:0;background:rgba(255,255,255,.08);border-radius:18px;padding:18px 20px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.16)}
+.quote p{font-size:14.5px;line-height:1.55}
+.quote footer{margin-top:12px;font-size:12px;font-weight:600;opacity:.8}
+@media(min-width:900px){.reviews{padding-block:48px}.rev-wrap{grid-template-columns:minmax(0,3fr) minmax(0,9fr);align-items:center;gap:40px}.rev-score{flex-direction:column;align-items:flex-start}.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;margin:0;padding:0}}
+
+/* ---------- FAQ: stessa riga sottile dell'indice ---------- */
+.faqs{margin-top:26px;border-top:1px solid var(--line-2)}
+.faq{border-bottom:1px solid var(--line-2)}
+.faq summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:68px;padding:14px 2px;cursor:pointer;font-weight:700;font-size:16px;color:var(--ink)}
+.faq summary:hover{color:var(--blue)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:0 0 auto;font:500 24px/1 var(--f-body);color:var(--blue);transition:transform .2s}
+.faq[open] summary::after{transform:rotate(45deg)}
+.faq .ans{padding:0 36px 20px 2px;color:var(--ink-2)}
+.faq-all{margin-top:24px}
+.todo{background:#FFE7EB;color:#8A1027;padding:2px 6px;border-radius:6px;font-weight:700;font-size:13px}
+@media(min-width:900px){.faq-grid{display:grid;grid-template-columns:4fr 7fr;gap:64px}.faqs{margin-top:0}}
+
+/* ---------- footer ---------- */
+.foot{background:var(--blue);color:var(--paper);padding-block:60px calc(40px + env(safe-area-inset-bottom,0px))}
+.foot .h2{color:var(--paper)}
+.foot-grid{display:grid;gap:26px;margin-top:28px}
+.foot h3{font:700 12px/1 var(--f-body);text-transform:uppercase;letter-spacing:.12em;color:var(--yellow);margin-bottom:10px}
+.foot address{font-style:normal}
+.foot a{text-decoration:none}
+.foot .fl{display:flex;align-items:center;gap:8px;min-height:var(--tap)}
+.foot .fl svg{width:20px;height:20px}
+.foot-links{display:flex;flex-wrap:wrap;gap:0 20px;margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.2)}
+.foot-links a{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:600;font-size:14px;opacity:.88}
+.foot-links a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.foot-bar{margin-top:18px;font-size:13px;display:grid;gap:4px}
+.foot-bar p{opacity:.72}
+.langs{display:flex;gap:6px;margin-bottom:10px}
+.langs a{display:grid;place-items:center;min-width:var(--tap);min-height:var(--tap);border-radius:12px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);font-weight:700;font-size:13px;text-decoration:none}
+.langs a[aria-current]{background:var(--yellow);color:var(--blue-deep);box-shadow:none}
+.drawer .langs a{color:var(--blue);box-shadow:inset 0 0 0 1px var(--line-2)}
+.drawer .langs{margin:0}
+@media(min-width:900px){.foot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* ---------- WhatsApp fisso ---------- */
+.wa-float{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:45;width:56px;height:56px;border-radius:50%;background:#1FA855;color:var(--paper);display:grid;place-items:center;box-shadow:0 10px 24px -8px rgba(21,48,111,.5)}
+.wa-float svg{width:28px;height:28px}
+
+/* ---------- avviso lingua (js/lang-suggest.js) ---------- */
+.lang-suggest{background:var(--blue);color:var(--paper);font-size:14px}
+.lang-suggest[hidden]{display:none}
+.lang-suggest__inner{max-width:var(--wrap);margin:0 auto;padding:4px var(--gutter-r) 4px var(--gutter);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.lang-suggest__message{display:flex;flex-wrap:wrap;align-items:center;gap:4px 12px}
+.lang-suggest__cta{display:inline-flex;align-items:center;min-height:var(--tap);font-weight:700;color:var(--yellow)}
+.lang-suggest__close{flex:0 0 auto;width:var(--tap);height:var(--tap);display:grid;place-items:center;border:0;border-radius:50%;background:transparent;color:inherit;cursor:pointer}
+.lang-suggest__close svg{width:18px;height:18px}
+
+</style>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SQ90MD674K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-SQ90MD674K');
+</script>
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '928743266641763');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=928743266641763&ev=PageView&noscript=1"/></noscript>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('a[href*="wa.me/34711552030"]').forEach(function(link) {
+      link.addEventListener('click', function() {
+        if (typeof gtag === 'function') gtag('event', 'click_whatsapp', {'event_category': 'conversion', 'event_label': 'whatsapp_contact'});
+        if (typeof fbq === 'function') fbq('track', 'Contact');
       });
     });
-  </script>
+  });
+</script>
 </head>
 <body>
-
-  <a href="#main-content" class="skip-link">Skip to content</a>
-
-  <!-- ============================================================
-       LANGUAGE SUGGESTION BAR
-       Suggerisce EN/CA/PT (o EN come lingua franca per de/fr/it)
-       quando la lingua del browser non coincide con quella della
-       pagina. Testo nella lingua SUGGERITA, non in quella corrente.
-       Nascosta di default (attributo "hidden"): se JS è disattivato
-       resta invisibile, lo switcher statico in navbar resta comunque
-       raggiungibile. La rivelazione avviene in modo sincrono, PRIMA
-       del primo paint, per non causare layout shift (CLS).
-       ============================================================ -->
-  <div id="lang-suggest-bar" class="lang-suggest" hidden role="region" aria-label="Language suggestion">
-    <div class="lang-suggest__inner">
-      <p class="lang-suggest__message">
-        <span class="lang-suggest__text" id="lang-suggest-text"></span>
-        <a href="#" class="lang-suggest__cta" id="lang-suggest-link"></a>
-      </p>
-      <button type="button" class="lang-suggest__close" id="lang-suggest-close" aria-label="Close">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
-          <line x1="4" y1="4" x2="20" y2="20"></line>
-          <line x1="20" y1="4" x2="4" y2="20"></line>
-        </svg>
+<a class="skip" href="#contenido">Skip to content</a>
+<div id="lang-suggest-bar" class="lang-suggest" hidden role="region" aria-label="Language">
+  <div class="lang-suggest__inner">
+    <p class="lang-suggest__message"><span class="lang-suggest__text" id="lang-suggest-text"></span> <a href="#" class="lang-suggest__cta" id="lang-suggest-link"></a></p>
+    <button type="button" class="lang-suggest__close" id="lang-suggest-close" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  </div>
+</div>
+<script src="/js/lang-suggest.js?v=3" data-cookieconsent="ignore"></script>
+<header class="nav">
+  <div class="wrap nav-bar">
+    <a class="brand" href="#inicio" aria-label="La Mesa, home"><img src="/images/logo-lamesa.png" alt="" width="30" height="30"><span>LA MESA</span></a>
+    <nav aria-label="Main">
+      <ul class="nav-links">
+        <li><a href="/en/experiencias/torno.html">Experiences</a></li>
+        <li><a href="#cursos">Courses</a></li>
+        <li><a href="/en/tienda/">Shop</a></li>
+        <li><a href="/en/team-building.html">Groups &amp; teams</a></li>
+        <li><a href="/en/custom-tableware.html">Restaurants</a></li>
+      </ul>
+    </nav>
+    <div class="nav-end">
+      <div class="lang-mini" role="group" aria-label="Language"><a href="/" hreflang="es" lang="es" title="Español">ES</a><a href="/en/" hreflang="en" lang="en" aria-current="page" title="English">EN</a><a href="/ca/" hreflang="ca" lang="ca" title="Català">CA</a><a href="/pt/" hreflang="pt" lang="pt" title="Português">PT</a></div>
+      <a class="btn btn-y nav-cta" href="/en/experiencias/torno.html" data-track="nav_reservar">Book a class</a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu" data-open-label="Open menu" data-close-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
   </div>
-  <script src="../js/lang-suggest.js?v=3" data-cookieconsent="ignore"></script>
-
-  <!-- ============================================================
-       NAVBAR
-       ============================================================ -->
-  <header class="navbar" role="banner">
-    <div class="navbar__inner">
-
-      <!-- Logo -->
-      <a class="navbar__logo" href="#inicio" aria-label="La Mesa – Go to top">
-        <img src="../images/logo-lamesa.png" alt="La Mesa – Laboratorio Creativo Barcelona" width="40" height="40" style="height:40px; width:auto; display:block;">
-      </a>
-
-      <!-- Desktop navigation links -->
-      <nav class="navbar__links" aria-label="Main navigation">
-        <a class="navbar__link" href="#experiencias" data-section="clases">Experiences</a>
-        <a class="navbar__link" href="#cursos" data-section="cursos">Courses</a><a class="navbar__link" href="#workshops" data-section="workshops">Workshops</a>
-        <a class="navbar__link" href="#tienda" data-section="tienda">Shop</a>
-        <a class="navbar__link" href="#privadas" data-section="privadas">Groups & events</a>
-        <a class="navbar__link" href="#contacto" data-section="contacto">Contact</a>
-
-        <!-- Language switcher -->
-        <div class="navbar__lang" aria-label="Change language">
-          <a href="/index.html" lang="es">ES</a>
-          <span aria-hidden="true">|</span>
-          <a href="/en/index.html" class="active" aria-current="page" lang="en">EN</a>
-          <span aria-hidden="true">|</span>
-          <a href="/ca/index.html" lang="ca">CA</a>
-          <span aria-hidden="true">|</span>
-          <a href="/pt/index.html" lang="pt">PT</a>
-        </div>
-      </nav>
-
-      <!-- Hamburger (mobile) -->
-      <button
-        class="navbar__hamburger"
-        aria-label="Open menu"
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+  <div class="drawer" id="drawer" hidden>
+    <div class="wrap">
+      <ul>
+        <li><a href="/en/experiencias/torno.html"><span class="n">01</span><b>Experiences</b><span class="arr" aria-hidden="true">→</span><small>2-hour class, no experience needed</small></a></li>
+        <li><a href="#cursos"><span class="n">02</span><b>Courses</b><span class="arr" aria-hidden="true">→</span><small>Every week, fixed day and time</small></a></li>
+        <li><a href="/en/tienda/"><span class="n">03</span><b>Shop</b><span class="arr" aria-hidden="true">→</span><small>Handmade pieces and gift voucher</small></a></li>
+        <li><a href="/en/team-building.html"><span class="n">04</span><b>Groups &amp; teams</b><span class="arr" aria-hidden="true">→</span><small>Team building and celebrations</small></a></li>
+        <li><a href="/en/custom-tableware.html"><span class="n">05</span><b>Restaurants</b><span class="arr" aria-hidden="true">→</span><small>Custom stoneware tableware</small></a></li>
+      </ul>
+      <div class="drawer-foot">
+        <a class="btn btn-y" href="/en/experiencias/torno.html" data-track="nav_reservar">Book a class <span class="ar" aria-hidden="true">→</span></a>
+        <div class="langs" role="group" aria-label="Language"><a href="/" hreflang="es" lang="es" title="Español">ES</a><a href="/en/" hreflang="en" lang="en" aria-current="page" title="English">EN</a><a href="/ca/" hreflang="ca" lang="ca" title="Català">CA</a><a href="/pt/" hreflang="pt" lang="pt" title="Português">PT</a></div>
+      </div>
     </div>
-
-    <!-- Mobile menu -->
-    <nav
-      id="mobile-menu"
-      class="navbar__mobile"
-      aria-label="Mobile menu"
-    >
-      <a class="navbar__mobile-link" href="#experiencias">Experiences</a>
-      <a class="navbar__mobile-link" href="#cursos">Courses</a><a class="navbar__mobile-link" href="#workshops">Workshops</a>
-      <a class="navbar__mobile-link" href="#tienda">Shop</a>
-      <a class="navbar__mobile-link" href="#privadas">Groups & events</a>
-      <a class="navbar__mobile-link" href="#contacto">Contact</a>
-      <div class="navbar__mobile-lang">
-        <a href="/index.html" lang="es">ES</a>
-        <a href="/en/index.html" class="active" aria-current="page" lang="en">EN</a>
-        <a href="/ca/index.html" lang="ca">CA</a>
-        <a href="/pt/index.html" lang="pt">PT</a>
+  </div>
+</header>
+<main id="contenido">
+<div id="inicio"></div>
+<section class="top" aria-label="What brings you to La Mesa?">
+  <div class="wrap top-grid">
+    <div class="t-text">
+      <h1>The best moments in life happen around a <span class="mark">table.</span></h1>
+      <p class="sub">Ceramics studio and creative lab in La Barceloneta, Barcelona.</p>
+      <!-- dato Google rilevato il 18/10/2026 dalla scheda pubblica -->
+      <a class="proof" href="https://www.google.com/maps?cid=8399713182337560112" target="_blank" rel="noopener noreferrer" aria-label="5.0 · 53 reviews on Google: Google Maps"><b aria-hidden="true">★★★★★</b><span>5.0 · 53 reviews on Google</span></a>
+    </div>
+    <figure class="t-photo">
+      <img src="/images/hero.webp" alt="Inside La Mesa, a pottery studio in La Barceloneta, Barcelona" width="2302" height="1536" fetchpriority="high" sizes="(min-width:1024px) 640px, 100vw">
+      <a class="proof" href="https://www.google.com/maps?cid=8399713182337560112" target="_blank" rel="noopener noreferrer" aria-label="5.0 · 53 reviews on Google: Google Maps"><b aria-hidden="true">★★★★★</b><span>5.0 · 53 reviews</span></a>
+    </figure>
+    <div class="t-who" id="que-te-trae" role="region" aria-labelledby="who-q">
+      <div class="who-card">
+        <button class="who-close" type="button" aria-label="Close" data-close-who>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+        <div class="who-head">
+          <h2 class="who-q" id="who-q">What brings you to La Mesa?</h2>
+          <div class="chips" role="tablist" aria-label="Choose what you're looking for">
+          <button class="chip" type="button" role="tab" id="t-probar" aria-controls="p-probar" aria-selected="true" data-answer="probar">Try ceramics</button>
+          <button class="chip" type="button" role="tab" id="t-aprender" aria-controls="p-aprender" aria-selected="false" tabindex="-1" data-answer="aprender">Learn every week</button>
+          <button class="chip" type="button" role="tab" id="t-regalo" aria-controls="p-regalo" aria-selected="false" tabindex="-1" data-answer="regalo">Give a gift</button>
+          <button class="chip" type="button" role="tab" id="t-grupo" aria-controls="p-grupo" aria-selected="false" tabindex="-1" data-answer="grupo">Come as a group</button>
+          <button class="chip" type="button" role="tab" id="t-resto" aria-controls="p-resto" aria-selected="false" tabindex="-1" data-answer="resto">Equip my restaurant</button>
+          </div>
+        </div>
+      <div class="panel" role="tabpanel" id="p-probar" aria-labelledby="t-probar">
+        <img src="/images/nosotras.webp" alt="Hands shaping clay at La Mesa" width="1200" height="1600" loading="lazy" decoding="async">
+        <div class="in">
+          <h3>2-hour ceramics class</h3>
+          <p class="desc">Hand-building or wheel, no experience needed. Materials and firing included. In the next step you choose the technique and the date.</p>
+          <ul class="facts"><li>From €45</li><li>2 hours</li><li>No experience needed</li></ul>
+        </div>
+        <div class="btns"><a class="btn btn-y" href="/en/experiencias/torno.html" data-track="clase_suelta">See dates and book <span class="ar" aria-hidden="true">→</span></a></div>
       </div>
+      <div class="panel" role="tabpanel" id="p-aprender" aria-labelledby="t-aprender" hidden>
+        <img src="/images/pieza-01.jpg" alt="Course worktable with brushes and a notebook" width="800" height="800" loading="lazy" decoding="async">
+        <div class="in">
+          <h3>Courses &amp; hour packs</h3>
+          <p class="desc">For those who want to keep going: a course with a fixed day and time, or a pack of hours at a lower price.</p>
+          <ul class="facts"><li>4 × 2h classes a month</li><li>€120/month</li></ul>
+        </div>
+        <div class="btns"><a class="btn btn-b" href="/en/clases/semanal-modelado.html" data-track="taller_semanal">Hand-building course <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-b" href="/en/clases/semanal-torno.html" data-track="taller_semanal">Wheel course <span class="ar" aria-hidden="true">→</span></a><p class="extra"><a href="https://app.mesana.studio/book/la-mesa" rel="noopener" data-standard-booking data-track="bono_horas">or buy a pack of hours: 8 h · €120</a></p></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-regalo" aria-labelledby="t-regalo" hidden>
+        <img src="/images/foto-tienda-4.jpg" alt="La Mesa ceramic cups on the studio shelf" width="800" height="600" loading="lazy" decoding="async">
+        <div class="in">
+          <h3>Give ceramics</h3>
+          <p class="desc">Everything is made with our hands: every piece is unique. Or give an experience with the gift voucher, which includes a card and a mini ceramic charm.</p>
+          
+        </div>
+        <div class="btns"><a class="btn btn-y" href="/en/tienda/" id="shop-link" data-track="tienda">Go to the shop <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I'm%20interested%20in%20buying%20a%20La%20Mesa%20gift%20voucher.%20How%20does%20it%20work%3F" target="_blank" rel="noopener noreferrer" data-track="vale_regalo"><svg aria-hidden="true"><use href="#i-wa"/></svg>Gift voucher</a></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-grupo" aria-labelledby="t-grupo" hidden>
+        <img src="/images/pieza-02.jpg" alt="Afternoon light on the studio’s wooden table" width="800" height="800" loading="lazy" decoding="async">
+        <div class="in">
+          <h3>Team building &amp; private groups</h3>
+          <p class="desc">Bespoke sessions for groups of up to 10 people: companies, birthdays, hen parties, families. You name the occasion, we take care of everything else.</p>
+          
+        </div>
+        <div class="btns"><a class="btn btn-b" href="/en/team-building.html" data-track="team_building">See team building <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20organise%20a%20private%20session%20at%20La%20Mesa.%20Could%20you%20send%20me%20a%20quote%3F" target="_blank" rel="noopener noreferrer" data-track="privada_wa"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a><p class="extra">Or by email: <a data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=Team%20building%20at%20La%20Mesa">lamesa.lc [at] gmail.com</a></p></div>
+      </div>
+      <div class="panel" role="tabpanel" id="p-resto" aria-labelledby="t-resto" hidden>
+        <img src="/images/encargos/descanso-verde-piedra-set-960.webp" alt="Handmade set of stone-green stoneware plates" width="960" height="640" loading="lazy" decoding="async">
+        <div class="in">
+          <h3>Tableware for your restaurant</h3>
+          <p class="desc">Plates, small plates, bowls and cups in stoneware, made by hand in our studio. To buy or to rent, in the sizes and colours your kitchen needs.</p>
+          <ul class="facts"><li>No minimum order</li><li>Shipping across Europe</li></ul>
+        </div>
+        <div class="btns"><a class="btn btn-b" href="/en/custom-tableware.html" data-track="encargos">See the tableware <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I%20have%20a%20restaurant%20and%20I'm%20interested%20in%20your%20tableware." target="_blank" rel="noopener noreferrer" data-track="encargos_wa"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a><p class="extra">Or by email: <a data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=Tableware%20for%20my%20restaurant">lamesa.lc [at] gmail.com</a></p></div>
+      </div>
+        <div class="who-more"><button class="link link-btn" type="button" data-close-who>See all of La Mesa ↓</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section" id="todo" aria-labelledby="todo-h">
+  <div class="wrap">
+    <p class="eyebrow">all of La Mesa</p>
+    <h2 class="h2" id="todo-h" tabindex="-1">Five ways to join us at the table</h2>
+    <div class="index">
+      <details class="row first" id="experiencias">
+        <summary><span class="n">01</span><span class="t">Experiences<small>2-hour class · from €45 · no experience needed</small></span><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="body">
+          <p>Hand-building or wheel, no experience needed. Materials and firing included. In the next step you choose the technique and the date.</p>
+          <div class="btns"><a class="btn btn-b" href="/en/experiencias/torno.html" data-track="clase_suelta">See dates and book <span class="ar" aria-hidden="true">→</span></a></div>
+          
+        </div>
+      </details>
+      <details class="row" id="cursos">
+        <summary><span class="n">02</span><span class="t">Courses<small>Every week · from €120/month</small></span><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="body">
+          <p>A course with a fixed day and time with your group and teacher, or a pack of hours with a flexible schedule: 8 h · €120, 16 h · €220, 24 h · €300.</p>
+          <div class="btns"><a class="btn btn-b" href="/en/clases/semanal-modelado.html" data-track="taller_semanal">Hand-building course <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-b" href="/en/clases/semanal-torno.html" data-track="taller_semanal">Wheel course <span class="ar" aria-hidden="true">→</span></a></div>
+          
+        </div>
+      </details>
+      <details class="row" id="tienda">
+        <summary><span class="n">03</span><span class="t">Shop<small>Unique pieces · gift voucher</small></span><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="body">
+          <p>Everything is made with our hands. Every piece is handcrafted and unique — no two are the same.</p>
+          <div class="btns"><a class="btn btn-y" href="/en/tienda/" data-track="tienda">Go to the shop <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I'm%20interested%20in%20buying%20a%20La%20Mesa%20gift%20voucher.%20How%20does%20it%20work%3F" target="_blank" rel="noopener noreferrer" data-track="vale_regalo"><svg aria-hidden="true"><use href="#i-wa"/></svg>Gift voucher</a></div>
+          
+        </div>
+      </details>
+      <details class="row" id="grupos">
+        <summary><span class="n">04</span><span class="t">Groups &amp; teams<small>Team building · private sessions up to 10 people</small></span><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="body">
+          <p>Bespoke sessions for groups of up to 10 people: companies, birthdays, hen parties, families. You name the occasion, we take care of everything else.</p>
+          <div class="btns"><a class="btn btn-b" href="/en/team-building.html" data-track="team_building">See team building <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20organise%20a%20private%20session%20at%20La%20Mesa.%20Could%20you%20send%20me%20a%20quote%3F" target="_blank" rel="noopener noreferrer" data-track="privada_wa"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></div>
+          <p class="mail">Or by email: <a data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=Team%20building%20at%20La%20Mesa">lamesa.lc [at] gmail.com</a></p>
+        </div>
+      </details>
+      <details class="row" id="restaurantes">
+        <summary><span class="n">05</span><span class="t">Restaurants<small>Handmade stoneware tableware · buy or rent</small></span><span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span></summary>
+        <div class="body">
+          <p>Plates, small plates, bowls and cups in stoneware, made by hand in our studio. To buy or to rent, in the sizes and colours your kitchen needs.</p>
+          <div class="btns"><a class="btn btn-b" href="/en/custom-tableware.html" data-track="encargos">See the tableware <span class="ar" aria-hidden="true">→</span></a><a class="btn btn-wa" href="https://wa.me/34711552030?text=Hi!%20I%20have%20a%20restaurant%20and%20I'm%20interested%20in%20your%20tableware." target="_blank" rel="noopener noreferrer" data-track="encargos_wa"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a></div>
+          <p class="mail">Or by email: <a data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=Tableware%20for%20my%20restaurant">lamesa.lc [at] gmail.com</a></p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="section about-sec" id="nosotras" aria-labelledby="about-h">
+  <div class="wrap about">
+    <figure>
+      <img src="/images/pieza-03.jpg" alt="Ceramics class at La Mesa" width="800" height="800" loading="lazy" decoding="async">
+      
+    </figure>
+    <div>
+      <p class="eyebrow">who we are</p>
+      <h2 class="h2" id="about-h">A space to create, experiment and <span class="mark">connect</span></h2>
+      <p class="lead">La Mesa is a multidisciplinary creative lab in Barcelona. We design classes and gatherings where art is the excuse to learn, play and meet new people. There’s no rush and no rigid rules here.</p>
+      <p class="lead">We’re not a school — we’re a place that embraces curiosity, experimentation and connection. Come create with us in La Barceloneta, steps from the sea.</p>
+      <div class="about-facts">
+        <div><b>5.0</b><span>53 reviews on Google</span></div>
+        <div><b>Included</b><span>Materials and firings</span></div>
+        <div><b>5 min</b><span>walk from the beach</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- recensioni Google reali (estratti), testo originale in spagnolo -->
+<section class="reviews" aria-labelledby="rev-h">
+  <div class="wrap rev-wrap">
+    <div class="rev-score">
+      <h2 class="rev-h" id="rev-h"><b>5.0</b><i aria-hidden="true">★★★★★</i><span>53 reviews on Google</span></h2>
+      <p class="rev-note">Original reviews in Spanish</p>
+      <a class="link" href="https://www.google.com/maps?cid=8399713182337560112" target="_blank" rel="noopener noreferrer">Read all <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+    <div class="quotes" tabindex="0" role="region" aria-label="Featured reviews">
+      <blockquote class="quote" lang="es"><p>«Nuestra profe fue Vic, quien nos recibió con mucho cariño, paciencia y buen humor… Lo recomiendo muchísimo para los que nunca han tenido la experiencia».</p><footer lang="en">Luisa · class with friends</footer></blockquote>
+      <blockquote class="quote" lang="es"><p>«Amo venir aquí cada semana al curso… Lau y Vicky han construido de verdad un espacio hermoso de creatividad».</p><footer lang="en">Valerie · course student</footer></blockquote>
+      <blockquote class="quote" lang="es"><p>«Fui sin experiencia y salí con ganas de volver el fin de semana siguiente. Lau tiene una energía muy especial».</p><footer lang="en">Jupa · first class</footer></blockquote>
+    </div>
+  </div>
+</section>
+<section class="section" id="faq" aria-labelledby="faq-h">
+  <div class="wrap faq-grid">
+    <div>
+      <p class="eyebrow">frequently asked</p>
+      <h2 class="h2" id="faq-h">What you ask us</h2>
+      <p class="lead">Can’t find your answer? Message us on WhatsApp at +34 711 55 20 30.</p>
+    </div>
+    <div>
+      <div class="faqs">
+        <details class="faq"><summary>How much do ceramics classes in Barcelona cost?</summary><div class="ans">At La Mesa the 2-hour class costs €45 (hand-building) or €65 (wheel). The hand-building and wheel courses cost €120/month for 4 two-hour classes. Hour packs: 8 h · €120, 16 h · €220, 24 h · €300. Materials and firings included.</div></details>
+        <details class="faq"><summary>Can I try pottery with no previous experience?</summary><div class="ans">Yes. The 2-hour class needs no previous experience, and the courses are designed for complete beginners: we start from zero and you go at your own pace.</div></details>
+        <details class="faq"><summary>Can I book online?</summary><div class="ans">Yes. The 2-hour class, the courses and the hour packs are booked directly online.</div></details>
+        <details class="faq"><summary>Where is La Mesa?</summary><div class="ans">We are at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. A 5-minute walk from the beach.</div></details>
+      </div>
+      <a class="btn btn-line faq-all" href="/en/faq.html">See all 9 questions <span class="ar" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="foot" id="contacto">
+  <div class="wrap">
+    <h2 class="h2">Find us in La Barceloneta</h2>
+    <div class="foot-grid">
+      <div>
+        <h3>Where we are</h3>
+        <address>Carrer de l'Atlàntida, 47<br>La Barceloneta, Barcelona</address>
+        <a class="fl" href="https://www.google.com/maps?cid=8399713182337560112" target="_blank" rel="noopener noreferrer">Directions on Google Maps <span class="ar" aria-hidden="true">→</span></a>
+      </div>
+      <div>
+        <h3>Get in touch</h3>
+        <a class="fl" href="tel:+34711552030">+34 711 55 20 30</a>
+        <a class="fl" data-email-user="lamesa.lc" data-email-domain="gmail.com">lamesa.lc [at] gmail.com</a>
+      </div>
+      <div>
+        <h3>Follow us</h3>
+        <a class="fl" href="https://instagram.com/lamesa.lc" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-ig"/></svg>@lamesa.lc</a>
+        <a class="fl" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+      </div>
+    </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="/en/experiencias/torno.html">Experiences</a>
+      <a href="#cursos">Courses</a>
+      <a href="/en/tienda/">Shop</a>
+      <a href="/en/team-building.html">Groups &amp; teams</a>
+      <a href="/en/custom-tableware.html">Restaurants</a>
+      <a href="/en/faq.html">FAQ</a>
+      <a href="/en/blog/">Blog</a>
+      <a href="/en/privacy.html">Privacy</a>
     </nav>
-  </header>
-
-  <main id="main-content">
-
-    <!-- ============================================================
-         SECTION 1 — HERO (#inicio)
-         ============================================================ -->
-    <section id="inicio" class="hero" aria-label="Welcome to La Mesa">
-
-      <!-- Background: geometric pattern placeholder (real photo via data-src) -->
-      <div class="hero__bg" aria-hidden="true">
-        <picture>
-          <source media="(max-width: 767px)" srcset="../images/hero-mobile.webp" type="image/webp">
-          <source srcset="../images/hero.webp" type="image/webp">
-          <img class="hero__bg-img"
-            src="../images/hero.jpg"
-            alt="Interior of La Mesa studio, ceramics workshop in La Barceloneta, Barcelona"
-            width="1440" height="800"
-            fetchpriority="high">
-        </picture>
-      </div>
-
-      <!-- Dark overlay -->
-      <div class="hero__overlay" aria-hidden="true"></div>
-
-      <!-- Hero content — NOT fade-in (above the fold) -->
-      <div class="hero__content">
-        <h1 class="hero__title">
-          The best moments in life happen around a table.
-        </h1>
-        <p class="hero-subtitle">Ceramics studio and creative lab in La Barceloneta, Barcelona.</p>
-        <div class="hero__cta-group">
-          <a
-            class="btn btn--primary"
-            id="cta-hero-reserva"
-            href="/en/experiencias/torno.html"
-            aria-label="Book your experience"
-            onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});"
-          >
-            Book your experience →
-          </a>
-        </div>
-        <!-- Prova sociale: 5,0 su 41 recensioni Google, rilevato il 22/09/2026 dalla scheda pubblica Google Business di La Mesa. Aggiornare il numero "41" e la media quando cambiano. Il cid punta alla scheda "La Mesa - Laboratorio Creativo" (NON confonderlo con il cid del solo indirizzo dell'edificio, che porta a una scheda diversa senza recensioni di La Mesa): verificato aprendo davvero l'URL in un browser reale il 22/09/2026 (titolo pagina "La Mesa - Laboratorio Creativo - Google Maps", 5,0 (41)), non ricalcolato a tavolino dal place id dell'embed Maps. Se lo si tocca in futuro, riverificare allo stesso modo aprendo l'URL in un browser, non ricalcolandolo dai numeri dell'embed. -->
-        <a
-          class="hero__social-proof"
-          href="https://www.google.com/maps?cid=8399713182337560112"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="See La Mesa's reviews on Google: 5.0 out of 5, 41 reviews"
-        >
-          <span class="hero__social-proof-stars" aria-hidden="true">★★★★★</span>
-          <span>5.0 · 41 reviews on Google</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 2 — ABOUT LA MESA (#nosotras)
-         ============================================================ -->
-    <section id="nosotras" class="nosotras section" aria-label="About La Mesa">
-      <div class="container">
-        <div class="nosotras__inner">
-
-          <!-- Text column -->
-          <div class="nosotras__text fade-in">
-            <h2>A space to create, experiment and connect</h2>
-            <p>
-              La Mesa is a multidisciplinary creative lab in Barcelona.
-              We design workshops and gatherings where art is the excuse to learn, play and
-              meet new people. There's no rush and no rigid rules here.
-              We're not a school — we're a place that embraces curiosity, experimentation and connection.
-              Come create with us in La Barceloneta, steps from the sea.
-            </p>
-            <p class="nosotras__ca" lang="ca" style="font-size:0.85rem; color:#4A4A4A; margin-top:12px; font-style:italic;">
-              La Mesa és un espai creatiu al cor de la Barceloneta. T'esperem.
-            </p>
-          </div>
-
-          <!-- Image column (placeholder) -->
-          <div class="nosotras__image fade-in fade-in--delay-1">
-            <picture>
-              <source srcset="../images/nosotras.webp" type="image/webp">
-              <img src="../images/nosotras.jpg"
-                alt="Laura at La Mesa, creative ceramics lab in La Barceloneta, Barcelona"
-                width="600" height="450"
-                loading="lazy">
-            </picture>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 3 — CLASSES & WORKSHOPS (#clases)
-         ============================================================ -->
-    <section id="experiencias" class="clases section--lg" aria-label="Ceramic experiences">
-      <span id="clases" aria-hidden="true"></span>
-      <div class="container">
-        <div class="clases__header fade-in">
-          <h2>Ceramic experiences</h2>
-        </div>
-        <div class="clases__bloques">
-          <div class="clases__bloque fade-in">
-            <article class="clase-card clase-card--primary" aria-label="2-hour ceramics class">
-              <h3 class="clase-card__title">2-hour ceramics class</h3>
-              <p class="clase-card__subtitle">Hand-building or wheel · from €45</p>
-              <p class="clase-card__body">No experience needed. Materials and firing included. In the next step you choose the technique and the date.</p>
-              <a class="clase-card__cta clase-card__cta--online" href="/en/experiencias/torno.html"
-                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'clase_suelta'}); fbq('track', 'Lead', {content_name: 'clase_suelta'});">
-                See dates and book →
-              </a>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="cursos" class="clases clases--cursos section--lg" aria-label="Courses & hour packs">
-      <div class="container">
-        <div class="clases__header fade-in">
-          <h2>Courses & hour packs</h2>
-          <p class="clases__lead">For those who want to keep going: a course with a fixed day and time, or a pack of hours at a lower price.</p>
-        </div>
-        <div class="clases__bloques">
-          <div class="clases__bloque fade-in">
-            <article class="clase-card clase-card--secondary" aria-label="Hand-building course">
-              <h3 class="clase-card__title">Hand-building course</h3>
-              <p class="clase-card__subtitle">4 × 2h classes a month · group of up to 8</p>
-              <p class="clase-card__body">Make progress every week with your group and teacher.</p>
-              <a class="clase-card__cta clase-card__cta--curso" href="/en/clases/semanal-modelado.html"
-                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
-                Sign up · €120/month →
-              </a>
-            </article>
-          </div>
-          <div class="clases__bloque fade-in fade-in--delay-1">
-            <article class="clase-card clase-card--secondary" aria-label="Wheel course">
-              <h3 class="clase-card__title">Wheel course</h3>
-              <p class="clase-card__subtitle">4 private 2h classes a month</p>
-              <p class="clase-card__body">In a few months you'll throw on your own.</p>
-              <a class="clase-card__cta clase-card__cta--curso" href="/en/clases/semanal-torno.html"
-                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'taller_semanal'}); fbq('track', 'Lead', {content_name: 'taller_semanal'});">
-                Sign up · €120/month →
-              </a>
-            </article>
-          </div>
-          <div class="clases__bloque fade-in fade-in--delay-2" id="bono">
-            <article class="clase-card clase-card--secondary" aria-label="Pack of hours">
-              <h3 class="clase-card__title">Pack of hours</h3>
-              <p class="clase-card__subtitle">Flexible schedule · hand-building or wheel</p>
-              <p class="clase-card__body"><strong>8 h · €120<br>16 h · €220<br>24 h · €300</strong></p>
-              <p class="clase-card__body">Buy hours in advance and every hour costs you less.</p>
-              <a class="clase-card__cta clase-card__cta--curso" href="https://app.mesana.studio/book/la-mesa" data-standard-booking rel="noopener noreferrer"
-                 onclick="gtag('event', 'click_cta', {'event_category': 'conversion', 'event_label': 'bono_horas'}); fbq('track', 'Lead', {content_name: 'bono_horas'});">
-                Buy a pack →
-              </a>
-            </article>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 4 — CREATIVE SESSIONS / WORKSHOPS (#workshops)
-         ============================================================ -->
-    <section id="workshops" class="workshops section--lg" aria-label="Creative sessions and workshops">
-      <div class="container">
-        <div class="workshops__inner fade-in">
-          <h2>Creative workshops in Barcelona</h2>
-          <p class="workshops__subheadline">
-            One-off workshops with guest artists. Ceramics, painting, macramé,
-            jewellery, illustration… each gathering is unique and never repeated.
-          </p>
-
-          <div class="workshops__ctas">
-            <a class="btn btn--dark"
-               href="https://drive.google.com/drive/folders/1skRVnl7KxyRohEVQ3QLtmfphP1Ny0Hpm?usp=sharing"
-               target="_blank"
-               rel="noopener noreferrer"
-               aria-label="View La Mesa workshops programme on Drive">
-              📄 View upcoming workshops →
-            </a>
-          </div>
-
-          <div class="workshops__newsletter">
-            <p class="workshops__newsletter-label">Want us to let you know?</p>
-            <form class="newsletter-form newsletter-form--inline"
-                  action="https://lamesabcn.us1.list-manage.com/subscribe/post?u=e67dcaeb000f3ed6681a0ffc8&id=42df7f26b2&f_id=007fc3e1f0"
-                  method="post" id="newsletter-form-workshops" target="_blank">
-              <input type="email" name="EMAIL" placeholder="your@email.com" required
-                aria-label="Your email address"
-                class="newsletter-input">
-              <div style="position:absolute; left:-5000px;" aria-hidden="true">
-                <input type="text" name="b_e67dcaeb000f3ed6681a0ffc8_42df7f26b2" tabindex="-1" value="">
-              </div>
-              <button type="submit" class="newsletter-btn">Notify me →</button>
-            </form>
-            <label class="privacy-check">
-              <input type="checkbox" required name="privacy-workshops">
-              <span>I accept the <a href="/en/privacy.html" target="_blank">privacy policy</a></span>
-            </label>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 5 — SHOP (#tienda)
-         ============================================================ -->
-    <section id="tienda" class="tienda section--lg" aria-label="Handmade ceramics shop">
-      <div class="container">
-
-        <!-- Section header -->
-        <div class="tienda__header fade-in">
-          <h2>Handmade ceramics shop</h2>
-          <p class="tienda__subheadline">
-            Everything is made with our hands. Every piece is handcrafted and unique — no two are the same.
-          </p>
-          <p class="tienda__text">Discover our handmade ceramics and options for shipping or studio pickup.</p>
-        </div>
-
-        <!-- Product grid (3 placeholder images) -->
-        <div class="tienda__grid" aria-label="Gallery of handmade ceramic pieces">
-
-          <div class="tienda__product fade-in fade-in--delay-1">
-            <img src="../images/foto-tienda-1.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 1" width="400" height="400" loading="lazy">
-          </div>
-
-          <div class="tienda__product fade-in fade-in--delay-2">
-            <img src="../images/foto-tienda-2.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 2" width="400" height="400" loading="lazy">
-          </div>
-
-          <div class="tienda__product fade-in fade-in--delay-3">
-            <img src="../images/foto-tienda-3.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 3" width="400" height="400" loading="lazy">
-          </div>
-
-          <div class="tienda__product fade-in">
-            <img src="../images/foto-tienda-4.jpg" alt="Handmade ceramic pieces at La Mesa Barcelona 4" width="400" height="400" loading="lazy">
-          </div>
-
-        </div>
-
-        <!-- Gift voucher -->
-        <div class="tienda__gift fade-in">
-          <h3>La Mesa Gift Voucher</h3>
-          <p>
-            Looking for a gift? Our gift voucher includes a card and a mini handmade
-            ceramic charm. It can be redeemed for any class, workshop or piece.
-          </p>
-          <a
-            class="btn btn--primary"
-            href="https://wa.me/34711552030?text=Hi!%20I'm%20interested%20in%20buying%20a%20La%20Mesa%20gift%20voucher.%20How%20does%20it%20work%3F"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Buy a La Mesa gift voucher via WhatsApp"
-          >
-            Buy gift voucher →
-          </a>
-        </div>
-
-        <!-- CTAs -->
-        <div class="tienda__ctas fade-in">
-          <a class="btn btn--dark" href="/en/tienda/" id="shop-link">Explore the pieces →</a>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION — ENCARGOS / VAJILLA PARA RESTAURANTES (#encargos)
-         ============================================================ -->
-    <section id="encargos" class="enc-section enc-section--cream enc-home" aria-label="Handmade tableware for restaurants and custom orders">
-      <div class="container enc-split">
-        <figure class="enc-split__media fade-in">
-          <img src="../images/encargos/hero-promesa-1400.webp" srcset="../images/encargos/hero-promesa-800.webp 800w, ../images/encargos/hero-promesa-1400.webp 1400w" sizes="(min-width: 900px) 600px, 92vw" width="800" height="534" loading="lazy" decoding="async" alt="Large Promesa bowl in handmade stoneware with a green and black interior, Verde Piedra glaze">
-        </figure>
-        <div class="fade-in">
-          <p class="enc-kicker">Custom orders</p>
-          <h2 class="enc-h2">Handmade tableware for restaurants</h2>
-          <p class="enc-text">Plates, small plates, bowls and cups in stoneware, made by hand in our studio. To buy or to rent, in the sizes and colours your kitchen needs.</p>
-          <ul class="enc-list">
-            <li>Handmade, piece by piece</li>
-            <li>Your own sizes and colours</li>
-            <li>Shipping across Europe</li>
-          </ul>
-          <div class="enc-actions">
-            <a class="btn btn--dark" href="/en/custom-tableware.html">See the tableware →</a>
-            <a class="enc-link" href="/en/custom-tableware.html#particulares">Custom pieces for home</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 6 — PRIVATE SESSIONS (#privadas)
-         ============================================================ -->
-    <section id="privadas" class="privadas section--lg" aria-label="Private sessions and events">
-      <div class="container">
-        <div class="privadas__inner fade-in">
-
-          <h2>Private sessions and team building</h2>
-          <p class="privadas__subheadline">
-            Birthdays, hen parties, Team Buildings, plans for families or friends...
-          </p>
-          <p class="privadas__body">
-            We organise bespoke sessions for groups of up to 10 people. You name
-            the occasion, we take care of everything else.
-          </p>
-
-          <!-- Tags -->
-          <div class="privadas__tags" aria-label="Types of private sessions">
-            <span class="privadas__tag">Birthdays</span>
-            <span class="privadas__tag">Hen parties</span>
-            <span class="privadas__tag">Team building</span>
-            <span class="privadas__tag">Families</span>
-            <span class="privadas__tag">Friend groups</span>
-            <span class="privadas__tag privadas__tag--ca" lang="en">Parties & celebrations</span>
-          </div>
-
-          <a
-            class="btn btn--primary"
-            href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20organise%20a%20private%20session%20at%20La%20Mesa.%20Can%20you%20send%20me%20a%20quote%3F"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Request a quote for a private session via WhatsApp"
-          >
-            <!-- WhatsApp icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-            </svg>
-            Request a quote →
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION FAQ — FREQUENTLY ASKED QUESTIONS (#faq)
-         ============================================================ -->
-    <section id="faq" class="faq section--lg" aria-label="Frequently asked questions about La Mesa">
-      <div class="container">
-        <div class="faq__inner fade-in">
-          <h2>Frequently asked questions</h2>
-          <div class="faq__list">
-
-            <details class="faq__item">
-              <summary class="faq__question">How much do ceramics classes in Barcelona cost?</summary>
-              <p class="faq__answer">At La Mesa: Drop-in class is €45 (hand-building) or €65 (wheel) for 2 hours; Weekly class is €120/month (hand-building) or €120/month (wheel) for 4 sessions; Wheel Intro €90 for 2 sessions; Wheel Coworking €20/hour. Materials and firings included.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Are materials included?</summary>
-              <p class="faq__answer">Yes. All our classes and workshops include tools, materials and firings.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Can I book online?</summary>
-              <p class="faq__answer">Yes. The Weekly Studio and Drop-in Session can be booked directly online. For the Flex Studio, Wheel Intro and Wheel Coworking, message us on WhatsApp to arrange a time.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Where is La Mesa located?</summary>
-              <p class="faq__answer">We are at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. A 5-minute walk from the beach.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Can I try pottery with no previous experience?</summary>
-              <p class="faq__answer">Absolutely. The Weekly Class is designed for complete beginners. You go at your own pace and we guide you every step of the way.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">Do you offer private events, team buildings or hen parties?</summary>
-              <p class="faq__answer">Yes! We organise private sessions for groups: birthdays, hen parties, team buildings and more. Contact us via WhatsApp or email for a custom quote.</p>
-            </details>
-
-            <details class="faq__item">
-              <summary class="faq__question">What is Wheel Coworking and how does it work?</summary>
-              <p class="faq__answer">Wheel Coworking is a space for ceramicists who already know how to use the wheel and want to practice independently. Available Tuesday, Wednesday and Friday 14:00–18:00. Book via WhatsApp.</p>
-            </details>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         SECTION 8 — CONTACT + FOOTER (#contacto)
-         ============================================================ -->
-    <section id="contacto" class="contacto" aria-label="Contact and location of La Mesa">
-      <div class="container">
-
-        <div class="fade-in">
-          <h2>Find us in La Barceloneta</h2>
-        </div>
-
-        <!-- 3-column grid -->
-        <div class="contacto__grid">
-
-          <!-- Column 1 — Address & Phone -->
-          <div class="contacto__col fade-in fade-in--delay-1">
-            <h3>Where we are</h3>
-            <address style="font-style:normal;">
-              <p>Carrer de l'Atlàntida, 47</p>
-              <p>La Barceloneta, Barcelona</p>
-              <a href="tel:+34711552030" aria-label="Call La Mesa at +34 711 55 20 30">
-                +34 711 55 20 30
-              </a>
-            </address>
-          </div>
-
-          <!-- Column 2 — Email & Social -->
-          <div class="contacto__col fade-in fade-in--delay-2">
-            <h3>Get in touch</h3>
-            <a aria-label="Send an email to La Mesa" data-email-user="lamesa.lc" data-email-domain="gmail.com">
-              lamesa.lc [at] gmail.com
-            </a>
-            <div class="contacto__social">
-              <a
-                href="https://instagram.com/lamesa.lc"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Follow La Mesa on Instagram (@lamesa.lc)"
-              >
-                <!-- Instagram icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
-                </svg>
-                @lamesa.lc
-              </a>
-              <a
-                href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20more%20information%20about%20La%20Mesa"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Contact La Mesa on WhatsApp"
-              >
-                <!-- WhatsApp icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-                </svg>
-                WhatsApp
-              </a>
-            </div>
-          </div>
-
-          <!-- Google Maps embed (full width) -->
-          <div class="contacto__map fade-in">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.73232532334!2d2.1872730759081325!3d41.379899971300794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3a9facb9f0d%3A0xc916c573c8382ce3!2sCarrer%20de%20l'Atl%C3%A0ntida%2C%2047%2C%20Ciutat%20Vella%2C%2008003%20Barcelona!5e0!3m2!1sit!2ses!4v1774454480233!5m2!1sit!2ses" width="100%" height="400" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="La Mesa – Carrer de l'Atlàntida 47, La Barceloneta, Barcelona"></iframe>
-          </div>
-
-        </div>
-
-        <!-- Footer links -->
-        <div style="text-align: center; margin-bottom: var(--space-sm);">
-          <a href="/en/team-building.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Team Building</a>
-          <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="/en/custom-tableware.html" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">Custom tableware</a>
-          <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a href="#faq" style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;">FAQ</a>
-          <span aria-hidden="true" style="color: rgba(255,255,255,0.4); margin: 0 8px;">·</span>
-          <a style="color: rgba(255,255,255,0.7); font-size: 0.85rem; text-decoration: none; font-weight: 600; letter-spacing: 0.04em;" data-email-user="lamesa.lc" data-email-domain="gmail.com" data-email-query="subject=I'd%20like%20to%20run%20a%20workshop%20at%20La%20Mesa" data-email-label="true">Are you an artist? Propose a workshop</a>
-        </div>
-
-        <!-- Bottone blog -->
-        <div style="text-align: center; margin-bottom: var(--space-sm);">
-          <a href="/en/blog/" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1.5px solid rgba(255,255,255,0.6); border-radius: 999px; color: #fff; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.04em; text-decoration: none;">Read our blog →</a>
-        </div>
-
-        <!-- Footer bottom bar -->
-        <div class="footer__bar">
-          <p class="footer__tagline">La Mesa — Creative Lab · La Barceloneta, Barcelona</p>
-          <p class="footer__tagline-ca" lang="ca">La Mesa — Laboratori Creatiu · la Barceloneta</p>
-          <p>© 2026 La Mesa · All rights reserved</p>
-        </div>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ============================================================
-       WHATSAPP FLOATING BUTTON
-       ============================================================ -->
-  <a
-    class="whatsapp-btn"
-    href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Contact La Mesa on WhatsApp"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-    </svg>
-  </a>
-
-  <!-- ============================================================
-       JSON-LD STRUCTURED DATA — Schema.org @graph (EN):
-       LocalBusiness + Organization + WebSite (enlazados por @id)
-       sameAs pendiente: Google Business Profile + TripAdvisor (tras claim).
-       Facebook: sin página pública indexable.
-       ============================================================ -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "LocalBusiness",
-        "@id": "https://lamesabcn.com/#lamesa",
-        "name": "La Mesa – Creative Lab",
-        "alternateName": "La Mesa Barcelona",
-        "parentOrganization": {
-          "@id": "https://lamesabcn.com/#organization"
-        },
-        "description": "Multidisciplinary creative space in La Barceloneta, Barcelona. Ceramics workshops, sessions with guest artists, handmade ceramics shop and private sessions.",
-        "url": "https://lamesabcn.com",
-        "telephone": "+34711552030",
-        "image": "https://lamesabcn.com/images/og-lamesa.jpg",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Carrer de l'Atlàntida, 47",
-          "addressLocality": "Barceloneta",
-          "addressRegion": "Barcelona",
-          "postalCode": "08003",
-          "addressCountry": "ES"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 41.3783,
-          "longitude": 2.1894
-        },
-        "priceRange": "€€",
-        "openingHoursSpecification": [
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Tuesday",
-            "opens": "11:00",
-            "closes": "19:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Wednesday",
-            "opens": "11:00",
-            "closes": "20:30"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Thursday",
-            "opens": "11:00",
-            "closes": "19:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Friday",
-            "opens": "11:00",
-            "closes": "19:00"
-          },
-          {
-            "@type": "OpeningHoursSpecification",
-            "dayOfWeek": "Saturday",
-            "opens": "11:00",
-            "closes": "16:00"
-          }
-        ],
-        "sameAs": [
-          "https://www.instagram.com/lamesa.lc",
-          "https://www.etsy.com/es/shop/LaMesaLC",
-          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
-          "https://www.google.com/maps?cid=8399713182337560112"
-        ],
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Ceramics Classes and Workshops",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Weekly Ceramics Studio",
-                "description": "Weekly hand-building ceramics classes for beginners. Once a week, 2 hours. Materials and firings included."
-              },
-              "price": "120",
-              "priceCurrency": "EUR",
-              "priceSpecification": {
-                "@type": "UnitPriceSpecification",
-                "price": "120",
-                "priceCurrency": "EUR",
-                "unitText": "month"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Weekly Wheel Class",
-                "description": "Weekly wheel-throwing classes. Once a week, 2 hours, 4 sessions per month. Maximum 2 people. Materials and firings included."
-              },
-              "price": "120",
-              "priceCurrency": "EUR",
-              "priceSpecification": {
-                "@type": "UnitPriceSpecification",
-                "price": "120",
-                "priceCurrency": "EUR",
-                "unitText": "month"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Drop-in Class: Hand-building",
-                "description": "2-hour hand-building class, no commitment. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours."
-              },
-              "price": "45",
-              "priceCurrency": "EUR"
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Drop-in Class: Wheel",
-                "description": "2-hour private wheel class, maximum 2 people. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability."
-              },
-              "price": "65",
-              "priceCurrency": "EUR"
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Wheel Coworking",
-                "description": "Open access to the wheel for experienced potters. Minimum 2 hours. Tuesday, Wednesday and Friday 14h–18h."
-              },
-              "price": "20",
-              "priceCurrency": "EUR",
-              "priceSpecification": {
-                "@type": "UnitPriceSpecification",
-                "price": "20",
-                "priceCurrency": "EUR",
-                "unitText": "hour"
-              }
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Flex Studio",
-                "description": "Hand-building or wheel classes for students with prior experience. Booking via WhatsApp only."
-              },
-              "price": "120",
-              "priceCurrency": "EUR"
-            },
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Wheel Intro Course",
-                "description": "Intensive 2-session course to learn wheel throwing and trimming. Maximum 2 people."
-              },
-              "price": "90",
-              "priceCurrency": "EUR"
-            }
-          ]
-        },
-        "hasMap": "https://www.google.com/maps?cid=8399713182337560112"
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://lamesabcn.com/#organization",
-        "name": "La Mesa – Creative Lab",
-        "url": "https://lamesabcn.com",
-        "logo": "https://lamesabcn.com/images/logo-lamesa.png",
-        "image": "https://lamesabcn.com/images/og-lamesa.jpg",
-        "sameAs": [
-          "https://www.instagram.com/lamesa.lc",
-          "https://www.etsy.com/es/shop/LaMesaLC",
-          "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
-          "https://www.google.com/maps?cid=8399713182337560112"
-        ],
-        "location": {
-          "@id": "https://lamesabcn.com/#lamesa"
-        },
-        "founder": [
-          {
-            "@type": "Person",
-            "name": "Lau"
-          },
-          {
-            "@type": "Person",
-            "name": "Vick"
-          }
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://lamesabcn.com/en/#website",
-        "url": "https://lamesabcn.com/en/",
-        "name": "La Mesa",
-        "inLanguage": "en",
-        "publisher": {
-          "@id": "https://lamesabcn.com/#organization"
-        },
-        "about": {
-          "@id": "https://lamesabcn.com/#lamesa"
-        }
-      }
-    ]
+    <div class="foot-bar">
+      <div class="langs" role="group" aria-label="Language"><a href="/" hreflang="es" lang="es" title="Español">ES</a><a href="/en/" hreflang="en" lang="en" aria-current="page" title="English">EN</a><a href="/ca/" hreflang="ca" lang="ca" title="Català">CA</a><a href="/pt/" hreflang="pt" lang="pt" title="Português">PT</a></div>
+      <p>La Mesa — Creative Lab · La Barceloneta, Barcelona</p>
+      <p>© 2026 La Mesa · All rights reserved</p>
+    </div>
+  </div>
+</footer>
+<a class="wa-float" href="https://wa.me/34711552030?text=Hi!%20I'd%20like%20to%20know%20more%20about%20La%20Mesa" target="_blank" rel="noopener noreferrer" aria-label="Message La Mesa on WhatsApp"><svg aria-hidden="true"><use href="#i-wa"/></svg></a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.62.71.23 1.36.2 1.87.12.57-.09 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35m-5.42 7.4h-.01a9.87 9.87 0 0 1-5.03-1.37l-.36-.22-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4Z"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.64-.07-4.85s.01-3.58.07-4.85C2.38 3.92 3.9 2.38 7.15 2.23 8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07s3.67-.01 4.95-.07c4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></symbol>
+</svg>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"LocalBusiness","@id":"https://lamesabcn.com/#lamesa","name":"La Mesa – Creative Lab","alternateName":"La Mesa Barcelona","parentOrganization":{"@id":"https://lamesabcn.com/#organization"},"description":"Ceramics studio and creative lab in La Barceloneta, Barcelona. 2-hour classes, courses, shop, team building and tableware for restaurants.","url":"https://lamesabcn.com","telephone":"+34711552030","image":"https://lamesabcn.com/images/og-lamesa.jpg","address":{"@type":"PostalAddress","streetAddress":"Carrer de l'Atlàntida, 47","addressLocality":"Barceloneta","addressRegion":"Barcelona","postalCode":"08003","addressCountry":"ES"},"geo":{"@type":"GeoCoordinates","latitude":41.3783,"longitude":2.1894},"priceRange":"€€","openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":"Tuesday","opens":"11:00","closes":"19:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Wednesday","opens":"11:00","closes":"20:30"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Thursday","opens":"11:00","closes":"19:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Friday","opens":"11:00","closes":"19:00"},{"@type":"OpeningHoursSpecification","dayOfWeek":"Saturday","opens":"11:00","closes":"16:00"}],"sameAs":["https://www.instagram.com/lamesa.lc","https://www.etsy.com/es/shop/LaMesaLC","https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html","https://www.google.com/maps?cid=8399713182337560112"],"hasOfferCatalog":{"@type":"OfferCatalog","name":"Ceramics Classes and Courses","itemListElement":[{"@type":"Offer","itemOffered":{"@type":"Service","name":"Weekly Ceramics Studio","description":"Weekly hand-building ceramics classes for beginners. Once a week, 2 hours. Materials and firings included."},"price":"120","priceCurrency":"EUR","priceSpecification":{"@type":"UnitPriceSpecification","price":"120","priceCurrency":"EUR","unitText":"month"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Weekly Wheel Class","description":"Weekly wheel-throwing classes. Once a week, 2 hours, 4 sessions per month. Maximum 2 people. Materials and firings included."},"price":"120","priceCurrency":"EUR","priceSpecification":{"@type":"UnitPriceSpecification","price":"120","priceCurrency":"EUR","unitText":"month"}},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Drop-in Class: Hand-building","description":"2-hour hand-building class, no commitment. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours."},"price":"45","priceCurrency":"EUR"},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Drop-in Class: Wheel","description":"2-hour private wheel class, maximum 2 people. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability."},"price":"65","priceCurrency":"EUR"},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Flex Studio","description":"Hand-building or wheel classes for students with prior experience. Booking via WhatsApp only."},"price":"120","priceCurrency":"EUR"},{"@type":"Offer","itemOffered":{"@type":"Service","name":"Wheel Intro Course","description":"Intensive 2-session course to learn wheel throwing and trimming. Maximum 2 people."},"price":"90","priceCurrency":"EUR"}]},"hasMap":"https://www.google.com/maps?cid=8399713182337560112"},{"@type":"Organization","@id":"https://lamesabcn.com/#organization","name":"La Mesa – Creative Lab","url":"https://lamesabcn.com","logo":"https://lamesabcn.com/images/logo-lamesa.png","image":"https://lamesabcn.com/images/og-lamesa.jpg","sameAs":["https://www.instagram.com/lamesa.lc","https://www.etsy.com/es/shop/LaMesaLC","https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html","https://www.google.com/maps?cid=8399713182337560112"],"location":{"@id":"https://lamesabcn.com/#lamesa"},"founder":[{"@type":"Person","name":"Lau"},{"@type":"Person","name":"Vick"}]},{"@type":"WebSite","@id":"https://lamesabcn.com/en/#website","url":"https://lamesabcn.com/en/","name":"La Mesa","inLanguage":"en","publisher":{"@id":"https://lamesabcn.com/#organization"},"about":{"@id":"https://lamesabcn.com/#lamesa"}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","inLanguage":"en","mainEntity":[{"@type":"Question","name":"How much do ceramics classes in Barcelona cost?","acceptedAnswer":{"@type":"Answer","text":"At La Mesa the 2-hour class costs €45 (hand-building) or €65 (wheel). The hand-building and wheel courses cost €120/month for 4 two-hour classes. Hour packs: 8 h · €120, 16 h · €220, 24 h · €300. Materials and firings included."}},{"@type":"Question","name":"Can I try pottery with no previous experience?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 2-hour class needs no previous experience, and the courses are designed for complete beginners: we start from zero and you go at your own pace."}},{"@type":"Question","name":"Can I book online?","acceptedAnswer":{"@type":"Answer","text":"Yes. The 2-hour class, the courses and the hour packs are booked directly online."}},{"@type":"Question","name":"Where is La Mesa?","acceptedAnswer":{"@type":"Answer","text":"We are at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. A 5-minute walk from the beach."}}]}
+</script>
+<script>
+(function () {
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // come sulle home precedenti: prenotazioni di classe, corsi e bono contano anche come Lead per Meta
+  var LEAD = { clase_suelta: 'clase_suelta', nav_reservar: 'clase_suelta', taller_semanal: 'taller_semanal', bono_horas: 'bono_horas' };
+  function track(label) {
+    if (typeof window.gtag === 'function') window.gtag('event', 'click_cta', { event_category: 'conversion', event_label: label });
   }
-  </script>
+  document.querySelectorAll('[data-track]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track(a.dataset.track);
+      var lead = LEAD[a.dataset.track];
+      if (lead && typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: lead });
+    });
+  });
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "How much do ceramics classes in Barcelona cost?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "At La Mesa: Drop-in class is €45 (hand-building) or €65 (wheel) for 2 hours; Weekly class is €120/month (hand-building) or €120/month (wheel) for 4 sessions; Wheel Intro €90 for 2 sessions; Wheel Coworking €20/hour. Materials and firings included."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Are materials included?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. All our classes and workshops include tools, materials and firings."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I book online?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes. The Weekly Studio and Drop-in Session can be booked directly online. For the Flex Studio, Wheel Intro and Wheel Coworking, message us on WhatsApp to arrange a time."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Where is La Mesa located?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "We are at Carrer de l'Atlàntida 47, in the La Barceloneta neighbourhood, Barcelona. A 5-minute walk from the beach."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Can I try pottery with no previous experience?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Absolutely. The Weekly Class is designed for complete beginners. You go at your own pace and we guide you every step of the way."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Do you offer private events, team buildings or hen parties?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes! We organise private sessions for groups: birthdays, hen parties, team buildings and more. Contact us via WhatsApp or email for a custom quote."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "What is Wheel Coworking and how does it work?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Wheel Coworking is a space for ceramicists who already know how to use the wheel and want to practice independently. Available Tuesday, Wednesday and Friday 14:00–18:00. Book via WhatsApp."
-        }
-      }
-    ]
+  // Menu su telefono
+  var burger = document.querySelector('.burger');
+  var drawer = document.getElementById('drawer');
+  function setMenu(open) {
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? burger.dataset.closeLabel : burger.dataset.openLabel);
+    drawer.hidden = !open;
   }
-  </script>
+  burger.addEventListener('click', function () { setMenu(burger.getAttribute('aria-expanded') !== 'true'); });
+  drawer.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) { setMenu(false); burger.focus(); } });
 
-  <!-- Main script (relative path from /en/) -->
-  <script src="../js/booking-config.js?v=9" data-cookieconsent="ignore" defer></script>
-  <script src="../js/client-area-links.js?v=4" data-cookieconsent="ignore" defer></script>
-  <script src="../js/main.js?v=7" data-cookieconsent="ignore" defer></script>
+  // Apre la riga dell'indice indicata dall'ancora (#cursos dal menu)
+  function openFromHash() {
+    var row = location.hash && document.querySelector('details.row' + location.hash);
+    if (row) row.open = true;
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
 
+  // Domanda «¿Qué te trae?»: schede accessibili da tastiera
+  var who = document.getElementById('que-te-trae');
+  if (!who) return;
+  var chips = Array.prototype.slice.call(who.querySelectorAll('.chip'));
+  function select(id, focus) {
+    chips.forEach(function (c) {
+      var on = c.dataset.answer === id;
+      c.setAttribute('aria-selected', on ? 'true' : 'false');
+      c.tabIndex = on ? 0 : -1;
+      document.getElementById(c.getAttribute('aria-controls')).hidden = !on;
+      if (on && focus) c.focus();
+    });
+  }
+  // porta in vista la proposta scelta se finisce sotto il bordo dello schermo
+  function reveal(id) {
+    var panel = document.getElementById('p-' + id);
+    if (panel.getBoundingClientRect().bottom > window.innerHeight - 8) {
+      panel.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    }
+  }
+  chips.forEach(function (c, i) {
+    c.addEventListener('click', function () { select(c.dataset.answer); track('respuesta_' + c.dataset.answer); reveal(c.dataset.answer); });
+    c.addEventListener('keydown', function (e) {
+      var n = chips.length, j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % n;
+      else if (e.key === 'ArrowLeft') j = (i - 1 + n) % n;
+      else if (e.key === 'Home') j = 0;
+      else if (e.key === 'End') j = n - 1;
+      if (j === null) return;
+      e.preventDefault();
+      select(chips[j].dataset.answer, true);
+    });
+  });
+  // X o «Ver todo»: chiude la domanda e porta all'indice
+  who.querySelectorAll('[data-close-who]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      who.hidden = true;
+      var h = document.getElementById('todo-h');
+      document.getElementById('todo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      h.focus({ preventScroll: true });
+    });
+  });
+})();
+</script>
 <script src="/js/contact-email.js?v=1" data-cookieconsent="ignore" defer></script>
 </body>
 </html>

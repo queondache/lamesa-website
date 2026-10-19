@@ -8,18 +8,17 @@ const locales = { es: '', en: 'en/', ca: 'ca/', pt: 'pt/' };
 const labels = { es: 'Reservar clases en Mesana', en: 'Book classes on Mesana', ca: 'Reserva classes a Mesana', pt: 'Reserve aulas na Mesana' };
 for (const [locale, prefix] of Object.entries(locales)) {
   test(`${locale}: homepage class reservation CTAs work without JavaScript`, () => {
-    const anchors = [...read(`${prefix}index.html`).matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map(match => match[0]);
-    const booking = anchors.filter(anchor => /id="cta-hero-reserva"|class="clase-card__cta/.test(anchor));
-    assert.equal(booking.length, 5);
-    // Fuori da pt, in home solo il bono resta su Mesana: le altre CTA portano a pagine interne.
-    const onMesana = booking.filter(anchor => anchor.includes(`href="${url}"`));
-    assert.equal(onMesana.length, locale === 'pt' ? 5 : 1);
-    if (locale !== 'pt') assert.ok(onMesana[0].includes('bono_horas'));
-    for (const anchor of onMesana) {
-      assert.ok(anchor.includes('data-standard-booking'));
-      assert.doesNotMatch(anchor, /target="_blank"|data-client-area=/);
-      assert.ok(anchor.replace(/<[^>]*>/g, '').trim().length > 0);
-    }
+    const home = read(`${prefix}index.html`);
+    const anchors = [...home.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/g)].map(match => match[0]);
+    // Home D3: la classe di 2 h porta alla pagina interna; su Mesana resta solo il bono.
+    const onMesana = anchors.filter(anchor => anchor.includes(`href="${url}"`));
+    assert.equal(onMesana.length, 1);
+    assert.ok(onMesana[0].includes('bono_horas'));
+    assert.ok(onMesana[0].includes('data-standard-booking'));
+    assert.doesNotMatch(onMesana[0], /target="_blank"|data-client-area=/);
+    assert.ok(onMesana[0].replace(/<[^>]*>/g, '').trim().length > 0);
+    const twoHours = locale === 'pt' ? '/pt/clases/suelta.html' : `/${prefix}experiencias/torno.html`;
+    assert.ok(anchors.some(anchor => anchor.includes(`href="${twoHours}"`) && anchor.includes('clase_suelta')));
   });
   for (const name of locale === 'pt' ? ['suelta'] : ['semanal-modelado', 'semanal-torno'] /* suelta es/en/ca e un rimando */) {
     test(`${locale}/${name}: class booking uses the standard page and no legacy calendar activation`, () => {

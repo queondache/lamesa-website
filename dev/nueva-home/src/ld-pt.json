@@ -1,0 +1,189 @@
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "LocalBusiness",
+   "@id": "https://lamesabcn.com/#lamesa",
+   "name": "La Mesa – Laboratório Criativo",
+   "alternateName": "La Mesa Barcelona",
+   "parentOrganization": {
+    "@id": "https://lamesabcn.com/#organization"
+   },
+   "description": "Estúdio de cerâmica e laboratório criativo na Barceloneta, Barcelona. Aulas de 2 horas, cursos, loja, team building e louça para restaurantes.",
+   "url": "https://lamesabcn.com",
+   "telephone": "+34711552030",
+   "image": "https://lamesabcn.com/images/og-lamesa.jpg",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Carrer de l'Atlàntida, 47",
+    "addressLocality": "Barceloneta",
+    "addressRegion": "Barcelona",
+    "postalCode": "08003",
+    "addressCountry": "ES"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.3783,
+    "longitude": 2.1894
+   },
+   "priceRange": "€€",
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Tuesday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Wednesday",
+     "opens": "11:00",
+     "closes": "20:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Thursday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "11:00",
+     "closes": "16:00"
+    }
+   ],
+   "sameAs": [
+    "https://www.instagram.com/lamesa.lc",
+    "https://www.etsy.com/es/shop/LaMesaLC",
+    "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+    "https://www.google.com/maps?cid=8399713182337560112"
+   ],
+   "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Aulas e cursos de cerâmica",
+    "itemListElement": [
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Estúdio Semanal de Cerâmica",
+       "description": "Aulas semanais de modelagem manual em cerâmica para iniciantes. Uma vez por semana, 2 horas. Materiais e queimas incluídos."
+      },
+      "price": "120",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+       "@type": "UnitPriceSpecification",
+       "price": "120",
+       "priceCurrency": "EUR",
+       "unitText": "month"
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Aula Semanal de Torno",
+       "description": "Aulas semanais de torno. Uma vez por semana, 2 horas, 4 sessões por mês. Máximo de 2 pessoas. Materiais e queimas incluídos."
+      },
+      "price": "120",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+       "@type": "UnitPriceSpecification",
+       "price": "120",
+       "priceCurrency": "EUR",
+       "unitText": "month"
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Aula Avulsa: Modelagem Manual",
+       "description": "Aula de modelagem manual de 2 horas, sem compromisso. Materiais e queimas incluídos. De terça a sábado, no horário que você preferir dentro do horário de funcionamento."
+      },
+      "price": "45",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Aula Avulsa: Torno",
+       "description": "Aula particular de torno de 2 horas, máximo de 2 pessoas. Materiais e queimas incluídos. De terça a sábado, no horário que você preferir dentro do horário de funcionamento, sujeito à disponibilidade do torno."
+      },
+      "price": "65",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Estúdio Flex",
+       "description": "Aulas de modelagem manual ou torno para alunos com experiência prévia. Reservas somente pelo WhatsApp."
+      },
+      "price": "120",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Curso de Introdução ao Torno",
+       "description": "Curso intensivo de 2 sessões para aprender a tornear e a retornear as peças. Máximo de 2 pessoas."
+      },
+      "price": "90",
+      "priceCurrency": "EUR"
+     }
+    ]
+   },
+   "hasMap": "https://www.google.com/maps?cid=8399713182337560112"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://lamesabcn.com/#organization",
+   "name": "La Mesa – Laboratório Criativo",
+   "url": "https://lamesabcn.com",
+   "logo": "https://lamesabcn.com/images/logo-lamesa.png",
+   "image": "https://lamesabcn.com/images/og-lamesa.jpg",
+   "sameAs": [
+    "https://www.instagram.com/lamesa.lc",
+    "https://www.etsy.com/es/shop/LaMesaLC",
+    "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+    "https://www.google.com/maps?cid=8399713182337560112"
+   ],
+   "location": {
+    "@id": "https://lamesabcn.com/#lamesa"
+   },
+   "founder": [
+    {
+     "@type": "Person",
+     "name": "Lau"
+    },
+    {
+     "@type": "Person",
+     "name": "Vick"
+    }
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://lamesabcn.com/pt/#website",
+   "url": "https://lamesabcn.com/pt/",
+   "name": "La Mesa",
+   "inLanguage": "pt",
+   "publisher": {
+    "@id": "https://lamesabcn.com/#organization"
+   },
+   "about": {
+    "@id": "https://lamesabcn.com/#lamesa"
+   }
+  }
+ ]
+}
