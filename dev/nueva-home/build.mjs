@@ -14,6 +14,8 @@ const css = readFileSync(path.join(here, 'src', 'site.css'), 'utf8');
 const SPRITE = readFileSync(path.join(here, 'src', 'sprite.svg'), 'utf8').trim();
 const ORDER = ['es', 'en', 'ca', 'pt'];
 const SITE = 'https://lamesabcn.com';
+// Mappa del footer: stesso embed Google Maps delle home precedenti, interfaccia nella lingua della pagina
+const MAP_EMBED = (lang) => "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.73232532334!2d2.1872730759081325!3d41.379899971300794!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a4a3a9facb9f0d%3A0xc916c573c8382ce3!2sCarrer%20de%20l'Atl%C3%A0ntida%2C%2047%2C%20Ciutat%20Vella%2C%2008003%20Barcelona!5e0!3m2!1sit!2ses!4v1774454480233!5m2!1sit!2ses".replace(/!1sit!2ses/g, `!1s${lang}!2ses`);
 const OG_LOCALE = { es: 'es_ES', en: 'en_GB', ca: 'ca_ES', pt: 'pt_BR' };
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -425,6 +427,9 @@ function footer(ctx) {
         <a class="fl" href="https://instagram.com/lamesa.lc" ${ext}><svg aria-hidden="true"><use href="#i-ig"/></svg>@lamesa.lc</a>
         <a class="fl" href="${wa(F.wa)}" ${ext}>${waIcon}WhatsApp</a>
       </div>
+    </div>
+    <div class="foot-map">
+      <iframe src="${MAP_EMBED(L.htmlLang)}" width="100%" height="360" style="border:0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="${esc(F.mapTitle)}"></iframe>
     </div>
     <nav class="foot-links" aria-label="${esc(L.ui.footNav)}">
 ${DOORS.map((d) => `      <a href="${doorHref(ctx, d.nav)}"${doorAttrs(d.nav)}>${esc(L.nav[d.nav][0])}</a>`).join('\n')}

@@ -142,7 +142,7 @@ export const LANGS = {
       },
     },
     foot: {
-      h: 'Encuéntranos en La Barceloneta', where: 'Dónde estamos', contact: 'Contáctanos', follow: 'Síguenos', maps: 'Cómo llegar en Google Maps',
+      h: 'Encuéntranos en La Barceloneta', where: 'Dónde estamos', contact: 'Contáctanos', follow: 'Síguenos', maps: 'Cómo llegar en Google Maps', mapTitle: 'Mapa: La Mesa, Carrer de l’Atlàntida 47, La Barceloneta, Barcelona',
       tagline: 'La Mesa — Laboratorio Creativo · La Barceloneta, Barcelona', rights: '© 2026 La Mesa · Todos los derechos reservados',
       wa: 'Hola! Me gustaría saber más sobre La Mesa',
     },
@@ -244,7 +244,7 @@ export const LANGS = {
       },
     },
     foot: {
-      h: 'Find us in La Barceloneta', where: 'Where we are', contact: 'Get in touch', follow: 'Follow us', maps: 'Directions on Google Maps',
+      h: 'Find us in La Barceloneta', where: 'Where we are', contact: 'Get in touch', follow: 'Follow us', maps: 'Directions on Google Maps', mapTitle: 'Map: La Mesa, Carrer de l’Atlàntida 47, La Barceloneta, Barcelona',
       tagline: 'La Mesa — Creative Lab · La Barceloneta, Barcelona', rights: '© 2026 La Mesa · All rights reserved',
       wa: "Hi! I'd like to know more about La Mesa",
     },
@@ -346,7 +346,7 @@ export const LANGS = {
       },
     },
     foot: {
-      h: 'Troba’ns a la Barceloneta', where: 'On som', contact: 'Contacta’ns', follow: 'Segueix-nos', maps: 'Com arribar amb Google Maps',
+      h: 'Troba’ns a la Barceloneta', where: 'On som', contact: 'Contacta’ns', follow: 'Segueix-nos', maps: 'Com arribar amb Google Maps', mapTitle: 'Mapa: La Mesa, Carrer de l’Atlàntida 47, la Barceloneta, Barcelona',
       tagline: 'La Mesa — Laboratori Creatiu · la Barceloneta, Barcelona', rights: '© 2026 La Mesa · Tots els drets reservats',
       wa: 'Hola! M’agradaria saber més sobre La Mesa',
     },
@@ -448,7 +448,7 @@ export const LANGS = {
       },
     },
     foot: {
-      h: 'Encontre a gente na Barceloneta', where: 'Onde estamos', contact: 'Fale com a gente', follow: 'Siga a gente', maps: 'Como chegar no Google Maps',
+      h: 'Encontre a gente na Barceloneta', where: 'Onde estamos', contact: 'Fale com a gente', follow: 'Siga a gente', maps: 'Como chegar no Google Maps', mapTitle: 'Mapa: La Mesa, Carrer de l’Atlàntida 47, Barceloneta, Barcelona',
       tagline: 'La Mesa — Laboratório Criativo · La Barceloneta, Barcelona', rights: '© 2026 La Mesa · Todos os direitos reservados',
       wa: 'Olá! Gostaria de saber mais sobre a La Mesa',
     },
