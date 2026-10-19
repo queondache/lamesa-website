@@ -1,0 +1,190 @@
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "LocalBusiness",
+   "@id": "https://lamesabcn.com/#lamesa",
+   "name": "La Mesa – Creative Lab",
+   "alternateName": "La Mesa Barcelona",
+   "parentOrganization": {
+    "@id": "https://lamesabcn.com/#organization"
+   },
+   "description": "Ceramics studio and creative lab in La Barceloneta, Barcelona. 2-hour classes, courses, shop, team building and tableware for restaurants.",
+   "url": "https://lamesabcn.com",
+   "telephone": "+34711552030",
+   "email": "lamesa.lc@gmail.com",
+   "image": "https://lamesabcn.com/images/og-lamesa.jpg",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Carrer de l'Atlàntida, 47",
+    "addressLocality": "Barceloneta",
+    "addressRegion": "Barcelona",
+    "postalCode": "08003",
+    "addressCountry": "ES"
+   },
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 41.3783,
+    "longitude": 2.1894
+   },
+   "priceRange": "€€",
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Tuesday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Wednesday",
+     "opens": "11:00",
+     "closes": "20:30"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Thursday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Friday",
+     "opens": "11:00",
+     "closes": "19:00"
+    },
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "Saturday",
+     "opens": "11:00",
+     "closes": "16:00"
+    }
+   ],
+   "sameAs": [
+    "https://www.instagram.com/lamesa.lc",
+    "https://www.etsy.com/es/shop/LaMesaLC",
+    "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+    "https://www.google.com/maps?cid=8399713182337560112"
+   ],
+   "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Ceramics Classes and Courses",
+    "itemListElement": [
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Weekly Ceramics Studio",
+       "description": "Weekly hand-building ceramics classes for beginners. Once a week, 2 hours. Materials and firings included."
+      },
+      "price": "120",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+       "@type": "UnitPriceSpecification",
+       "price": "120",
+       "priceCurrency": "EUR",
+       "unitText": "month"
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Weekly Wheel Class",
+       "description": "Weekly wheel-throwing classes. Once a week, 2 hours, 4 sessions per month. Maximum 2 people. Materials and firings included."
+      },
+      "price": "120",
+      "priceCurrency": "EUR",
+      "priceSpecification": {
+       "@type": "UnitPriceSpecification",
+       "price": "120",
+       "priceCurrency": "EUR",
+       "unitText": "month"
+      }
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Drop-in Class: Hand-building",
+       "description": "2-hour hand-building class, no commitment. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours."
+      },
+      "price": "45",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Drop-in Class: Wheel",
+       "description": "2-hour private wheel class, maximum 2 people. Materials and firings included. Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability."
+      },
+      "price": "65",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Flex Studio",
+       "description": "Hand-building or wheel classes for students with prior experience. Booking via WhatsApp only."
+      },
+      "price": "120",
+      "priceCurrency": "EUR"
+     },
+     {
+      "@type": "Offer",
+      "itemOffered": {
+       "@type": "Service",
+       "name": "Wheel Intro Course",
+       "description": "Intensive 2-session course to learn wheel throwing and trimming. Maximum 2 people."
+      },
+      "price": "90",
+      "priceCurrency": "EUR"
+     }
+    ]
+   },
+   "hasMap": "https://www.google.com/maps?cid=8399713182337560112"
+  },
+  {
+   "@type": "Organization",
+   "@id": "https://lamesabcn.com/#organization",
+   "name": "La Mesa – Creative Lab",
+   "url": "https://lamesabcn.com",
+   "logo": "https://lamesabcn.com/images/logo-lamesa.png",
+   "image": "https://lamesabcn.com/images/og-lamesa.jpg",
+   "sameAs": [
+    "https://www.instagram.com/lamesa.lc",
+    "https://www.etsy.com/es/shop/LaMesaLC",
+    "https://www.tripadvisor.com/Attraction_Review-g187497-d34398258-Reviews-La_Mesa_Laboratorio_Creativo-Barcelona_Catalonia.html",
+    "https://www.google.com/maps?cid=8399713182337560112"
+   ],
+   "location": {
+    "@id": "https://lamesabcn.com/#lamesa"
+   },
+   "founder": [
+    {
+     "@type": "Person",
+     "name": "Lau"
+    },
+    {
+     "@type": "Person",
+     "name": "Vick"
+    }
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://lamesabcn.com/en/#website",
+   "url": "https://lamesabcn.com/en/",
+   "name": "La Mesa",
+   "inLanguage": "en",
+   "publisher": {
+    "@id": "https://lamesabcn.com/#organization"
+   },
+   "about": {
+    "@id": "https://lamesabcn.com/#lamesa"
+   }
+  }
+ ]
+}

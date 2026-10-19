@@ -1,56 +1,102 @@
-// Controllo statico della homepage di test: contenuti, FAQ, link e accessibilità minima.
+// Controllo statico della homepage D3 e della pagina FAQ nelle quattro lingue,
+// sia per l'anteprima di prova (dev/nueva-home) sia per le pagine definitive del sito.
+// Le pagine si rigenerano con `node dev/nueva-home/build.mjs` (definitive) e `... build.mjs dev` (prova).
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { LANGS, FAQ_KEYS } from './src/i18n.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(here, '..', '..');
-const html = readFileSync(path.join(here, 'index.html'), 'utf8');
-const visible = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<script[\s\S]*?<\/script>/g, '');
-const count = (re) => (html.match(re) || []).length;
-
-test('cinque risposte nel blocco B e cinque righe nell\'indice', () => {
-  assert.equal(count(/class="chip[ "]/g), 5);
-  assert.equal(count(/<details class="row[ "]/g), 5);
-});
-
-const faqHtml = readFileSync(path.join(here, 'preguntas-frecuentes.html'), 'utf8');
+const strip = (s) => s.replace(/<!--[\s\S]*?-->/g, '').replace(/<script[\s\S]*?<\/script>/g, '');
+const count = (src, re) => (src.match(re) || []).length;
+// la pagina può avere più blocchi JSON-LD (attività + FAQ): si prende quello FAQPage
 const ldFaq = (src) => {
-  const block = src.match(/<script type="application\/ld\+json">([\s\S]*?"FAQPage"[\s\S]*?)<\/script>/);
-  assert.ok(block, 'manca il JSON-LD FAQPage');
-  return JSON.parse(block[1]).mainEntity.length;
+  const blocks = [...src.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+  const faq = blocks.find((b) => b['@type'] === 'FAQPage');
+  assert.ok(faq, 'manca il JSON-LD FAQPage');
+  return faq.mainEntity;
 };
+const answered = (L) => FAQ_KEYS.filter((k) => L.faq.items[k][1] !== null).length;
 
-test('homepage: quattro FAQ e link alla pagina con tutte', () => {
-  assert.equal(count(/<details class="faq[ "]/g), 4);
-  assert.equal(ldFaq(html), 4);
-  assert.match(html, /href="preguntas-frecuentes\.html"/);
-});
+for (const target of ['dev', 'prod']) {
+  const root = target === 'dev' ? here : siteRoot;
+  for (const [code, L] of Object.entries(LANGS)) {
+    const name = `${target}/${code}`;
+    const html = readFileSync(path.join(root, L.files.home), 'utf8');
+    const faq = readFileSync(path.join(root, L.files.faq), 'utf8');
 
-test('pagina FAQ: undici domande visibili e nei dati strutturati', () => {
-  assert.equal((faqHtml.match(/<details class="faq[ "]/g) || []).length, 11);
-  assert.equal(ldFaq(faqHtml), 11);
-  assert.doesNotMatch(faqHtml.replace(/<!--[\s\S]*?-->/g, ''), /coworking|workshop/i);
-});
+    test(`${name}: lingua dichiarata e domanda tradotta`, () => {
+      assert.match(html, new RegExp(`<html lang="${code}">`));
+      assert.match(faq, new RegExp(`<html lang="${code}">`));
+      assert.ok(html.includes(L.who.q), 'domanda non tradotta');
+    });
 
-test('niente coworking né workshop nel testo', () => {
-  assert.doesNotMatch(visible, /coworking|workshop/i);
-});
+    test(`${name}: cinque risposte, cinque righe d'indice, menu con le stesse cinque voci`, () => {
+      assert.equal(count(html, /class="chip"/g), 5);
+      assert.equal(count(html, /<details class="row[ "]/g), 5);
+      const navLinks = html.match(/<ul class="nav-links">([\s\S]*?)<\/ul>/)[1];
+      for (const key of ['exp', 'courses', 'shop', 'groups', 'resto']) {
+        assert.ok(navLinks.includes(L.nav[key][0].replace(/&/g, '&amp;')), `menu senza ${key}`);
+      }
+    });
 
-test('ogni link interno porta a un file esistente', () => {
-  const internal = [...html.matchAll(/href="(\/[^"#?]*)/g)].map((m) => m[1]);
-  assert.ok(internal.length > 0);
-  for (const href of internal) {
-    const file = href.endsWith('/') ? href + 'index.html' : href;
-    assert.ok(existsSync(path.join(siteRoot, file)), `link rotto: ${href}`);
+    test(`${name}: 4 FAQ in homepage, pagina FAQ completa`, () => {
+      assert.equal(count(html, /<details class="faq"/g), 4);
+      assert.equal(ldFaq(html).length, 4);
+      const visible = target === 'dev' ? FAQ_KEYS.length : answered(L);
+      assert.equal(count(faq, /<details class="faq"/g), visible);
+      assert.equal(ldFaq(faq).length, answered(L));
+      assert.ok(ldFaq(faq).every((q) => !/COMPLETAR/.test(q.acceptedAnswer.text)));
+    });
+
+    test(`${name}: niente coworking né workshop nel testo`, () => {
+      assert.doesNotMatch(strip(html), /coworking|workshop/i);
+      assert.doesNotMatch(strip(faq), /coworking|workshop/i);
+    });
+
+    test(`${name}: link interni, immagini e lingue collegate esistono`, () => {
+      for (const [file, src] of [[L.files.home, html], [L.files.faq, faq]]) {
+        const dir = path.dirname(path.join(root, file));
+        for (const m of src.matchAll(/(?:href|src)="([^"#?]+)/g)) {
+          const ref = m[1];
+          if (/^(https?:|mailto:|tel:)/.test(ref)) continue;
+          const target2 = ref.startsWith('/') ? path.join(siteRoot, ref.endsWith('/') ? ref + 'index.html' : ref) : path.join(dir, ref);
+          assert.ok(existsSync(target2), `${file}: link rotto ${ref}`);
+        }
+      }
+    });
+
+    test(`${name}: X accessibile, voto Google`, () => {
+      assert.match(html, new RegExp(`<button class="who-close"[^>]*aria-label="${L.ui.close}"`));
+      assert.doesNotMatch(html, /data-variant-switch/);
+      assert.match(strip(html), /53 /);
+    });
+
+    if (target === 'prod') {
+      test(`${name}: pronta per il pubblico (indicizzabile, tracciata, senza segnaposti)`, () => {
+        for (const src of [html, faq]) {
+          assert.doesNotMatch(src, /noindex/);
+          assert.match(src, /<link rel="canonical" href="https:\/\/lamesabcn\.com\//);
+          assert.match(src, /G-SQ90MD674K/);
+          assert.match(src, /consent\.cookiebot\.com/);
+          assert.doesNotMatch(strip(src), /COMPLETAR|provisional|provisória|placeholder/i);
+        }
+        assert.match(html, /id="lang-suggest-bar"/);
+        assert.match(html, /"@type":"LocalBusiness"/);
+      });
+    } else {
+      test(`${name}: prova fuori dai motori di ricerca`, () => {
+        assert.match(html, /noindex, nofollow/);
+        assert.doesNotMatch(html, /G-SQ90MD674K/);
+      });
+    }
   }
-});
+}
 
-test('X accessibile, interruttore varianti, voto Google', () => {
-  assert.match(html, /<button[^>]*class="who-close"[^>]*aria-label="Cerrar"/);
-  assert.match(html, /data-variant-switch/);
-  assert.match(visible, /5,0/);
-  assert.match(visible, /53 reseñas/);
+test('nessun nero pieno nello stile', () => {
+  const css = readFileSync(path.join(here, 'src', 'site.css'), 'utf8');
+  assert.doesNotMatch(css, /#1A1A1A|#000\b|#000000|:\s*black\b/i);
 });

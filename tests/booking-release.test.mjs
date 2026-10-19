@@ -56,7 +56,8 @@ test('Home discovery and sitemap include nine localized canonical pages while re
   assert.equal(home.split('href="https://app.mesana.studio/book/la-mesa"').length-1,1,'Solo il bono resta su Mesana');
   assert.ok(home.includes(`href="/${prefix(lang)}experiencias/torno.html"`),'Hero e card 2h portano al box suelta');
   for(const t of ['semanal-modelado','semanal-torno'])assert.ok(home.includes(`href="/${prefix(lang)}clases/${t}.html"`),t);assert.match(read(`${prefix(lang)}experiencias/torno.html`),/href="https:\/\/wa.me\/34711552030/);
-  assert.ok(home.includes('drive.google.com/drive/folders/'),'Existing workshop programme remains accessible');assert.match(read(`${prefix(lang)}experiencias/modelado.html`),/href="https:\/\/wa.me\/34711552030/);
+  // Home D3 (19/10/2026): workshop e coworking tolti per decisione di Andrea; la home porta alle FAQ.
+  assert.doesNotMatch(home.replace(/<script[\s\S]*?<\/script>/g,''),/workshop|coworking|drive\.google\.com/i,'Niente workshop in home');assert.match(read(`${prefix(lang)}experiencias/modelado.html`),/href="https:\/\/wa.me\/34711552030/);
  }
  assert.doesNotMatch(sitemap,/<loc>[^<]*(?:experiencias\/reserva\.html|\/demo\/)/);
  assert.match(read('llms.txt'),/public calendars show actual Mesana dates/);

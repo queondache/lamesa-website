@@ -140,17 +140,36 @@ gravi; Andrea, Lau e Vick l'hanno provata.
   questionario affiancati, D2 questionario sulla foto, D3 copertina + questionario sotto);
   scelta di Andrea in attesa. Anteprime: https://claude.ai/artifact/U7MN9wKaNB99apAHkKdJJK
 
-## Stato al 19/10/2026 (punto di ripresa)
+## Revisione 19/10/2026 — D3 scelta, quattro lingue (v3)
 
-- Pagina: `dev/nueva-home/index.html` + `preguntas-frecuentes.html`; controllo
-  `node --test dev/nueva-home/check.test.mjs` verde 6/6. `dev/` è escluso dal sito pubblico
-  (`_config.yml`).
-- v2 (19/10): tutto più in alto; risposte su 2 colonne al telefono; proposta compatta che si
-  porta in vista da sola al tocco; stelle Google sulla foto (D2/D3 telefono); recensioni in
-  fascia blu compatta (scorre di lato al telefono); D3 computer con domanda e risposte su una
-  riga e proposta a striscia. Verificato su Chrome 390×844 e 1440×900.
-- Confronto affiancato D1/D2/D3: https://claude.ai/artifact/5yDxYrjqtDfrSqJFPXfBv4
-  (si rigenera da `dev/nueva-home` incorporando i font e rendendo assoluti i link `/…`).
-- Andrea: D1 «troppo asentimentale», D2 «non si capisce», D3 «mi convince un po' di più».
-- Aperti: scelta finale; 2 FAQ `[COMPLETAR]` (lingue lezioni, spedizioni negozio); foto Lau+Vick;
-  revisione indipendente della v2 (la v1 aveva OK); decisione se sostituire `index.html`.
+Andrea sceglie la **D3** e chiede: poco nero, pagina non caotica, attenzione al testo del
+menu, tutto in ES/EN/CA/PT. Scelte del progettista (da verificare da Andrea):
+
+- **Colore:** titoli e testo forte nel blu La Mesa; linee sottili blu; risposta scelta in blu;
+  il giallo resta solo per l'azione principale e l'evidenziatore sotto «mesa.». Niente nero pieno
+  (controllo automatico).
+- **Calma:** l'indice 01–05 è solo testo (le foto stanno solo nella domanda), tutte le righe
+  chiuse; la 01 ha il numero in giallo. Una foto diversa per ogni proposta, nessuna ripetuta.
+- **Comportamento della domanda:** resta la variante 1 (X + «Ver todo La Mesa ↓»); tolti
+  barretta e interruttore di prova.
+- **Menu:** un solo vocabolario per lingua, uguale in menu, indice e footer (es. Experiencias ·
+  Cursos · Tienda · Grupos y empresas · Restaurantes + «Reservar una clase»). Risposte alla
+  domanda con verbi paralleli (Probar · Aprender · Hacer un regalo · Venir en grupo · Equipar
+  mi restaurante). «Cursos» porta alla riga dell'indice con modelado e torno (non c'è una
+  pagina riassuntiva). Lingue nel menu su computer e nel menu del telefono.
+- **Lingue:** un modello unico (`dev/nueva-home/build.mjs` + `src/i18n.mjs` + `src/site.css`)
+  genera home e FAQ in ES, EN (`en/`), CA (`ca/`), PT (`pt/`). Testi presi dalle versioni
+  tradotte del sito. Le recensioni restano nell'originale spagnolo, con nota. PT non ha ancora
+  cursi, team building ed encargos tradotti: quei link vanno alle pagine inglesi.
+- **FAQ:** nei dati strutturati solo le risposte vere; le 2 `[COMPLETAR]` restano visibili ma
+  fuori dal JSON-LD.
+
+## Stato al 19/10/2026 sera (punto di ripresa)
+
+- Pagine generate in `dev/nueva-home/` (8 file). Rigenerare con `node dev/nueva-home/build.mjs`.
+  Controllo `node --test dev/nueva-home/check.test.mjs` verde 25/25. Lighthouse telefono:
+  accessibilità 100, buone pratiche 100; SEO frenato solo dal `noindex` voluto.
+- Link privato di prova (4 lingue): https://claude.ai/artifact/7zc1ZT96hz5VmUCDA3Xpki
+- Aperti: prova di Andrea, Lau e Vick; 2 FAQ `[COMPLETAR]` (lingue lezioni, spedizioni
+  negozio); foto Lau+Vick; revisione indipendente della v3; salvataggio nel repository del sito;
+  tradurre in PT cursi/team building/encargos; poi decisione se sostituire le home vere.

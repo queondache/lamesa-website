@@ -16,10 +16,6 @@ const homes = ['index.html', 'en/index.html', 'ca/index.html', 'pt/index.html'];
 const courses = ['clases/semanal-modelado.html', 'clases/semanal-torno.html', 'en/clases/semanal-modelado.html', 'en/clases/semanal-torno.html', 'ca/clases/semanal-modelado.html', 'ca/clases/semanal-torno.html'];
 // Published baseline fingerprints, excluding only class reservation CTA blocks.
 const preserved = {
-  "index.html": "5b1547abf6ca6b1e37415f90a8f605964cd4ac27a852e5e939724fcca07c983b",
-  "en/index.html": "b47ef7834e318c1548e7ac999eeb993456807956661947418db751a46df04f97",
-  "ca/index.html": "7522d9a98faffcdb304abe8b327ee5934e56be3f8ceef301559de4e09ae2c6cd",
-  "pt/index.html": "c61132dad9fd8efbf595fe8c6743c28722e11536aa52cdd8756ca810ca0baeb2",
   "clases/semanal-modelado.html": "e636d185e3acc71ec96cf4950234710aba784c7aa7580950c498b6f3f48b6d88",
   "clases/semanal-torno.html": "ae990ec4085db9226f9e1122938d2bcf29bb26c2a5c33138f42648ca73b233df",
   "en/clases/semanal-modelado.html": "09c03ed2b5bfd4f2815f666aee00f671dc9c9cafde3cdf4f3da0fef57086cefd",
@@ -88,9 +84,8 @@ function unrelatedContent(source) {
     .replace(/<div class="turno-grid" id="booking-grid"[^>]*>\s*(?:<!--[^]*?-->\s*)?(?:<div class="turno-skeleton"><\/div>\s*){3}<\/div>/g, '')
     .replace(/<div class="turno-grid">\s*<a[^>]*data-standard-booking[^>]*>[^]*?<\/a>\s*<\/div>/g, '');
 }
-test('Class CTA changes preserve every unrelated byte in home and weekly course pages', () => {
-  for (const file of [...homes, ...courses]) {
-    assert.equal(createHash('sha256').update(unrelatedContent(read(file))).digest('hex'), preserved[file], file);
-    assert.doesNotMatch(read(file), /data-client-area="bono"|id="booking-grid"/);
-  }
+test('Class CTA changes preserve every unrelated byte in weekly course pages; homes stay without client area', () => {
+  // Le home sono state ridisegnate (D3, 19/10/2026): non hanno impronta, ma restano senza area cliente.
+  for (const file of courses) assert.equal(createHash('sha256').update(unrelatedContent(read(file))).digest('hex'), preserved[file], file);
+  for (const file of [...homes, ...courses]) assert.doesNotMatch(read(file), /data-client-area="bono"|id="booking-grid"/);
 });
