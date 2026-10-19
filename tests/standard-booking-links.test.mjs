@@ -17,7 +17,8 @@ for (const [locale, prefix] of Object.entries(locales)) {
     assert.ok(onMesana[0].includes('data-standard-booking'));
     assert.doesNotMatch(onMesana[0], /target="_blank"|data-client-area=/);
     assert.ok(onMesana[0].replace(/<[^>]*>/g, '').trim().length > 0);
-    const twoHours = locale === 'pt' ? '/pt/clases/suelta.html' : `/${prefix}experiencias/torno.html`;
+    // dal 19/10/2026 anche PT ha la sua pagina della classe di 2 h
+    const twoHours = `/${prefix}experiencias/torno.html`;
     assert.ok(anchors.some(anchor => anchor.includes(`href="${twoHours}"`) && anchor.includes('clase_suelta')));
   });
   // pt/clases/semanal-* (19/10/2026) seguono lo stesso invariante dei mensili es/en/ca.
