@@ -85,6 +85,9 @@ for (const target of ['dev', 'prod']) {
           assert.doesNotMatch(strip(src), /COMPLETAR|provisional|provisória|placeholder/i);
         }
         assert.match(html, /id="lang-suggest-bar"/);
+        // Lead per Meta sugli stessi clic delle home precedenti
+        assert.match(html, /fbq\('track', 'Lead'/);
+        for (const label of ['clase_suelta', 'taller_semanal', 'bono_horas']) assert.match(html, new RegExp(`data-track="${label}"`));
         assert.match(html, /"@type":"LocalBusiness"/);
       });
     } else {

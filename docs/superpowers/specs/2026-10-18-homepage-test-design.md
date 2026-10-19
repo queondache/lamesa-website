@@ -164,12 +164,29 @@ menu, tutto in ES/EN/CA/PT. Scelte del progettista (da verificare da Andrea):
 - **FAQ:** nei dati strutturati solo le risposte vere; le 2 `[COMPLETAR]` restano visibili ma
   fuori dal JSON-LD.
 
+## Decisione 19/10/2026 — pagine definitive
+
+Andrea, dopo la prova della v3: «va bene, ci sono un po' di distanze e posizioni dei bottoni da
+risolvere. ma per il resto va bene. produciamo le pagine definitive». La D3 **sostituisce le home
+vere** in ES/EN/CA/PT (supera il non-obiettivo «sostituire index.html») e aggiunge una pagina FAQ
+per lingua. La messa online (pubblicazione su main) resta in attesa del suo «vai online».
+
+- Distanze/pulsanti: note (bono, email) dentro la colonna dei pulsanti; «Ver todo» centrato;
+  indice con testo e pulsanti in colonna; pulsanti affiancati di pari larghezza al telefono;
+  tap target ≥ 44 px.
+- Pubblico: niente FAQ `[COMPLETAR]` (9 domande online), niente didascalia «foto provisional».
+- Conservati dalle home precedenti: Cookiebot, GA4, Meta Pixel (PageView, Contact su WhatsApp,
+  Lead su clase/corsi/bono), avviso lingua, dati strutturati LocalBusiness (senza coworking).
+- Test del sito aggiornati alla nuova home: un solo link verso Mesana (il bono), niente workshop.
+
 ## Stato al 19/10/2026 sera (punto di ripresa)
 
-- Pagine generate in `dev/nueva-home/` (8 file). Rigenerare con `node dev/nueva-home/build.mjs`.
-  Controllo `node --test dev/nueva-home/check.test.mjs` verde 25/25. Lighthouse telefono:
-  accessibilità 100, buone pratiche 100; SEO frenato solo dal `noindex` voluto.
-- Link privato di prova (4 lingue): https://claude.ai/artifact/7zc1ZT96hz5VmUCDA3Xpki
-- Aperti: prova di Andrea, Lau e Vick; 2 FAQ `[COMPLETAR]` (lingue lezioni, spedizioni
-  negozio); foto Lau+Vick; revisione indipendente della v3; salvataggio nel repository del sito;
-  tradurre in PT cursi/team building/encargos; poi decisione se sostituire le home vere.
+- Pagine definitive in `/`, `/en/`, `/ca/`, `/pt/` + `preguntas-frecuentes.html`, `en/faq.html`,
+  `ca/preguntes-frequents.html`, `pt/perguntas-frequentes.html`; anteprima noindex in
+  `dev/nueva-home/`. Rigenerare con `node dev/nueva-home/build.mjs` (definitive) e `… build.mjs dev`.
+- Controlli: `node --test dev/nueva-home/check.test.mjs tests/*.test.mjs` verde 204/204.
+  Lighthouse telefono (EN definitiva): accessibilità 100, SEO 100, buone pratiche 96 (solo errore
+  Cookiebot su localhost).
+- Salvato sulla copia `feat/nueva-home-test`, non ancora online.
+- Aperti: «vai online» di Andrea; conferma che 53 recensioni è il dato Google attuale (la home
+  precedente diceva 41); 2 FAQ da scrivere; foto Lau+Vick; pagine PT di corsi/team building/encargos.

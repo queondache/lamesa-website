@@ -440,11 +440,17 @@ ${DOORS.map((d) => `      <a href="${doorHref(ctx, d.nav)}"${doorAttrs(d.nav)}>$
 const SCRIPT = `<script>
 (function () {
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // come sulle home precedenti: prenotazioni di classe, corsi e bono contano anche come Lead per Meta
+  var LEAD = { clase_suelta: 'clase_suelta', nav_reservar: 'clase_suelta', taller_semanal: 'taller_semanal', bono_horas: 'bono_horas' };
   function track(label) {
     if (typeof window.gtag === 'function') window.gtag('event', 'click_cta', { event_category: 'conversion', event_label: label });
   }
   document.querySelectorAll('[data-track]').forEach(function (a) {
-    a.addEventListener('click', function () { track(a.dataset.track); });
+    a.addEventListener('click', function () {
+      track(a.dataset.track);
+      var lead = LEAD[a.dataset.track];
+      if (lead && typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: lead });
+    });
   });
 
   // Menu su telefono
