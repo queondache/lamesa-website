@@ -30,7 +30,7 @@ const IMG = {
   regalo: ['images/foto-tienda-4.jpg', 800, 600],
   grupo: ['images/pieza-02.jpg', 800, 800],
   resto: ['images/encargos/descanso-verde-piedra-set-960.webp', 960, 640],
-  about: ['images/pieza-03.jpg', 800, 800],
+  about: ['images/lau-vick-960.webp', 960, 640],
   logo: ['images/logo-lamesa.png', 1080, 1080],
 };
 
@@ -320,12 +320,11 @@ function about(ctx) {
   const { L, code } = ctx;
   const A = L.about;
   const facts = [[RATING[code], `${REVIEWS_TOTAL} ${A.facts[0][0]}`], A.facts[1], A.facts[2]];
-  // la didascalia «foto provvisoria» serve solo nella prova: in produzione non si mostra
   return `<section class="section about-sec" id="nosotras" aria-labelledby="about-h">
   <div class="wrap about">
     <figure>
-      ${img(ctx, 'about', A.alt)}
-      ${ctx.prod ? '' : `<figcaption>${esc(A.caption)}</figcaption>`}
+      ${img(ctx, 'about', A.alt, `loading="lazy" decoding="async"${ctx.prod ? ' srcset="/images/lau-vick-960.webp 960w, /images/lau-vick-1536.webp 1536w" sizes="(min-width:900px) 560px, 100vw"' : ''}`)}
+      <figcaption>${esc(A.caption)}</figcaption>
     </figure>
     <div>
       <p class="eyebrow">${esc(A.eyebrow)}</p>
