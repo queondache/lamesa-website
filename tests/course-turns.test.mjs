@@ -174,8 +174,8 @@ test('aree di tocco >= 44px nel CSS del box turni',()=>{
 });
 test('booking-config: corsi mensili con classTypeId reali, nessun segnaposto',()=>{
  const config=read('js/booking-config.js');assert.match(config,/courses:\s*\{/);
- assert.match(config,/torno:\s*\{\s*classTypeIds:\s*\['ct_afb572015b6e457b8fd070ab697e7269'\]/);
- assert.match(config,/modelado:\s*\{\s*classTypeIds:\s*\['ct_9366d72e18b545c2b6e5741ea334bbfb'\]/);
+ assert.match(config,/torno:\s*\{\s*classTypeIds:\s*\['ct_afb572015b6e457b8fd070ab697e7269',\s*'ct_b079ccf5a7ce4bf289b303173bf7bf26'\]/);
+ assert.match(config,/modelado:\s*\{\s*classTypeIds:\s*\['ct_9366d72e18b545c2b6e5741ea334bbfb',\s*'ct_c99fe995b7ca44b08f0a710a8a1c56fa'\]/);
  assert.doesNotMatch(config,/TODO/);
  for(const f of ['js/course-turns.js','js/experience-booking.js'])assert.doesNotMatch(read(f),/ct_TODO_mensile/);
 });
