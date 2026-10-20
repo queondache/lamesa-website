@@ -17,8 +17,8 @@ test('Public production configuration activates Stripe checkout with exact La Me
  assert.equal(c.enabled,true);assert.equal(c.releaseApproved,true);assert.equal(c.bookingFlow,'stripe');assert.equal(c.studioSlug,'la-mesa');assert.equal(c.clientArea.enabled,true);
  assert.equal(c.apiBase,'https://mesa-saas-backend.onrender.com/api');assert.deepEqual(Array.from(c.allowedApiOrigins),['https://mesa-saas-backend.onrender.com']);assert.ok(validateConfig(c,window.location));
  assert.equal(c.experiences.modelado.expectedUnitPriceCents,undefined);assert.equal(c.experiences.torno.expectedUnitPriceCents,undefined);
- assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4']);
- assert.deepEqual(Array.from(c.experiences.torno.classTypeIds),['ct_0dbbb9eb8634405c82efe7d9a1b3c413']);
+ assert.deepEqual(Array.from(c.experiences.modelado.classTypeIds),['ct_c4a053343d214b15a3adf18f018f6bc4','ct_c99fe995b7ca44b08f0a710a8a1c56fa']);
+ assert.deepEqual(Array.from(c.experiences.torno.classTypeIds),['ct_0dbbb9eb8634405c82efe7d9a1b3c413','ct_b079ccf5a7ce4bf289b303173bf7bf26']);
 });
 test('Static production configuration preserves explicitly injected loopback sandbox',()=>{
  const sandbox={enabled:true,mode:'sandbox',bookingFlow:'stripe',apiBase:'/api',studioSlug:'la-mesa-sandbox',experiences:{modelado:{classTypeIds:['ct_guest_modelado'],expectedUnitPriceCents:4500},torno:{classTypeIds:['ct_guest_torno'],expectedUnitPriceCents:6500}}};
