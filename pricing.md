@@ -62,3 +62,14 @@
 - Web: https://lamesabcn.com
 - WhatsApp: https://wa.me/34711552030
 - Location: Carrer de l'Atlàntida 47, La Barceloneta, 08003 Barcelona, Spain
+
+## Personalised ceramic gifts
+- Handmade to order at La Mesa in La Barceloneta, Barcelona; orders from one piece.
+- Indicative starting price: €40. Final quote depends on the piece, dimensions and design; not every piece or personalisation costs €40.
+- Personalisation: names, dates, messages, drawings, colours, dimensions and custom shapes, agreed before production.
+- Production: 2–3 weeks AFTER the design is agreed, not from the initial enquiry; transport time is additional.
+- Collection at Carrer de l’Atlàntida 47, Barcelona, or shipping. Confirm destination, shipping cost, terms and transport time via WhatsApp.
+- Enquiries and quotes: https://wa.me/34711552030
+- Guide (ES): https://lamesabcn.com/blog/regalos-ceramica-personalizados-barcelona.html
+- Guide (EN): https://lamesabcn.com/blog/personalised-ceramic-gifts-barcelona.html
+- Guide (CA): https://lamesabcn.com/blog/regals-ceramica-personalitzats-barcelona.html
