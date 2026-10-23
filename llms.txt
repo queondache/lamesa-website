@@ -21,16 +21,17 @@ All materials and firings included. High-temperature clay. Full machine-readable
 - Hour pack (bono de horas): online via Mesana at https://app.mesana.studio/book/la-mesa.
 - WhatsApp (https://wa.me/34711552030): creative workshops and private sessions.
 
-## Guides (blog, ES / EN / CA)
-- Pottery class prices in Barcelona: https://lamesabcn.com/blog/pottery-class-prices-barcelona.html · ES https://lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html · CA https://lamesabcn.com/blog/preu-classe-ceramica-barcelona.html
-- Pottery for beginners in Barcelona: https://lamesabcn.com/blog/pottery-for-beginners-barcelona.html
-- What to expect at your first pottery class: https://lamesabcn.com/blog/what-to-expect-first-pottery-class.html
-- Wheel throwing for beginners: https://lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html
-- How to choose a pottery class in Barcelona: https://lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html
-- Guide to ceramics workshops in Barcelona: https://lamesabcn.com/blog/ceramics-classes-barcelona-guide.html
-- Things to do in Barceloneta: https://lamesabcn.com/blog/things-to-do-barceloneta-barcelona.html
-- Date ideas in Barcelona: https://lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html
-- Pottery team building guide (why it works, how to organise it): https://lamesabcn.com/blog/pottery-team-building-barcelona.html · ES https://lamesabcn.com/blog/team-building-ceramica-barcelona.html · CA https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html
+## Guides (blog, ES / EN / CA / PT)
+- Ceramics Classes in Barcelona: La Mesa Format Guide: ES https://lamesabcn.com/blog/guia-talleres-ceramica-barcelona.html · EN https://lamesabcn.com/blog/ceramics-classes-barcelona-guide.html · CA https://lamesabcn.com/blog/guia-tallers-ceramica-barcelona.html · PT https://lamesabcn.com/blog/guia-aulas-ceramica-barcelona.html
+- How to Choose a Pottery Class in Barcelona: ES https://lamesabcn.com/blog/como-elegir-taller-ceramica-barcelona.html · EN https://lamesabcn.com/blog/how-to-choose-pottery-class-barcelona.html · CA https://lamesabcn.com/blog/com-triar-taller-ceramica-barcelona.html · PT https://lamesabcn.com/blog/como-escolher-aula-ceramica-barcelona.html
+- Personalised ceramic gifts in Barcelona, handmade for someone special: ES https://lamesabcn.com/blog/regalos-ceramica-personalizados-barcelona.html · EN https://lamesabcn.com/blog/personalised-ceramic-gifts-barcelona.html · CA https://lamesabcn.com/blog/regals-ceramica-personalitzats-barcelona.html
+- Pottery Class Prices in Barcelona: ES https://lamesabcn.com/blog/cuanto-cuesta-clase-ceramica-barcelona.html · EN https://lamesabcn.com/blog/pottery-class-prices-barcelona.html · CA https://lamesabcn.com/blog/preu-classe-ceramica-barcelona.html · PT https://lamesabcn.com/blog/quanto-custa-aula-ceramica-barcelona.html
+- Pottery for Beginners in Barcelona: How to Get Started: ES https://lamesabcn.com/blog/ceramica-para-principiantes-barcelona.html · EN https://lamesabcn.com/blog/pottery-for-beginners-barcelona.html · CA https://lamesabcn.com/blog/ceramica-per-a-principiants-barcelona.html · PT https://lamesabcn.com/blog/ceramica-para-iniciantes-barcelona.html
+- Pottery Team Building in Barcelona: Planning Guide: ES https://lamesabcn.com/blog/team-building-ceramica-barcelona.html · EN https://lamesabcn.com/blog/pottery-team-building-barcelona.html · CA https://lamesabcn.com/blog/team-building-amb-ceramica-barcelona.html · PT https://lamesabcn.com/blog/team-building-com-ceramica-barcelona.html
+- 10 Things to Do in Barceloneta: ES https://lamesabcn.com/blog/cosas-que-hacer-en-barceloneta.html · EN https://lamesabcn.com/blog/things-to-do-barceloneta-barcelona.html · CA https://lamesabcn.com/blog/coses-per-fer-a-la-barceloneta.html · PT https://lamesabcn.com/blog/o-que-fazer-na-barceloneta.html
+- A Pottery Date in Barcelona: Plan a Class Together: ES https://lamesabcn.com/blog/plan-diferente-barcelona-ceramica.html · EN https://lamesabcn.com/blog/unique-date-ideas-barcelona-pottery.html · CA https://lamesabcn.com/blog/pla-diferent-barcelona-ceramica.html · PT https://lamesabcn.com/blog/programa-diferente-barcelona-ceramica.html
+- Your First Pottery Class in Barcelona: ES https://lamesabcn.com/blog/que-esperar-primera-clase-ceramica.html · EN https://lamesabcn.com/blog/what-to-expect-first-pottery-class.html · CA https://lamesabcn.com/blog/que-esperar-primera-classe-ceramica.html · PT https://lamesabcn.com/blog/o-que-esperar-primeira-aula-ceramica.html
+- Wheel Throwing in Barcelona: A Beginner’s Guide: ES https://lamesabcn.com/blog/que-es-el-torno-ceramica.html · EN https://lamesabcn.com/blog/wheel-throwing-barcelona-beginners.html · CA https://lamesabcn.com/blog/torn-ceramica-barcelona-guia.html · PT https://lamesabcn.com/blog/o-que-e-o-torno-ceramica.html
 
 ## Pages
 - Direct hand-building class (live Mesana dates and online payment via Stripe, WhatsApp as fallback): https://lamesabcn.com/experiencias/modelado.html · EN https://lamesabcn.com/en/experiencias/modelado.html · CA https://lamesabcn.com/ca/experiencias/modelado.html
