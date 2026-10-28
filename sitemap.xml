@@ -429,6 +429,26 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Landing: Regalos de empresa (encargos) -->
+  <url>
+    <loc>https://lamesabcn.com/encargos/regalos-empresa.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/encargos/regalos-empresa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/encargos/corporate-gifts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/encargos/regalos-empresa.html"/>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lamesabcn.com/en/encargos/corporate-gifts.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/encargos/regalos-empresa.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lamesabcn.com/en/encargos/corporate-gifts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/encargos/regalos-empresa.html"/>
+    <lastmod>2026-10-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Landing: Encargos (vajilla para restaurantes) -->
   <url>
     <loc>https://lamesabcn.com/encargos.html</loc>

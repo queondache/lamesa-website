@@ -73,3 +73,6 @@
 - Guide (ES): https://lamesabcn.com/blog/regalos-ceramica-personalizados-barcelona.html
 - Guide (EN): https://lamesabcn.com/blog/personalised-ceramic-gifts-barcelona.html
 - Guide (CA): https://lamesabcn.com/blog/regals-ceramica-personalitzats-barcelona.html
+- Corporate gifts page (ES): https://lamesabcn.com/encargos/regalos-empresa.html
+- Corporate gifts page (EN): https://lamesabcn.com/en/encargos/corporate-gifts.html
+- Corporate gifts: same pieces and personalisation, no minimum order, volume discounts on pieces of the same type, shipping across Europe.
