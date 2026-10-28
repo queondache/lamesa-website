@@ -2,14 +2,14 @@
 
 > Ceramics studio and creative lab in La Barceloneta, Barcelona.
 > All prices in EUR (€). All materials, tools and firings included. High-temperature clay.
-> Last updated: 2026-10-19. Closed Monday and Sunday.
+> Last updated: 2026-10-28. Closed Monday and Sunday.
 
 ## Price table
 
 | Service | Price | Format | Booking |
 |---|---|---|---|
-| Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
-| Taller Semanal Torno (weekly wheel throwing) | €120 / month | 4 sessions × 2h, 1×/week | Online (Stripe Checkout) |
+| Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | First class requested online (Mesana); pay online or at the studio |
+| Taller Semanal Torno (weekly wheel throwing) | €120 / month | 4 sessions × 2h, 1×/week | First class requested online (Mesana); pay online or at the studio |
 | Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session of 2h | Online (Stripe Checkout) |
 | Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
 | Bono de horas (hour pack) | 8h €120 · 16h €220 · 24h €300 | hand-building or wheel, at your own pace | Online (Mesana) |
@@ -22,13 +22,13 @@
 - Price: €120 per month.
 - Includes: 4 weekly sessions of 2 hours, hand-building (modelado) techniques, finishing and glazing, all materials and firings.
 - For: beginners welcome, no experience required.
-- Booking: online via Stripe Checkout.
+- Booking: Request your first class online on the course page (Mesana, free, confirmed by email); pay the month or the single class online or at the studio on the first day.
 
 ### Taller Semanal Torno
 - Price: €120 per month.
 - Includes: 4 weekly sessions of 2 hours, wheel throwing (torno), all materials and firings.
 - For: all levels, beginners and students with some experience; each class is adapted to the person.
-- Booking: online via Stripe Checkout.
+- Booking: Request your first class online on the course page (Mesana, free, confirmed by email); pay the month or the single class online or at the studio on the first day.
 
 ### Clase Suelta Modelado
 - Price: €45.

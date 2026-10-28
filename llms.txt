@@ -3,8 +3,8 @@
 > La Mesa is a ceramics studio and multidisciplinary creative lab located in La Barceloneta, Barcelona. We offer weekly classes, drop-in sessions, wheel throwing courses, creative workshops and private sessions. Tone: welcoming, informal, community-focused. We are hosts, not teachers.
 
 ## Services
-- Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
-- Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Access enrollment through the Mesana client area.
+- Taller Semanal Modelado (weekly hand-building class): €120/month — 4 sessions of 2h, 1×/week. Request your first class online on the course page; pay online or at the studio on the first day.
+- Taller Semanal Torno (weekly wheel-throwing class): €120/month — 4 sessions of 2h, 1×/week. Request your first class online on the course page; pay online or at the studio on the first day.
 - Clase Suelta Modelado (drop-in hand-building): €45 — one 2-hour class. Book and pay online (Stripe) on the hand-building page; WhatsApp is the fallback.
 - Clase Suelta Torno (drop-in wheel, private, max 2 people): €65 — one 2-hour class. Book and pay online (Stripe) on the wheel page; WhatsApp is the fallback.
 - Bono de horas (hour pack, hand-building or wheel, used at your own pace): 8h €120, 16h €220, 24h €300. Buy online via Mesana (https://app.mesana.studio/book/la-mesa).
@@ -15,7 +15,7 @@
 All materials and firings included. High-temperature clay. Full machine-readable pricing: https://lamesabcn.com/pricing.md
 
 ## Booking
-- Weekly classes: enrollment and account access use the Mesana client area at https://app.mesana.studio/client/la-mesa.
+- Weekly classes: choose a slot on the course page and request your first class online (Mesana, confirmed by email); pay the month or the single class online or at the studio on the first day. Account access: Mesana client area at https://app.mesana.studio/client/la-mesa.
 - Single classes: the public calendars show actual Mesana dates, prices and live available places. Choose a session and pay online (Stripe) to book; the price comes from Mesana. If the calendar cannot load, the page falls back to a WhatsApp request.
 - Single-class calendars: pottery wheel https://lamesabcn.com/experiencias/torno.html · hand-building https://lamesabcn.com/experiencias/modelado.html (the former Clase Suelta page redirects to the wheel page). Public Modelado is €45.
 - Hour pack (bono de horas): online via Mesana at https://app.mesana.studio/book/la-mesa.

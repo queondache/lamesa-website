@@ -38,7 +38,7 @@ test('il box non mostra mai numeri di posti, nemmeno se l API li inviasse',async
  assert.match(r.html,/Miércoles · 16:00–18:00/);
  assert.doesNotMatch(r.html,/424[234]/);
  assert.doesNotMatch(r.html,/plazas?|seats?|places?|remaining|capacity|data-seats/i);
- assert.match(r.html,/El primer día pagas en el estudio el mes o la clase suelta/);
+ assert.match(r.html,/El mes o la clase suelta los pagas online o en el estudio el primer día/);
  assert.match(r.html,/https:\/\/wa\.me\/34711552030/);
 });
 test('lista vuota: solo WhatsApp, nessun form',async()=>{
@@ -61,7 +61,7 @@ test('scelta turno mostra form nome/email/telefono facoltativo e avviso pagament
  const {r,w}=widgetWith(respond(200,{data:{turns:[turn]},error:null}));await w.init();w.selectTurn('tpl_1');
  assert.match(r.html,/<form/);assert.match(r.html,/name="name"[^>]*required/);assert.match(r.html,/name="email"[^>]*type="email"|type="email"[^>]*name="email"/);
  assert.match(r.html,/name="phone"/);assert.doesNotMatch(r.html,/name="phone"[^>]*required/);
- assert.match(r.html,/El primer día pagas en el estudio/);
+ assert.match(r.html,/los pagas online o en el estudio el primer día/);
 });
 test('invio richiesta: POST strict, telefono omesso se vuoto, poi stato "Revisa tu email"',async()=>{
  calls.length=0;
@@ -103,8 +103,8 @@ test('errori del POST: turn_full, invalid_request, rate_limited, email_unavailab
 });
 test('testi en/ca e nessun "Tras el pago" nel widget',async()=>{
  const {r,w}=widgetWith(respond(200,{data:{turns:[turn]},error:null}),'en');await w.init();
- assert.match(r.html,/Wednesday · 16:00–18:00/);assert.match(r.html,/On the first day you pay at the studio/);
- const ca=widgetWith(respond(200,{data:{turns:[turn]},error:null}),'ca');await ca.w.init();assert.match(ca.r.html,/El primer dia pagues a l’estudi/);
+ assert.match(r.html,/Wednesday · 16:00–18:00/);assert.match(r.html,/online or at the studio on the first day/);
+ const ca=widgetWith(respond(200,{data:{turns:[turn]},error:null}),'ca');await ca.w.init();assert.match(ca.r.html,/els pagues en línia o a l’estudi el primer dia/);
 });
 
 // ---- pagina di conferma ----
@@ -123,14 +123,14 @@ test('conferma: confirmed mostra titolo (escapato), data, orario e avviso pagame
  calls.length=0;const {r,v}=confirmView('es',recorder({'verify':[200,{data:confirmed,error:null}]}));
  await v.run('TOKEN-SECRET');
  const post=calls[0];assert.ok(post.url.endsWith('/api/public/course-first-lesson/verify'));assert.deepEqual(JSON.parse(post.options.body),{token:'TOKEN-SECRET'});
- assert.match(r.html,/Torno &lt;mensual&gt;/);assert.match(r.html,/miércoles/i);assert.match(r.html,/16:00–18:00/);assert.match(r.html,/pagas en el estudio/);
+ assert.match(r.html,/Torno &lt;mensual&gt;/);assert.match(r.html,/miércoles/i);assert.match(r.html,/16:00–18:00/);assert.match(r.html,/pagas online o en el estudio/);
  assert.doesNotMatch(r.html,/TOKEN-SECRET/);assert.equal(post.options.referrerPolicy,'no-referrer');
 });
 test('conferma: startAt/timezone malformati -> testo generico confermato, mai bloccata su Confirmando',async()=>{
  for(const bad of [{startAt:'non-una-data'},{timezone:'Mars/Olympus'},{startAt:null,endAt:undefined}]){
   const {r,v}=confirmView('es',recorder({'verify':[200,{data:{...confirmed,...bad},error:null}]}));
   await v.run('t');
-  assert.match(r.html,/Primera clase confirmada/);assert.match(r.html,/pagas en el estudio/);
+  assert.match(r.html,/Primera clase confirmada/);assert.match(r.html,/pagas online o en el estudio/);
   assert.doesNotMatch(r.html,/Confirmando|Invalid|NaN/);assert.match(r.html,/wa\.me\/34711552030/);
  }
 });
@@ -185,14 +185,14 @@ for(const [lang,prefix] of [['es',''],['en','en/'],['ca','ca/']])for(const cours
   assert.match(s,new RegExp(`<section id="turnos"[^>]*aria-labelledby="turnos-title"[^>]*data-course="${course}"`));
   assert.doesNotMatch(s,/turno-grid|data-standard-booking|app\.mesana\.studio\/book/);
   assert.doesNotMatch(s,/Tras el pago|After payment|Després del pagament/);
-  assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=1"/);assert.match(s,/experience-booking\.css\?v=3/);
-  assert.match(s,{es:/el primer día pagas en el estudio el mes o la clase suelta/i,en:/on the first day you pay at the studio for the full month or the single class/i,ca:/el primer dia pagues a l’estudi el mes o la classe solta/i}[lang]);
+  assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=3"/);assert.match(s,/experience-booking\.css\?v=3/);
+  assert.match(s,{es:/el mes o la clase suelta los pagas online o en el estudio el primer día/i,en:/you pay for the full month or the single class online or at the studio on the first day/i,ca:/el mes o la classe solta els pagues en línia o a l’estudi el primer dia/i}[lang]);
  });
 }
 for(const prefix of ['','en/','ca/'])test(`${prefix}clases/confirmar.html: noindex, no-referrer, senza analytics, ancora WhatsApp`,()=>{
  const s=read(`${prefix}clases/confirmar.html`);
  assert.match(s,/name="robots" content="noindex,nofollow"/);assert.match(s,/name="referrer" content="no-referrer"/);
- assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=1/);assert.match(s,/booking-config\.js\?v=9/);
+ assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=3/);assert.match(s,/booking-config\.js\?v=9/);
  assert.doesNotMatch(s,/googletagmanager|Cookiebot/);assert.match(s,/wa\.me\/34711552030/);
 });
 
@@ -224,7 +224,7 @@ test('S5 fix6: nome/email/telefono digitati sopravvivono a "Cambiar de turno"',a
  w.selectTurn(null);w.selectTurn('tpl_1');
  assert.match(r.html,/value="Ana"/);assert.match(r.html,/value="ana@x\.es"/);assert.match(r.html,/value="\+34 600 000 000"/);
 });
-for(const [lang,prefix,re] of [['es','',/Reserva tu primera clase en el turno que prefieras; el primer día pagas en el estudio el mes o la clase suelta\./],['en','en/',/Book your first class in the slot you prefer; on the first day you pay at the studio for the full month or the single class\./],['ca','ca/',/Reserva la primera classe al torn que prefereixis; el primer dia pagues a l’estudi el mes o la classe solta\./]])for(const course of ['torno','modelado'])
+for(const [lang,prefix,re] of [['es','',/Reserva tu primera clase en el turno que prefieras; el mes o la clase suelta los pagas online o en el estudio el primer día\./],['en','en/',/Book your first class in the slot you prefer; you pay for the full month or the single class online or at the studio on the first day\./],['ca','ca/',/Reserva la primera classe al torn que prefereixis; el mes o la classe solta els pagues en línia o a l’estudi el primer dia\./]])for(const course of ['torno','modelado'])
  test(`S5 fix7: ${prefix}clases/semanal-${course}: banner allineato al flusso prima lezione`,()=>{
   const s=read(`${prefix}clases/semanal-${course}.html`);assert.match(s,re);assert.doesNotMatch(s,/plaza fija en este turno|fixed spot in this class|plaça fixa en aquest torn/);
  });
@@ -238,8 +238,8 @@ for(const course of ['torno','modelado'])test(`pt/clases/semanal-${course}: asid
  assert.match(s,/<html lang="pt">/);
  assert.match(s,new RegExp(`<section id="turnos"[^>]*aria-labelledby="turnos-title"[^>]*data-course="${course}"`));
  assert.doesNotMatch(s,/turno-grid|data-standard-booking|app\.mesana\.studio\/book/);
- assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=2"/);assert.match(s,/experience-booking\.css\?v=3/);
- assert.match(s,/Reserve a sua primeira aula no horário que preferir; no primeiro dia você paga no estúdio o mês ou a aula avulsa\./);
+ assert.match(s,/booking-config\.js\?v=9/);assert.match(s,/type="module" src="[^"]*course-turns\.js\?v=3"/);assert.match(s,/experience-booking\.css\?v=3/);
+ assert.match(s,/Reserve a sua primeira aula no horário que preferir; você paga o mês ou a aula avulsa online ou no estúdio no primeiro dia\./);
  assert.ok(s.includes(`<link rel="canonical" href="https://lamesabcn.com/pt/clases/semanal-${course}.html">`));
  for(const [code,prefix] of [['es',''],['en','en/'],['ca','ca/'],['pt','pt/']]){
   assert.ok(s.includes(`<link rel="alternate" hreflang="${code}" href="https://lamesabcn.com/${prefix}clases/semanal-${course}.html">`),code);
@@ -250,7 +250,7 @@ for(const course of ['torno','modelado'])test(`pt/clases/semanal-${course}: asid
 test('pt/clases/confirmar.html: noindex, no-referrer, senza analytics, ancora WhatsApp, senza aria-live',()=>{
  const s=read('pt/clases/confirmar.html');
  assert.match(s,/<html lang="pt">/);assert.match(s,/name="robots" content="noindex,nofollow"/);assert.match(s,/name="referrer" content="no-referrer"/);
- assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=2/);assert.match(s,/booking-config\.js\?v=9/);
+ assert.match(s,/data-course-confirm/);assert.match(s,/course-turns\.js\?v=3/);assert.match(s,/booking-config\.js\?v=9/);
  assert.doesNotMatch(s,/googletagmanager|Cookiebot|aria-live/);assert.match(s,/wa\.me\/34711552030/);
 });
 test('pt: widget turni e conferma in portoghese; a Mesana arriva locale en (nessuna email pt)',async()=>{
@@ -258,7 +258,7 @@ test('pt: widget turni e conferma in portoghese; a Mesana arriva locale en (ness
  assert.match(turnLabel({weekday:3,startTime:'16:00',durationMin:120},'pt'),/^Quarta-feira · 16:00–18:00$/);
  calls.length=0;
  const {r,w}=widgetWith(recorder({'course-turns':[200,{data:{turns:[turn]},error:null}],'course-first-lesson-requests':[202,{data:{status:'email_sent'},error:null}]}),'pt');
- await w.init();w.selectTurn('tpl_1');assert.match(r.html,/No primeiro dia você paga no estúdio/);
+ await w.init();w.selectTurn('tpl_1');assert.match(r.html,/online ou no estúdio no primeiro dia/);
  await w.submit({name:'Ana',email:'ana@example.com',phone:''});
  const post=calls.find(c=>c.options.method==='POST');assert.equal(JSON.parse(post.options.body).locale,'en');
  assert.match(r.html,/Confira o seu email/);
