@@ -5,7 +5,6 @@ import { runInNewContext } from 'node:vm';
 const read = file => readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
 const url = 'https://app.mesana.studio/book/la-mesa';
 const locales = { es: '', en: 'en/', ca: 'ca/', pt: 'pt/' };
-const labels = { es: 'Reservar clases en Mesana', en: 'Book classes on Mesana', ca: 'Reserva classes a Mesana', pt: 'Reserve aulas na Mesana' };
 for (const [locale, prefix] of Object.entries(locales)) {
   test(`${locale}: homepage class reservation CTAs work without JavaScript`, () => {
     const home = read(`${prefix}index.html`);
@@ -22,20 +21,14 @@ for (const [locale, prefix] of Object.entries(locales)) {
     assert.ok(anchors.some(anchor => anchor.includes(`href="${twoHours}"`) && anchor.includes('clase_suelta')));
   });
   // pt/clases/semanal-* (19/10/2026) seguono lo stesso invariante dei mensili es/en/ca.
-  for (const name of locale === 'pt' ? ['suelta', 'semanal-modelado', 'semanal-torno'] : ['semanal-modelado', 'semanal-torno'] /* suelta es/en/ca e un rimando */) {
+  for (const name of ['semanal-modelado', 'semanal-torno'] /* suelta e un rimando in tutte le lingue (pt dal 28/10/2026) */) {
     test(`${locale}/${name}: class booking uses the standard page and no legacy calendar activation`, () => {
       const source = read(`${prefix}clases/${name}.html`);
       const booking = [...source.matchAll(/<a\b[^>]*data-standard-booking[^>]*>[\s\S]*?<\/a>/g)];
-      if (name === 'suelta') {
-        assert.equal(booking.length, 1);
-        assert.ok(booking[0][0].includes(`href="${url}"`));
-        assert.ok(booking[0][0].includes(labels[locale]));
-      } else {
-        // S5: i mensili es/en/ca non rimandano piu a Mesana; il box turni (#turnos) prenota la prima lezione.
-        assert.equal(booking.length, 0);
-        assert.match(source, /<section id="turnos"[^>]*data-course="(?:torno|modelado)"/);
-        assert.ok(!source.includes(url));
-      }
+      // S5: i mensili non rimandano piu a Mesana; il box turni (#turnos) prenota la prima lezione.
+      assert.equal(booking.length, 0);
+      assert.match(source, /<section id="turnos"[^>]*data-course="(?:torno|modelado)"/);
+      assert.ok(!source.includes(url));
       assert.doesNotMatch(source, /id="booking-grid"|class="mini-booking"|turno-skeleton|<script[^>]*src="[^"]*\/(?:mini-booking|booking|booking-v2)\.js/);
       assert.match(source, /href="https:\/\/wa.me\/34711552030/);
       assert.match(source, /<link rel="canonical"/);
