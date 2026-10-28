@@ -14,14 +14,14 @@ const bookingSource = read('js/booking-v2.js');
 const url = 'https://app.mesana.studio/client/la-mesa';
 const homes = ['index.html', 'en/index.html', 'ca/index.html', 'pt/index.html'];
 const courses = ['clases/semanal-modelado.html', 'clases/semanal-torno.html', 'en/clases/semanal-modelado.html', 'en/clases/semanal-torno.html', 'ca/clases/semanal-modelado.html', 'ca/clases/semanal-torno.html'];
-// Baseline fingerprints of the weekly course pages, excluding only class reservation CTA blocks (homes redesigned 19/10: D3).
+// Baseline fingerprints of the weekly course pages, excluding only class reservation CTA blocks (homes redesigned 19/10: D3; payment copy «online or at the studio» 28/10).
 const preserved = {
-  "clases/semanal-modelado.html": "e636d185e3acc71ec96cf4950234710aba784c7aa7580950c498b6f3f48b6d88",
-  "clases/semanal-torno.html": "ae990ec4085db9226f9e1122938d2bcf29bb26c2a5c33138f42648ca73b233df",
-  "en/clases/semanal-modelado.html": "09c03ed2b5bfd4f2815f666aee00f671dc9c9cafde3cdf4f3da0fef57086cefd",
-  "en/clases/semanal-torno.html": "9579bda02f24b262641aa3f9b8fab1a57e4f9e2d01ea0359da79795a0929a99e",
-  "ca/clases/semanal-modelado.html": "3d2360e5994efbd8cf131ca1fbe4564eebe26f515aebf8759c1e578df4bc991a",
-  "ca/clases/semanal-torno.html": "ee633fe644fb8918b17797332bad31baf48fbf0d6aa781e8d2dc7a205c35d0f3"
+  "clases/semanal-modelado.html": "6ec90f4a082016bf30c3f32cd18eebf17d6fda69d3228958b87510dde57152db",
+  "clases/semanal-torno.html": "d10129e242c3020b84530298e71bc38d3b391c4c45bd6be26f85b6ab7fa72386",
+  "en/clases/semanal-modelado.html": "65136c2ac1b0e609dc05355b78eeefcb62f22cd2261c840d44c57f4384cb4c40",
+  "en/clases/semanal-torno.html": "e05441d067610bc75f4fd757f46595b04faa589ad09fb2b123afa4f807349970",
+  "ca/clases/semanal-modelado.html": "691610c7a0304af505aa4f85e93f3e35d4840cc121a5a9676533025ab92e3883",
+  "ca/clases/semanal-torno.html": "6d0b7c3383ad029df190bb351283ec5ee98b7a13a7d57282239a4ad956958bfc"
 };
 
 function page(config, lang = 'es') {
