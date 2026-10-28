@@ -68,7 +68,7 @@ Clase Suelta (Modelado or Torno): Tuesday to Saturday, at the time the customer 
 Website: Spanish (primary), English, Catalan, Portuguese. Classes are taught in English, Spanish and Portuguese.
 
 ## Pottery class for visitors to Barcelona
-Main pages: pottery wheel https://lamesabcn.com/en/experiencias/torno.html · hand-building https://lamesabcn.com/en/experiencias/modelado.html (ES https://lamesabcn.com/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html · PT https://lamesabcn.com/pt/clases/suelta.html)
+Main pages: pottery wheel https://lamesabcn.com/en/experiencias/torno.html · hand-building https://lamesabcn.com/en/experiencias/modelado.html (ES https://lamesabcn.com/experiencias/torno.html · CA https://lamesabcn.com/ca/experiencias/torno.html · PT https://lamesabcn.com/pt/experiencias/torno.html)
 - 2-hour pottery class in La Barceloneta, no experience needed: hand-building €45 or private wheel throwing for up to 2 people €65. Book online with a live calendar and secure payment (Stripe).
 - Taught in English, Spanish or Portuguese.
 - Clay, tools, glazes and firing included. The piece is ready 15 days after the class; if the visitor leaves Barcelona sooner, La Mesa can ship it to their home (shipping price on request via WhatsApp).

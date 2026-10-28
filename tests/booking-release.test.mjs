@@ -69,9 +69,10 @@ test('Pages publication excludes fixture and internal material; one stable cheap
  const workflow=read('.github/workflows/site-check.yml');assert.match(workflow,/pull_request:/);assert.match(workflow,/branches: \[main\]/);assert.match(workflow,/cancel-in-progress: true/);assert.match(workflow,/name: site-check/);assert.match(workflow,/node-version: '22'/);assert.match(workflow,/tests\/booking-release.test.mjs/);assert.doesNotMatch(workflow,/paths:|npm install|npm ci|postgres|stripe|experience-booking\.browser/i);
  assert.doesNotMatch(configSource,/ct_guest_|sandbox|localhost|127\.0\.0\.1|secret|sk_live|pk_live|token/i);
 });
-test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
+test('clases/suelta è un rimando verso experiencias in ES, EN, CA, PT',()=>{
  const sitemap=read('sitemap.xml');
- for(const lang of languages){
+ // PT allineato il 28/10/2026 (era una pagina indicizzabile rimasta isolata).
+ for(const lang of [...languages,'pt']){
   const src=read(`${prefix(lang)}clases/suelta.html`);
   const target=`https://lamesabcn.com/${prefix(lang)}experiencias/torno.html`;
   assert.ok(src.includes(`<link rel="canonical" href="${target}">`));
@@ -82,16 +83,14 @@ test('clases/suelta è un rimando verso experiencias in ES, EN, CA',()=>{
   // Il prefisso vuoto (es) combacerebbe anche con pt/: l'ancora sul dominio evita il falso positivo.
   assert.ok(!sitemap.includes(`https://lamesabcn.com/${prefix(lang)}clases/suelta.html`),`sitemap senza ${lang}/clases/suelta`);
  }
- // pt resta fuori perimetro: pagina e voce sitemap invariate nella sostanza (solo se stessa).
- assert.ok(sitemap.includes('<loc>https://lamesabcn.com/pt/clases/suelta.html</loc>'));
- assert.doesNotMatch(read('llms.txt'),/clases\/suelta\.html\b(?<!pt\/clases\/suelta\.html)/);
+ assert.doesNotMatch(read('llms.txt'),/clases\/suelta\.html/);
 });
-test('Nessuna pagina es/en/ca linka più le pagine di rimando clases/suelta',()=>{
- // Le tre pagine di rimando e pt/, demo/, node_modules sono escluse dalla scansione.
- const skip=new Set(['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html']);
+test('Nessuna pagina es/en/ca/pt linka più le pagine di rimando clases/suelta',()=>{
+ // Le quattro pagine di rimando e demo/, node_modules sono escluse dalla scansione.
+ const skip=new Set(['clases/suelta.html','en/clases/suelta.html','ca/clases/suelta.html','pt/clases/suelta.html']);
  const walk=dir=>readdirSync(resolve(root,dir),{withFileTypes:true}).flatMap(e=>{
   const rel=dir?`${dir}/${e.name}`:e.name;
-  if(e.isDirectory())return ['pt','demo','node_modules','.git','.superpowers','.orchestratore','dev','docs'].includes(e.name)&&!dir?[]:(e.name==='node_modules'||e.name==='.git'?[]:walk(rel));
+  if(e.isDirectory())return ['demo','node_modules','.git','.superpowers','.orchestratore','dev','docs'].includes(e.name)&&!dir?[]:(e.name==='node_modules'||e.name==='.git'?[]:walk(rel));
   return e.name.endsWith('.html')?[rel]:[];
  });
  const offenders=walk('').filter(f=>!skip.has(f)&&read(f).includes('/clases/suelta.html'));
