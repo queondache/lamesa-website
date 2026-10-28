@@ -10,6 +10,11 @@
       link.href = 'mailto:' + address + query;
       // Con data-email-label il testo originale resta (es. «Escribir por email»).
       if (link.dataset.emailLabel !== 'true') link.textContent = address;
+      // Conta il clic come quello su WhatsApp, cosi' in Analytics si vede da dove arriva chi scrive.
+      link.addEventListener('click', function () {
+        if (typeof gtag === 'function') gtag('event', 'click_email', {'event_category': 'conversion', 'event_label': 'email_contact'});
+        if (typeof fbq === 'function') fbq('track', 'Contact');
+      });
     });
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build);

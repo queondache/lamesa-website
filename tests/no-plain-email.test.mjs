@@ -27,13 +27,14 @@ test('No published file contains the plain contact email', () => {
   assert.deepEqual(offenders, []);
 });
 
-function run(attrs, text = 'fallback') {
+function run(attrs, text = 'fallback', globals = {}) {
   const link = {
-    dataset: attrs, textContent: text, href: '',
-    getAttribute() { return null; }
+    dataset: attrs, textContent: text, href: '', listeners: {},
+    getAttribute() { return null; },
+    addEventListener(type, fn) { this.listeners[type] = fn; }
   };
   const document = {readyState: 'complete', querySelectorAll(sel) { assert.equal(sel, 'a[data-email-user][data-email-domain]'); return [link]; }};
-  runInNewContext(readFileSync(resolve(root, 'js/contact-email.js'), 'utf8'), {document});
+  runInNewContext(readFileSync(resolve(root, 'js/contact-email.js'), 'utf8'), {document, ...globals});
   return link;
 }
 
@@ -52,6 +53,25 @@ test('contact-email.js keeps a custom label and appends the query', () => {
 test('contact-email.js ignores invalid parts', () => {
   const link = run({emailUser: 'a b', emailDomain: 'evil'});
   assert.equal(link.href, '');
+});
+
+test('contact-email.js tracks email clicks like WhatsApp', () => {
+  const calls = [];
+  const link = run({emailUser: 'lamesa.lc', emailDomain: 'gmail.com'}, 'x', {
+    gtag: (...args) => calls.push(['gtag', ...args]),
+    fbq: (...args) => calls.push(['fbq', ...args])
+  });
+  assert.equal(typeof link.listeners.click, 'function');
+  link.listeners.click();
+  assert.deepEqual(JSON.parse(JSON.stringify(calls)), [
+    ['gtag', 'event', 'click_email', {event_category: 'conversion', event_label: 'email_contact'}],
+    ['fbq', 'track', 'Contact']
+  ]);
+});
+
+test('contact-email.js click works without analytics loaded', () => {
+  const link = run({emailUser: 'lamesa.lc', emailDomain: 'gmail.com'});
+  assert.doesNotThrow(() => link.listeners.click());
 });
 
 test('Pages using the obfuscated email load the script', () => {
