@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" fill="none">
+<defs><pattern id="speckle" width="28" height="23" patternUnits="userSpaceOnUse"><circle cx="4" cy="6" r="1" fill="#1B3C8B" opacity=".13"/><circle cx="21" cy="18" r=".7" fill="#1B3C8B" opacity=".1"/></pattern></defs>
+<path fill="#F2B9B6" d="M0 0h600v280H0z"/>
+<g stroke="#FFFAEE" stroke-width="7"><path fill="#FFFAEE" d="M-20-20h160v160H-20z"/><path fill="#E84159" d="M140-20h160v160H140z"/><path fill="#FFFAEE" d="M300-20h160v160H300z"/><path fill="#F7B137" d="M460-20h160v160H460z"/><path fill="#F7B137" d="M-20 140h160v160H-20z"/><path fill="#FFFAEE" d="M140 140h160v160H140z"/><path fill="#1B3C8B" d="M300 140h160v160H300z"/><path fill="#FFFAEE" d="M460 140h160v160H460z"/></g>
+<path d="M170 47c18-29 82-29 100 0v55H170Z" fill="#FFFAEE"/><path d="M186 62c11-20 59-20 68 0" stroke="#E84159" stroke-width="4"/><path d="M186 80h68" stroke="#E84159" stroke-width="4"/>
+<g stroke="#1B3C8B" stroke-width="5"><path d="M322 58c14-25 33-25 47 0s33 25 47 0 26-24 35-5m-129 29c14-25 33-25 47 0s33 25 47 0 26-24 35-5"/><circle cx="540" cy="62" r="39"/><circle cx="540" cy="62" r="26"/></g>
+<path d="m60 171 13 28 31 4-23 21 6 31-27-15-27 15 6-31-23-21 31-4Z" fill="#E84159"/>
+<path d="M190 176h53l-5 28c25 14 28 44 6 58h-55c-22-14-19-44 6-58Z" fill="#1B3C8B"/><ellipse cx="217" cy="176" rx="27" ry="7" fill="#E84159"/>
+<path d="M338 182h78v40c0 42-78 42-78 0Z" fill="#F7B137"/><path d="M416 192c38-4 35 38 0 35" stroke="#F7B137" stroke-width="9"/><ellipse cx="377" cy="182" rx="39" ry="10" fill="#FFFAEE"/>
+<path d="M499 250c0-48 20-67 43-67s43 19 43 67m-66 0c0-29 9-43 23-43s23 14 23 43" stroke="#E84159" stroke-width="8"/>
+<path fill="url(#speckle)" d="M0 0h600v280H0z"/>
+</svg>
