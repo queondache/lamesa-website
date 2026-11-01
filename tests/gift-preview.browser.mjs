@@ -56,6 +56,14 @@ test('C2/C4/C5 gift preview: real desktop/mobile, safe personalization, independ
           await page.keyboard.press('Tab');
           assert.equal(await page.locator('.skip-link').evaluate(el => el === document.activeElement), true);
           assert.notEqual(await page.locator('.skip-link').evaluate(el => getComputedStyle(el).clipPath), 'inset(50%)');
+          // Check the visible commercial promise against the contract, not messages[lang].
+          const noRenewalPromises = {es: 'Un solo regalo, sin renovación.', en: 'One gift, no renewal.', ca: 'Un sol regal, sense renovació.', pt: 'Um só presente, sem renovação.'};
+          for (const [lang, promise] of Object.entries(noRenewalPromises)) {
+            await page.locator('#page-language').selectOption(lang);
+            assert.equal(await page.locator('#month-help').isVisible(), true);
+            assert.ok((await page.locator('#month-help').textContent()).startsWith(promise), `${lang}: visible monthly gift must explicitly promise no renewal`);
+          }
+          await page.locator('#page-language').selectOption('en');
 
           // Empty mandatory fields produce localized errors and focus the first one.
           await page.locator('.review-button').click();

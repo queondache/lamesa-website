@@ -13,6 +13,13 @@ test('C1 gift-catalog: one month default, arbitrary consecutive integer months, 
   }
   for (const months of [-1, 0, 1.5, NaN, Infinity, 'bad', '', Number.MAX_SAFE_INTEGER]) assert.equal(priceGift({...DEFAULT_GIFT, months}).error, 'monthsInvalid');
 });
+test('C1 gift-catalog: every language promises a one-off gift without renewal', () => {
+  // Contract expectations are deliberately independent of the application's dictionary.
+  const promises = {es: 'Un solo regalo, sin renovación.', en: 'One gift, no renewal.', ca: 'Un sol regal, sense renovació.', pt: 'Um só presente, sem renovação.'};
+  for (const [language, promise] of Object.entries(promises)) {
+    assert.ok(messages[language].monthHelp.startsWith(promise), `${language}: monthly gift must explicitly promise no renewal`);
+  }
+});
 test('C1 gift-catalog: single discipline belongs to buyer, fixed hour bundles, credit has no commercial ceiling', () => {
   for (const [discipline, cents] of [['modelado', 4500], ['torno', 6500]]) assert.deepEqual(priceGift({kind: 'single', discipline}), {cents, quantity: 1, disciplineOwner: 'buyer'});
   for (const [hours, cents] of [[8, 12000], [16, 22000], [24, 30000]]) assert.deepEqual(priceGift({kind: 'hours', hours}), {cents, quantity: hours, disciplineOwner: 'recipient'});
