@@ -90,7 +90,7 @@ function unrelatedContent(source) {
       })
     .replace(/#grupos"( data-section="privadas")?>(Grupos y empresas|Groups &amp; teams|Grups i empreses)<\/a>/g,
       (m, section, label) => `#grupos"${section || ''}>${{'Grupos y empresas': 'Grupos y eventos', 'Groups &amp; teams': 'Groups &amp; events', 'Grups i empreses': 'Grups i esdeveniments'}[label]}</a>`)
-    .replace(/\n *<p class="footer__links">.*<\/p>/g, '')
+    .replace(/\n *<p class="footer__links"><a href="\/(?:encargos|en\/custom-tableware|ca\/encarrecs)\.html" style="color:inherit;text-decoration:underline;display:inline-block;padding:12px 6px">(?:Por encargo|Custom orders|Per encàrrec)<\/a>(?: · <a href="\/(?:encargos\/regalos-empresa|en\/encargos\/corporate-gifts)\.html" style="color:inherit;text-decoration:underline;display:inline-block;padding:12px 6px">(?:Regalos de empresa|Corporate gifts)<\/a>)?<\/p>/g, '')
     // Pagine PT dei corsi (19/10/2026): hreflang pt e selettore PT verso la pagina PT sono l'unica differenza ammessa;
     // si riportano alla forma della baseline, cosi' le impronte restano quelle di prima.
     .replace(/ *<link rel="alternate" hreflang="pt" href="https:\/\/lamesabcn\.com\/pt\/clases\/semanal-(?:modelado|torno)\.html">\n/, '')
