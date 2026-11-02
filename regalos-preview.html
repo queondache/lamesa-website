@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#FFFAEE">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; img-src 'self'; font-src 'self'; style-src 'self'; script-src 'self'">
+<title>Regala un poco de barro · La Mesa</title>
+<link rel="icon" href="/images/favicon-32.png" type="image/png">
+<link rel="stylesheet" href="/css/gift-preview.css">
+<script type="module" src="/js/gift-preview.mjs"></script>
+</head>
+<body>
+<a class="skip-link" href="#gift-form" data-i18n="skip">Saltar al regalo</a>
+<header class="site-header">
+  <div class="brand"><img src="/images/logo-lamesa.png" alt="" width="48" height="48"><div>la mesa<small data-i18n="studio">Laboratorio Creativo · Barcelona</small></div></div>
+  <label class="page-language"><span data-i18n="pageLanguage">Idioma de la página</span><select id="page-language"><option value="es">ES</option><option value="en">EN</option><option value="ca">CA</option><option value="pt">PT</option></select></label>
+</header>
+<main id="main">
+  <section class="intro">
+    <div><p class="eyebrow" data-i18n="eyebrow">Algo bonito empieza con las manos</p><h1 data-i18n="title">Regala un poco de barro.</h1><p class="intro-copy" data-i18n="intro">Tiempo para crear, mancharse las manos y descubrir algo nuevo. Hazlo suyo, desde la primera mirada.</p></div>
+    <div class="intro-mark" aria-hidden="true"><span data-i18n="handNote">de las manos al corazón</span><svg viewBox="0 0 120 60"><path d="M10 12Q38 53 105 23M89 10l17 13-16 15"/></svg></div>
+  </section>
+  <aside class="demo-notice"><span class="demo-dot" aria-hidden="true"></span><p><strong data-i18n="previewBadge">Estás en una demostración</strong><span data-i18n="localNotice">Prueba la personalización. Los precios son de ejemplo; la compra y el envío no están disponibles aquí.</span></p></aside>
+  <noscript><p data-i18n="noScript">Activa JavaScript para probar esta vista previa local.</p></noscript>
+  <div class="gift-layout">
+    <form id="gift-form" novalidate>
+      <fieldset class="step"><legend><span class="step-number" aria-hidden="true">01</span><span data-i18n="giftStep">Elige qué regalar</span></legend>
+        <div class="gift-options">
+          <label class="gift-option"><input type="radio" name="kind" value="months" checked><span class="option-symbol" aria-hidden="true">✳</span><span><strong data-i18n="months">Meses de cerámica</strong><small data-i18n="monthsCard">4 clases flexibles por mes</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+          <label class="gift-option"><input type="radio" name="kind" value="single"><span class="option-symbol" aria-hidden="true">◒</span><span><strong data-i18n="single">Una clase</strong><small data-i18n="singleCard">Su primer encuentro con el barro</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+          <label class="gift-option"><input type="radio" name="kind" value="hours"><span class="option-symbol" aria-hidden="true">≈</span><span><strong data-i18n="hours">Bono de horas</strong><small data-i18n="hoursCard">Más tiempo para crear a su ritmo</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+          <label class="gift-option"><input type="radio" name="kind" value="credit"><span class="option-symbol" aria-hidden="true">✿</span><span><strong data-i18n="credit">Importe libre</strong><small data-i18n="creditCard">Un detalle con muchas posibilidades</small></span><span class="radio-dot" aria-hidden="true"></span></label>
+        </div>
+        <div class="gift-control" data-kind="months"><label for="months" data-i18n="monthCount">Meses consecutivos</label><input id="months" type="number" min="1" step="1" value="1" inputmode="numeric" aria-describedby="month-help gift-error"><p id="month-help" class="help" data-i18n="monthHelp"></p></div>
+        <div class="gift-control" data-kind="single" hidden><label for="discipline" data-i18n="discipline">Disciplina que regalas</label><select id="discipline"><option value="modelado" data-i18n="modelado">Modelado a mano</option><option value="torno" data-i18n="torno">Torno</option></select></div>
+        <div class="gift-control" data-kind="hours" hidden><label for="hours" data-i18n="hoursCount">Horas del bono</label><select id="hours"><option value="8">8 h</option><option value="16">16 h</option><option value="24">24 h</option></select><p class="help" data-i18n="hoursHelp"></p></div>
+        <div class="gift-control" data-kind="credit" hidden><label for="credit" data-i18n="creditAmount">Importe en euros</label><div class="amount-input"><input id="credit" type="text" inputmode="decimal" value="25" aria-describedby="credit-help gift-error"><span aria-hidden="true">€</span></div><p id="credit-help" class="help" data-i18n="creditHelp"></p></div>
+        <p id="gift-error" class="error" hidden></p>
+      </fieldset>
+      <fieldset class="step"><legend><span class="step-number" aria-hidden="true">02</span><span data-i18n="designStep">Dale tu toque</span></legend>
+        <fieldset class="design-fieldset"><legend class="field-label" data-i18n="designLabel">Diseño del regalo</legend><div class="design-options">
+          <label class="design-option"><input type="radio" name="design" value="vessels" checked><img src="/images/gifts/vessels.svg" width="180" height="108" alt=""><span data-i18n="vessels">Sobremesa</span></label>
+          <label class="design-option"><input type="radio" name="design" value="wheel"><img src="/images/gifts/wheel.svg" width="180" height="108" alt=""><span data-i18n="wheel">En el torno</span></label>
+          <label class="design-option"><input type="radio" name="design" value="tiles"><img src="/images/gifts/tiles.svg" width="180" height="108" alt=""><span data-i18n="tiles">Mosaico</span></label>
+        </div></fieldset>
+        <div class="name-fields"><div><label for="giver" data-i18n="giver">De parte de</label><input id="giver" type="text" autocomplete="off" required aria-describedby="giver-error"><p id="giver-error" class="error" hidden></p></div><div><label for="recipient" data-i18n="recipient">Para</label><input id="recipient" type="text" autocomplete="off" required aria-describedby="recipient-error"><p id="recipient-error" class="error" hidden></p></div></div>
+        <p class="help" data-i18n="requiredNote">Los nombres son obligatorios.</p>
+        <label for="dedication" data-i18n="dedication">Unas palabras (opcional)</label><textarea id="dedication" rows="3" autocomplete="off"></textarea>
+        <label for="gift-language" data-i18n="language">Idioma del regalo</label><select id="gift-language"><option value="es">Español</option><option value="en">English</option><option value="ca">Català</option><option value="pt">Português</option></select>
+      </fieldset>
+      <fieldset class="step"><legend><span class="step-number" aria-hidden="true">03</span><span data-i18n="deliveryStep">Imagina la entrega</span></legend>
+        <label for="delivery-to" data-i18n="deliveryTo">¿Quién recibiría el email?</label><select id="delivery-to"><option value="buyer" data-i18n="buyer">Yo, para entregarlo en persona</option><option value="recipient" data-i18n="recipientDelivery">La persona que recibe el regalo</option></select>
+        <label for="email" data-i18n="email">Email de entrega</label><input id="email" type="email" autocomplete="off" required aria-describedby="email-error"><p id="email-error" class="error" hidden></p>
+        <label for="date" data-i18n="date">Fecha de envío</label><input id="date" type="date" required aria-describedby="date-help date-error"><p id="date-help" class="help" data-i18n="todayHelp"></p><p id="date-error" class="error" hidden></p>
+        <button class="review-button" type="submit" data-i18n="review">Revisar mi regalo</button><p id="review-status" class="review-status" role="status" aria-live="polite"></p>
+      </fieldset>
+    </form>
+    <aside class="preview-panel" aria-labelledby="preview-heading">
+      <div class="preview-heading"><span class="preview-star" aria-hidden="true">✷</span><div><h2 id="preview-heading" data-i18n="previewTitle">Así se vería su regalo</h2><p data-i18n="previewHint">La vista previa cambia contigo.</p></div></div>
+      <article class="voucher" id="voucher" lang="es" data-design="vessels">
+        <div class="voucher-art"><img id="voucher-art" src="/images/gifts/vessels.svg" alt="" width="600" height="280"><span class="art-brand">la mesa</span></div>
+        <div class="voucher-body"><p class="voucher-eyebrow" id="voucher-eyebrow"></p><p class="recipient-name"><small id="voucher-for"></small><strong id="voucher-recipient"></strong></p><h3 id="voucher-gift"></h3><p class="voucher-detail" id="voucher-detail"></p><p class="dedication" id="voucher-dedication" hidden></p><p class="giver-name"><span id="voucher-from"></span> <strong id="voucher-giver"></strong></p><div class="voucher-rule"></div><p class="validity" id="voucher-validity"></p><p class="sample" id="voucher-sample"></p></div>
+      </article>
+      <section class="recap" aria-labelledby="recap-title"><h2 id="recap-title" data-i18n="recapTitle">Tu regalo, de un vistazo</h2><p id="recap-gift" class="recap-gift"></p><dl><div><dt data-i18n="recapLanguage">Idioma</dt><dd id="recap-language"></dd></div><div><dt id="recap-email-label">Email</dt><dd id="recap-email"></dd></div><div><dt data-i18n="recapDate">Envío previsto</dt><dd id="recap-date"></dd></div><div><dt data-i18n="recapExpiry">Validez del bono</dt><dd id="recap-expiry"></dd></div></dl><div class="total"><span data-i18n="total">Total de ejemplo</span><strong id="total"></strong></div><button id="purchase" type="button" disabled aria-describedby="purchase-help" data-i18n="purchase">Compra no disponible en esta demostración</button><p id="purchase-help" class="help" data-i18n="purchaseHelp"></p></section>
+    </aside>
+  </div>
+</main>
+<footer><span>la mesa</span><p data-i18n="footer">Hecho para regalar tiempo, manos y barro.</p><small>Barcelona · Carrer de l’Atlàntida, 47</small></footer>
+</body>
+</html>
