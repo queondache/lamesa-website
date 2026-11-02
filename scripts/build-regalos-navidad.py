@@ -239,11 +239,13 @@ def guide_main(lang, c):
                f'            <a class="enc-link" href="{kit}">{esc(c["cta2"])}</a>')
     h = hero(c, actions, '<!-- PENDIENTE EQUIPO: foto del kit mosaico (sostituisce questa immagine) -->\n          '
              + img('/images/foto-tienda-4.jpg', 800, 600, c['who'][1][5] if False else 'Piezas de cerámica de La Mesa en la estantería del estudio' if lang == 'es' else 'Peces de ceràmica de La Mesa a la prestatgeria de l’estudi', '(min-width: 900px) 50vw, 92vw', eager=True))
-    parts = [h,
-      section('white', 'enc-respuesta', esc(c['h1']), f'          <p class="enc-text">{esc(c["answer"])}</p>'),
-      section('cream', 'enc-kit', esc(c['kit_h']),
-              f'          <!-- PENDIENTE EQUIPO: foto della scatola aperta -->\n          <p class="enc-text">{esc(c["kit_p"])}</p>\n'
-              f'          <p class="enc-text"><a class="enc-link" href="{kit}">{esc(c["kit_link"])}</a></p>')]
+    kit_sec = section('cream', 'enc-kit', esc(c['kit_h']),
+              f'          <!-- PENDIENTE EQUIPO: foto della scatola aperta -->\n          <p class="enc-text">{esc(c["kit_p"] if KIT_AVAILABLE else T[lang]["kit"]["soldout_p"])}</p>\n'
+              f'          <p class="enc-text"><a class="enc-link" href="{kit}">{esc(c["kit_link"])}</a></p>')
+    parts = [h, section('white', 'enc-respuesta', esc(c['h1']), f'          <p class="enc-text">{esc(c["answer"])}</p>')]
+    # kit esaurito: la sezione kit scende in fondo, prima le idee della tienda
+    if KIT_AVAILABLE:
+        parts.append(kit_sec)
     cards = []
     for title, text, links, src, w, hgt, alt in c['who']:
         ls = ' · '.join(f'<a class="enc-link" href="{TIENDA}{u}">{esc(n)}</a>' for n, u in links)
@@ -256,6 +258,8 @@ def guide_main(lang, c):
     parts.append(section('white', 'enc-experiencia', esc(c['exp_h']), f'          <p class="enc-text">{esc(c["exp_p"])}</p>\n          <p class="enc-text">{exp}</p>'))
     parts.append(section('cream', 'enc-recibir', esc(c['get_h']), points(c['get'])))
     parts.append(faq_html(c['faq_t'], c['faq']))
+    if not KIT_AVAILABLE:
+        parts.append(kit_sec)
     more = '\n'.join(f'            <li><a class="enc-link" href="{u}">{esc(n)}</a>: {esc(d)}</li>' for u, n, d in c['more'])
     parts.append(section('white', 'enc-otras', esc(c['more_h']), f'          <ul class="enc-list">\n{more}\n          </ul>'))
     return '\n\n'.join(parts)
