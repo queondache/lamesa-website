@@ -420,6 +420,50 @@
     <priority>0.8</priority>
   </url>
 
+  <!-- Regalos Navidad: Guía regalos originales -->
+  <url>
+    <loc>https://lamesabcn.com/regalos-originales-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/regalos-originales-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/regals-originals-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/regalos-originales-barcelona.html"/>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Regalos Navidad: Guía regalos originales -->
+  <url>
+    <loc>https://lamesabcn.com/ca/regals-originals-barcelona.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/regalos-originales-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/regals-originals-barcelona.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/regalos-originales-barcelona.html"/>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Regalos Navidad: Kit mosaico -->
+  <url>
+    <loc>https://lamesabcn.com/kit-mosaico-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/kit-mosaico-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/kit-mosaic-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/kit-mosaico-ceramica.html"/>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Regalos Navidad: Kit mosaico -->
+  <url>
+    <loc>https://lamesabcn.com/ca/kit-mosaic-ceramica.html</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://lamesabcn.com/kit-mosaico-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="ca" href="https://lamesabcn.com/ca/kit-mosaic-ceramica.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://lamesabcn.com/kit-mosaico-ceramica.html"/>
+    <lastmod>2026-11-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Landing: Regalos de empresa (encargos) -->
   <url>
     <loc>https://lamesabcn.com/encargos/regalos-empresa.html</loc>
