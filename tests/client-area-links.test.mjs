@@ -80,6 +80,17 @@ test('HTTP and foreign hosts leave the page untouched and do not start booking',
 
 function unrelatedContent(source) {
   return source
+    // Menu "Por encargo" (2/11/2026): la voce Contacto diventa la voce encargos, "Grupos y eventos" diventa
+    // "Grupos y empresas" e il piede ha i link encargos; si riportano alla forma della baseline.
+    .replace(/<a class="navbar__(link|mobile-link)" href="\/(?:encargos|en\/custom-tableware|ca\/encarrecs)\.html"( data-section="encargos")?>(Por encargo|Custom orders|Per encàrrec)<\/a>/g,
+      (m, kind, section, label) => {
+        const base = {'Por encargo': '/', 'Custom orders': '/en/', 'Per encàrrec': '/ca/'}[label];
+        const text = {'Por encargo': 'Contacto', 'Custom orders': 'Contact', 'Per encàrrec': 'Contacte'}[label];
+        return `<a class="navbar__${kind}" href="${base}#contacto"${section ? ' data-section="contacto"' : ''}>${text}</a>`;
+      })
+    .replace(/#grupos"( data-section="privadas")?>(Grupos y empresas|Groups &amp; teams|Grups i empreses)<\/a>/g,
+      (m, section, label) => `#grupos"${section || ''}>${{'Grupos y empresas': 'Grupos y eventos', 'Groups &amp; teams': 'Groups &amp; events', 'Grups i empreses': 'Grups i esdeveniments'}[label]}</a>`)
+    .replace(/\n *<p class="footer__links">.*<\/p>/g, '')
     // Pagine PT dei corsi (19/10/2026): hreflang pt e selettore PT verso la pagina PT sono l'unica differenza ammessa;
     // si riportano alla forma della baseline, cosi' le impronte restano quelle di prima.
     .replace(/ *<link rel="alternate" hreflang="pt" href="https:\/\/lamesabcn\.com\/pt\/clases\/semanal-(?:modelado|torno)\.html">\n/, '')
