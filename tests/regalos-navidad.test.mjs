@@ -51,12 +51,14 @@ for (const {kind, lang, file} of all) {
       assert.equal(product.offers.price, '30');
       assert.equal(product.offers.priceCurrency, 'EUR');
       assert.match(plain(s), /30 €/);
+      assert.match(plain(s), /14,99 €/);
     }
   });
 
   test(`${file}: link locali esistenti, esterni solo tienda o WhatsApp, immagini dimensionate`, () => {
     const s = read(file);
-    for (const a of [...tags(s, 'a'), ...tags(s, 'img'), ...tags(s, 'link'), ...tags(s, 'script')]) {
+    const anchors = tags(s, 'a').map(a => ({...a, anchor: true}));
+    for (const a of [...anchors, ...tags(s, 'img'), ...tags(s, 'link'), ...tags(s, 'script')]) {
       const ref = a.href || a.src;
       if (!ref || ref.startsWith('#') || ref.startsWith('tel:')) continue;
       const url = new URL(ref, `${base}/${file}`);
@@ -64,7 +66,7 @@ for (const {kind, lang, file} of all) {
         const path = decodeURIComponent(url.pathname);
         const target = resolve(root, '.' + path + (path.endsWith('/') ? 'index.html' : ''));
         assert.ok(existsSync(target) && statSync(target).isFile(), `${file}: link rotto ${ref}`);
-      } else if (a.href && tags(s, 'a').includes(a)) {
+      } else if (a.anchor) {
         assert.ok(/^https:\/\/(tienda\.lamesabcn\.com|wa\.me|instagram\.com)\//.test(url.href), `${file}: link esterno ${ref}`);
       }
     }

@@ -8,6 +8,8 @@ BASE = 'https://lamesabcn.com'
 TIENDA = 'https://tienda.lamesabcn.com'
 # PENDIENTE: URL del prodotto kit in tienda (in vendita entro il 6/11)
 KIT_SHOP_URL = TIENDA + '/collections/all'
+# Kit esaurito: mettere False e rigenerare (bottone, testo e dati strutturati cambiano insieme)
+KIT_AVAILABLE = True
 WA = 'https://wa.me/34711552030'
 
 PAGES = {
@@ -38,11 +40,12 @@ def faq_ld(items):
     return {'@type': 'FAQPage', 'mainEntity': [
         {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}
 
-def section(cls, hid, title, body):
+def section(cls, hid, title, body, grid=None):
+    extra = f'\n        <ul class="enc-grid enc-grid--3">\n{grid}\n        </ul>' if grid else ''
     return (f'    <section class="enc-section enc-section--{cls}" aria-labelledby="{hid}">\n'
             f'      <div class="container">\n        <div class="enc-head">\n'
             f'          <h2 id="{hid}" class="enc-h2">{title}</h2>\n{body}\n'
-            f'        </div>\n      </div>\n    </section>')
+            f'        </div>{extra}\n      </div>\n    </section>')
 
 # ---------------------------------------------------------------- testi
 T = {
@@ -65,7 +68,7 @@ T = {
    'who_p': 'Cada pieza de la tienda es única: existe una sola. Estas son las secciones donde buscar.',
    'who': [
      ('Para quien ama el café', 'Tazas y vasos para el café o el té de cada mañana.', [('Tazas y vasos', '/collections/tazas')], '/images/encargos/abrazo-puntitos-480.webp', 480, 320, 'Taza Abrazo de gres hecha a mano con puntitos marrones'),
-     ('Para la casa', 'Jarrones, macetas y lámparas de cerámica para darle carácter a un rincón.', [('Jarrones', '/collections/jarrones'), ('Macetas', '/collections/macetas'), ('Lámparas', '/collections/lamparas')], '/images/foto-tienda-4.jpg', 800, 600, 'Piezas de cerámica de La Mesa en la estantería del estudio'),
+     ('Para la casa', 'Jarrones, macetas y lámparas de cerámica para darle carácter a un rincón.', [('Jarrones', '/collections/jarrones'), ('Macetas', '/collections/macetas'), ('Lámparas', '/collections/lamparas')], '/images/pieza-03.jpg', 800, 800, 'Pieza de cerámica hecha a mano en el taller de La Mesa'),
      ('Para quien cocina', 'Bowls, platos y piezas de cocina para servir y compartir.', [('Bowls', '/collections/bowls'), ('Platos', '/collections/platos'), ('Cocina', '/collections/cocina')], '/images/encargos/promesa-verde-piedra-480.webp', 480, 320, 'Bowl Promesa de gres con esmalte Verde Piedra'),
    ],
    'price_h': 'Ideas según tu presupuesto',
@@ -93,17 +96,19 @@ T = {
   },
   'kit': {
    'title': 'Kit de mosaico de cerámica para hacer en casa | La Mesa',
-   'desc': 'Kit de mosaico de cerámica para crear en casa, hecho en Barcelona: un regalo original de Navidad. 30 €, edición limitada. Recogida gratis en la Barceloneta.',
+   'desc': 'Kit de mosaico de cerámica para crear en casa, de un taller de Barcelona: regalo original de Navidad. 30 €, edición limitada. Recogida gratis en la Barceloneta.',
    'og': 'Una caja para crear tu propio mosaico de cerámica en casa. 30 €, edición limitada de Navidad.',
    'crumb': 'Kit de mosaico de cerámica',
    'kicker': 'Regalos de Navidad · Edición limitada',
    'h1': 'Kit de mosaico de cerámica para hacer en casa',
-   'lead': 'Una caja para crear tu propio mosaico de cerámica en casa, como el trencadís de Barcelona. Preparada en nuestro taller de la Barceloneta. Un regalo original para Navidad.',
+   'lead': 'Una caja para crear tu propio mosaico de cerámica en casa, como el trencadís de Barcelona. De La Mesa, taller de cerámica en la Barceloneta. Un regalo original para Navidad.',
    'price': '30 €', 'buy': 'Comprar en la tienda', 'see': 'Qué hay en la caja',
+   'soldout': 'Agotado · ver otros regalos', 'soldout_p': 'Las cajas de esta Navidad se han agotado. En la tienda siguen las piezas únicas hechas a mano.',
    'box_h': 'Qué hay en la caja',
-   'box_p': 'Todo lo necesario para crear tu mosaico en casa.',
+   'box_p': 'Te contamos aquí qué trae la caja y cómo se hace el mosaico.',
    'who_h': 'Para quién es',
-   'who': ['<strong>Para regalar en pareja</strong>Una tarde juntos creando algo con las manos.',
+   'who': ['<strong>Para regalar en pareja</strong>Para crear algo juntos con las manos.',
+           '<strong>Para una amiga o la familia</strong>Un plan creativo para compartir en casa.',
            '<strong>Para quien disfruta las manualidades</strong>Un proyecto creativo para hacer sin prisa.',
            '<strong>Para quien lo tiene todo</strong>Un regalo que no se compra en cualquier tienda.',
            '<strong>Para quien ama Barcelona</strong>El trencadís de Gaudí, hecho en casa.'],
@@ -135,7 +140,7 @@ T = {
    'kicker': 'Regals de Nadal · Fet a mà a Barcelona',
    'h1': 'Regals originals fets a mà a Barcelona',
    'lead': 'Peces úniques de ceràmica fetes al nostre taller de la Barceloneta i un kit per crear un mosaic a casa. Per regalar una cosa que ningú més té.',
-   'answer': 'A La Mesa, taller de ceràmica a la Barceloneta, trobes regals originals fets a mà: un kit de mosaic de ceràmica per 30 € i peces úniques com tasses, bols, gerros i làmpades. Compres en línia i ho recculls gratis al taller o ho reps a casa. Per Nadal, demana fins al 14 de desembre.',
+   'answer': 'A La Mesa, taller de ceràmica a la Barceloneta, trobes regals originals fets a mà: un kit de mosaic de ceràmica per 30 € i peces úniques com tasses, bols, gerros i làmpades. Compres en línia i ho reculls gratis al taller o ho reps a casa. Per Nadal, demana fins al 14 de desembre.',
    'cta': 'Veure la botiga', 'cta2': 'Veure el kit de mosaic',
    'kit_h': 'El regal estrella: kit de mosaic de ceràmica',
    'kit_p': 'Una capsa per crear el teu propi mosaic de ceràmica a casa, com el trencadís de Barcelona. 30 €. Edició limitada de Nadal: hem preparat unes 30 capses.',
@@ -144,7 +149,7 @@ T = {
    'who_p': 'Cada peça de la botiga és única: només n’hi ha una. Aquestes són les seccions on buscar.',
    'who': [
      ('Per a qui estima el cafè', 'Tasses i gots per al cafè o el te de cada matí.', [('Tasses i gots', '/collections/tazas')], '/images/encargos/abrazo-puntitos-480.webp', 480, 320, 'Tassa Abrazo de gres feta a mà amb puntets marrons'),
-     ('Per a la casa', 'Gerros, testos i làmpades de ceràmica per donar caràcter a un racó.', [('Gerros', '/collections/jarrones'), ('Testos', '/collections/macetas'), ('Làmpades', '/collections/lamparas')], '/images/foto-tienda-4.jpg', 800, 600, 'Peces de ceràmica de La Mesa a la prestatgeria de l’estudi'),
+     ('Per a la casa', 'Gerros, testos i làmpades de ceràmica per donar caràcter a un racó.', [('Gerros', '/collections/jarrones'), ('Testos', '/collections/macetas'), ('Làmpades', '/collections/lamparas')], '/images/pieza-03.jpg', 800, 800, 'Peça de ceràmica feta a mà al taller de La Mesa'),
      ('Per a qui cuina', 'Bols, plats i peces de cuina per servir i compartir.', [('Bols', '/collections/bowls'), ('Plats', '/collections/platos'), ('Cuina', '/collections/cocina')], '/images/encargos/promesa-verde-piedra-480.webp', 480, 320, 'Bol Promesa de gres amb esmalt Verd Pedra'),
    ],
    'price_h': 'Idees segons el teu pressupost',
@@ -159,7 +164,7 @@ T = {
            '<strong>Per Nadal</strong>Demana a la botiga en línia fins al 14 de desembre.'],
    'faq_t': 'Preguntes freqüents',
    'faq': [
-     ('On comprar regals originals fets a mà a Barcelona?', 'A La Mesa, taller de ceràmica a la Barceloneta. Tenim peces úniques fetes a mà i un kit de mosaic de ceràmica per 30 €. Compres a la nostra botiga en línia i ho recculls gratis al taller o te l’enviem.'),
+     ('On comprar regals originals fets a mà a Barcelona?', 'A La Mesa, taller de ceràmica a la Barceloneta. Tenim peces úniques fetes a mà i un kit de mosaic de ceràmica per 30 €. Compres a la nostra botiga en línia i ho reculls gratis al taller o te l’enviem.'),
      ('Fins quan puc demanar perquè arribi per Nadal?', 'Fins al 14 de desembre a la botiga en línia.'),
      ('Ho puc recollir al taller?', 'Sí, la recollida al taller del carrer de l’Atlàntida, 47 és gratuïta. Si ho prefereixes, te l’enviem per 14,99 € per comanda.'),
      ('Les peces són úniques?', 'Sí. Cada peça de la botiga està feta a mà i només n’hi ha una: quan es ven, desapareix de la botiga.'),
@@ -172,17 +177,19 @@ T = {
   },
   'kit': {
    'title': 'Kit de mosaic de ceràmica per fer a casa | La Mesa',
-   'desc': 'Kit de mosaic de ceràmica per crear a casa, fet a Barcelona: un regal original de Nadal. 30 €, edició limitada. Recollida gratuïta a la Barceloneta.',
+   'desc': 'Kit de mosaic de ceràmica per crear a casa, d’un taller de Barcelona: regal original de Nadal. 30 €, edició limitada. Recollida gratuïta a la Barceloneta.',
    'og': 'Una capsa per crear el teu propi mosaic de ceràmica a casa. 30 €, edició limitada de Nadal.',
    'crumb': 'Kit de mosaic de ceràmica',
    'kicker': 'Regals de Nadal · Edició limitada',
    'h1': 'Kit de mosaic de ceràmica per fer a casa',
-   'lead': 'Una capsa per crear el teu propi mosaic de ceràmica a casa, com el trencadís de Barcelona. Preparada al nostre taller de la Barceloneta. Un regal original per Nadal.',
+   'lead': 'Una capsa per crear el teu propi mosaic de ceràmica a casa, com el trencadís de Barcelona. De La Mesa, taller de ceràmica a la Barceloneta. Un regal original per Nadal.',
    'price': '30 €', 'buy': 'Comprar a la botiga', 'see': 'Què hi ha a la capsa',
+   'soldout': 'Esgotat · veure altres regals', 'soldout_p': 'Les capses d’aquest Nadal s’han esgotat. A la botiga continuen les peces úniques fetes a mà.',
    'box_h': 'Què hi ha a la capsa',
-   'box_p': 'Tot el que cal per crear el teu mosaic a casa.',
+   'box_p': 'T’expliquem aquí què porta la capsa i com es fa el mosaic.',
    'who_h': 'Per a qui és',
-   'who': ['<strong>Per regalar en parella</strong>Una tarda junts creant alguna cosa amb les mans.',
+   'who': ['<strong>Per regalar en parella</strong>Per crear alguna cosa junts amb les mans.',
+           '<strong>Per a una amiga o la família</strong>Un pla creatiu per compartir a casa.',
            '<strong>Per a qui gaudeix de les manualitats</strong>Un projecte creatiu per fer sense pressa.',
            '<strong>Per a qui ho té tot</strong>Un regal que no es compra a qualsevol botiga.',
            '<strong>Per a qui estima Barcelona</strong>El trencadís de Gaudí, fet a casa.'],
@@ -242,7 +249,7 @@ def guide_main(lang, c):
         ls = ' · '.join(f'<a class="enc-link" href="{TIENDA}{u}">{esc(n)}</a>' for n, u in links)
         cards.append(f'            <li><figure class="enc-piece">{img(src, w, hgt, alt)}<figcaption><strong>{esc(title)}</strong>{esc(text)}<span class="enc-size">{ls}</span></figcaption></figure></li>')
     parts.append(section('white', 'enc-quien', esc(c['who_h']),
-        f'          <p class="enc-text">{esc(c["who_p"])}</p>\n        </div>\n        <ul class="enc-grid enc-grid--3">\n' + '\n'.join(cards) + '\n        </ul>\n        <div class="enc-head">'))
+        f'          <p class="enc-text">{esc(c["who_p"])}</p>', grid='\n'.join(cards)))
     parts.append(section('cream', 'enc-precio', esc(c['price_h']),
         f'          <p class="enc-text">{esc(c["price_p"])}</p>\n          <p class="enc-text"><a class="enc-link" href="{TIENDA}/collections/all?sort_by=price-ascending">{esc(c["price_link"])}</a></p>'))
     exp = ' · '.join(f'<a class="enc-link" href="{u}"' + (' target="_blank" rel="noopener noreferrer"' if u.startswith('http') else '') + f'>{esc(n)}</a>' for n, u in c['exp_links'])
@@ -255,8 +262,9 @@ def guide_main(lang, c):
 
 def kit_main(lang, c):
     guide = '/' + PAGES['guide'][lang]
-    actions = (f'            <!-- PENDIENTE: link prodotto kit in tienda (KIT_SHOP_URL) -->\n'
-               f'            <a class="btn btn--primary" href="{KIT_SHOP_URL}" data-track="kit_mosaico_comprar">{esc(c["buy"])} · {c["price"]}</a>\n'
+    buy = (f'            <a class="btn btn--primary" href="{KIT_SHOP_URL}" data-track="kit_mosaico_comprar">{esc(c["buy"])} · {c["price"]}</a>\n'
+           if KIT_AVAILABLE else f'            <a class="btn btn--primary" href="{guide}">{esc(c["soldout"])}</a>\n')
+    actions = (f'            <!-- PENDIENTE: link prodotto kit in tienda (KIT_SHOP_URL) -->\n' + buy +
                f'            <a class="enc-link" href="#enc-caja">{esc(c["see"])}</a>')
     alt = 'Piezas de cerámica de La Mesa en la estantería del estudio' if lang == 'es' else 'Peces de ceràmica de La Mesa a la prestatgeria de l’estudi'
     h = hero(c, actions, '<!-- PENDIENTE EQUIPO: foto della scatola kit (sostituisce questa immagine) -->\n          '
@@ -266,7 +274,7 @@ def kit_main(lang, c):
               f'          <!-- PENDIENTE EQUIPO: contenuto esatto della scatola, tempo indicativo, età consigliata, foto scatola aperta e mosaico finito -->\n'
               f'          <p class="enc-text">{esc(c["box_p"])}</p>'),
       section('cream', 'enc-para', esc(c['who_h']), points(c['who'])),
-      section('white', 'enc-limitada', esc(c['lim_h']), f'          <p class="enc-text">{esc(c["lim_p"])}</p>'),
+      section('white', 'enc-limitada', esc(c['lim_h']), f'          <p class="enc-text">{esc(c["lim_p"] if KIT_AVAILABLE else c["soldout_p"])}</p>'),
       section('cream', 'enc-recibir', esc(c['get_h']), points(c['get'])),
       faq_html(c['faq_t'], c['faq']),
       section('white', 'enc-mas', esc(c['guide_h']), f'          <p class="enc-text">{esc(c["guide_p"])}</p>\n          <p class="enc-text"><a class="enc-link" href="{guide}">{esc(c["guide_link"])}</a></p>'),
@@ -286,7 +294,7 @@ def jsonld(kind, lang, c):
                   'image': f'{BASE}/images/foto-tienda-4.jpg',  # PENDIENTE: foto kit
                   'brand': {'@type': 'Brand', 'name': 'La Mesa'},
                   'offers': {'@type': 'Offer', 'price': '30', 'priceCurrency': 'EUR',
-                             'availability': 'https://schema.org/InStock',  # agotado → OutOfStock
+                             'availability': 'https://schema.org/' + ('InStock' if KIT_AVAILABLE else 'OutOfStock'),
                              'url': KIT_SHOP_URL,
                              'seller': {'@type': 'Organization', 'name': 'La Mesa – Laboratorio Creativo', 'url': BASE}}})
     else:
@@ -294,7 +302,8 @@ def jsonld(kind, lang, c):
             {'@type': 'ListItem', 'position': 1, 'name': T[lang]['kit']['h1'], 'url': f'{BASE}/{PAGES["kit"][lang]}'}] + [
             {'@type': 'ListItem', 'position': i + 2, 'name': w[0], 'url': TIENDA + w[2][0][1]} for i, w in enumerate(c['who'])]})
     g.append(faq_ld(c['faq']))
-    return '  <script type="application/ld+json">\n' + json.dumps({'@context': 'https://schema.org', '@graph': g}, ensure_ascii=False, indent=2) + '\n  </script>\n'
+    note = '  <!-- PENDIENTE: Product.image = foto del kit; Offer.url = prodotto kit in tienda -->\n' if kind == 'kit' else ''
+    return note + '  <script type="application/ld+json">\n' + json.dumps({'@context': 'https://schema.org', '@graph': g}, ensure_ascii=False, indent=2) + '\n  </script>\n'
 
 def build(kind, lang):
     c = T[lang][kind]
