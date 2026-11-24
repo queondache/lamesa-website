@@ -3,6 +3,14 @@
 Leggere questo file per primo. Cartella interna: esclusa dal sito pubblico (`_config.yml`).
 Aggiornare **questo** file a fine sessione, sostituendo lo stato vecchio (niente file di stato paralleli).
 
+## Aggiornamento — 25 novembre 2026
+
+- Search Console collegata a GA4 (24/11); `click_email` evento chiave; confronto salvato GA4 senza robot (Ashburn, Boardman, Council Bluffs).
+- Quiz home: risposte come `quiz_answer`, non più `click_cta` (proposta #62).
+- Blog: 2 temi nuovi × 4 lingue (dove comprare ceramica artigianale; laboratori creativi), scelti da ricerche Search Console senza articolo.
+- Review con metodo claude-seo (~70/100) e geo-seo-claude (46/100): troppo poco nelle pagine che vendono e fuori dal sito, blog già sufficiente.
+  Piano in 3 fasi e decisioni: https://claude.ai/artifact/B9okqgh8kiLxtBZ2VpX2zt. Da qui in avanti: rafforzare, non aggiungere temi.
+
 ## Dove siamo — 2 novembre 2026
 
 Tema in lavoro: **encargos** (vajilla per ristoranti, noleggio, regali aziendali, regali di Natale).
