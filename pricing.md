@@ -11,7 +11,7 @@
 | Taller Semanal Modelado (weekly hand-building) | €120 / month | 4 sessions × 2h, 1×/week | First class requested online (Mesana); pay online or at the studio |
 | Taller Semanal Torno (weekly wheel throwing) | €120 / month | 4 sessions × 2h, 1×/week | First class requested online (Mesana); pay online or at the studio |
 | Clase Suelta Modelado (drop-in hand-building) | €45 | 1 session of 2h | Online (Stripe Checkout) |
-| Clase Suelta Torno (drop-in wheel, private) | €65 | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
+| Clase Suelta Torno (drop-in wheel, private) | €65 per person | 1 session of 2h, max 2 people | Online (Stripe Checkout) |
 | Bono de horas (hour pack) | 8h €120 · 16h €220 · 24h €300 | hand-building or wheel, at your own pace | Online (Mesana) |
 | Creative workshops (guest artists) | variable | see website | website / WhatsApp |
 | Private sessions (team building, birthdays, bachelorette) | custom quote | group | WhatsApp / email |
@@ -38,7 +38,7 @@
 - Booking: online via Stripe Checkout.
 
 ### Clase Suelta Torno
-- Price: €65.
+- Price: €65 per person (max 2 people per session).
 - Includes: one private wheel-throwing session of 2 hours, maximum 2 people, all materials and firing. No monthly commitment.
 - Availability: Tuesday to Saturday, at the time you prefer within opening hours, subject to wheel availability. If your time is not shown online, ask via WhatsApp.
 - Visitors: taught in English, Spanish or Portuguese; glazes included; piece ready 15 days after the class or shipped home (price on request); free cancellation up to 24 h before; from 8 years old; wheelchair accessible.
