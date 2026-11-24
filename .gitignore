@@ -8,3 +8,4 @@ Thumbs.db
 audit-screenshots/
 audit-ux-ui-lamesa.md
 .claude/
+__pycache__/
