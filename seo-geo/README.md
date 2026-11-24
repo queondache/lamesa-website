@@ -3,7 +3,7 @@
 Leggere questo file per primo. Cartella interna: esclusa dal sito pubblico (`_config.yml`).
 Aggiornare **questo** file a fine sessione, sostituendo lo stato vecchio (niente file di stato paralleli).
 
-## Aggiornamento — 25 novembre 2026
+## Aggiornamento — 24 novembre 2026
 
 - Search Console collegata a GA4 (24/11); `click_email` evento chiave; confronto salvato GA4 senza robot (Ashburn, Boardman, Council Bluffs).
 - Quiz home: risposte come `quiz_answer`, non più `click_cta` (proposta #62).
