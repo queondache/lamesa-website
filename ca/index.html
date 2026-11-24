@@ -684,7 +684,7 @@ fbq('track', 'PageView');
     }
   }
   chips.forEach(function (c, i) {
-    c.addEventListener('click', function () { select(c.dataset.answer); track('respuesta_' + c.dataset.answer); reveal(c.dataset.answer); });
+    c.addEventListener('click', function () { select(c.dataset.answer); if (typeof window.gtag === 'function') window.gtag('event', 'quiz_answer', { event_label: c.dataset.answer }); reveal(c.dataset.answer); });
     c.addEventListener('keydown', function (e) {
       var n = chips.length, j = null;
       if (e.key === 'ArrowRight') j = (i + 1) % n;
